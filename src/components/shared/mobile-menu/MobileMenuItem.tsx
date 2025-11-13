@@ -27,7 +27,9 @@ const MobileMenuItem = ({ id, title, children, hasSubmenu = false }: MobileMenuI
         onClick={handleToggle}
         className={cn(
           'sub-menu text-tagline-1 border-stroke-4 dark:border-stroke-6 flex w-full cursor-pointer items-center justify-between border-b py-3 text-left font-normal transition-all duration-200',
-          isActive ? 'text-secondary dark:text-accent font-medium' : 'text-secondary/60 dark:text-accent/60',
+          isActive
+            ? 'text-primary-500 dark:text-primary-300 font-medium'
+            : 'text-secondary/60 dark:text-accent/60 hover:text-primary-500 dark:hover:text-primary-300',
         )}
         aria-expanded={hasSubmenu ? isActive : undefined}
         aria-controls={hasSubmenu ? `submenu-${id}` : undefined}>
@@ -37,7 +39,7 @@ const MobileMenuItem = ({ id, title, children, hasSubmenu = false }: MobileMenuI
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
                 d="M8 12L12 8L8 4"
-                className="stroke-secondary dark:stroke-accent"
+                className="stroke-primary-500 dark:stroke-primary-300"
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
