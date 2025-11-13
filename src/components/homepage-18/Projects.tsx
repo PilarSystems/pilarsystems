@@ -12,16 +12,16 @@ const Projects = () => {
       <div className="main-container">
         <div className="text-center space-y-5 mb-10 md:mb-[70px]">
           <RevealAnimation delay={0.2}>
-            <span className="badge badge-green">Projects</span>
+            <span className="badge badge-green">Ergebnisse</span>
           </RevealAnimation>
           <div className="space-y-3">
             <RevealAnimation delay={0.3}>
-              <h2>Proven AI solutions in action.</h2>
+              <h2>So nutzen Studios Pilar Systems bereits heute.</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
               <p className="max-w-[680px] mx-auto">
-                Discover how NextSaaS is transforming businesses with tailored automation strategies. Explore our
-                portfolio to see the real-world impact we&apos;ve made for clients across various industries.
+                Entdecke, wie Fitnessstudios und Studios mit Pilar Systems mehr Probetrainings, höhere Abschlussquoten
+                und weniger Verwaltungsaufwand erreichen. Jede Case Study zeigt echte Prozesse und messbare Resultate.
               </p>
             </RevealAnimation>
           </div>
@@ -43,7 +43,7 @@ const Projects = () => {
                     <LinkButton
                       href={`/case-study/${featuredProjects[0].slug}`}
                       className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      View Projects
+                      Case ansehen
                     </LinkButton>
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
@@ -70,7 +70,7 @@ const Projects = () => {
                     <LinkButton
                       href={`/case-study/${featuredProjects[1].slug}`}
                       className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      View Projects
+                      Case ansehen
                     </LinkButton>
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
@@ -97,7 +97,7 @@ const Projects = () => {
                     <LinkButton
                       href={`/case-study/${featuredProjects[2].slug}`}
                       className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      View Projects
+                      Case ansehen
                     </LinkButton>
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
@@ -124,7 +124,7 @@ const Projects = () => {
                     <LinkButton
                       href={`/case-study/${featuredProjects[3].slug}`}
                       className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      View Projects
+                      Case ansehen
                     </LinkButton>
                   </div>
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
@@ -143,7 +143,7 @@ const Projects = () => {
             <LinkButton
               href="/case-study"
               className="btn btn-secondary btn-md hover:btn-primary dark:btn-transparent mx-auto">
-              View portfolio
+              Alle Erfolgsgeschichten ansehen
             </LinkButton>
           </div>
         </RevealAnimation>

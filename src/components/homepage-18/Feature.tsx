@@ -15,16 +15,16 @@ const Feature = () => {
       <div className="main-container">
         <div className="text-center space-y-5 max-w-[750px] mx-auto mb-10 md:mb-[70px]">
           <RevealAnimation delay={0.2}>
-            <span className="badge badge-green">Features</span>
+            <span className="badge badge-green">Funktionen</span>
           </RevealAnimation>
           <div>
             <RevealAnimation delay={0.3}>
-              <h2 className="mb-3">Automation that fits your needs.</h2>
+              <h2 className="mb-3">Alles, was moderne Gyms heute brauchen.</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
               <p className="text-secondary/60 dark:text-accent/60 max-w-[600px] mx-auto">
-                Powerful tools to streamline operations and boost efficiency. Automate tasks with NextSaaS and focus on
-                what matters.
+                Pilar Systems verbindet KI-Rezeption, Terminplanung und Trainingsorganisation in einer Plattform – damit
+                du mehr Zeit für deine Mitglieder hast und kein Lead mehr verloren geht.
               </p>
             </RevealAnimation>
           </div>
@@ -34,10 +34,10 @@ const Feature = () => {
           <RevealAnimation delay={0.5}>
             <div className="col-span-12 md:col-span-6 lg:col-span-8 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Smart analytics with real-time insights.</h5>
+                <h5 className="max-sm:text-heading-6">KI-Rezeption für alle Kanäle.</h5>
                 <p className="max-w-[450px]">
-                  Stay in the loop and make better choices with awesome, built-in analytics that give you real-time
-                  insights.
+                  Telefon, WhatsApp, E-Mail & Website-Anfragen werden von deiner KI beantwortet, vorqualifiziert und bis
+                  zum gebuchten Probetraining begleitet – in deinem Studio-Branding.
                 </p>
               </div>
               <figure className="w-full">
@@ -57,8 +57,11 @@ const Feature = () => {
           <RevealAnimation delay={0.6}>
             <div className="col-span-12 md:col-span-6 lg:col-span-4 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Seamless system integrations.</h5>
-                <p className="max-w-[220px]">Want it even shorter? Here’s a super chill version!</p>
+                <h5 className="max-sm:text-heading-6">Nahtlose Integrationen.</h5>
+                <p className="max-w-[220px]">
+                  Verbinde Telefonanlage, WhatsApp, E-Mail und bestehende Studio-Software – ohne komplizierte
+                  IT-Projekte.
+                </p>
               </div>
               <figure className="w-full">
                 <Image
@@ -77,8 +80,11 @@ const Feature = () => {
           <RevealAnimation delay={0.7}>
             <div className="col-span-12 md:col-span-6 lg:col-span-4 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Clear dashboards for visibility.</h5>
-                <p className="">Track everything at a glance with clean, easy-to-use dashboards.</p>
+                <h5 className="max-sm:text-heading-6">Klares Dashboard für dein Team.</h5>
+                <p className="">
+                  Alle Leads, Termine, Probetrainings und Trainingspläne auf einen Blick – ohne Excel, ohne Chaos im
+                  Postfach.
+                </p>
               </div>
               <figure className="w-full">
                 <Image
@@ -97,9 +103,10 @@ const Feature = () => {
           <RevealAnimation delay={0.8}>
             <div className="col-span-12 md:col-span-6 lg:col-span-8 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2 max-w-[285px]">
-                <h5 className="max-sm:text-heading-6">Durable, secure platforms.</h5>
+                <h5 className="max-sm:text-heading-6">Stabil, sicher & skalierbar.</h5>
                 <p className="max-w-[311px]">
-                  Grow with confidence on a platform that&apos;s secure, stable, and built for the future.
+                  DSGVO-konforme Infrastruktur, hohe Verfügbarkeit und regelmäßige Updates – gebaut, um mit deinem Gym
+                  und deinen Standorten mitzuwachsen.
                 </p>
               </div>
               <figure className="w-full">

@@ -15,12 +15,14 @@ const Testimonial = () => {
       <div className="main-container">
         <div className="flex flex-col items-center text-center mb-10 md:mb-[70px]">
           <RevealAnimation delay={0.2}>
-            <h2 className="max-w-[750px] mx-auto mb-4">What our clients are saying.</h2>
+            <h2 className="max-w-[750px] mx-auto mb-4">
+              Was Studiobetreiber über Pilar Systems sagen.
+            </h2>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
             <p className="max-w-[872px] mx-auto">
-              Trusted by businesses worldwide to drive efficiency, accuracy, and results. Hear from our clients how
-              NextSaaS helped them streamline operations, save time, and drive results through smart automation.
+              Gyms und Studios setzen auf Pilar Systems, um Anfragen, Probetrainings und Mitgliederkommunikation zu
+              automatisieren. Weniger Telefonstress, mehr Abschlüsse – direkt spürbar im Alltag der Teams.
             </p>
           </RevealAnimation>
         </div>
@@ -56,7 +58,9 @@ const Testimonial = () => {
                           className="max-w-full"
                         />
                       </figure>
-                      <p className="text-secondary/60 dark:text-accent/60 line-clamp-2 review-text">{review.quote}</p>
+                      <p className="text-secondary/60 dark:text-accent/60 line-clamp-2 review-text">
+                        {review.quote}
+                      </p>
                       <div>
                         <p className="text-secondary dark:text-accent review-name text-lg leading-[1.5] font-medium">
                           {review.name}
@@ -77,7 +81,7 @@ const Testimonial = () => {
             <LinkButton
               href="/testimonial-01"
               className="btn btn-secondary btn-md inline-block dark:btn-transparent dark:border-primary-50 hover:btn-primary w-[85%] md:w-auto mx-auto">
-              Read more testimonials
+              Weitere Stimmen unserer Kunden
             </LinkButton>
           </div>
         </RevealAnimation>

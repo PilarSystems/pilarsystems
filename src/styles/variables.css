@@ -5,15 +5,18 @@ All the varaiables are added here
   /* =============== FONTS =============== */
   --font-inter-tight: 'Inter Tight', sans-serif;
   /* =============== COLORS =============== */
-  --color-primary-50: #f4f2fe;
-  --color-primary-100: #ece8ff;
-  --color-primary-200: #dcd4ff;
-  --color-primary-300: #c3b1ff;
-  --color-primary-400: #a585ff;
-  --color-primary-500: #864ffe;
-  --color-primary-600: #7c31f6;
-  --color-primary-700: #6d1fe2;
-  --color-primary-800: #5a19be;
+
+  /* Primary: von lila zu blau-lila angepasst */
+  --color-primary-50: #eef3ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c3d0ff;
+  --color-primary-300: #9daeff;
+  --color-primary-400: #7a8cff;
+  --color-primary-500: #5770ff;
+  --color-primary-600: #3c55f0;
+  --color-primary-700: #2d40c4;
+  --color-primary-800: #232f92;
+
   --color-secondary: #1a1a1c;
   --color-accent: #fcfcfc;
   --color-split-text: #1a1a1c;
@@ -46,18 +49,21 @@ All the varaiables are added here
   --color-ns-cyan-light: #cdf5f8;
   --color-ns-yellow-light: #fdf7bc;
 
-  --color-gradient-1: linear-gradient(135deg, #a585ff 0%, #ffc2ad 100%);
+  /* Gradients → mehr Blau–Lila */
+  --color-gradient-1: linear-gradient(135deg, #5770ff 0%, #a855f7 100%);
   --color-gradient-2: linear-gradient(135deg, #f9eb57 0%, #f99988 100%);
-  --color-gradient-3: linear-gradient(135deg, #83e7ee 0%, #f9eb57 100%);
-  --color-gradient-4: linear-gradient(135deg, #864ffe 0%, #23eed6 100%);
+  --color-gradient-3: linear-gradient(135deg, #83e7ee 0%, #5770ff 100%);
+  --color-gradient-4: linear-gradient(135deg, #5770ff 0%, #23eed6 100%);
   --color-gradient-5: linear-gradient(165deg, rgba(255, 255, 255, 0.5) 0.51%, rgba(255, 255, 255, 0) 64.43%);
-  --color-gradient-6: linear-gradient(#83e7ee 0%, #c6f56f 100%);
+  --color-gradient-6: linear-gradient(#5770ff 0%, #a855f7 100%);
   --color-gradient-7: linear-gradient(#ffffff 0%, #83e7ee 100%);
-  --color-gradient-8: linear-gradient(156deg, #ffffff 32.92%, #a585ff 91%);
+  --color-gradient-8: linear-gradient(156deg, #ffffff 32.92%, #5770ff 91%);
   --color-gradient-9: linear-gradient(156deg, #dfb0ff 32.92%, #fdbedc 91%);
-  --color-gradient-10: linear-gradient(135deg, #83e7ee 0%, #c6f56f 100%);
+  --color-gradient-10: linear-gradient(135deg, #83e7ee 0%, #5770ff 100%);
   --color-gradient-11: linear-gradient(179deg, rgba(255, 255, 255, 0) 0.68%, #fff 79.47%);
-  --color-gradient-12: radial-gradient(73.01% 80.77% at 19.23% 47.79%, #83e7ee 0%, rgba(134, 79, 254, 0) 100%);
+  --color-gradient-pilar: linear-gradient(135deg, #3B82F6 0%, #A855F7 100%);
+  --color-gradient-12: radial-gradient(73.01% 80.77% at 19.23% 47.79%, #5770ff 0%, rgba(134, 79, 254, 0) 100%);
+
   /* =============== TYPOGRAPHY =============== */
   --text-heading-1: 4.25rem;
   --text-heading-1--line-height: 110%;

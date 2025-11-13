@@ -7,22 +7,28 @@ const CTA = () => {
       <div className="main-container">
         <div className="text-center max-w-[690px] mx-auto">
           <RevealAnimation>
-            <span className="badge badge-blur mb-5 text-ns-yellow">Get started</span>
+            <span className="badge badge-blur mb-5 text-ns-yellow">Jetzt starten</span>
           </RevealAnimation>
+
           <RevealAnimation>
-            <h2 className="mb-3 text-white">Let’s build a smarter tomorrow.</h2>
+            <h2 className="mb-3 text-white">
+              Automatisiere deine Studio-Rezeption in wenigen Minuten.
+            </h2>
           </RevealAnimation>
+
           <RevealAnimation>
             <p className="mb-6 text-white/60">
-              Start your aI journey with NextSaaS and transform the way you work—forever.
+              Weniger Telefonstress, mehr Probetrainings, bessere Abläufe – alles in einem System. 
+              Pilar Systems erledigt die Arbeit im Hintergrund, damit du dich auf dein Studio konzentrieren kannst.
             </p>
           </RevealAnimation>
+
           <RevealAnimation>
             <div className="md:inline-block text-center">
               <LinkButton
-                href="/contact-us"
+                href="/pricing-03"
                 className="btn btn-primary btn-md w-[85%] md:w-auto hover:btn-white dark:hover:btn-accent">
-                Contact us now
+                Jetzt loslegen
               </LinkButton>
             </div>
           </RevealAnimation>

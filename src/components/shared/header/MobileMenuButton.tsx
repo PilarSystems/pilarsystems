@@ -9,12 +9,51 @@ const MobileMenuButton = () => {
     <div className="block xl:hidden">
       <button
         onClick={openMenu}
-        className="nav-hamburger bg-background-4 dark:bg-background-6 hover:bg-background-5 dark:hover:bg-background-7 flex size-12 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-full transition-all duration-200 hover:scale-105 group"
-        aria-label="Open mobile menu">
+        aria-label="Open mobile menu"
+        className="
+          nav-hamburger 
+          flex size-12 cursor-pointer flex-col items-center justify-center 
+          gap-[5px] rounded-full 
+          transition-all duration-200 hover:scale-105 group
+
+          /* Hintergrund (statt grau → Pilar Blau hell) */
+          bg-primary-100 dark:bg-primary-800
+          hover:bg-primary-200 dark:hover:bg-primary-700
+        "
+      >
         <span className="sr-only">Menu</span>
-        <span className="bg-stroke-9 group-hover:bg-stroke-1 dark:bg-stroke-1 block h-0.5 w-6 transition-all duration-200"></span>
-        <span className="bg-stroke-9 group-hover:bg-stroke-1 dark:bg-stroke-1 block h-0.5 w-6 transition-all duration-200"></span>
-        <span className="bg-stroke-9 group-hover:bg-stroke-1 dark:bg-stroke-1 block h-0.5 w-6 transition-all duration-200"></span>
+
+        {/* Hamburger Lines (statt schwarz → Pilar Blau) */}
+        <span
+          className="
+            block h-0.5 w-6 
+            bg-primary-600 
+            dark:bg-primary-300 
+            transition-all duration-200 
+            group-hover:bg-primary-700 
+            dark:group-hover:bg-primary-200
+          "
+        ></span>
+        <span
+          className="
+            block h-0.5 w-6 
+            bg-primary-600 
+            dark:bg-primary-300 
+            transition-all duration-200 
+            group-hover:bg-primary-700 
+            dark:group-hover:bg-primary-200
+          "
+        ></span>
+        <span
+          className="
+            block h-0.5 w-6 
+            bg-primary-600 
+            dark:bg-primary-300 
+            transition-all duration-200 
+            group-hover:bg-primary-700 
+            dark:group-hover:bg-primary-200
+          "
+        ></span>
       </button>
     </div>
   );

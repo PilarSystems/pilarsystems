@@ -22,30 +22,30 @@ import LinkButton from '../ui/button/LinkButton';
 const benefits = [
   {
     id: 1,
-    text: 'Boost your business with AI.',
+    text: 'KI-Rezeption für Telefon, WhatsApp, E-Mail & Website-Formulare.',
   },
   {
     id: 2,
-    text: 'Trusted by leading industries worldwide.',
+    text: 'Automatisches Follow-up bis zum gebuchten Vertragstermin.',
   },
   {
     id: 3,
-    text: 'Start your AI journey today.',
+    text: 'Trainingspläne, Terminplan & Mitgliederverwaltung in einem Dashboard.',
   },
 ];
 
 const experienceList = [
   {
     id: 1,
-    text: '8 years in creative direction, design & code',
+    text: 'Ersetzt Callcenter & Minijob-Rezeption – 24/7 in deinem Studio-Branding.',
   },
   {
     id: 2,
-    text: 'Collaborated with over 50 brands in tech, fashion, and media',
+    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse & PT-Sessions.',
   },
   {
     id: 3,
-    text: 'Enthusiastic about typography, interaction, and minimalism',
+    text: 'Geführtes Setup: Nach der Online-Buchung in wenigen Minuten startklar.',
   },
 ];
 
@@ -78,7 +78,7 @@ const Hero = () => {
                 className="bg-white dark:bg-black p-4 w-full space-y-4 rounded-xl">
                 {/* heading  */}
                 <div className="flex items-center justify-between">
-                  <p className="text-secondary leading-[150%] dark:text-accent">Credit limit</p>
+                  <p className="text-secondary leading-[150%] dark:text-accent">Auslastung KI-Rezeption</p>
                   <p className="text-lg flex items-center font-medium leading-[150%] text-secondary dark:text-accent">
                     $
                     <NumberAnimation number={80224} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
@@ -93,7 +93,7 @@ const Hero = () => {
                   <span>
                     <TransferSuccessIcon />
                   </span>
-                  <span className="text-white dark:text-white"> Transfer success! </span>
+                  <span className="text-white dark:text-white"> Neuer Lead gebucht </span>
                 </div>
                 <div className="bg-background-1 dark:bg-secondary p-4 flex items-center justify-center rounded-xl">
                   <Image
@@ -121,7 +121,9 @@ const Hero = () => {
           <RevealAnimation delay={0.9} useSpring offset={50} duration={3.9}>
             <div className="w-[250px] lg:w-[270px] 2xl:w-[288px] absolute top-[60px] lg:top-[150px] xl:top-[60px] sm:right-5 xl:right-0 bg-white dark:bg-black rounded-2xl p-4 lg:p-6 hidden sm:block">
               <div className="text-left">
-                <span className="text-tagline-2 font-normal text-secondary dark:text-accent">Total balance</span>
+                <span className="text-tagline-2 font-normal text-secondary dark:text-accent">
+                  Gesamt-Mitgliederwert
+                </span>
                 <h3 className="text-heading-5 flex items-center lg:text-heading-3 font-normal leading-[1.2] mt-2 mb-[30px]">
                   $
                   <NumberAnimation number={45324} speed={2000} interval={200} rooms={5} heightSpaceRatio={2} />
@@ -130,7 +132,7 @@ const Hero = () => {
               <div className="flex gap-1 lg:gap-3">
                 <div className="bg-secondary dark:bg-background-7 rounded-xl p-4 space-y-2 flex-1 text-left">
                   <div className="flex items-center justify-start gap-2 text-tagline-2 text-accent dark:text-accent">
-                    Income
+                    Neue Probetrainings
                     <span className="bg-ns-green flex items-center justify-center rounded-full size-[18px] p-1">
                       <DownArrowIcon className="w-[8px] h-[9px]" />
                     </span>
@@ -142,7 +144,7 @@ const Hero = () => {
                 </div>
                 <div className="bg-background-4 dark:bg-background-5 rounded-xl p-4 space-y-2 flex-1 text-left">
                   <div className="flex items-center justify-start gap-2 text-tagline-2 text-secondary dark:text-accent">
-                    Expenses
+                    Kündigungen
                     <span className="bg-ns-red flex items-center justify-center rounded-full size-[18px] p-1">
                       <UpArrowIcon className="w-[8px] h-[9px]" />
                     </span>
@@ -159,13 +161,15 @@ const Hero = () => {
         <div className="text-left md:text-center max-md:pt-[150px] max-lg:pt-[200px]">
           <RevealAnimation delay={0.2}>
             <h1 className="mb-4">
-              Automate smarter. <br className="hidden md:block" />
-              Grow faster.
+              Dein KI-Rezeptionist
+              <br className="hidden md:block" />
+              für Fitnessstudios.
             </h1>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
             <p className="max-w-[650px] mx-auto mb-6">
-              &nbsp;Save time and elevate your business with intelligent workflow automation from NextSaaS.
+              Pilar Systems beantwortet Anrufe und Nachrichten, bucht Probetrainings, erstellt Trainingspläne und hält
+              Leads automatisch nach – alles in einem klaren Dashboard für dein Gym.
             </p>
           </RevealAnimation>
           <ul className="list-none mb-14 flex flex-col md:flex-row md:items-center md:justify-center md:flex-wrap lg:flex-nowrap gap-4 md:gap-9 w-fit md:mx-auto">
@@ -183,10 +187,10 @@ const Hero = () => {
           <RevealAnimation delay={0.7}>
             <div className="block md:inline-block">
               <LinkButton
-                href="/pricing-01"
+                href="/pricing-03"
                 className="btn btn-primary hover:btn-white dark:btn-accent btn-xl dark:hover:btn-primary w-[90%] md:w-auto mx-auto"
-                aria-label="Start building free">
-                Get started
+                aria-label="Zu den Preisen und Plan auswählen">
+                Jetzt starten
               </LinkButton>
             </div>
           </RevealAnimation>
@@ -212,12 +216,12 @@ const Hero = () => {
             <div className="lg:flex-1/2 py-16 max-lg:px-5 lg:pl-14">
               <div className="mb-9">
                 <RevealAnimation delay={0.2}>
-                  <h2 className="mb-3">Innovate for Impact.</h2>
+                  <h2 className="mb-3">Mehr Leads, mehr Verträge, weniger Aufwand.</h2>
                 </RevealAnimation>
                 <RevealAnimation delay={0.3}>
                   <p className="max-w-[530px]">
-                    At NextSaaS, we leverage AI and strategic insight to enhance business performance. Partner with us
-                    to unlock your potential.
+                    Pilar Systems ist keine generische Studio-Software: Deine KI kümmert sich um Anfragen, Termine,
+                    Trainingspläne und Onboarding – komplett automatisch, ohne lange Setup-Calls.
                   </p>
                 </RevealAnimation>
               </div>
@@ -236,9 +240,9 @@ const Hero = () => {
               <RevealAnimation delay={0.7}>
                 <div className="text-center sm:text-left">
                   <LinkButton
-                    href="/about-01"
+                    href="/our-team-02"
                     className="btn btn-secondary btn-md hover:btn-primary dark:btn-accent w-[85%] md:w-auto mx-auto">
-                    Discover more about us
+                    Mehr über Pilar Systems
                   </LinkButton>
                 </div>
               </RevealAnimation>

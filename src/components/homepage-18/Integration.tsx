@@ -24,14 +24,15 @@ const Integration = () => {
           <div className="flex flex-col lg:flex-row items-start gap-y-24 gap-x-[140px]">
             <div className="w-full lg:flex-1 lg:sticky lg:top-28 lg:max-w-full max-w-[520px] lg:mx-0 mx-auto text-center lg:text-left">
               <RevealAnimation delay={0.2}>
-                <span className="badge badge-green mb-5">Process</span>
+                <span className="badge badge-green mb-5">Ablauf</span>
               </RevealAnimation>
               <RevealAnimation delay={0.3}>
-                <h2 className="mb-3 max-w-[529px]">Why thousands trust us for their apps.</h2>
+                <h2 className="mb-3 max-w-[529px]">So wird aus Anfragen automatisch Umsatz.</h2>
               </RevealAnimation>
               <RevealAnimation delay={0.4}>
                 <p className="mb-7 lg:max-w-[620px]">
-                  We streamline automation for a strategic and sustainable AI transition.
+                  Von der Online-Buchung über das Setup bis zur laufenden Automatisierung – Pilar Systems fügt sich in
+                  deinen Alltag ein, ohne dein Team zu überfordern.
                 </p>
               </RevealAnimation>
               <RevealAnimation delay={0.5}>
@@ -40,7 +41,7 @@ const Integration = () => {
                     href="/process-01"
                     rel="noopener noreferrer"
                     className="btn btn-secondary hover:btn-primary dark:btn-transparent btn-md w-[85%] md:w-auto mx-auto">
-                    Get started
+                    Ablauf im Detail ansehen
                   </LinkButton>
                 </div>
               </RevealAnimation>
@@ -60,9 +61,10 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Design tailored AI strategies.</h5>
+                        <h5>Online starten & Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[250px]">
-                          Tailored AI strategies align solutions to drive smarter decisions.
+                          Dein Studio wählt einen Plan, erstellt einen Account und führt den geführten Setup-Wizard
+                          durch – ganz ohne Telefontermin oder Vor-Ort-Besuch.
                         </p>
                       </figcaption>
                       <figure className="max-w-[385px] w-full">
@@ -87,8 +89,11 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Monitor and optimize results.</h5>
-                        <p className="max-w-[250px]">Track performance and fine-tune your strategy.</p>
+                        <h5>Systeme verbinden & alles testen.</h5>
+                        <p className="max-w-[250px]">
+                          Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach testen wir
+                          gemeinsam typische Szenarien aus Sicht deiner Mitglieder.
+                        </p>
                       </figcaption>
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <Image
@@ -117,8 +122,11 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Know your goals</h5>
-                        <p className="max-w-[250px]">When you know your goals, you own your path.</p>
+                        <h5>Ziele & Regeln für deine KI festlegen.</h5>
+                        <p className="max-w-[250px]">
+                          Du definierst, welche Leads priorisiert werden, wie Probetrainings vergeben werden und welche
+                          Angebote kommuniziert werden – die KI hält sich an deine Regeln.
+                        </p>
                       </figcaption>
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <Image
@@ -147,9 +155,10 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Use smart automation.</h5>
+                        <h5>Live gehen & Automatisierung nutzen.</h5>
                         <p className="max-w-[250px]">
-                          Let automation handle the routine, so you can focus on strategy.
+                          Danach übernimmt Pilar Systems die Routine: Anfragen beantworten, Leads nachfassen,
+                          Probetrainings koordinieren – dein Team konzentriert sich aufs Training.
                         </p>
                       </figcaption>
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">

@@ -7,15 +7,16 @@ const Services = () => {
       <div className="main-container">
         <div className="text-center space-y-5 max-w-[750px] mx-auto mb-14">
           <RevealAnimation delay={0.2}>
-            <span className="badge badge-green">Services</span>
+            <span className="badge badge-green">Warum Pilar Systems?</span>
           </RevealAnimation>
           <div>
             <RevealAnimation delay={0.3}>
-              <h2 className="mb-3">AI services that deliver real results.</h2>
+              <h2 className="mb-3">Mehr als nur eine Studio-Software.</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
               <p className="max-w-[600px] mx-auto">
-                From consulting to implementation, our solutions are built to transform the way you work.
+                Wir ersetzen Telefonstress, Zettelwirtschaft und manuelle Nachverfolgung durch eine KI, die dein Gym
+                versteht – vom ersten Kontakt bis zum aktiven Mitglied.
               </p>
             </RevealAnimation>
           </div>
@@ -28,10 +29,10 @@ const Services = () => {
                 <span className="ns-shape-8 text-[52px] text-secondary dark:text-accent" />
               </div>
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Real-time data analytics and visualization.</h5>
+                <h5 className="max-sm:text-heading-6">Vollautomatisiertes Lead- & Termin-Handling.</h5>
                 <p className="max-w-[430px]">
-                  Speed up your journey with real-time data analytics to bring your ideas to life and make informed
-                  decisions.
+                  Deine KI nimmt Anrufe entgegen, beantwortet WhatsApp & E-Mails, qualifiziert Interessenten vor und
+                  bucht Probetrainings direkt in deinen Kalender – ohne dass jemand im Büro sitzen muss.
                 </p>
               </div>
             </div>
@@ -42,8 +43,11 @@ const Services = () => {
                 <span className="ns-shape-35 text-[52px] text-secondary dark:text-accent" />
               </div>
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">AI-powered apps.</h5>
-                <p>Use AI applications to boost workflow automation and improve efficiency.</p>
+                <h5 className="max-sm:text-heading-6">Setup ohne lange Onboarding-Calls.</h5>
+                <p>
+                  Deine Kunden buchen online, durchlaufen einen geführten Setup-Wizard und die KI lernt alles über dein
+                  Gym – komplett digital, ohne Agentur-Termine und ohne Wartezeit.
+                </p>
               </div>
             </div>
           </RevealAnimation>
@@ -53,9 +57,10 @@ const Services = () => {
                 <span className="ns-shape-41 text-[52px] text-secondary dark:text-accent" />
               </div>
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">End-to-end AI consulting.</h5>
+                <h5 className="max-sm:text-heading-6">Mehr Funktionen als klassische Software.</h5>
                 <p className="max-w-[430px]">
-                  Discover your business&apos;s potential with our AI consulting services.
+                  KI-Rezeption, Lead-Nachverfolgung, Terminbuchung, Trainingspläne & Onboarding – statt fünf
+                  Einzellösungen bekommst du bei uns ein System, das alles zusammendenkt.
                 </p>
               </div>
             </div>
@@ -66,9 +71,10 @@ const Services = () => {
                 <span className="ns-shape-19 text-[52px] text-secondary dark:text-accent" />
               </div>
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Machine learning model development.</h5>
+                <h5 className="max-sm:text-heading-6">Transparente Preise statt Agenturprojekt.</h5>
                 <p className="max-w-[430px]">
-                  Quickly develop tools, platforms, and educational applications for machine learning model creation.
+                  Klare Pläne, planbare monatliche Kosten und faire Setup-Gebühren – keine versteckten Tagessätze, keine
+                  Endlos-Projekte, kein Risiko für dein Gym.
                 </p>
               </div>
             </div>
@@ -79,7 +85,7 @@ const Services = () => {
             <LinkButton
               href="/contact-us"
               className="btn btn-secondary hover:btn-primary dark:btn-transparent dark:border-primary-50 btn-md w-[85%] md:w-auto mx-auto">
-              Talk to an expert
+              Kostenloses Erstgespräch buchen
             </LinkButton>
           </div>
         </RevealAnimation>
