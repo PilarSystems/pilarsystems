@@ -38,7 +38,7 @@ const Hero = () => {
               <RevealAnimation delay={0.3}>
                 <div className="mt-10 lg:mt-14">
                   <LinkButton
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="hero-button btn btn-md md:btn-xl hover:btn-secondary btn-primary dark:btn-accent dark:hover:btn-white-dark w-[90%] md:w-auto">
                     Get started for free
                   </LinkButton>

@@ -158,7 +158,7 @@ Access different homepage designs:
 ### Core Pages
 
 - **Authentication**: `/login-01`, `/signup-01`, `/login-02`, etc.
-- **Pricing**: `/pricing-01`, `/pricing-02`, `/pricing-03`
+- **Pricing**: `/signup-01`, `/signup-01`, `/signup-01`
 - **About**: `/about-01`, `/about-02`, `/about-03`
 - **Blog**: `/blog-01`, `/blog-02`, `/blog-03`, `/blog/[slug]`
 - **Services**: `/our-services-01`, `/our-services/[slug]`

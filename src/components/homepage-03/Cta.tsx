@@ -40,7 +40,7 @@ const Cta = ({ className, buttonTopSpacing }: { className?: string; buttonTopSpa
           <RevealAnimation delay={0.3}>
             <div>
               <Link
-                href="/pricing-01"
+                href="/signup-01"
                 className="btn btn-primary hover:btn-white-dark dark:hover:btn-white btn-md text-tagline-2 mx-auto block w-full text-center md:mx-0 md:inline-block md:w-auto">
                 Get started
               </Link>

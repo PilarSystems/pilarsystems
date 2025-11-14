@@ -21,13 +21,13 @@ const Counter = () => {
               <h3 className="text-white flex items-center justify-center">
                 <NumberAnimation number={2400} speed={2000} interval={200} rooms={3} heightSpaceRatio={2} />+
               </h3>
-              <p className="text-white/60">automatisierte Anfragen pro Monat.</p>
+              <p className="text-white/60">Automatisierte Anfragen pro Monat.</p>
             </div>
             <div className="space-y-2 text-center">
               <h3 className="text-white flex items-center justify-center">
                 <NumberAnimation number={87} speed={2000} interval={200} rooms={2} heightSpaceRatio={2} />%
               </h3>
-              <p className="text-white/60">höhere Lead-Conversion auf Probetrainings.</p>
+              <p className="text-white/60">Höhere Lead-Conversion auf Probetrainings.</p>
             </div>
             <div className="space-y-2 text-center">
               <h3 className="text-white flex items-center justify-center">
@@ -39,7 +39,7 @@ const Counter = () => {
               <h3 className="text-white flex items-center justify-center">
                 <NumberAnimation number={95} speed={2000} interval={200} rooms={2} heightSpaceRatio={2} />%
               </h3>
-              <p className="text-white/60">Zufriedene Studios, die täglich mit Pilar arbeiten.</p>
+              <p className="text-white/60">Zufriedene Studios, die täglich mit Pilar Systems arbeiten.</p>
             </div>
           </div>
         </RevealAnimation>

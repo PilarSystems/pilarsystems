@@ -45,7 +45,7 @@ const Hero = () => {
         <RevealAnimation delay={0.4}>
           <div className="text-center relative z-30">
             <LinkButton
-              href="/pricing-01"
+              href="/signup-01"
               className="btn btn-secondary hover:btn-white dark:btn-accent dark:hover:btn-white-dark btn-lg md:btn-xl block md:inline-block w-[90%] md:w-auto mx-auto">
               Request a demo
             </LinkButton>

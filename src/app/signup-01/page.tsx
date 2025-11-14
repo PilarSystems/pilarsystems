@@ -1,15 +1,38 @@
 import SignupHero from '@/components/authentication/SignupHero';
-import CTAV1 from '@/components/shared/cta/CTAV1';
 import FooterThree from '@/components/shared/footer/FooterThree';
 import NavbarOne from '@/components/shared/header/NavbarOne';
 import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Fragment } from 'react';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Signup Page - NextSaaS',
+  title: 'Konto erstellen – Pilar Systems',
 };
+
+// Server Action: hier später User + Workspace in DB anlegen
+async function handleSignup(formData: FormData) {
+  'use server';
+
+  const firstName = formData.get('firstName');
+  const lastName = formData.get('lastName');
+  const email = formData.get('email');
+  const studioName = formData.get('studioName');
+  const studioWebsite = formData.get('studioWebsite');
+  const phone = formData.get('phone');
+  const members = formData.get('members');
+  const password = formData.get('password');
+
+  // TODO:
+  // 1. User in DB anlegen
+  // 2. Workspace / Studio speichern
+  // 3. Onboarding-State setzen
+  // 4. Optional: E-Mail-Bestätigung
+
+  // Danach weiter zu Schritt 2: Checkout
+  redirect('/checkout');
+}
 
 const SignUpPage01 = () => {
   return (
@@ -20,19 +43,11 @@ const SignUpPage01 = () => {
         btnClassName="btn-primary hover:bg-secondary dark:hover:btn-accent"
       />
       <main className="bg-background-3 dark:bg-background-7">
-        <SignupHero />
-        <CTAV1
-          className="dark:bg-background-6 bg-white"
-          badgeClass="badge-yellow-v2"
-          badgeText="Get Started"
-          ctaHeading="Build a complete website using the assistance"
-          description="Start your free trial today and see your ideas come to life easily and creatively."
-          btnClass="hover:btn-secondary dark:hover:btn-accent"
-          ctaBtnText="Get started"
-        />
+        <SignupHero signupAction={handleSignup} />
       </main>
       <FooterThree />
     </Fragment>
   );
 };
+
 export default SignUpPage01;

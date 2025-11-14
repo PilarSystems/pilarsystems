@@ -17,7 +17,7 @@ const ServicesV2 = () => {
                 <h5 className="text-accent mb-8">
                   Develop a fully functional website that includes engaging content and visuals.
                 </h5>
-                <LinkButton href="/pricing-01" className="btn btn-md hover:btn-primary btn-accent">
+                <LinkButton href="/signup-01" className="btn btn-md hover:btn-primary btn-accent">
                   Get started
                 </LinkButton>
               </div>

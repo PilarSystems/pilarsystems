@@ -35,32 +35,32 @@ const Pricing = () => {
       buttonClass:
         'btn btn-md hover:btn-primary dark:btn-white-dark btn-white w-full block text-center before:content-none first-letter:uppercase',
       planType: 'basic',
-      href: '/pricing-03',
+      href: '/signup-01',
       features: [
-        { label: 'KI-Rezeption für Telefon & WhatsApp', enabled: true },
-        { label: 'Lead-Erfassung & Probetraining-Buchung', enabled: true },
-        { label: 'Basis-Dashboard für Leads & Termine', enabled: true },
+        { label: 'KI-Rezeption für Telefon und WhatsApp', enabled: true },
+        { label: 'Lead-Erfassung und Probetraining-Buchung', enabled: true },
+        { label: 'Basis-Dashboard für Leads und Termine', enabled: true },
         { label: 'E-Mail-Benachrichtigungen ans Team', enabled: true },
         { label: 'Standard-Support per E-Mail', enabled: true },
-        { label: 'Ideal für Studios mit 1 Standort', enabled: true },
+        { label: 'Ideal für Studios mit einem Standort', enabled: true },
       ],
     },
     {
       id: 'featured',
-      title: 'Growth Gym (Empfohlen)',
+      title: 'Growth Gym (empfohlen)',
       monthlyPrice: '199',
       setupFee: '999',
       buttonText: 'Jetzt starten',
       buttonClass:
         'btn btn-md btn-primary dark:hover:btn-white hover:btn-secondary w-full block text-center before:content-none first-letter:uppercase',
       planType: 'featured',
-      href: '/pricing-03',
+      href: '/signup-01',
       features: [
         { label: 'Alle Funktionen aus Starter Gym', enabled: true },
-        { label: 'Erweiterte Follow-ups & Workflows', enabled: true },
-        { label: 'Trainingsplan-Modul & Mitglieder-Notizen', enabled: true },
-        { label: 'Priorisierte Leads & Tags', enabled: true },
-        { label: 'Onboarding-Support & Live-Check-in', enabled: true },
+        { label: 'Erweiterte Follow-ups und Workflows', enabled: true },
+        { label: 'Trainingsplan-Modul und Mitglieder-Notizen', enabled: true },
+        { label: 'Priorisierte Leads und Tags', enabled: true },
+        { label: 'Onboarding-Support und Live-Check-in', enabled: true },
         { label: 'Ideal für Studios mit 1–3 Standorten', enabled: true },
       ],
     },
@@ -76,10 +76,10 @@ const Pricing = () => {
       features: [
         { label: 'Alle Funktionen aus Growth Gym', enabled: true },
         { label: 'Mehrere Standorte in einem Account', enabled: true },
-        { label: 'Reporting auf Standort- & Kettenebene', enabled: true },
+        { label: 'Reporting auf Standort- und Kettenebene', enabled: true },
         { label: 'Individuelle Regeln pro Standort', enabled: true },
         { label: 'Persönlicher Ansprechpartner', enabled: true },
-        { label: 'Individuelles Angebot inkl. Setup', enabled: true },
+        { label: 'Individuelles Angebot inklusive Setup', enabled: true },
       ],
     },
   ];
@@ -92,7 +92,7 @@ const Pricing = () => {
             <span className="badge badge-green mb-5">Preise</span>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
-            <h2 className="mb-3">Monatliche Pläne + einmalige Setup-Gebühr.</h2>
+            <h2 className="mb-3">Monatliche Pläne plus einmalige Setup-Gebühr.</h2>
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p className="mb-5 md:mb-7">
@@ -149,7 +149,7 @@ const Pricing = () => {
                         )}
                         {plan.isOnRequest && (
                           <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                            Individuelles Angebot inkl. Setup je nach Standortanzahl und Volumen.
+                            Individuelles Angebot inklusive Setup – abhängig von Standortanzahl und Volumen.
                           </p>
                         )}
                         <Link href={plan.href} className={plan.buttonClass}>

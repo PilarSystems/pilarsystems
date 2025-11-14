@@ -23,9 +23,9 @@ const navigationItems = [
   { id: 'home', label: 'Home', href: '/homepage-18', hasDropdown: false },
   { id: 'features', label: 'Funktionen', href: '/features-02', hasDropdown: false },
   { id: 'about', label: 'Über uns', href: '/about-02', hasDropdown: false },
-  { id: 'pricing', label: 'Preise', href: '/pricing-03', hasDropdown: false },
+  { id: 'pricing', label: 'Preise', href: '/signup-01', hasDropdown: false },
   { id: 'customers', label: 'Kunden', href: '/testimonial-02', hasDropdown: false },
-  { id: 'login', label: 'Login', href: '/login-03', hasDropdown: false },
+  { id: 'login', label: 'Login', href: '/login-01', hasDropdown: false },
 ];
 
 const NavbarOne: FC<NavbarOneProps> = ({ className, btnClassName }) => {
@@ -57,7 +57,7 @@ const NavbarOne: FC<NavbarOneProps> = ({ className, btnClassName }) => {
 
           {/* CTA Button */}
           <NavCTAButton
-  href="/pricing-03"
+  href="/signup-01"
   btnClassName="btn btn-primary bg-[var(--color-primary-500)] text-white hover:opacity-80"
   label="Jetzt starten"
 />

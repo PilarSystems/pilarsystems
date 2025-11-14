@@ -87,7 +87,7 @@ const HowItsWork = () => {
         <RevealAnimation delay={0.5}>
           <div className="text-center mt-14 group">
             <Link
-              href="/pricing-02"
+              href="/signup-01"
               className="inline-flex items-center justify-center rounded-full cursor-pointer gap-1.5 group-hover:bg-primary-500 group-hover:scale-101 text-center transition-all duration-500 ease-in-out font-medium text-nowrap lowercase shadow-1 bg-secondary border-stroke-7 text-accent px-6 py-2.5 text-tagline-1 md:px-8 md:py-3.5 w-[90%] md:w-auto mx-auto md:mx-0">
               <span className="inline-block transition-transform duration-300 ease-in-out first-letter:uppercase">
                 Generate Voice

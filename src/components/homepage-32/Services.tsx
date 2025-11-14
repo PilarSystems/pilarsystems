@@ -73,7 +73,7 @@ const Services = () => {
           <RevealAnimation delay={0.6}>
             <div className="flex items-center justify-center">
               <LinkButton
-                href="/pricing-01"
+                href="/signup-01"
                 className="btn btn-secondary dark:btn-transparent hover:btn-primary btn-md w-[90%] md:w-auto mx-auto md:mx-0">
                 Start your free trial today
               </LinkButton>

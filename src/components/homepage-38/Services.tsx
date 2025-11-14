@@ -159,7 +159,7 @@ const Services = () => {
               <div className="mt-auto mb-0 md:w-auto w-full flex items-center justify-center">
                 <div className="group w-[90%] sm:w-auto">
                   <Link
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="inline-flex items-center justify-center rounded-full cursor-pointer gap-1.5 group-hover:bg-primary-500 group-hover:scale-101 text-center transition-all duration-500 ease-in-out font-normal text-nowrap lowercase shadow-1 bg-background-5 border-stroke-7 text-accent px-6 py-2.5 text-tagline-1 md:px-8 md:py-3.5 w-full md:w-auto mx-auto md:mx-0">
                     <span className="inline-block transition-transform duration-300 ease-in-out first-letter:uppercase">
                       Build your resume now

@@ -34,7 +34,7 @@ const CTA = ({ badgeClassName = '' }: { badgeClassName?: string }) => {
               <RevealAnimation delay={0.4}>
                 <div>
                   <LinkButton
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="btn btn-primary border-0 btn-md hover:btn-white w-[85%] md:w-auto mx-auto md:mx-0">
                     Book a demo
                   </LinkButton>

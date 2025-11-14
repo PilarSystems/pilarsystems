@@ -40,7 +40,7 @@ const Hero = () => {
                   <RevealAnimation delay={0.3} direction="left" offset={50}>
                     <li className="w-full sm:w-auto">
                       <LinkButton
-                        href="/pricing-01"
+                        href="/signup-01"
                         rel="noopener noreferrer"
                         className="btn btn-secondary dark:btn-accent hover:btn-white dark:hover:btn-white-dark btn-md md:btn-xl w-[90%] md:w-auto mx-auto md:mx-0"
                         aria-label="Begin your investment journey">

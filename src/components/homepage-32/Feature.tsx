@@ -90,7 +90,7 @@ const Feature = () => {
               <RevealAnimation delay={0.6}>
                 <div className="md:mt-[70px] mt-11 data-visualization-feature-button">
                   <LinkButton
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="text-tagline-2 font-medium btn btn-secondary btn-md dark:btn-transparent hover:btn-primary w-[90%] md:w-auto mx-auto md:mx-0">
                     Connect your data source
                   </LinkButton>

@@ -17,33 +17,36 @@ import FooterRightGradient from './FooterRightGradient';
 const FooterTwo = () => {
   return (
     <footer className="bg-secondary dark:bg-background-8 relative overflow-hidden">
-      {/* <!-- right gradient --> */}
+      {/* right gradient */}
       <FooterRightGradient className="pointer-events-none absolute top-[-15%] right-[-71%] z-0 h-[618px] w-[617px] rotate-[-30deg] bg-top-right bg-no-repeat select-none max-[376px]:right-[-68%] md:top-[-21%] md:right-[-33%] lg:right-[-19%] xl:top-[-24%] xl:right-[-9%]" />
 
-      {/* <!-- left gradient --> */}
+      {/* left gradient */}
       <FooterLeftGradient className="pointer-events-none absolute -bottom-[8%] -left-[65%] z-0 size-[570px] select-none min-[2559px]:!bottom-[-14%] min-[2559px]:!left-[-16%] md:-bottom-[20%] md:-left-[59%] md:size-[870px] lg:-left-[38%] xl:-bottom-[26%] xl:-left-[21%]" />
 
+      {/* CTA oben im Footer */}
       <CTAV1
         className="relative z-10 px-5 py-14 max-[400px]:py-14 xl:py-[88px]"
-        ctaHeading="Build a complete website using the assistance"
-        description="Start your free trial today and see your ideas come to life easily and creatively."
-        ctaBtnText="Get started"
+        ctaHeading="Automatisiere deinen Studioalltag mit Pilar Systems"
+        description="Lass deinen KI-Rezeptionisten Probetrainings, Anfragen und Termine übernehmen – du konzentrierst dich auf dein Studio."
+        ctaBtnText="Demo anfragen"
         headingClass="text-accent"
-        btnClass=" btn-white h-12 w-[85%] md:w-auto dark:hover:btn-transparent"
+        btnClass="btn-white h-12 w-[85%] md:w-auto dark:hover:btn-transparent"
         listTextClass="text-accent/60"
         inputFieldClass="shadow-1 placeholder:text-accent/60 border-stroke-7 dark:border-stroke-7 dark:placeholder:text-accent/60 focus:border-accent/60 bg-accent/10 text-accent h-12 w-[85%] rounded-full border px-[18px] py-3 font-normal placeholder:font-normal focus:outline-none md:w-[71%] lg:max-w-[340px] dark:bg-transparent"
       />
 
       <div className="main-container border-t-stroke-6 dark:border-t-accent/10 relative z-10 border-t px-5">
         <div className="grid grid-cols-12 justify-between gap-x-0 gap-y-16 pt-16 pb-12 xl:pt-[90px]">
+          {/* Brand / Intro */}
           <div className="col-span-12 xl:col-span-4">
             <RevealAnimation delay={0.3}>
               <div className="xl:max-w-[306px]">
                 <figure>
-                  <Image src={darkLogo} alt="NextSass Logo" />
+                  <Image src={darkLogo} alt="Pilar Systems Logo" />
                 </figure>
                 <p className="text-accent/60 text-tagline-1 mt-4 mb-7 font-normal">
-                  Turpis tortor nunc sed amet et faucibus vitae morbi congue sed id mauris.
+                  Pilar Systems übernimmt die Rolle deines digitalen Empfangs: 24/7 erreichbar, immer freundlich und
+                  perfekt auf dein Studio abgestimmt.
                 </p>
                 <div className="flex items-center gap-3">
                   <Link target="_blank" href="https://www.facebook.com" className="footer-social-link">
@@ -79,93 +82,95 @@ const FooterTwo = () => {
               </div>
             </RevealAnimation>
           </div>
+
+          {/* Link-Spalten */}
           <div className="col-span-12 grid grid-cols-12 xl:col-span-8">
+            {/* Unternehmen */}
             <div className="col-span-12 md:col-span-4">
               <RevealAnimation delay={0.4}>
                 <div className="space-y-8">
-                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Company</p>
+                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Unternehmen</p>
                   <ul className="space-y-5 max-[400px]:space-y-3">
                     <li>
-                      <Link href="/about-01" className="footer-link">
-                        About Us
+                      <Link href="/our-team-02" className="footer-link">
+                        Über Pilar
                       </Link>
                     </li>
                     <li>
-                      <Link href="/career" className="footer-link">
-                        Career
+                      <Link href="/process-01" className="footer-link">
+                        Ablauf &amp; Setup
                       </Link>
                     </li>
                     <li>
                       <Link href="/case-study" className="footer-link">
-                        Case Studies
+                        Erfolgsgeschichten
                       </Link>
                     </li>
                     <li>
                       <Link href="/contact-us" className="footer-link">
-                        Contact Us
+                        Kontakt
                       </Link>
                     </li>
                   </ul>
                 </div>
               </RevealAnimation>
             </div>
+
+            {/* Produkt */}
             <div className="col-span-12 md:col-span-4">
               <RevealAnimation delay={0.5}>
                 <div className="space-y-8">
-                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Support</p>
+                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Produkt</p>
                   <ul className="space-y-5">
                     <li>
-                      <Link href="/faq" className="footer-link">
-                        FAQ
+                      <Link href="/" className="footer-link">
+                        Startseite
                       </Link>
                     </li>
                     <li>
-                      <Link href="/documentation" className="footer-link">
-                        Documentation
+                      <Link href="/signup-01" className="footer-link">
+                        Preise &amp; Pläne
                       </Link>
                     </li>
                     <li>
-                      <Link href="/tutorial" className="footer-link">
-                        Tutorial
+                      <Link href="/login-04" className="footer-link">
+                        Login
                       </Link>
                     </li>
                     <li>
-                      <Link href="/support" className="footer-link">
-                        Support
+                      <Link href="/sign-up-04" className="footer-link">
+                        Account anlegen
                       </Link>
                     </li>
                   </ul>
                 </div>
               </RevealAnimation>
             </div>
+
+            {/* Rechtliches */}
             <div className="col-span-12 md:col-span-4">
               <RevealAnimation delay={0.6}>
                 <div className="space-y-8">
-                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Legal Policies</p>
+                  <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Rechtliches</p>
                   <ul className="space-y-5">
                     <li>
                       <Link href="/terms-conditions" className="footer-link">
-                        Terms & Conditions
+                        AGB
                       </Link>
                     </li>
                     <li>
                       <Link href="/privacy" className="footer-link">
-                        Privacy Policy
+                        Datenschutz
                       </Link>
                     </li>
                     <li>
-                      <Link href="/refund-policy" className="footer-link">
-                        Refund Policy
+                      <Link href="/imprint" className="footer-link">
+                        Impressum
                       </Link>
                     </li>
                     <li>
                       <Link href="/gdpr" className="footer-link">
-                        GDPR Compliance
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/affiliate-policy" className="footer-link">
-                        Affiliate Policy
+                        DSGVO-Infos
                       </Link>
                     </li>
                   </ul>
@@ -174,18 +179,22 @@ const FooterTwo = () => {
             </div>
           </div>
         </div>
+
+        {/* Bottom Bar */}
         <div className="relative pt-6 pb-10 text-center">
           <FooterDivider className="bg-stroke-6 dark:bg-accent/10" />
           <RevealAnimation delay={0.7} offset={10} start="top 105%">
             <p className="text-tagline-1 max-sm:text-tagline-2 text-primary-50 font-normal">
-              Copyright &copy;NextSaaS – smart application for modern business
+              © {new Date().getFullYear()} Pilar Systems – KI-Rezeptionist für Fitnessstudios.
             </p>
           </RevealAnimation>
         </div>
       </div>
+
       <ThemeToggle />
     </footer>
   );
 };
+
 FooterTwo.displayName = 'FooterTwo';
 export default FooterTwo;

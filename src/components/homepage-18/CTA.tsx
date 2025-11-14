@@ -18,7 +18,7 @@ const CTA = () => {
 
           <RevealAnimation>
             <p className="mb-6 text-white/60">
-              Weniger Telefonstress, mehr Probetrainings, bessere Abläufe – alles in einem System. 
+              Weniger Telefonstress, mehr Probetrainings, bessere Abläufe – alles in einem System.
               Pilar Systems erledigt die Arbeit im Hintergrund, damit du dich auf dein Studio konzentrieren kannst.
             </p>
           </RevealAnimation>
@@ -26,7 +26,7 @@ const CTA = () => {
           <RevealAnimation>
             <div className="md:inline-block text-center">
               <LinkButton
-                href="/pricing-03"
+                href="/signup-01"
                 className="btn btn-primary btn-md w-[85%] md:w-auto hover:btn-white dark:hover:btn-accent">
                 Jetzt loslegen
               </LinkButton>

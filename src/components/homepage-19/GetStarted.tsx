@@ -36,7 +36,7 @@ const GetStarted = () => {
               <RevealAnimation delay={0.4}>
                 <div className="w-full">
                   <LinkButton
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="btn btn-primary btn-md hover:btn-secondary dark:hover:btn-accent w-[85%] md:w-auto">
                     Get started now
                   </LinkButton>

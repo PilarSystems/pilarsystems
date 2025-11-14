@@ -36,8 +36,8 @@ const Feature = () => {
               <div className="space-y-2">
                 <h5 className="max-sm:text-heading-6">KI-Rezeption für alle Kanäle.</h5>
                 <p className="max-w-[450px]">
-                  Telefon, WhatsApp, E-Mail & Website-Anfragen werden von deiner KI beantwortet, vorqualifiziert und bis
-                  zum gebuchten Probetraining begleitet – in deinem Studio-Branding.
+                  Telefon, WhatsApp, E-Mail und Website-Anfragen werden von deiner KI beantwortet, vorqualifiziert und
+                  bis zum gebuchten Probetraining begleitet – in deinem Studio-Branding.
                 </p>
               </div>
               <figure className="w-full">
@@ -81,8 +81,8 @@ const Feature = () => {
             <div className="col-span-12 md:col-span-6 lg:col-span-4 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2">
                 <h5 className="max-sm:text-heading-6">Klares Dashboard für dein Team.</h5>
-                <p className="">
-                  Alle Leads, Termine, Probetrainings und Trainingspläne auf einen Blick – ohne Excel, ohne Chaos im
+                <p>
+                  Alle Leads, Termine, Probetrainings und Trainingspläne auf einen Blick – ohne Excel und ohne Chaos im
                   Postfach.
                 </p>
               </div>
@@ -103,7 +103,7 @@ const Feature = () => {
           <RevealAnimation delay={0.8}>
             <div className="col-span-12 md:col-span-6 lg:col-span-8 p-8 rounded-[20px] bg-background-3 dark:bg-background-7 space-y-6">
               <div className="space-y-2 max-w-[285px]">
-                <h5 className="max-sm:text-heading-6">Stabil, sicher & skalierbar.</h5>
+                <h5 className="max-sm:text-heading-6">Stabil, sicher und skalierbar.</h5>
                 <p className="max-w-[311px]">
                   DSGVO-konforme Infrastruktur, hohe Verfügbarkeit und regelmäßige Updates – gebaut, um mit deinem Gym
                   und deinen Standorten mitzuwachsen.

@@ -22,7 +22,7 @@ import LinkButton from '../ui/button/LinkButton';
 const benefits = [
   {
     id: 1,
-    text: 'KI-Rezeption für Telefon, WhatsApp, E-Mail & Website-Formulare.',
+    text: 'KI-Rezeption für Telefon, WhatsApp, E-Mail und Website-Formulare.',
   },
   {
     id: 2,
@@ -30,18 +30,18 @@ const benefits = [
   },
   {
     id: 3,
-    text: 'Trainingspläne, Terminplan & Mitgliederverwaltung in einem Dashboard.',
+    text: 'Trainingspläne, Terminplan und Mitgliederverwaltung in einem Dashboard.',
   },
 ];
 
 const experienceList = [
   {
     id: 1,
-    text: 'Ersetzt Callcenter & Minijob-Rezeption – 24/7 in deinem Studio-Branding.',
+    text: 'Ersetzt Callcenter und Minijob-Rezeption – 24/7 in deinem Studio-Branding.',
   },
   {
     id: 2,
-    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse & PT-Sessions.',
+    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse und PT-Sessions.',
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ const Hero = () => {
                 <div className="flex items-center justify-between">
                   <p className="text-secondary leading-[150%] dark:text-accent">Auslastung KI-Rezeption</p>
                   <p className="text-lg flex items-center font-medium leading-[150%] text-secondary dark:text-accent">
-                    $
+                    €
                     <NumberAnimation number={80224} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
                   </p>
                 </div>
@@ -93,7 +93,7 @@ const Hero = () => {
                   <span>
                     <TransferSuccessIcon />
                   </span>
-                  <span className="text-white dark:text-white"> Neuer Lead gebucht </span>
+                  <span className="text-white dark:text-white">Neuer Lead gebucht</span>
                 </div>
                 <div className="bg-background-1 dark:bg-secondary p-4 flex items-center justify-center rounded-xl">
                   <Image
@@ -125,7 +125,7 @@ const Hero = () => {
                   Gesamt-Mitgliederwert
                 </span>
                 <h3 className="text-heading-5 flex items-center lg:text-heading-3 font-normal leading-[1.2] mt-2 mb-[30px]">
-                  $
+                  €
                   <NumberAnimation number={45324} speed={2000} interval={200} rooms={5} heightSpaceRatio={2} />
                 </h3>
               </div>
@@ -138,7 +138,7 @@ const Hero = () => {
                     </span>
                   </div>
                   <div className="text-lg flex items-center font-medium leading-[1.5] text-accent dark:text-accent">
-                    $
+                    €
                     <NumberAnimation number={48000} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
                   </div>
                 </div>
@@ -150,7 +150,7 @@ const Hero = () => {
                     </span>
                   </div>
                   <div className="text-lg flex items-center font-medium leading-[1.5] text-secondary dark:text-accent">
-                    $
+                    €
                     <NumberAnimation number={2321} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
                   </div>
                 </div>
@@ -187,17 +187,17 @@ const Hero = () => {
           <RevealAnimation delay={0.7}>
             <div className="block md:inline-block">
               <LinkButton
-                href="/pricing-03"
+                href="/signup-01"
                 className="btn btn-primary hover:btn-white dark:btn-accent btn-xl dark:hover:btn-primary w-[90%] md:w-auto mx-auto"
-                aria-label="Zu den Preisen und Plan auswählen">
+                aria-label="Zu den Preisen wechseln und einen Plan auswählen">
                 Jetzt starten
               </LinkButton>
             </div>
           </RevealAnimation>
           <RevealAnimation delay={0.8} instant duration={0.9}>
             <figure className="max-w-[408px] mx-auto mt-20 md:mt-[124px] rounded-[20px] flex justify-center items-center overflow-hidden">
-              <Image src={heroImage} alt=" hero" className="inline-block dark:hidden w-full h-full object-cover" />
-              <Image src={heroImageDark} alt=" hero" className="hidden dark:inline-block w-full h-full object-cover" />
+              <Image src={heroImage} alt="hero" className="inline-block dark:hidden w-full h-full object-cover" />
+              <Image src={heroImageDark} alt="hero" className="hidden dark:inline-block w-full h-full object-cover" />
             </figure>
           </RevealAnimation>
         </div>

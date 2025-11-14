@@ -24,7 +24,7 @@ const Audit = () => {
               <RevealAnimation delay={0.3}>
                 <div>
                   <LinkButton
-                    href="/pricing-01"
+                    href="/signup-01"
                     className="btn btn-secondary dark:btn-accent hover:btn-white dark:hover:btn-white-dark btn-md">
                     Claim my free audit
                   </LinkButton>

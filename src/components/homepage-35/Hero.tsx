@@ -31,7 +31,7 @@ const ctaButtons: CTAButton[] = [
   {
     id: 1,
     text: 'Start for free',
-    href: '/pricing-01',
+    href: '/signup-01',
     variant: 'primary',
     delay: 0.3,
   },

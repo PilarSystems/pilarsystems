@@ -1,751 +1,206 @@
+import { CheckIcon } from '@/icons';
+import { cn } from '@/utils/cn';
 import gradient4 from '@public/images/gradient/gradient-4.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import RevealAnimation from '../animation/RevealAnimation';
 
-{
-  /* =========================
-Pricing section
-===========================*/
+interface Feature {
+  label: string;
+  enabled: boolean;
 }
+
+interface PricingPlan {
+  id: string;
+  title: string;
+  monthlyPrice?: string;
+  setupFee?: string;
+  buttonText: string;
+  buttonClass: string;
+  planType: 'basic' | 'featured' | 'premium';
+  features: Feature[];
+  href: string;
+  isOnRequest?: boolean;
+}
+
 const Pricing = () => {
+  const pricingPlans: PricingPlan[] = [
+    {
+      id: 'basic',
+      title: 'Starter Gym',
+      monthlyPrice: '129',
+      setupFee: '499',
+      buttonText: 'Plan wählen',
+      buttonClass:
+        'btn btn-md hover:btn-primary dark:btn-white-dark btn-white w-full block text-center before:content-none first-letter:uppercase',
+      planType: 'basic',
+      href: '/signup-01',
+      features: [
+        { label: 'KI-Rezeption für Telefon & WhatsApp', enabled: true },
+        { label: 'Lead-Erfassung & Probetrainings-Buchung', enabled: true },
+        { label: 'Basis-Dashboard für Leads & Termine', enabled: true },
+        { label: 'E-Mail-Benachrichtigungen ans Team', enabled: true },
+        { label: 'Standard-Support per E-Mail', enabled: true },
+        { label: 'Ideal für Studios mit 1 Standort', enabled: true },
+      ],
+    },
+    {
+      id: 'featured',
+      title: 'Growth Gym (empfohlen)',
+      monthlyPrice: '199',
+      setupFee: '999',
+      buttonText: 'Jetzt starten',
+      buttonClass:
+        'btn btn-md btn-primary dark:hover:btn-white hover:btn-secondary w-full block text-center before:content-none first-letter:uppercase',
+      planType: 'featured',
+      href: '/signup-01',
+      features: [
+        { label: 'Alle Funktionen aus Starter Gym', enabled: true },
+        { label: 'Erweiterte Follow-ups & Workflows', enabled: true },
+        { label: 'Trainingsplan-Modul & Mitglieder-Notizen', enabled: true },
+        { label: 'Priorisierte Leads & Tags', enabled: true },
+        { label: 'Onboarding-Support & Live-Check-in', enabled: true },
+        { label: 'Ideal für Studios mit 1–3 Standorten', enabled: true },
+      ],
+    },
+    {
+      id: 'premium',
+      title: 'Elite / Multi-Location',
+      buttonText: 'Kontakt aufnehmen',
+      buttonClass:
+        'btn btn-md hover:btn-primary dark:btn-white-dark btn-white w-full block text-center before:content-none first-letter:uppercase',
+      planType: 'premium',
+      href: '/signup-01',
+      isOnRequest: true,
+      features: [
+        { label: 'Alle Funktionen aus Growth Gym', enabled: true },
+        { label: 'Mehrere Standorte in einem Account', enabled: true },
+        { label: 'Reporting auf Standort- & Kettenebene', enabled: true },
+        { label: 'Individuelle Regeln pro Standort', enabled: true },
+        { label: 'Persönlicher Ansprechpartner', enabled: true },
+        { label: 'Individuelles Angebot inkl. Setup', enabled: true },
+      ],
+    },
+  ];
+
   return (
-    <RevealAnimation delay={0.1}>
-      <section className="pb-20 md:pb-[100px] lg:pb-[150px] xl:pb-[200px]">
-        <div className="max-w-[1440px] w-full mx-auto rounded-2xl space-y-[70px] bg-background-1 dark:bg-black py-[100px] px-5 md:px-6 lg:px-10 xl:px-16">
-          <div className="max-w-2xl mx-auto text-center space-y-3">
-            <RevealAnimation delay={0.2}>
-              <span className="badge badge-cyan-v2">Our pricing</span>
-            </RevealAnimation>
-            <RevealAnimation delay={0.3}>
-              <h2>Select the pricing plan that best suits your needs.</h2>
-            </RevealAnimation>
-          </div>
-          <div className="grid grid-cols-12 gap-y-8">
-            {/*Column 1*/}
-            <RevealAnimation delay={0.4}>
-              <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                <div>
-                  <div className="h-[201px] w-[290px] hidden md:block" />
-                  <div className="space-y-[10px]">
-                    <h3 className="text-heading-6">What’s included</h3>
-                    <ul>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Pages included
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Customized branding services
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Custom design
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Comprehensive branding solutions
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          SEO optimization
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Branding support
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Tailored branding assistance
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Expert branding guidance
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Strategic branding support
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Professional branding help
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Innovative branding strategies
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Effective branding solutions
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Holistic branding support
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Dynamic branding options
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Insightful branding advice
-                        </p>
-                      </li>
-                      <li className="h-14 px-0 py-4 border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-normal text-secondary/60 dark:text-accent/60 text-tagline-1">
-                          Value-driven branding support
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </RevealAnimation>
-            <RevealAnimation delay={0.5}>
-              <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                <div>
-                  <div className="px-4">
-                    <div className="rounded-[20px] py-8 px-6 bg-background-3 dark:bg-background-8 space-y-8">
-                      <div>
-                        <p className="text-tagline-1 text-secondary/60 dark:text-accent/60 font-medium mb-3">
-                          Essential
-                        </p>
-                        <h3 className="text-heading-5 font-normal text-secondary dark:text-accent/60">Free</h3>
-                        <p className="text-secondary/60 dark:text-accent/60">Free plan for all users</p>
-                      </div>
-                      <Link
-                        href="/contact-us"
-                        className="btn btn-white hover:btn-primary dark:btn-white-dark btn-md w-full before:content-none first-letter:uppercase">
-                        Get started
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="rounded-[20px] flex flex-col space-y-8">
-                    <ul>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-medium text-secondary/60 dark:text-accent/60">Up to 5</p>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                    </ul>
-                    <div className="btn btn-primary hover:btn-white-dark dark:hover:btn-accent btn-md w-fit mx-auto">
-                      <Link href="/contact-us">
-                        {' '}
-                        <span>Get started </span>{' '}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </RevealAnimation>
-            {/*Column 3*/}
-            <RevealAnimation delay={0.6}>
-              <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                <div>
-                  <div className="px-4 relative z-10">
-                    <div className="rounded-[20px] relative py-8 px-6 bg-secondary overflow-hidden">
-                      <div className="absolute z-20 h-full w-full -top-28 -right-20">
-                        <Image src={gradient4} alt="pricing bg" priority />
-                      </div>
-                      <div className="relative z-30 space-y-8">
-                        <div>
-                          <p className="text-tagline-1 text-accent/60 font-medium mb-3">Advanced</p>
-                          <h3 className="text-heading-5 font-normal text-accent">$99</h3>
-                          <p className="text-accent/60">Plans for advanced users</p>
-                        </div>
-                        <Link
-                          href="/contact-us"
-                          className="btn btn-primary hover:btn-white dark:hover:btn-accent btn-md w-full before:content-none first-letter:uppercase">
-                          Get started
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded-[20px] flex flex-col space-y-8">
-                    <ul>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-medium text-secondary/60 dark:text-accent/60">Up to 10</p>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg
-                          width={18}
-                          height={18}
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                    </ul>
-                    <div className="btn btn-primary hover:btn-white-dark dark:hover:btn-accent text-center btn-md w-fit mx-auto">
-                      <Link href="/contact-us">
-                        <span>Get started </span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </RevealAnimation>
-            {/*column-4 */}
-            <RevealAnimation delay={0.7}>
-              <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                <div>
-                  <div className="px-4">
-                    <div className="rounded-[20px] py-8 px-6 bg-background-3 dark:bg-background-8 space-y-8">
-                      <div>
-                        <p className="text-tagline-1 text-secondary/60 dark:text-accent/60 font-medium mb-3">
-                          Enterprise
-                        </p>
-                        <h3 className="text-heading-5 font-normal text-secondary dark:text-accent/60">Enterprise</h3>
-                        <p className="text-secondary/60 dark:text-accent/60">Contact us for enterprise users</p>
-                      </div>
-                      <Link
-                        href="/contact-us"
-                        className="btn dark:btn-white-dark hover:btn-primary btn-white btn-md w-full before:content-none first-letter:uppercase">
-                        Get started
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="rounded-[20px] flex flex-col space-y-8">
-                    <ul>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7">
-                        <p className="font-medium text-secondary/60 dark:text-accent/60">Unlimited</p>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary/20 dark:fill-accent/20" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                      <li className="h-14 px-6 py-4 text-center border-b border-b-stroke-4 dark:border-stroke-7 flex items-center justify-center">
-                        <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width={18} height={18} rx={9} className="fill-secondary dark:fill-accent" />
-                          <path
-                            d="M8.31661 12.7561L13.7491 7.42144C14.0836 7.0959 14.0836 6.5697 13.7491 6.24416C13.4145 5.91861 12.8736 5.91861 12.539 6.24416L7.7116 10.9901L5.46096 8.78807C5.12636 8.46253 4.58554 8.46253 4.25095 8.78807C3.91635 9.11362 3.91635 9.63982 4.25095 9.96536L7.1066 12.7561C7.27347 12.9184 7.49253 13 7.7116 13C7.93067 13 8.14974 12.9184 8.31661 12.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                      </li>
-                    </ul>
-                    <div className="btn btn-primary hover:btn-white-dark dark:hover:btn-accent btn-md w-fit mx-auto">
-                      <Link href="/contact-us">
-                        <span>Get started </span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </RevealAnimation>
-          </div>
+    <section className="relative pb-20 md:pb-[100px] lg:pb-[150px] xl:pb-[200px]">
+      <div className="max-w-[1440px] w-full mx-auto rounded-2xl bg-background-1 dark:bg-black py-[100px] px-5 md:px-6 lg:px-10 xl:px-16 space-y-[60px]">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center space-y-3">
+          <RevealAnimation delay={0.2}>
+            <span className="badge badge-cyan-v2">Preise</span>
+          </RevealAnimation>
+          <RevealAnimation delay={0.3}>
+            <h2>Pläne für moderne Fitnessstudios.</h2>
+          </RevealAnimation>
+          <RevealAnimation delay={0.4}>
+            <p className="text-secondary/60 dark:text-accent/60">
+              Monatliche Lizenz + einmalige Setup-Gebühr – klar kalkulierbar, ohne versteckte Kosten 
+              und ohne lange Agenturprojekte.
+            </p>
+          </RevealAnimation>
         </div>
-      </section>
-    </RevealAnimation>
+
+        {/* Plans */}
+        <div className="grid grid-cols-12 gap-y-8 lg:gap-x-8 items-stretch">
+          {pricingPlans.map((plan, idx) => (
+            <RevealAnimation key={plan.id} delay={0.4 + idx * 0.1}>
+              <div
+                className={cn(
+                  'col-span-12 md:col-span-6 xl:col-span-4 flex h-full',
+                )}
+              >
+                <div
+                  className={cn(
+                    'relative flex flex-col gap-6 rounded-[20px] max-w-[604px] w-full bg-white dark:bg-black p-8 xl:py-[60px] xl:px-10 overflow-hidden',
+                    plan.planType === 'featured' && 'p-[2px] bg-transparent'
+                  )}
+                >
+                  {/* Gradient für Featured-Plan */}
+                  {plan.planType === 'featured' && (
+                    <>
+                      <Image
+                        src={gradient4}
+                        alt="gradient"
+                        className="absolute inset-0 w-full h-full object-cover rounded-[20px]"
+                        priority
+                      />
+                      <div className="relative z-10 flex flex-col gap-6 bg-white dark:bg-black rounded-[18px] p-8 xl:py-[60px] xl:px-10">
+                        {renderPlanContent(plan)}
+                      </div>
+                    </>
+                  )}
+
+                  {plan.planType !== 'featured' && renderPlanContent(plan)}
+                </div>
+              </div>
+            </RevealAnimation>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Hilfsfunktion für den Karteninhalt
+const renderPlanContent = (plan: PricingPlan) => {
+  return (
+    <>
+      <div>
+        <h5 className="mb-2 font-normal text-heading-5">{plan.title}</h5>
+        <div className="border-b border-stroke-2 dark:border-stroke-6 pb-6">
+          <div className="price-month mb-3">
+            {plan.isOnRequest ? (
+              <h4 className="text-heading-6 sm:text-heading-4 font-normal">
+                Preis auf Anfrage
+              </h4>
+            ) : (
+              <h4 className="text-heading-6 sm:text-heading-4 font-normal">
+                €<span>{plan.monthlyPrice}</span>
+                <span className="text-tagline-2"> / Monat</span>
+              </h4>
+            )}
+          </div>
+          {!plan.isOnRequest && plan.setupFee && (
+            <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-3">
+              zzgl. einmalig <span className="font-medium">€{plan.setupFee}</span> Setup-Gebühr
+            </p>
+          )}
+          {plan.isOnRequest && (
+            <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-3">
+              Individuelles Angebot inkl. Setup je nach Standortanzahl und Volumen.
+            </p>
+          )}
+          <Link href={plan.href} className={plan.buttonClass}>
+            {plan.buttonText}
+          </Link>
+        </div>
+      </div>
+
+      <ul className="list-none space-y-3">
+        {plan.features.map((feature, featureIdx) => (
+          <li key={featureIdx} className="flex items-center gap-2.5">
+            <span
+              className={cn(
+                'flex size-5 items-center justify-center rounded-full shrink-0',
+                feature.enabled ? 'bg-secondary dark:bg-accent' : 'bg-secondary/40 dark:bg-accent/40',
+              )}
+            >
+              <CheckIcon className="fill-white dark:fill-black" />
+            </span>
+            <span
+              className={cn(
+                'font-normal text-tagline-1',
+                feature.enabled ? 'text-secondary dark:text-accent' : 'text-secondary/60 dark:text-accent/60',
+              )}
+            >
+              {feature.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

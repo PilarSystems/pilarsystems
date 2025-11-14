@@ -29,9 +29,9 @@ const Services = () => {
                 <span className="ns-shape-8 text-[52px] text-secondary dark:text-accent" />
               </div>
               <div className="space-y-2">
-                <h5 className="max-sm:text-heading-6">Vollautomatisiertes Lead- & Termin-Handling.</h5>
+                <h5 className="max-sm:text-heading-6">Vollautomatisiertes Lead- und Termin-Handling.</h5>
                 <p className="max-w-[430px]">
-                  Deine KI nimmt Anrufe entgegen, beantwortet WhatsApp & E-Mails, qualifiziert Interessenten vor und
+                  Deine KI nimmt Anrufe entgegen, beantwortet WhatsApp und E-Mails, qualifiziert Interessenten vor und
                   bucht Probetrainings direkt in deinen Kalender – ohne dass jemand im Büro sitzen muss.
                 </p>
               </div>
@@ -59,7 +59,7 @@ const Services = () => {
               <div className="space-y-2">
                 <h5 className="max-sm:text-heading-6">Mehr Funktionen als klassische Software.</h5>
                 <p className="max-w-[430px]">
-                  KI-Rezeption, Lead-Nachverfolgung, Terminbuchung, Trainingspläne & Onboarding – statt fünf
+                  KI-Rezeption, Lead-Nachverfolgung, Terminbuchung, Trainingspläne und Onboarding – statt fünf
                   Einzellösungen bekommst du bei uns ein System, das alles zusammendenkt.
                 </p>
               </div>
@@ -74,7 +74,7 @@ const Services = () => {
                 <h5 className="max-sm:text-heading-6">Transparente Preise statt Agenturprojekt.</h5>
                 <p className="max-w-[430px]">
                   Klare Pläne, planbare monatliche Kosten und faire Setup-Gebühren – keine versteckten Tagessätze, keine
-                  Endlos-Projekte, kein Risiko für dein Gym.
+                  Endlosprojekte, kein Risiko für dein Gym.
                 </p>
               </div>
             </div>

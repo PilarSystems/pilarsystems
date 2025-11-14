@@ -1,6 +1,6 @@
-import Client from '@/components/pricing-02/Client';
-import Faq from '@/components/pricing-02/Faq';
-import Pricing from '@/components/pricing-03/Pricing';
+import Client from '@/components/signup-01/Client';
+import Faq from '@/components/signup-01/Faq';
+import Pricing from '@/components/signup-01/Pricing';
 import CTAV1 from '@/components/shared/cta/CTAV1';
 import FooterThree from '@/components/shared/footer/FooterThree';
 import NavbarOne from '@/components/shared/header/NavbarOne';
@@ -11,7 +11,7 @@ import { Fragment } from 'react';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Pricing 03 - NextSaaS',
+  title: 'Preise – Pilar Systems',
 };
 
 const Pricing03 = () => {
@@ -19,21 +19,28 @@ const Pricing03 = () => {
     <Fragment>
       <NavbarOne
         className="border border-stroke-2 bg-accent/60 dark:border-stroke-6 dark:bg-background-9 backdrop-blur-[25px]"
-        btnClassName="btn-primary hover:btn-secondary dark:hover:btn-accent"
-        megaMenuColor="!bg-background-3 dark:!bg-background-9"
+        btnClassName="btn-primary hover:btn-white-dark dark:hover:btn-white"
       />
       <main className="bg-background-1 dark:bg-background-6">
-        <PageHero title="Pricing 03" heading="Pricing 03 " link="/pricing-03" />
+        <PageHero
+          title="Preise"
+          heading="Preise & Pläne für dein Studio"
+          link="/signup-01"
+        />
+
         <Pricing />
+
         <Client />
+
         <Faq />
+
         <CTAV1
           className="dark:bg-background-7 bg-accent"
-          badgeText="Get started"
+          badgeText="Jetzt starten"
           badgeClass="!badge-cyan"
-          ctaHeading="Build a complete website using the assistance"
-          description="Start your free trial today and see your ideas come to life easily and creatively."
-          ctaBtnText="Get started"
+          ctaHeading="Bereit, deine Studio-Rezeption zu automatisieren?"
+          description="Wir zeigen dir in einem gemeinsamen Gespräch, wie Pilar Systems in deinen Alltag passt – von ersten Anfragen bis zur Vertragsunterschrift."
+          ctaBtnText="Kostenloses Erstgespräch buchen"
           btnClass="btn-primary hover:btn-secondary dark:hover:btn-accent"
         />
       </main>

@@ -188,9 +188,9 @@ export const pageMegaMenuColumns: MegaMenuColumn[] = [
       { id: 'team-1', label: 'Our team 01', href: '/our-team-01' },
       { id: 'team-2', label: 'Our team 02', href: '/our-team-02' },
       { id: 'team-details', label: 'Team details', href: '/team/cody-fisher' },
-      { id: 'pricing-1', label: 'Pricing Page 01', href: '/pricing-01' },
-      { id: 'pricing-2', label: 'Pricing Page 02', href: '/pricing-02' },
-      { id: 'pricing-3', label: 'Pricing Page 03', href: '/pricing-03' },
+      { id: 'pricing-1', label: 'Pricing Page 01', href: '/signup-01' },
+      { id: 'pricing-2', label: 'Pricing Page 02', href: '/signup-01' },
+      { id: 'pricing-3', label: 'Pricing Page 03', href: '/signup-01' },
     ],
   },
   {

@@ -1,5 +1,5 @@
 import Reviews from '@/components/homepage-09/Reviews';
-import Client from '@/components/pricing-02/Client';
+import Client from '@/components/signup-01/Client';
 import CTAV1 from '@/components/shared/cta/CTAV1';
 import FooterThree from '@/components/shared/footer/FooterThree';
 import NavbarOne from '@/components/shared/header/NavbarOne';

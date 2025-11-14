@@ -75,7 +75,7 @@ const Hero = () => {
             <RevealAnimation delay={0.7} direction="left" offset={50}>
               <li className="w-full sm:w-auto">
                 <LinkButton
-                  href="/pricing-01"
+                  href="/signup-01"
                   className="btn btn-green hover:btn-white dark:hover:btn-accent mx-auto sm:mx-0 block md:inline-block w-[90%] md:w-auto btn-lg md:btn-xl border-0">
                   Try it free
                 </LinkButton>

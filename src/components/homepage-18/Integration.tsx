@@ -61,7 +61,7 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Online starten & Setup-Wizard durchlaufen.</h5>
+                        <h5>Online starten und Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[250px]">
                           Dein Studio wählt einen Plan, erstellt einen Account und führt den geführten Setup-Wizard
                           durch – ganz ohne Telefontermin oder Vor-Ort-Besuch.
@@ -89,10 +89,10 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Systeme verbinden & alles testen.</h5>
+                        <h5>Systeme verbinden und alles testen.</h5>
                         <p className="max-w-[250px]">
-                          Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach testen wir
-                          gemeinsam typische Szenarien aus Sicht deiner Mitglieder.
+                          Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach testest du
+                          gemeinsam mit uns typische Szenarien aus Sicht deiner Mitglieder.
                         </p>
                       </figcaption>
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
@@ -122,7 +122,7 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Ziele & Regeln für deine KI festlegen.</h5>
+                        <h5>Ziele und Regeln für deine KI festlegen.</h5>
                         <p className="max-w-[250px]">
                           Du definierst, welche Leads priorisiert werden, wie Probetrainings vergeben werden und welche
                           Angebote kommuniziert werden – die KI hält sich an deine Regeln.
@@ -155,9 +155,9 @@ const Integration = () => {
                     </figure>
                     <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
                       <figcaption className="space-y-2">
-                        <h5>Live gehen & Automatisierung nutzen.</h5>
+                        <h5>Live gehen und Automatisierung nutzen.</h5>
                         <p className="max-w-[250px]">
-                          Danach übernimmt Pilar Systems die Routine: Anfragen beantworten, Leads nachfassen,
+                          Danach übernimmt Pilar Systems die Routine: Anfragen beantworten, Leads nachfassen und
                           Probetrainings koordinieren – dein Team konzentriert sich aufs Training.
                         </p>
                       </figcaption>

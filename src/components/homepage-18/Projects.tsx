@@ -20,8 +20,9 @@ const Projects = () => {
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
               <p className="max-w-[680px] mx-auto">
-                Entdecke, wie Fitnessstudios und Studios mit Pilar Systems mehr Probetrainings, höhere Abschlussquoten
-                und weniger Verwaltungsaufwand erreichen. Jede Case Study zeigt echte Prozesse und messbare Resultate.
+                Entdecke, wie Fitness- und Gesundheitsstudios mit Pilar Systems mehr Probetrainings, höhere
+                Abschlussquoten und weniger Verwaltungsaufwand erreichen. Jede Case Study zeigt echte Prozesse und
+                messbare Resultate.
               </p>
             </RevealAnimation>
           </div>
@@ -96,7 +97,7 @@ const Projects = () => {
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
                     <LinkButton
                       href={`/case-study/${featuredProjects[2].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
+                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
                       Case ansehen
                     </LinkButton>
                   </div>
@@ -123,7 +124,7 @@ const Projects = () => {
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
                     <LinkButton
                       href={`/case-study/${featuredProjects[3].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
+                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
                       Case ansehen
                     </LinkButton>
                   </div>

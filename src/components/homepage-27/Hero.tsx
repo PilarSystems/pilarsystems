@@ -32,7 +32,7 @@ const Hero = () => {
         <RevealAnimation delay={0.4}>
           <div className="py-[72px] flex justify-center">
             <LinkButton
-              href="/pricing-01"
+              href="/signup-01"
               className="btn dark:btn-accent hover:btn-white dark:hover:btn-white-dark btn-secondary btn-xl">
               Get a free demo
             </LinkButton>

@@ -22,7 +22,7 @@ const NewsLetter = () => {
             <RevealAnimation delay={0.4}>
               <div className="text-center">
                 <LinkButton
-                  href="/pricing-01"
+                  href="/signup-01"
                   className="btn btn-primary border-0 hover:btn-accent btn-md w-[90%] md:w-auto mx-auto md:mx-0">
                   Book your free strategy call
                 </LinkButton>
