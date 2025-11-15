@@ -8,9 +8,11 @@ import type { FormEvent } from 'react';
 type SignupHeroProps = {
   // wenn nicht übergeben → Fallback: nur Router-Push auf /checkout
   signupAction?: (formData: FormData) => void;
+  status?: string;
+  error?: string;
 };
 
-const SignupHero = ({ signupAction }: SignupHeroProps) => {
+const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
   const router = useRouter();
 
   const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -23,9 +25,39 @@ const SignupHero = ({ signupAction }: SignupHeroProps) => {
   const gradientTextClass =
     'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
 
+  const renderAlert = () => {
+    if (error) {
+      let message = 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten. Bitte versuche es erneut.';
+
+      if (error === 'missing_fields') {
+        message = 'Bitte fülle alle Pflichtfelder aus.';
+      } else if (error === 'password_mismatch') {
+        message = 'Die beiden Passwörter stimmen nicht überein.';
+      } else if (error === 'signup_failed') {
+        message = 'Dein Konto konnte nicht erstellt werden. Prüfe deine E-Mail und versuche es erneut.';
+      }
+
+      return (
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+          {message}
+        </div>
+      );
+    }
+
+    if (status === 'confirmed') {
+      return (
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und mit dem Setup fortfahren.
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <section className="py-16 md:py-20 lg:py-24">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16">
+    <section className="py-0 md:py-2 lg:py-4">
+      <div className="max-w-[1200px] mx-auto">
         {/* Headline */}
         <RevealAnimation delay={0.1}>
           <div className="mb-10 space-y-3 text-center">
@@ -40,6 +72,8 @@ const SignupHero = ({ signupAction }: SignupHeroProps) => {
             </p>
           </div>
         </RevealAnimation>
+
+        {renderAlert()}
 
         {/* Layout: links Benefits, rechts Formular */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)]">
@@ -322,7 +356,7 @@ const SignupHero = ({ signupAction }: SignupHeroProps) => {
                     Du hast bereits Zugang?{' '}
                     <Link
                       href="/login-01"
-                      className={`font-semibold underline underline-offset-2 ${gradientTextClass}`}
+                      className="font-semibold underline underline-offset-2"
                     >
                       Hier einloggen
                     </Link>
