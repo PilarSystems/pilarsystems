@@ -31,7 +31,7 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
     redirect('/checkout');
   }
 
-  // Server Action: Supabase-Signup
+  // Server Action: Supabase-Signup + Redirect zum Checkout
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -78,8 +78,8 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ Registrierung geklappt → Hinweis "Mail verschickt" anzeigen
-    redirect('/signup-01?status=signup_success');
+    // ✅ Registrierung geklappt → direkt zur Checkout-Seite mit E-Mail im Query
+    redirect(`/checkout?email=${encodeURIComponent(email)}`);
   }
 
   return (
