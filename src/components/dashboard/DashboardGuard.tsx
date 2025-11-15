@@ -53,7 +53,7 @@ const DashboardGuard = ({ children }: DashboardGuardProps) => {
 
         if (!data || data.status !== 'active') {
           setState('no_payment');
-          router.replace('/pricing-02');
+          router.replace('/signup-01');
           return;
         }
 

@@ -3,7 +3,7 @@
     "name": "Essential",
     "price": "Free",
     "description": "Free plan for all users",
-    "ctaHref": "/signup-01",
+    "ctaHref": "/pricing-02",
     "ctaText": "Get started",
     "cells": [
       { "type": "text", "value": "Up to 5" },
@@ -17,7 +17,7 @@
     "name": "Advanced",
     "price": "$99",
     "description": "Plans for advanced users",
-    "ctaHref": "/signup-01",
+    "ctaHref": "/pricing-02",
     "ctaText": "Get started",
     "isSecondary": true,
     "withGradientImg": true,
@@ -33,7 +33,7 @@
     "name": "Enterprise",
     "price": "Enterprise",
     "description": "Contact us for enterprise users",
-    "ctaHref": "/signup-01",
+    "ctaHref": "/pricing-02",
     "ctaText": "Get started",
     "cells": [
       { "type": "text", "value": "Unlimited" },

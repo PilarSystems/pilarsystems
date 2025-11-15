@@ -1,43 +1,41 @@
 // src/middleware.ts
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
+import { createSupabaseServerClient } from '@/lib/supabaseServer';
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
+export async function middleware(req: Request) {
+  const url = new URL(req.url);
+  const pathname = url.pathname;
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return req.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: any) {
-          res.cookies.set(name, value, options);
-        },
-        remove(name: string, options: any) {
-          res.cookies.set(name, '', { ...options, maxAge: 0 });
-        },
-      },
-    }
-  );
+  // ❗ Geschützte Routen
+  const protectedRoutes = ['/dashboard', '/dashboard/', '/dashboard/settings'];
 
-  const { data } = await supabase.auth.getUser();
+  const supabase = createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  // Geschützte Routen
-  const protectedRoutes = ['/dashboard', '/onboarding'];
+  // User NICHT eingeloggt → sofort zum Login
+  if (!user && protectedRoutes.some((p) => pathname.startsWith(p))) {
+    return NextResponse.redirect(new URL('/login-01', req.url));
+  }
 
-  if (protectedRoutes.some((p) => req.nextUrl.pathname.startsWith(p))) {
-    if (!data.user) {
-      return NextResponse.redirect(new URL('/login-01', req.url));
+  // Eingeloggt → Subscription prüfen
+  if (user && protectedRoutes.some((p) => pathname.startsWith(p))) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('subscription_status')
+      .eq('id', user.id)
+      .single();
+
+    // Kein Profil oder kein aktives Abo
+    if (!profile || profile.subscription_status !== 'active') {
+      return NextResponse.redirect(new URL('/checkout', req.url));
     }
   }
 
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/onboarding/:path*'],
+  matcher: ['/dashboard/:path*'],
 };

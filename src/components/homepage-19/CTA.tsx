@@ -33,7 +33,7 @@ const CTA = () => {
             <RevealAnimation delay={0.5}>
               <div className="text-center">
                 <LinkButton
-                  href="/signup-01"
+                  href="/pricing-02"
                   className="btn btn-primary btn-md hover:btn-white w-[85%] md:w-auto border-0 dark:hover:btn-accent"
                   aria-label="Get started with NextSaaS">
                   Get started now

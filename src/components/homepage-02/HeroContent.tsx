@@ -33,7 +33,7 @@ const HeroContent = () => {
         <RevealAnimation delay={0.5} direction="left" offset={50}>
           <li>
             <LinkButton
-              href="/signup-01"
+              href="/pricing-02"
               className="btn btn-white max-md:btn-md btn-xl hover:btn-secondary dark:btn-transparent dark:hover:btn-accent w-full max-md:mx-auto md:w-auto">
               Free trial
             </LinkButton>

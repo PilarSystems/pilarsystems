@@ -93,7 +93,7 @@ const Pricing = () => {
           <RevealAnimation delay={0.3}>
             <div>
               <LinkButton
-                href="/signup-01"
+                href="/pricing-02"
                 className="btn hover:btn-primary dark:btn-transparent btn-secondary btn-md w-[90%] md:w-auto mx-auto">
                 See the platform in action
               </LinkButton>
