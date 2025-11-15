@@ -28,7 +28,7 @@ if (!stripeSecret) {
 }
 
 const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2024-06-20' as any, // gleich wie im Webhook
 });
 
 // Server Action: Stripe Checkout Session erstellen und redirecten
