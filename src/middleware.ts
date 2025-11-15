@@ -1,41 +1,54 @@
 // src/middleware.ts
-import { NextResponse } from 'next/server';
-import { createSupabaseServerClient } from '@/lib/supabaseServer';
+import { NextResponse, type NextRequest } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
 
-export async function middleware(req: Request) {
-  const url = new URL(req.url);
-  const pathname = url.pathname;
+const PROTECTED_PATHS = ['/dashboard', '/checkout', '/onboarding'];
 
-  // ❗ Geschützte Routen
-  const protectedRoutes = ['/dashboard', '/dashboard/', '/dashboard/settings'];
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({
+    request,
+  });
 
-  const supabase = createSupabaseServerClient();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          // Cookies im Response-Objekt setzen
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    }
+  );
+
+  // User über Supabase laden
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // User NICHT eingeloggt → sofort zum Login
-  if (!user && protectedRoutes.some((p) => pathname.startsWith(p))) {
-    return NextResponse.redirect(new URL('/login-01', req.url));
+  const path = request.nextUrl.pathname;
+  const isProtected = PROTECTED_PATHS.some((p) =>
+    path === p || path.startsWith(`${p}/`)
+  );
+
+  if (isProtected && !user) {
+    const url = new URL('/login-01', request.url);
+    url.searchParams.set('redirectTo', path);
+    return NextResponse.redirect(url);
   }
 
-  // Eingeloggt → Subscription prüfen
-  if (user && protectedRoutes.some((p) => pathname.startsWith(p))) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('subscription_status')
-      .eq('id', user.id)
-      .single();
-
-    // Kein Profil oder kein aktives Abo
-    if (!profile || profile.subscription_status !== 'active') {
-      return NextResponse.redirect(new URL('/checkout', req.url));
-    }
-  }
-
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: [
+    // alles außer _next, static assets, favicon etc.
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 };
