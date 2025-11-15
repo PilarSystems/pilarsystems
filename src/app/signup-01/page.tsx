@@ -13,8 +13,15 @@ export const metadata: Metadata = {
   title: 'Konto erstellen – Pilar Systems',
 };
 
-const SignupPage = async () => {
-  // Wenn schon eingeloggt → direkt zum Checkout
+type SignupPageProps = {
+  searchParams?: {
+    status?: string;
+    error?: string;
+  };
+};
+
+const SignupPage = async ({ searchParams }: SignupPageProps) => {
+  // Wenn schon eingeloggt → direkt zum Checkout (Abo wählen)
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
@@ -24,7 +31,7 @@ const SignupPage = async () => {
     redirect('/checkout');
   }
 
-  // Server Action: Registrierung + Weiter zum Checkout
+  // Server Action: Supabase-Signup
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -54,7 +61,7 @@ const SignupPage = async () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${appUrl}/login-01`,
+        emailRedirectTo: `${appUrl}/signup-01?status=confirmed`,
         data: {
           firstName,
           lastName,
@@ -71,8 +78,8 @@ const SignupPage = async () => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // Registrierung geklappt → weiter zum Checkout (Stripe)
-    redirect('/checkout?status=signup_success');
+    // ✅ Registrierung geklappt → Hinweis "Mail verschickt" anzeigen
+    redirect('/signup-01?status=signup_success');
   }
 
   return (
@@ -83,7 +90,11 @@ const SignupPage = async () => {
       />
       <main className="bg-background-3 dark:bg-background-7 min-h-screen">
         <section className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16 py-16 md:py-20 lg:py-24">
-          <SignupHero signupAction={handleSignup} />
+          <SignupHero
+            signupAction={handleSignup}
+            status={searchParams?.status}
+            error={searchParams?.error}
+          />
         </section>
       </main>
       <FooterThree />
