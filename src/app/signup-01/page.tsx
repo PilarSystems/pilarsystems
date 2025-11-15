@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const SignupPage = async () => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   // Wenn User schon eingeloggt ist → direkt ins Dashboard
   const {
@@ -49,7 +49,7 @@ const SignupPage = async () => {
       redirect('/signup-01?error=password_mismatch');
     }
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { error } = await supabase.auth.signUp({
       email,

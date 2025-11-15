@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const LoginPage = async () => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   // Wenn schon eingeloggt → direkt ins Dashboard
   const {
@@ -36,7 +36,7 @@ const LoginPage = async () => {
       redirect('/login-01?error=missing_fields');
     }
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
