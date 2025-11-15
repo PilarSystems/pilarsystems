@@ -18,27 +18,16 @@ export const metadata: Metadata = {
 async function handleCheckout(formData: FormData) {
   'use server';
 
-  // 1. Supabase User ziehen – nur eingeloggte dürfen zahlen
-  const supabase = createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    // nicht eingeloggt → zurück zum Login
-    redirect('/login-01?redirect=checkout');
-  }
-
   const plan = formData.get('plan') as string | null;
-  const billingPeriod = (formData.get('billingPeriod') as string | null) ?? 'monthly';
-  const vatId = (formData.get('vatId') as string | null) ?? '';
-  const coupon = (formData.get('coupon') as string | null) ?? '';
+  const billingPeriod = formData.get('billingPeriod') as string | null;
+  const vatId = formData.get('vatId') as string | null;
+  const coupon = formData.get('coupon') as string | null;
 
   if (!plan) {
     redirect('/checkout?error=noplan');
   }
 
-  // Pro / Enterprise → Kontaktformular statt Stripe
+  // Pro / Enterprise → kein Stripe, sondern Kontakt
   if (plan === 'pro') {
     redirect('/contact-us?plan=enterprise');
   }
@@ -50,7 +39,7 @@ async function handleCheckout(formData: FormData) {
   }
 
   const stripe = new Stripe(stripeSecret, {
-    apiVersion: '2024-06-20' as any,
+    apiVersion: '2025-10-29.clover',
   });
 
   let subscriptionPriceId: string | undefined;
@@ -92,8 +81,7 @@ async function handleCheckout(formData: FormData) {
     });
   }
 
-  const appUrl =
-    process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
   const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
@@ -101,13 +89,12 @@ async function handleCheckout(formData: FormData) {
     success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${appUrl}/checkout/canceled`,
     allow_promotion_codes: true,
-    invoice_creation: { enabled: false }, // bei subscription nicht nötig
+    invoice_creation: undefined, // bei subscription nicht erlaubt
     metadata: {
-      user_id: user.id,            // 🔥 wichtig für Webhook
       plan,
-      billingPeriod,
-      vatId,
-      coupon,
+      billingPeriod: billingPeriod ?? 'monthly',
+      vatId: vatId ?? '',
+      coupon: coupon ?? '',
     },
   });
 
@@ -119,7 +106,18 @@ async function handleCheckout(formData: FormData) {
   redirect(session.url);
 }
 
-const CheckoutPage = () => {
+// Server Component mit Auth-Guard
+const CheckoutPage = async () => {
+  const supabase = await createSupabaseServerClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/login-01?redirectTo=/checkout');
+  }
+
   return (
     <Fragment>
       <NavbarOne
