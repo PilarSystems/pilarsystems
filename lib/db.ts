@@ -1,16 +1,9 @@
 // lib/db.ts
-import { PrismaClient } from '@prisma/client';
+// Temporärer Platzhalter – aktuell nutzen wir Supabase als Hauptdatenbank.
+// Prisma wird später sauber eingerichtet, bis dahin vermeiden wir den Import von '@prisma/client'.
 
-const globalForPrisma = globalThis as unknown as {
-  prisma?: PrismaClient;
-};
+// Typ-Alias als Dummy – so schlägt kein Import fehl
+export type EmptyDbClient = never;
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  });
-
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
-}
+// Dummy-Export, falls irgendwo `prisma` importiert wird
+export const prisma = undefined as unknown as EmptyDbClient;

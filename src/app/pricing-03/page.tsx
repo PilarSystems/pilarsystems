@@ -1,12 +1,13 @@
-import Client from '@/components/signup-01/Client';
-import Faq from '@/components/signup-01/Faq';
-import Pricing from '@/components/signup-01/Pricing';
+// src/app/pricing-03/page.tsx
+import Client from '@/components/pricing-02/Client';
+import Faq from '@/components/pricing-02/Faq';
+import Pricing from '@/components/pricing-02/Pricing';
 import CTAV1 from '@/components/shared/cta/CTAV1';
 import FooterThree from '@/components/shared/footer/FooterThree';
 import NavbarOne from '@/components/shared/header/NavbarOne';
 import PageHero from '@/components/shared/PageHero';
 import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Fragment } from 'react';
 
 export const metadata: Metadata = {
@@ -21,17 +22,16 @@ const Pricing03 = () => {
         className="border border-stroke-2 bg-accent/60 dark:border-stroke-6 dark:bg-background-9 backdrop-blur-[25px]"
         btnClassName="btn-primary hover:btn-white-dark dark:hover:btn-white"
       />
+
       <main className="bg-background-1 dark:bg-background-6">
         <PageHero
           title="Preise"
           heading="Preise & Pläne für dein Studio"
-          link="/signup-01"
+          link="/pricing-02"
         />
 
         <Pricing />
-
         <Client />
-
         <Faq />
 
         <CTAV1
@@ -44,10 +44,12 @@ const Pricing03 = () => {
           btnClass="btn-primary hover:btn-secondary dark:hover:btn-accent"
         />
       </main>
+
       <FooterThree className="dark:!bg-background-6" />
     </Fragment>
   );
 };
 
 Pricing03.displayName = 'Pricing03';
+
 export default Pricing03;

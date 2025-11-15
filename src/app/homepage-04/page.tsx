@@ -11,7 +11,7 @@ import ReviewsV2 from '@/components/shared/reviews/ReviewsV2';
 import { defaultMetadata } from '@/utils/generateMetaData';
 import { Metadata } from 'next';
 
-import gradient36 from '@public/images/gradient/gradient-36.png';
+
 
 export const metadata: Metadata = {
   ...defaultMetadata,
@@ -33,11 +33,8 @@ const HomePage04 = () => {
         <Process />
         <Blogs />
       </main>
-      <FooterThree
-        className="rounded-t-[20px] relative overflow-hidden"
-        gradientClassName="show-gradient !block size-[600px] md:size-[1220px] rotate-[-38deg] right-[-321px]  md:right-[-693px] top-[-237px] md:top-[-485px] select-none pointer-events-none"
-        bgGradientImg={gradient36}
-      />
+      <FooterThree className="rounded-t-[20px] relative overflow-hidden" />
+      /
     </>
   );
 };

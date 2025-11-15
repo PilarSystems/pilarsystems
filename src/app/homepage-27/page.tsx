@@ -45,11 +45,8 @@ const Homepage27 = () => {
           ctaBtnText="Get started"
         />
       </main>
-      <FooterThree
-        className="relative overflow-hidden rounded-t-[20px]"
-        gradientClassName="!block size-[600px] md:size-[1220px] rotate-[-38deg] right-[-321px]  md:right-[-693px] top-[-237px] md:top-[-485px] select-none pointer-events-none"
-        bgGradientImg={gradient36}
-      />
+      <FooterThree className="relative overflow-hidden rounded-t-[20px]" />
+      /
     </Fragment>
   );
 };
