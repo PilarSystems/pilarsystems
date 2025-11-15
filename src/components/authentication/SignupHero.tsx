@@ -1,373 +1,238 @@
 'use client';
 
-import RevealAnimation from '@/components/animation/RevealAnimation';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import type { FormEvent } from 'react';
+import React from 'react';
+import { useSearchParams } from 'next/navigation';
 
 type SignupHeroProps = {
-  // wenn nicht übergeben → Fallback: nur Router-Push auf /checkout
-  signupAction?: (formData: FormData) => void;
-  status?: string;
-  error?: string;
+  signupAction: (formData: FormData) => void;
 };
 
-const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
-  const router = useRouter();
+const SignupHero: React.FC<SignupHeroProps> = ({ signupAction }) => {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  const status = searchParams.get('status');
 
-  const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
-    if (!signupAction) {
-      e.preventDefault();
-      router.push('/checkout');
-    }
-  };
-
-  const gradientTextClass =
-    'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
-
-  const renderAlert = () => {
-    if (error) {
-      let message = 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten. Bitte versuche es erneut.';
-
-      if (error === 'missing_fields') {
-        message = 'Bitte fülle alle Pflichtfelder aus.';
-      } else if (error === 'password_mismatch') {
-        message = 'Die beiden Passwörter stimmen nicht überein.';
-      } else if (error === 'signup_failed') {
-        message = 'Dein Konto konnte nicht erstellt werden. Prüfe deine E-Mail und versuche es erneut.';
-      }
-
+  const renderMessage = () => {
+    if (status === 'signup_success') {
       return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
-          {message}
+        <div className="mb-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+          ✅ Konto angelegt. Bitte bestätige deine E-Mail (Posteingang & Spam prüfen).
         </div>
       );
     }
 
-    if (status === 'confirmed') {
-      return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und mit dem Setup fortfahren.
-        </div>
-      );
+    if (!error) return null;
+
+    let text = 'Etwas ist schiefgelaufen. Bitte versuch es erneut.';
+    switch (error) {
+      case 'missing_fields':
+        text = 'Bitte fülle alle Pflichtfelder aus.';
+        break;
+      case 'password_mismatch':
+        text = 'Die beiden Passwörter stimmen nicht überein.';
+        break;
+      case 'signup_failed':
+        text = 'Registrierung fehlgeschlagen. Bitte E-Mail-Adresse prüfen oder später erneut versuchen.';
+        break;
     }
 
-    return null;
+    return (
+      <div className="mb-4 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+        {text}
+      </div>
+    );
   };
 
   return (
-    <section className="py-0 md:py-2 lg:py-4">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Headline */}
-        <RevealAnimation delay={0.1}>
-          <div className="mb-10 space-y-3 text-center">
-            <span className="badge badge-cyan-v2">Schritt 1 von 3</span>
-            <h1 className="text-heading-3 md:text-heading-2">
-              Dein Pilar-Konto erstellen
-            </h1>
-            <p className="text-secondary/70 dark:text-accent/70 text-tagline-1 max-w-2xl mx-auto">
-              Sag uns kurz, wer du bist und wie dein Studio aussieht.
-              Danach leitest du dein Abo über Stripe ein und dein Dashboard
-              wird automatisch für dich vorbereitet.
-            </p>
-          </div>
-        </RevealAnimation>
+    <div className="grid gap-10 md:grid-cols-[1.1fr,1fr] items-start">
+      {/* Linke Seite – Text / USP */}
+      <div className="space-y-6">
+        <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+          <span className="size-2 rounded-full bg-accent" />
+          Schritt 1 von 3 · Konto erstellen
+        </div>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+          Erstelle dein Pilar-Konto in&nbsp;
+          <span className="text-accent">unter 2 Minuten</span>.
+        </h1>
+        <p className="text-sm md:text-base text-secondary/70 dark:text-accent/80 max-w-xl">
+          Sichere dir deinen Zugang zu deinem KI-Rezeptionisten, automatisierten Leads
+          und einem komplett vorgebauten Gym-OS. Keine Kreditkarte im ersten Schritt
+          nötig – du schließt dein Abo im nächsten Schritt über Stripe ab.
+        </p>
 
-        {renderAlert()}
+        <ul className="space-y-2 text-sm text-secondary/80 dark:text-accent/80">
+          <li className="flex gap-2">
+            <span className="mt-[3px] size-[14px] rounded-full bg-accent/15 text-[10px] flex items-center justify-center">
+              ✓
+            </span>
+            <span>1 Login für Dashboard, KI-Kanäle und Trainingsplan-Generator.</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-[3px] size-[14px] rounded-full bg-accent/15 text-[10px] flex items-center justify-center">
+              ✓
+            </span>
+            <span>DSGVO-konforme Datenhaltung & Hosting in der EU.</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="mt-[3px] size-[14px] rounded-full bg-accent/15 text-[10px] flex items-center justify-center">
+              ✓
+            </span>
+            <span>Später jederzeit Plan upgraden – komplett ohne Setup-Chaos.</span>
+          </li>
+        </ul>
 
-        {/* Layout: links Benefits, rechts Formular */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)]">
-          {/* Left – Value / Benefits */}
-          <RevealAnimation delay={0.2} direction="left">
-            <div className="space-y-6 rounded-2xl border border-stroke-2 dark:border-stroke-6 bg-background-1/80 dark:bg-background-8/80 px-6 py-6 md:px-8 md:py-8 shadow-[0_0_40px_rgba(15,23,42,0.45)] backdrop-blur">
-              <p className="text-tagline-1 uppercase tracking-[0.18em] text-secondary/60 dark:text-accent/60">
-                pilar systems · ki-rezeptionist
-              </p>
-              <h2 className="text-heading-5 md:text-heading-4">
-                In wenigen Minuten von
-                <span className={`ml-1 ${gradientTextClass}`}>Chaos zu Klarheit</span>.
-              </h2>
-              <p className="text-tagline-1 text-secondary/70 dark:text-accent/70">
-                Nach dem Setup läuft dein Empfang über WhatsApp, Telefon
-                und E-Mail automatisch – Leads, Termine und Antworten
-                landen sauber in deinem Dashboard.
-              </p>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    title: 'Kein Personalstress mehr am Empfang',
-                    text: '24/7 Erreichbarkeit für Interessenten und Mitglieder – ohne Überstunden, Ausfälle oder Schichtpläne.',
-                  },
-                  {
-                    title: 'Mehr Leads & Termine aus denselben Anfragen',
-                    text: 'Automatisierte Qualifizierung & Terminvergabe, damit aus Anfragen echte Mitgliedschaften werden.',
-                  },
-                  {
-                    title: 'Saubere Datenbasis für dein Wachstum',
-                    text: 'Alle Konversationen, Leads und Termine zentral im Dashboard – vorbereitet für deine nächsten Kampagnen.',
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="flex gap-3">
-                    <div className="mt-[3px] flex h-6 w-6 items-center justify-center rounded-full bg-accent/10">
-                      <span className="h-2 w-2 rounded-full bg-accent" />
-                    </div>
-                    <div>
-                      <p className="text-tagline-1 font-semibold">{item.title}</p>
-                      <p className="text-tagline-2 text-secondary/65 dark:text-accent/70">
-                        {item.text}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 rounded-xl bg-accent/10 px-4 py-3 text-tagline-3 text-secondary/80 dark:text-accent">
-                <p className="font-semibold mb-1">Was du jetzt erledigst:</p>
-                <ul className="list-disc space-y-1 pl-4">
-                  <li>Stammdaten für dich &amp; dein Studio</li>
-                  <li>Basisinfos für die KI (Mitgliedergröße, Kontaktdaten)</li>
-                  <li>Direkter Übergang zur Zahlung via Stripe</li>
-                </ul>
-              </div>
-            </div>
-          </RevealAnimation>
-
-          {/* Right – Formular */}
-          <RevealAnimation delay={0.25} direction="up">
-            <div className="rounded-2xl border border-stroke-2 dark:border-stroke-6 bg-background-1/90 dark:bg-background-8/90 px-5 py-6 md:px-7 md:py-8 shadow-[0_0_40px_rgba(15,23,42,0.5)] backdrop-blur">
-              <form
-                action={signupAction}
-                onSubmit={handleClientSubmit}
-                className="space-y-6"
-              >
-                {/* Name */}
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="firstName"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Vorname
-                    </label>
-                    <input
-                      required
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      autoComplete="given-name"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      placeholder="Max"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="lastName"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Nachname
-                    </label>
-                    <input
-                      required
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      autoComplete="family-name"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      placeholder="Müller"
-                    />
-                  </div>
-                </div>
-
-                {/* Kontakt */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                  >
-                    Geschäftliche E-Mail
-                  </label>
-                  <input
-                    required
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                    placeholder="studio@dein-gym.de"
-                  />
-                </div>
-
-                {/* Studio */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="studioName"
-                    className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                  >
-                    Studio-Name
-                  </label>
-                  <input
-                    required
-                    id="studioName"
-                    name="studioName"
-                    type="text"
-                    className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                    placeholder="Pilar Gym Wolfsburg"
-                  />
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="studioWebsite"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Studio-Website (optional)
-                    </label>
-                    <input
-                      id="studioWebsite"
-                      name="studioWebsite"
-                      type="url"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      placeholder="https://www.dein-gym.de"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="members"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Mitgliederanzahl (ca.)
-                    </label>
-                    <select
-                      id="members"
-                      name="members"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-[11px] text-sm md:text-base text-secondary dark:text-accent focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      defaultValue="100-300"
-                    >
-                      <option value="<100">Weniger als 100</option>
-                      <option value="100-300">100 – 300</option>
-                      <option value="300-600">300 – 600</option>
-                      <option value="600-1000">600 – 1.000</option>
-                      <option value=">1000">Über 1.000</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Telefon */}
-                <div className="space-y-2">
-                  <label
-                    htmlFor="phone"
-                    className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                  >
-                    Telefonnummer für Rückfragen
-                  </label>
-                  <input
-                    required
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                    placeholder="+49 151 23456789"
-                  />
-                </div>
-
-                {/* Passwort */}
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="password"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Passwort
-                    </label>
-                    <input
-                      required
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="new-password"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="passwordConfirm"
-                      className="text-tagline-1 font-medium text-secondary dark:text-accent"
-                    >
-                      Passwort wiederholen
-                    </label>
-                    <input
-                      required
-                      id="passwordConfirm"
-                      name="passwordConfirm"
-                      type="password"
-                      autoComplete="new-password"
-                      className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-4 py-3 text-sm md:text-base text-secondary dark:text-accent placeholder:text-secondary/50 dark:placeholder:text-accent/40 focus:outline-none focus:border-accent/70 focus:ring-1 focus:ring-accent/60"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                </div>
-
-                {/* Bedingungen */}
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <input
-                      id="terms"
-                      name="terms"
-                      type="checkbox"
-                      required
-                      className="mt-[3px] h-4 w-4 rounded border-stroke-3 dark:border-stroke-6 bg-background-1 text-accent focus:ring-accent/60"
-                    />
-                    <label
-                      htmlFor="terms"
-                      className="text-tagline-2 text-secondary/80 dark:text-accent/80"
-                    >
-                      Ich akzeptiere die{' '}
-                      <Link
-                        href="/terms-conditions"
-                        className={`underline underline-offset-2 ${gradientTextClass}`}
-                      >
-                        AGB
-                      </Link>{' '}
-                      und die{' '}
-                      <Link
-                        href="/privacy"
-                        className={`underline underline-offset-2 ${gradientTextClass}`}
-                      >
-                        Datenschutzerklärung
-                      </Link>
-                      .
-                    </label>
-                  </div>
-                </div>
-
-                {/* Button + Login-Link */}
-                <div className="space-y-3 pt-1">
-                  <button
-                    type="submit"
-                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-md w-full"
-                  >
-                    Weiter zur Zahlung
-                  </button>
-                  <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 text-center">
-                    Du hast bereits Zugang?{' '}
-                    <Link
-                      href="/login-01"
-                      className="font-semibold underline underline-offset-2"
-                    >
-                      Hier einloggen
-                    </Link>
-                  </p>
-                </div>
-              </form>
-            </div>
-          </RevealAnimation>
+        <div className="rounded-2xl border border-stroke-2/70 dark:border-stroke-6/70 bg-background-1/80 dark:bg-background-6/80 p-4 text-xs md:text-sm text-secondary/70 dark:text-accent/80">
+          <p className="font-medium mb-1">Was passiert nach diesem Schritt?</p>
+          <ol className="list-decimal pl-4 space-y-1">
+            <li>Konto erstellen & E-Mail bestätigen.</li>
+            <li>Preise & Plan wählen, Stripe-Checkout abschließen.</li>
+            <li>Onboarding-Assistent starten & deine KI konfigurieren.</li>
+          </ol>
         </div>
       </div>
-    </section>
+
+      {/* Rechte Seite – Formular */}
+      <div className="rounded-2xl border border-stroke-2 dark:border-stroke-6 bg-background-1/90 dark:bg-background-6/90 p-6 md:p-7 shadow-lg shadow-black/5">
+        {renderMessage()}
+
+        <form action={signupAction} className="space-y-5">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Vorname*
+              </label>
+              <input
+                name="firstName"
+                required
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                placeholder="Max"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Nachname*
+              </label>
+              <input
+                name="lastName"
+                required
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                placeholder="Mustermann"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+              Geschäfts-E-Mail*
+            </label>
+            <input
+              name="email"
+              type="email"
+              required
+              className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+              placeholder="you@studio-name.de"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+              Studio-Name*
+            </label>
+            <input
+              name="studioName"
+              required
+              className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+              placeholder="Beispiel: Strong Gym Wolfsburg"
+            />
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Studio-Website (optional)
+              </label>
+              <input
+                name="studioWebsite"
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                placeholder="https://dein-studio.de"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Mitgliederanzahl (ca.)*
+              </label>
+              <select
+                name="members"
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                defaultValue=""
+                required
+              >
+                <option value="" disabled>
+                  Bitte wählen
+                </option>
+                <option value="<200">Unter 200</option>
+                <option value="200-500">200 – 500</option>
+                <option value="500-1000">500 – 1.000</option>
+                <option value=">1000">Über 1.000</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+              Handynummer (für Rückfragen / WhatsApp)* 
+            </label>
+            <input
+              name="phone"
+              required
+              className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+              placeholder="+49 170 1234567"
+            />
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Passwort*
+              </label>
+              <input
+                name="password"
+                type="password"
+                required
+                minLength={8}
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                placeholder="Mind. 8 Zeichen"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-secondary/80 dark:text-accent/80 mb-1">
+                Passwort wiederholen*
+              </label>
+              <input
+                name="passwordConfirm"
+                type="password"
+                required
+                minLength={8}
+                className="w-full rounded-xl border border-stroke-3 dark:border-stroke-6 bg-background-3 dark:bg-background-7 px-3 py-2.5 text-sm focus:outline-none focus:border-accent/80 focus:ring-1 focus:ring-accent/60"
+                placeholder="Nochmal eingeben"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary hover:btn-secondary dark:hover:btn-accent w-full md:w-auto"
+          >
+            Weiter zur Zahlungsseite
+          </button>
+
+          <p className="text-xs text-secondary/60 dark:text-accent/60">
+            Mit dem Fortfahren akzeptierst du unsere Nutzungsbedingungen und die Datenschutzerklärung.
+          </p>
+        </form>
+      </div>
+    </div>
   );
 };
 
