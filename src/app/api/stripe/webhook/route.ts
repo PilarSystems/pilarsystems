@@ -1,26 +1,25 @@
 // src/app/api/stripe/webhook/route.ts
 import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
-import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
-// Stripe-Keys aus Env
+// Stripe-Env-Variablen (können auf Vercel noch fehlen → deshalb KEIN throw hier)
 const stripeSecret = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-if (!stripeSecret) {
-  throw new Error('STRIPE_SECRET_KEY ist nicht gesetzt');
-}
-if (!webhookSecret) {
-  throw new Error('STRIPE_WEBHOOK_SECRET ist nicht gesetzt');
-}
-
-// Stripe-Client – API-Version: 2024-06-20
-// TypeScript meckert wegen Literal-Typ, deshalb casten wir explizit:
-const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2024-06-20' as Stripe.StripeConfig['apiVersion'],
-});
-
 export async function POST(req: NextRequest) {
+  // Wenn Stripe auf Vercel noch nicht konfiguriert ist → sauber 500 zurückgeben
+  if (!stripeSecret || !webhookSecret) {
+    console.error(
+      'Stripe Env-Variablen fehlen (STRIPE_SECRET_KEY oder STRIPE_WEBHOOK_SECRET).'
+    );
+    return new Response('Stripe config missing', { status: 500 });
+  }
+
+  // Stripe-Client – API-Version passend zu deinen Typen
+  const stripe = new Stripe(stripeSecret, {
+    apiVersion: '2025-10-29.clover',
+  });
+
   // Stripe-Signatur aus Header holen
   const sig = req.headers.get('stripe-signature');
   if (!sig) {
@@ -34,11 +33,7 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      rawBody,
-      sig,
-      webhookSecret as string // wir haben oben bereits geprüft, also safe
-    );
+    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err: any) {
     console.error('Stripe Webhook Error:', err);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
@@ -58,30 +53,16 @@ export async function POST(req: NextRequest) {
           session.subscription
         );
 
-        // === Supabase-Teil aktuell optional / soft ===
-        if (!supabaseAdmin) {
-          console.warn(
-            'Supabase Admin nicht initialisiert – überspringe Workspace-Setup im Webhook.'
-          );
-          break;
-        }
-
-        // 🔜 HIER später:
-        // - Workspace / Studio in Supabase anlegen oder updaten
-        // - Subscription-Infos speichern
-        //
-        // Beispiel-Skizze:
-        // const customerId = session.customer as string | null;
-        // const subscriptionId = session.subscription as string | null;
-        // await supabaseAdmin.from('workspaces').insert({...});
-
+        // TODO: später
+        // - Workspace / User in Supabase anlegen/aktualisieren
+        // - Subscription-Status speichern
         break;
       }
 
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice;
         console.log('✅ Invoice bezahlt – ID:', invoice.id);
-        // Später: Rechnungsdaten in DB speichern
+        // TODO: später Rechnungsdaten in DB speichern
         break;
       }
 
@@ -94,7 +75,7 @@ export async function POST(req: NextRequest) {
           'Status:',
           subscription.status
         );
-        // Später: Subscription-Status in DB nachziehen
+        // TODO: Subscription-Status in DB nachziehen
         break;
       }
 
