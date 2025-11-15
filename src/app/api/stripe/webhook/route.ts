@@ -3,16 +3,21 @@ import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
-// Stripe-Secret aus Env holen
+// Stripe-Keys aus Env
 const stripeSecret = process.env.STRIPE_SECRET_KEY;
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 if (!stripeSecret) {
   throw new Error('STRIPE_SECRET_KEY ist nicht gesetzt');
 }
+if (!webhookSecret) {
+  throw new Error('STRIPE_WEBHOOK_SECRET ist nicht gesetzt');
+}
 
-// Stripe-Client – API-Version passend zu deinen installierten Typen
+// Stripe-Client – API-Version: 2024-06-20
+// TypeScript meckert wegen Literal-Typ, deshalb casten wir explizit:
 const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2025-10-29.clover',
+  apiVersion: '2024-06-20' as Stripe.StripeConfig['apiVersion'],
 });
 
 export async function POST(req: NextRequest) {
@@ -26,16 +31,14 @@ export async function POST(req: NextRequest) {
   // Roh-Body lesen (wichtig für Webhook-Validierung)
   const rawBody = await req.text();
 
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!webhookSecret) {
-    console.error('STRIPE_WEBHOOK_SECRET ist nicht gesetzt');
-    return new Response('Webhook secret not configured', { status: 500 });
-  }
-
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(
+      rawBody,
+      sig,
+      webhookSecret as string // wir haben oben bereits geprüft, also safe
+    );
   } catch (err: any) {
     console.error('Stripe Webhook Error:', err);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
@@ -46,84 +49,39 @@ export async function POST(req: NextRequest) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
 
-        const customerEmail =
-          session.customer_details?.email ??
-          (typeof session.customer_email === 'string'
-            ? session.customer_email
-            : null);
+        console.log(
+          '✅ Checkout abgeschlossen – Session:',
+          session.id,
+          'Customer:',
+          session.customer,
+          'Subscription:',
+          session.subscription
+        );
 
-        const subscriptionId =
-          typeof session.subscription === 'string'
-            ? session.subscription
-            : null;
-
-        const customerId =
-          typeof session.customer === 'string' ? session.customer : null;
-
-        const plan =
-          (session.metadata?.plan as string | undefined) ?? 'growth';
-        const billingPeriod =
-          (session.metadata?.billingPeriod as string | undefined) ??
-          'monthly';
-        const priceId =
-          (session.metadata?.priceId as string | undefined) ?? '';
-
-        console.log('✅ checkout.session.completed', {
-          sessionId: session.id,
-          customerEmail,
-          subscriptionId,
-          customerId,
-          plan,
-          billingPeriod,
-          priceId,
-        });
-
-        if (!customerEmail || !subscriptionId || !customerId) {
-          console.error(
-            '❌ Fehlende Pflichtdaten aus Stripe Session (Email / Subscription / Customer)'
+        // === Supabase-Teil aktuell optional / soft ===
+        if (!supabaseAdmin) {
+          console.warn(
+            'Supabase Admin nicht initialisiert – überspringe Workspace-Setup im Webhook.'
           );
           break;
         }
 
-        // 1. Workspace in Supabase anlegen
-        const { data: workspace, error: wsError } = await supabaseAdmin
-          .from('workspaces')
-          .insert({
-            name: `Pilar Workspace · ${customerEmail}`,
-            stripe_customer_id: customerId,
-            stripe_subscription_id: subscriptionId,
-            plan,
-            billing_period: billingPeriod,
-          })
-          .select()
-          .single();
+        // 🔜 HIER später:
+        // - Workspace / Studio in Supabase anlegen oder updaten
+        // - Subscription-Infos speichern
+        //
+        // Beispiel-Skizze:
+        // const customerId = session.customer as string | null;
+        // const subscriptionId = session.subscription as string | null;
+        // await supabaseAdmin.from('workspaces').insert({...});
 
-        if (wsError || !workspace) {
-          console.error('❌ Fehler beim Erstellen des Workspaces:', wsError);
-          break;
-        }
-
-        // 2. Owner-User/Profil anlegen
-        const { error: profileError } = await supabaseAdmin
-          .from('profiles')
-          .insert({
-            email: customerEmail,
-            workspace_id: workspace.id,
-            role: 'owner',
-          });
-
-        if (profileError) {
-          console.error('❌ Fehler beim Erstellen des Profiles:', profileError);
-          break;
-        }
-
-        console.log('✅ Workspace + Owner-Profil erfolgreich erstellt');
         break;
       }
 
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice;
         console.log('✅ Invoice bezahlt – ID:', invoice.id);
+        // Später: Rechnungsdaten in DB speichern
         break;
       }
 
@@ -136,6 +94,7 @@ export async function POST(req: NextRequest) {
           'Status:',
           subscription.status
         );
+        // Später: Subscription-Status in DB nachziehen
         break;
       }
 
