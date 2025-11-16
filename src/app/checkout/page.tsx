@@ -3,7 +3,7 @@ import NavbarOne from '@/components/shared/header/NavbarOne';
 import FooterThree from '@/components/shared/footer/FooterThree';
 import { defaultMetadata } from '@/utils/generateMetaData';
 import type { Metadata } from 'next';
-import { Fragment } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 import Stripe from 'stripe';
@@ -19,7 +19,7 @@ const stripeSecret = process.env.STRIPE_SECRET_KEY ?? '';
 const stripe =
   stripeSecret && typeof stripeSecret === 'string'
     ? new Stripe(stripeSecret, {
-        apiVersion: '2024-06-20',
+        apiVersion: '2025-10-29.clover',
       })
     : null;
 
@@ -125,9 +125,8 @@ type CheckoutPageProps = {
 const CheckoutPage = ({ searchParams }: CheckoutPageProps) => {
   const status = searchParams?.status;
   const error = searchParams?.error;
-  const planFromQuery = (searchParams?.plan as string | undefined) ?? 'starter';
 
-  let banner: JSX.Element | null = null;
+  let banner: ReactNode = null;
 
   if (status === 'signup_success') {
     banner = (
@@ -173,10 +172,7 @@ const CheckoutPage = ({ searchParams }: CheckoutPageProps) => {
       <main className="bg-background-3 dark:bg-background-7 min-h-screen">
         <section className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16 py-16 md:py-20 lg:py-24">
           {banner}
-          <CheckoutForm
-            checkoutAction={handleCheckout}
-            defaultPlanFromQuery={planFromQuery}
-          />
+          <CheckoutForm checkoutAction={handleCheckout} />
         </section>
       </main>
 
