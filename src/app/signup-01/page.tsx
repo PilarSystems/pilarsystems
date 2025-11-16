@@ -29,7 +29,12 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
+  if (user && searchParams?.status !== 'confirmed') {
+    redirect('/checkout');
+  }
+
+  // 🔁 Wenn aus der Mail bestätigt → direkt weiter zum Checkout
+  if (searchParams?.status === 'confirmed') {
     redirect('/checkout');
   }
 
@@ -61,12 +66,12 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
-    // 📨 Supabase SignUp + Bestätigungslink → /checkout?status=confirmed
+    // 📨 Supabase SignUp + Bestätigungslink → zurück auf signup-01 mit status=confirmed
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${appUrl}/checkout?status=confirmed`,
+        emailRedirectTo: `${appUrl}/signup-01?status=confirmed`,
         data: {
           firstName,
           lastName,

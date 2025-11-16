@@ -47,7 +47,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
       );
     }
 
-    // ✅ Signup erfolgreich → Mail verschickt, warten auf Bestätigung
+    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
     if (status === 'signup_success') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -68,7 +68,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
             <span className="font-semibold">
               Öffne jetzt dein Postfach und klicke auf den Bestätigungslink.
             </span>{' '}
-            Danach schicken wir dich automatisch in den Zahlungs-Schritt.
+            Danach leiten wir dich automatisch in den nächsten Schritt.
           </p>
           <p className="mt-2 text-xs opacity-80">
             Tipp: Schau auch im Spam- oder Werbe-Ordner nach, falls die E-Mail nicht
@@ -78,12 +78,12 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
       );
     }
 
-    // Optional: falls wir später ?status=confirmed irgendwo nutzen wollen
+    // ✅ Schritt 2 (optional sichtbar): E-Mail aus Link bestätigt
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst jetzt mit der Zahlung und
-          dem Setup deiner KI-Rezeption fortfahren.
+          Deine E-Mail wurde erfolgreich bestätigt. Du wirst jetzt zum Zahlungs-Schritt
+          weitergeleitet.
         </div>
       );
     }
