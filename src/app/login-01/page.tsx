@@ -22,33 +22,21 @@ type LoginPageProps = {
 };
 
 const LoginPage = async ({ searchParams }: LoginPageProps) => {
-  const supabase = await createSupabaseServerClient();
-  const redirectTo = searchParams?.redirectTo;
+  const redirectToFromQuery = searchParams?.redirectTo;
 
-  // Wenn schon eingeloggt → direkt weiterleiten
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (session) {
-    if (redirectTo && redirectTo.startsWith('/')) {
-      redirect(redirectTo);
-    }
-    redirect('/dashboard');
-  }
-
-  // Server Action: Supabase-Login
+  // ✅ Server Action: ECHTER Login
   async function loginAction(formData: FormData) {
     'use server';
 
     const email = (formData.get('email') ?? '').toString().trim();
     const password = (formData.get('password') ?? '').toString();
-    const redirectToFromForm =
+    const redirectTo =
       ((formData.get('redirectTo') as string | null) || undefined)?.toString();
 
+    // Felder leer → zurück mit Fehlermeldung
     if (!email || !password) {
-      const qp = redirectToFromForm
-        ? `?error=missing_fields&redirectTo=${encodeURIComponent(redirectToFromForm)}`
+      const qp = redirectTo
+        ? `?error=missing_fields&redirectTo=${encodeURIComponent(redirectTo)}`
         : '?error=missing_fields';
       redirect('/login-01' + qp);
     }
@@ -62,17 +50,19 @@ const LoginPage = async ({ searchParams }: LoginPageProps) => {
 
     if (error) {
       console.error('Supabase login error:', error);
-      const qp = redirectToFromForm
-        ? `?error=invalid_credentials&redirectTo=${encodeURIComponent(
-            redirectToFromForm,
-          )}`
+
+      // ❌ Egal ob falsches Passwort, kein Account, nicht bestätigt → alles als "invalid_credentials"
+      // Auf der Login-Seite sagen wir dann: "E-Mail/Passwort falsch oder noch kein Konto → hier registrieren".
+      const qp = redirectTo
+        ? `?error=invalid_credentials&redirectTo=${encodeURIComponent(redirectTo)}`
         : '?error=invalid_credentials';
+
       redirect('/login-01' + qp);
     }
 
-    // Erfolg → dorthin, woher er kam (z. B. /checkout), sonst Dashboard
-    if (redirectToFromForm && redirectToFromForm.startsWith('/')) {
-      redirect(redirectToFromForm);
+    // ✅ Erfolg → dorthin, woher er kam (z. B. /checkout), sonst Dashboard
+    if (redirectTo && redirectTo.startsWith('/')) {
+      redirect(redirectTo);
     }
 
     redirect('/dashboard');
@@ -91,7 +81,7 @@ const LoginPage = async ({ searchParams }: LoginPageProps) => {
             loginAction={loginAction}
             error={searchParams?.error}
             status={searchParams?.status}
-            redirectTo={redirectTo}
+            redirectTo={redirectToFromQuery}
           />
         </section>
       </main>
