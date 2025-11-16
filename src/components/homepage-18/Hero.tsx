@@ -12,15 +12,15 @@ import LinkButton from '../ui/button/LinkButton';
 const benefits = [
   {
     id: 1,
-    text: 'Alle Anfragen aus Telefon, WhatsApp, E-Mail & DMs in einer KI-Inbox.',
+    text: 'Telefonanlage, WhatsApp, E-Mail, DMs & Trainingspläne in EINER Plattform – kein Tool-Zoo mehr.',
   },
   {
     id: 2,
-    text: 'Automatisches Follow-up bis zum gebuchten Probetraining oder Vertragsabschluss.',
+    text: 'KI übernimmt Qualifizierung, Follow-up & Terminbuchung bis zum unterschriebenen Vertrag.',
   },
   {
     id: 3,
-    text: 'Trainingspläne, Terminplanung & Mitgliederkommunikation in einem Dashboard.',
+    text: 'Growth-Analytics & Kampagnen-Vorschläge statt „blinder“ Studio-Software ohne echte Intelligenz.',
   },
 ];
 
@@ -66,9 +66,9 @@ const Hero = () => {
 
             <RevealAnimation delay={0.35}>
               <p className="max-w-[640px] mb-6 text-secondary/80 dark:text-accent/80">
-                PILAR SYSTEMS bündelt Telefonanlage, WhatsApp, E-Mail, DMs, Terminbuchung, Trainingspläne,
-                Growth-Analytics und Support in einer Plattform. Basic, Pro oder Elite – du kombinierst nur die
-                KI-Module, die dein Studio wirklich braucht.
+                PILAR SYSTEMS ersetzt klassische Studio-Software, Callcenter und Excel-Listen: Telefonanlage, Messaging,
+                Trainingspläne, Growth-Analytics und Support laufen in einem System – modular buchbar als Basic, Pro
+                oder Elite, genau passend zu deinem Studio.
               </p>
             </RevealAnimation>
 
@@ -118,19 +118,20 @@ const Hero = () => {
                   </div>
                 </figure>
                 <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
-                  Studios & Teams testen bereits die PILAR Plattform.
+                  Studios & Teams testen bereits die PILAR Plattform – ohne Agenturprojekt, ohne lange Onboarding-Calls.
                 </p>
               </div>
             </RevealAnimation>
           </div>
 
-          {/* RIGHT – Clean Dashboard Card */}
+          {/* RIGHT – Clean, perfekt ausgerichtete Dashboard Card */}
           <RevealAnimation delay={0.4}>
             <div className="relative mx-auto max-w-[480px] w-full lg:translate-y-[-8px]">
               <div className="absolute -inset-6 rounded-[32px] bg-white/40 blur-3xl dark:bg-background-9/40" />
 
               <div className="relative rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_22px_60px_rgba(15,23,42,0.18)] dark:border-background-6 dark:bg-background-8/95">
-                <div className="mb-4 flex items-center justify-between gap-2">
+                {/* Header */}
+                <div className="mb-6 flex items-center justify-between gap-2">
                   <div>
                     <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">Heute im Studio</p>
                     <h3 className="text-heading-5 font-normal text-secondary dark:text-accent">
@@ -142,34 +143,40 @@ const Hero = () => {
                   </span>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2 mb-4">
-                  <div className="rounded-2xl bg-background-2 p-4 dark:bg-background-7">
-                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
-                      Automatisierte Kontakte
-                    </p>
-                    <div className="mt-1 flex items-baseline gap-1">
-                      <span className="text-sm text-secondary/70 dark:text-accent/70">heute</span>
-                      <p className="text-heading-5 font-normal text-secondary dark:text-accent">
-                        <NumberAnimation
-                          number={240}
-                          speed={1400}
-                          interval={160}
-                          rooms={3}
-                          heightSpaceRatio={2}
-                        />
-                        +
+                {/* Metrics Row */}
+                <div className="grid gap-4 sm:grid-cols-2 mb-6">
+                  {/* Automatisierte Kontakte */}
+                  <div className="rounded-2xl bg-background-2 p-4 dark:bg-background-7 flex flex-col gap-2">
+                    <div>
+                      <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                        Automatisierte Kontakte
                       </p>
+                      <p className="text-xs text-secondary/60 dark:text-accent/60 mt-0.5">heute</p>
                     </div>
-                    <div className="mt-3">
+                    <p className="text-heading-5 font-normal text-secondary dark:text-accent">
+                      <NumberAnimation
+                        number={240}
+                        speed={1400}
+                        interval={160}
+                        rooms={3}
+                        heightSpaceRatio={2}
+                      />
+                      +
+                    </p>
+                    <div className="mt-1">
                       <Progress />
                     </div>
                   </div>
 
-                  <div className="rounded-2xl bg-background-1 p-4 dark:bg-background-6">
-                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
-                      Gebuchte Probetrainings
-                    </p>
-                    <p className="mt-1 text-heading-5 font-normal text-secondary dark:text-accent">
+                  {/* Probetrainings */}
+                  <div className="rounded-2xl bg-background-1 p-4 dark:bg-background-6 flex flex-col gap-2">
+                    <div>
+                      <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                        Gebuchte Probetrainings
+                      </p>
+                      <p className="text-xs text-secondary/60 dark:text-accent/60 mt-0.5">heute</p>
+                    </div>
+                    <p className="text-heading-5 font-normal text-secondary dark:text-accent">
                       <NumberAnimation
                         number={37}
                         speed={1400}
@@ -178,14 +185,15 @@ const Hero = () => {
                         heightSpaceRatio={2}
                       />
                     </p>
-                    <p className="mt-1 text-tagline-2 text-emerald-600 dark:text-emerald-400">
+                    <p className="text-tagline-2 text-emerald-600 dark:text-emerald-400 mt-0.5">
                       +87% vs. letzter Monat
                     </p>
                   </div>
                 </div>
 
+                {/* Saved Time Row */}
                 <div className="rounded-2xl bg-background-2/80 p-4 dark:bg-background-7/90">
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center justify-between gap-6">
                     <div>
                       <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
                         Gesparte Zeit im Team
@@ -201,7 +209,7 @@ const Hero = () => {
                         h / Monat
                       </p>
                     </div>
-                    <div className="text-right text-tagline-2 text-secondary/70 dark:text-accent/70">
+                    <div className="text-right text-tagline-2 text-secondary/70 dark:text-accent/70 space-y-0.5">
                       <p>Weniger Telefon</p>
                       <p>Mehr Betreuung auf der Fläche</p>
                     </div>
