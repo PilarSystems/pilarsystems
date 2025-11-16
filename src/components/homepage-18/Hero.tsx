@@ -1,18 +1,8 @@
 'use client';
 
-import { useParallaxEffect } from '@/hooks/useParallaxEffect';
-import { CheckIcon, DownArrowIcon, TransferSuccessIcon, UpArrowIcon } from '@/icons';
+import { CheckIcon } from '@/icons';
 import avatar9 from '@public/images/avatar/avatar-9.png';
 import gradient12 from '@public/images/gradient/gradient-12.png';
-import heroBottomImage from '@public/images/home-page-18/hero-bottom-image.png';
-import heroImageDark from '@public/images/home-page-18/hero-image-dark.png';
-import heroImage from '@public/images/home-page-18/hero-image.png';
-import heroLeftCursorDark from '@public/images/home-page-18/hero-left-cursor-dark.svg';
-import heroLeftCursor from '@public/images/home-page-18/hero-left-cursor.svg';
-import misc06Dark from '@public/images/home-page-18/misc-06-dark.png';
-import misc06 from '@public/images/home-page-18/misc-06.png';
-import badge3 from '@public/images/home-page-7/badge-3.svg';
-import badgeDark3 from '@public/images/home-page-7/badge-dark-3.svg';
 import Image from 'next/image';
 import NumberAnimation from '../animation/NumberAnimation';
 import RevealAnimation from '../animation/RevealAnimation';
@@ -34,250 +24,192 @@ const benefits = [
   },
 ];
 
-const experienceList = [
-  {
-    id: 1,
-    text: 'Basic, Pro & Elite – Module für KI-Rezeption, Telefon, Coach & Growth frei kombinierbar.',
-  },
-  {
-    id: 2,
-    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse, PT-Sessions und Calls.',
-  },
-  {
-    id: 3,
-    text: 'Geführter Setup-Wizard: In wenigen Minuten live – komplett in deinem Studio-Branding.',
-  },
-];
-
 const Hero = () => {
-  const sceneRef = useParallaxEffect();
   return (
     <section
-      ref={sceneRef}
-      className="pt-[320px] md:pt-[200px] lg:pt-[200px] xl:pt-[260px] pb-16 md:pb-20 lg:pb-[120px] xl:pb-[150px] bg-[url('/images/home-page-18/hero-bg.png')] bg-no-repeat bg-top relative z-0"
-      id="scene">
-      {/*Hero Title Content*/}
-      <div className="main-container flex flex-col items-center space-y-[124px] relative z-10 mb-[100px] lg:mb-[150px] xl:mb-[220px]">
-        {/*Hero shape left item*/}
-        <div className="absolute -top-[160px] md:-top-[80px] w-[323px] lg:top-[50px] left-5 lg:left-[50px] 2xl:-left-[120px] md:rotate-8 -z-10">
-          <RevealAnimation delay={0.9} useSpring offset={100} duration={1.9}>
-            <figure
-              className="w-[112px] top-0 absolute right-0 parallax-effect"
-              data-parallax-value="1.2"
-              data-parallax-y="1.2"
-              data-parallax-x="1.2">
-              <Image src={heroLeftCursor} alt="shape" className="w-full h-full dark:hidden" />
-              <Image src={heroLeftCursorDark} alt="shape" className="w-full h-full hidden dark:inline-block" />
-            </figure>
-          </RevealAnimation>
-          <RevealAnimation delay={0.8} useSpring offset={80} duration={2.9}>
-            <div className="w-[256px] absolute top-[60px] lg:top-[160px] xl:top-[60px] left-0 md:left-6 lg:left-0 space-y-4">
-              <div
-                data-progress-item=""
-                data-progress-value={48}
-                className="bg-white dark:bg-black p-4 w-full space-y-4 rounded-xl">
-                {/* heading  */}
-                <div className="flex items-center justify-between">
-                  <p className="text-secondary leading-[150%] dark:text-accent">
-                    Automatisierte Kontakte heute
-                  </p>
-                  <p className="text-lg flex items-center font-medium leading-[150%] text-secondary dark:text-accent">
-                    €
-                    <NumberAnimation number={80224} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
-                  </p>
-                </div>
-                {/* progress bar  */}
-                <Progress />
-              </div>
-              <div className="w-full flex gap-4">
-                {/* transfer success  */}
-                <div className="shrink-0 flex items-center flex-col bg-secondary dark:bg-background-9 w-[153px] h-24 gap-1 p-4 rounded-xl">
-                  <span>
-                    <TransferSuccessIcon />
-                  </span>
-                  <span className="text-white dark:text-white">Neuer Vertrag heute</span>
-                </div>
-                <div className="bg-background-1 dark:bg-secondary p-4 flex items-center justify-center rounded-xl">
-                  <Image
-                    src={avatar9}
-                    alt="shape"
-                    className="size-[56px] rounded-full bg-linear-[156deg,_#FFF_32.92%,_#C6F56F_91%]"
-                  />
-                </div>
-              </div>
-            </div>
-          </RevealAnimation>
+      id="scene"
+      className="
+        relative z-0 overflow-hidden
+        pt-32 md:pt-40 lg:pt-48
+        pb-16 md:pb-20 lg:pb-28
+        bg-gradient-to-b from-[#f5f7ff] via-white to-[#f5fbff]
+        dark:from-background-5 dark:via-background-7 dark:to-background-8
+      "
+    >
+      {/* weiches, dezentes Gradient-Overlay */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -right-[20%] -top-[40%] w-[640px] opacity-60 blur-3xl dark:opacity-40">
+          <Image src={gradient12} alt="Gradient" className="w-full h-full object-cover" />
         </div>
-        {/*Hero shape right item*/}
-        <div className="absolute -top-[200px] md:-top-[80px] w-[323px] lg:top-[50px] right-5 lg:right-[50px] 2xl:-right-[120px] -rotate-8 -z-12">
-          <RevealAnimation delay={0.9} useSpring offset={100} duration={1.9}>
-            <figure
-              className="w-[132px] top-0 absolute left-0 parallax-effect hidden sm:block"
-              data-parallax-value="1.2"
-              data-parallax-y="1.2"
-              data-parallax-x="-1.2">
-              <Image src={badge3} alt="shape" className="w-full h-full dark:hidden" />
-              <Image src={badgeDark3} alt="shape" className="w-full h-full hidden dark:inline-block" />
-            </figure>
-          </RevealAnimation>
-          <RevealAnimation delay={0.9} useSpring offset={50} duration={3.9}>
-            <div className="w-[250px] lg:w-[270px] 2xl:w-[288px] absolute top-[60px] lg:top-[150px] xl:top-[60px] sm:right-5 xl:right-0 bg-white dark:bg-black rounded-2xl p-4 lg:p-6 hidden sm:block">
-              <div className="text-left">
-                <span className="text-tagline-2 font-normal text-secondary dark:text-accent">
-                  Aktiver Mitgliederwert
-                </span>
-                <h3 className="text-heading-5 flex items-center lg:text-heading-3 font-normal leading-[1.2] mt-2 mb-[30px]">
-                  €
-                  <NumberAnimation number={45324} speed={2000} interval={200} rooms={5} heightSpaceRatio={2} />
-                </h3>
-              </div>
-              <div className="flex gap-1 lg:gap-3">
-                <div className="bg-secondary dark:bg-background-7 rounded-xl p-4 space-y-2 flex-1 text-left">
-                  <div className="flex items-center justify-start gap-2 text-tagline-2 text-accent dark:text-accent">
-                    Neue Probetrainings
-                    <span className="bg-ns-green flex items-center justify-center rounded-full size-[18px] p-1">
-                      <DownArrowIcon className="w-[8px] h-[9px]" />
-                    </span>
-                  </div>
-                  <div className="text-lg flex items-center font-medium leading-[1.5] text-accent dark:text-accent">
-                    €
-                    <NumberAnimation number={48000} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
-                  </div>
-                </div>
-                <div className="bg-background-4 dark:bg-background-5 rounded-xl p-4 space-y-2 flex-1 text-left">
-                  <div className="flex items-center justify-start gap-2 text-tagline-2 text-secondary dark:text-accent">
-                    Kündigungen
-                    <span className="bg-ns-red flex items-center justify-center rounded-full size-[18px] p-1">
-                      <UpArrowIcon className="w-[8px] h-[9px]" />
-                    </span>
-                  </div>
-                  <div className="text-lg flex items-center font-medium leading-[1.5] text-secondary dark:text-accent">
-                    €
-                    <NumberAnimation number={2321} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </RevealAnimation>
-        </div>
-        <div className="text-left md:text-center max-md:pt-[150px] max-lg:pt-[200px]">
-          <RevealAnimation delay={0.15}>
-            <p className="inline-flex items-center rounded-full border border-border bg-background-1/60 px-3 py-1 text-[13px] font-medium uppercase tracking-[0.14em] text-secondary dark:bg-background-8/80 dark:text-accent">
-              All-in-One KI-Infrastruktur für Gyms, Coaches & Studios
-            </p>
-          </RevealAnimation>
-          <RevealAnimation delay={0.25}>
-            <h1 className="mt-4 mb-4">
-              Die komplette KI-Plattform
-              <br className="hidden md:block" />
-              für dein Fitnessstudio.
-            </h1>
-          </RevealAnimation>
-          <RevealAnimation delay={0.35}>
-            <p className="max-w-[720px] mx-auto mb-6">
-              PILAR SYSTEMS bündelt Telefonanlage, WhatsApp, E-Mail, DMs, Terminbuchung, Trainingspläne, Growth-Analytics
-              und Support in einer Plattform. Basic, Pro oder Elite – du kombinierst nur die KI-Module, die dein Studio
-              wirklich braucht.
-            </p>
-          </RevealAnimation>
-          <ul className="list-none mb-14 flex flex-col md:flex-row md:items-center md:justify-center md:flex-wrap lg:flex-nowrap gap-4 md:gap-9 w-fit md:mx-auto">
-            {benefits.map((item, idx) => (
-              <RevealAnimation key={item.id} delay={0.45 + idx * 0.1}>
-                <li className="flex items-center gap-2.5">
-                  <span className="size-[19px] rounded-full bg-secondary dark:bg-accent/20">
-                    <CheckIcon className="w-[18px] h-[18px] fill-white dark:fill-accent" />
-                  </span>
-                  <span className="text-tagline-2 dark:text-accent/60">{item.text}</span>
-                </li>
-              </RevealAnimation>
-            ))}
-          </ul>
-          <RevealAnimation delay={0.7}>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
-              <div className="block md:inline-block">
-                <LinkButton
-                  href="/signup-01"
-                  className="btn btn-primary hover:btn-white dark:btn-accent btn-xl dark:hover:btn-primary w-[90%] md:w-auto mx-auto"
-                  aria-label="Account erstellen und mit PILAR SYSTEMS starten">
-                  Jetzt PILAR testen
-                </LinkButton>
-              </div>
-              <LinkButton
-                href="#pricing"
-                className="btn btn-ghost btn-md text-secondary dark:text-accent hover:btn-secondary/10"
-                aria-label="Zu den Preisen und Plänen von PILAR SYSTEMS springen">
-                Pläne vergleichen (Basic, Pro, Elite)
-              </LinkButton>
-            </div>
-          </RevealAnimation>
-          <RevealAnimation delay={0.85} instant duration={0.9}>
-            <figure className="max-w-[408px] mx-auto mt-20 md:mt-[124px] rounded-[20px] flex justify-center items-center overflow-hidden">
-              <Image src={heroImage} alt="hero" className="inline-block dark:hidden w-full h-full object-cover" />
-              <Image src={heroImageDark} alt="hero" className="hidden dark:inline-block w-full h-full object-cover" />
-            </figure>
-          </RevealAnimation>
+        <div className="absolute -left-[20%] bottom-[-30%] w-[520px] opacity-50 blur-3xl dark:opacity-30">
+          <Image src={gradient12} alt="Gradient" className="w-full h-full object-cover rotate-180" />
         </div>
       </div>
-      {/*Hero Bottom item*/}
+
       <div className="main-container">
-        <div className="relative z-0">
-          <div className="w-full h-full bg-white dark:bg-background-8 absolute -z-10 overflow-hidden rounded-[20px]">
-            <RevealAnimation delay={0.7} useSpring offset={140} direction="right">
-              <div className="-z-10 absolute lg:-top-[155%] md:-top-[65%] -top-[75%] -right-[75%] lg:-right-[40%] md:-right-[70%] md:rotate-[60deg] rotate-[10deg] size-[1060px] select-none pointer-events-none">
-                <Image src={gradient12} alt="gradient" />
+        <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-2">
+          {/* LEFT – Text + Benefits + CTAs */}
+          <div className="text-left">
+            <RevealAnimation delay={0.15}>
+              <p className="inline-flex items-center rounded-full border border-border/70 bg-white/70 px-3 py-1 text-[13px] font-medium uppercase tracking-[0.14em] text-secondary dark:bg-background-8/80 dark:text-accent">
+                All-in-One KI-Infrastruktur für Gyms, Coaches & Studios
+              </p>
+            </RevealAnimation>
+
+            <RevealAnimation delay={0.25}>
+              <h1 className="mt-4 mb-4 max-w-[720px]">
+                Die komplette KI-Plattform
+                <br className="hidden md:block" />
+                für dein Fitnessstudio.
+              </h1>
+            </RevealAnimation>
+
+            <RevealAnimation delay={0.35}>
+              <p className="max-w-[640px] mb-6 text-secondary/80 dark:text-accent/80">
+                PILAR SYSTEMS bündelt Telefonanlage, WhatsApp, E-Mail, DMs, Terminbuchung, Trainingspläne,
+                Growth-Analytics und Support in einer Plattform. Basic, Pro oder Elite – du kombinierst nur die
+                KI-Module, die dein Studio wirklich braucht.
+              </p>
+            </RevealAnimation>
+
+            <ul className="mb-10 flex flex-col gap-3">
+              {benefits.map((item, idx) => (
+                <RevealAnimation key={item.id} delay={0.45 + idx * 0.1}>
+                  <li className="flex items-start gap-2.5">
+                    <span className="mt-[2px] flex size-[19px] items-center justify-center rounded-full bg-secondary dark:bg-accent/20 shrink-0">
+                      <CheckIcon className="h-[18px] w-[18px] fill-white dark:fill-accent" />
+                    </span>
+                    <span className="text-tagline-2 text-secondary/90 dark:text-accent/80">{item.text}</span>
+                  </li>
+                </RevealAnimation>
+              ))}
+            </ul>
+
+            <RevealAnimation delay={0.7}>
+              <div className="flex flex-col items-start gap-4 md:flex-row md:items-center">
+                <LinkButton
+                  href="/signup-01"
+                  className="btn btn-primary btn-xl w-full md:w-auto hover:btn-white dark:btn-accent dark:hover:btn-primary"
+                  aria-label="Account erstellen und mit PILAR SYSTEMS starten"
+                >
+                  Jetzt PILAR testen
+                </LinkButton>
+
+                <LinkButton
+                  href="#pricing"
+                  className="btn btn-ghost btn-md text-secondary dark:text-accent hover:btn-secondary/10"
+                  aria-label="Zu den Preisen und Plänen von PILAR SYSTEMS springen"
+                >
+                  Pläne vergleichen (Basic, Pro, Elite)
+                </LinkButton>
+              </div>
+            </RevealAnimation>
+
+            <RevealAnimation delay={0.85}>
+              <div className="mt-6 flex items-center gap-3">
+                <figure className="flex -space-x-2">
+                  <Image
+                    src={avatar9}
+                    alt="Pilar Systems Kunde"
+                    className="size-8 rounded-full border border-white bg-linear-[156deg,_#FFF_32.92%,_#C6F56F_91%]"
+                  />
+                  <div className="size-8 rounded-full border border-white bg-secondary/10 text-xs flex items-center justify-center text-secondary/70 dark:text-accent/80">
+                    +240
+                  </div>
+                </figure>
+                <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                  Studios & Teams testen bereits die PILAR Plattform.
+                </p>
               </div>
             </RevealAnimation>
           </div>
-          <div className="flex flex-col lg:flex-row">
-            <div className="lg:flex-1/2 py-16 max-lg:px-5 lg:pl-14">
-              <div className="mb-9">
-                <RevealAnimation delay={0.2}>
-                  <h2 className="mb-3">Mehr Leads, bessere Auslastung, klarer Überblick.</h2>
-                </RevealAnimation>
-                <RevealAnimation delay={0.3}>
-                  <p className="max-w-[530px]">
-                    PILAR SYSTEMS ist mehr als eine KI-Rezeption: Deine Plattform übernimmt Anfragen, Follow-ups,
-                    Terminbuchungen, Trainingspläne, Kampagnen-Ideen und Growth-Analysen – zentral steuerbar im
-                    Dashboard, ohne komplizierte Integrations-Calls.
-                  </p>
-                </RevealAnimation>
+
+          {/* RIGHT – Clean Dashboard Card */}
+          <RevealAnimation delay={0.4}>
+            <div className="relative mx-auto max-w-[520px] w-full">
+              <div className="absolute -inset-8 rounded-[32px] bg-white/40 blur-3xl dark:bg-background-9/40" />
+
+              <div className="relative rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_22px_60px_rgba(15,23,42,0.18)] dark:border-background-6 dark:bg-background-8/95">
+                <div className="mb-4 flex items-center justify-between gap-2">
+                  <div>
+                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">Heute im Studio</p>
+                    <h3 className="text-heading-5 font-normal text-secondary dark:text-accent">
+                      Live-Dashboard
+                    </h3>
+                  </div>
+                  <span className="rounded-full bg-secondary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-secondary dark:bg-accent/10 dark:text-accent">
+                    Pilar OS
+                  </span>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 mb-4">
+                  <div className="rounded-2xl bg-background-2 p-4 dark:bg-background-7">
+                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                      Automatisierte Kontakte
+                    </p>
+                    <div className="mt-1 flex items-baseline gap-1">
+                      <span className="text-sm text-secondary/70 dark:text-accent/70">heute</span>
+                      <p className="text-heading-5 font-normal text-secondary dark:text-accent">
+                        <NumberAnimation
+                          number={240}
+                          speed={1400}
+                          interval={160}
+                          rooms={3}
+                          heightSpaceRatio={2}
+                        />
+                        +
+                      </p>
+                    </div>
+                    <div className="mt-3">
+                      <Progress />
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-background-1 p-4 dark:bg-background-6">
+                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                      Gebuchte Probetrainings
+                    </p>
+                    <p className="mt-1 text-heading-5 font-normal text-secondary dark:text-accent">
+                      <NumberAnimation
+                        number={37}
+                        speed={1400}
+                        interval={180}
+                        rooms={2}
+                        heightSpaceRatio={2}
+                      />
+                    </p>
+                    <p className="mt-1 text-tagline-2 text-emerald-600 dark:text-emerald-400">
+                      +87% vs. letzter Monat
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-background-2/80 p-4 dark:bg-background-7/90">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
+                        Gesparte Zeit im Team
+                      </p>
+                      <p className="mt-1 text-heading-5 font-normal text-secondary dark:text-accent">
+                        <NumberAnimation
+                          number={52}
+                          speed={1400}
+                          interval={160}
+                          rooms={2}
+                          heightSpaceRatio={2}
+                        />
+                        h / Monat
+                      </p>
+                    </div>
+                    <div className="text-right text-tagline-2 text-secondary/70 dark:text-accent/70">
+                      <p>Weniger Telefon</p>
+                      <p>Mehr Betreuung auf der Fläche</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <ul className="list-none space-y-2 mb-14">
-                {experienceList.map((item, idx) => (
-                  <RevealAnimation key={item.id} delay={0.4 + idx * 0.1}>
-                    <li className="flex items-center gap-3">
-                      <span className="size-[19px] rounded-full bg-secondary dark:bg-accent/20 flex items-center justify-center">
-                        <CheckIcon className="w-[18px] h-[18px] fill-white" />
-                      </span>
-                      <p className="text-secondary dark:text-accent">{item.text}</p>
-                    </li>
-                  </RevealAnimation>
-                ))}
-              </ul>
-              <RevealAnimation delay={0.7}>
-                <div className="text-center sm:text-left">
-                  <LinkButton
-                    href="/our-team-02"
-                    className="btn btn-secondary btn-md hover:btn-primary dark:btn-accent w-[85%] md:w-auto mx-auto">
-                    Mehr über PILAR SYSTEMS
-                  </LinkButton>
-                </div>
-              </RevealAnimation>
             </div>
-            <div className="lg:flex-1/2 lg:pe-[42px]">
-              <RevealAnimation delay={0.5} direction="right">
-                <div className="relative h-full max-lg:max-w-[525px] max-lg:mx-auto">
-                  <figure className="absolute max-w-[152px] w-full -rotate-[30deg] -left-5 md:left-0 lg:left-2 top-[100px] md:top-[200px] lg:top-10">
-                    <Image src={misc06} alt="shape" className="w-full h-fill dark:hidden" />
-                    <Image src={misc06Dark} alt="shape" className="w-full h-full hidden dark:inline-block" />
-                  </figure>
-                  <figure className="lg:absolute lg:right-0 lg:bottom-0 max-w-[525px] max-lg:mx-auto">
-                    <Image src={heroBottomImage} alt="shape" className="w-full h-full" />
-                  </figure>
-                </div>
-              </RevealAnimation>
-            </div>
-          </div>
+          </RevealAnimation>
         </div>
       </div>
     </section>
