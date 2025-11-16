@@ -6,12 +6,14 @@ import FooterOne from '@/components/shared/footer/FooterOne';
 import NavbarOne from '@/components/shared/header/NavbarOne';
 import PageHero from '@/components/shared/PageHero';
 import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Fragment } from 'react';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Pricing 02 - NextSaaS',
+  title: 'Preise & Pläne – Pilar Systems',
+  description:
+    'Übersicht aller Pilar Systems Tarife: Basic, Pro und Elite. Einmalige Setup-Gebühr plus monatliche Lizenz – speziell für Fitnessstudios, Coaches & Studios.',
 };
 
 const Pricing02 = () => {
@@ -23,17 +25,30 @@ const Pricing02 = () => {
         megaMenuColor="!bg-accent dark:!bg-background-9"
       />
       <main className="bg-background-1 dark:bg-background-6">
-        <PageHero title="Pricing 02" heading="Pricing 02 " link="/pricing-02" />
+        <PageHero
+          title="Preise"
+          heading="Preise & Pläne"
+          link="/pricing-02"
+          className="pt-24 md:pt-32 lg:pt-40 xl:pt-[200px]"
+        />
+
+        {/* Haupt-Pricing-Sektion */}
         <Pricing />
+
+        {/* Vertrauen / Value-Block */}
         <Client />
+
+        {/* FAQ */}
         <Faq />
+
+        {/* Abschluss-CTA */}
         <CTAV1
           className="dark:bg-background-5 bg-background-1"
-          badgeText="Get started"
-          badgeClass="!badge-yellow-v2"
-          ctaHeading="Build a complete website using the assistance"
-          description="Start your free trial today and see your ideas come to life easily and creatively."
-          ctaBtnText="Get started"
+          badgeText="Nächster Schritt"
+          badgeClass="!badge-green"
+          ctaHeading="Starte jetzt mit deiner KI-Infrastruktur fürs Studio."
+          description="Buche deinen Plan, schließe das Setup ab und lass Pilar Systems Anfragen, Follow-ups und Trainingspläne übernehmen – während dein Team sich auf die Fläche konzentriert."
+          ctaBtnText="Jetzt Pilar testen"
           btnClass="btn-primary hover:btn-secondary dark:hover:btn-accent"
         />
       </main>

@@ -13,6 +13,10 @@ const Client = () => {
               <h3 className="text-heading-5 md:text-heading-4">
                 Weniger Telefonstress. Mehr Probetrainings. Klarere Prozesse.
               </h3>
+              <p className="mt-3 text-secondary/60 dark:text-accent/60 text-tagline-2">
+                Pilar Systems ersetzt Tool-Chaos und lose Excel-Listen durch eine zentrale KI-Plattform für
+                Kommunikation, Qualifizierung und Trainingspläne.
+              </p>
             </div>
           </RevealAnimation>
 
@@ -27,17 +31,13 @@ const Client = () => {
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-secondary dark:text-accent">
-                  24/7 Erreichbarkeit
-                </p>
+                <p className="font-semibold text-secondary dark:text-accent">24/7 Erreichbarkeit</p>
                 <p className="text-secondary/60 dark:text-accent/60 text-tagline-2">
                   ohne Zusatz-Schichten oder Callcenter
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-secondary dark:text-accent">
-                  100&nbsp;% DSGVO-konform
-                </p>
+                <p className="font-semibold text-secondary dark:text-accent">100&nbsp;% DSGVO-konform</p>
                 <p className="text-secondary/60 dark:text-accent/60 text-tagline-2">
                   Infrastruktur für Studios & Ketten
                 </p>

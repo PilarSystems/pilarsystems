@@ -32,9 +32,9 @@ const Pricing = () => {
     {
       id: 'basic',
       title: 'Basic',
-      subtitle: 'Text & Messaging-KI',
-      monthlyPrice: '129',
-      setupFee: '499',
+      subtitle: 'KI-Inbox & Messaging',
+      monthlyPrice: '149',
+      setupFee: '500',
       buttonText: 'Basic wählen',
       buttonClass:
         'btn btn-md hover:btn-primary dark:btn-white-dark btn-white w-full block text-center before:content-none first-letter:uppercase',
@@ -46,15 +46,15 @@ const Pricing = () => {
         { label: 'Basis-Dashboard für Leads, Kontakte & Notizen', enabled: true },
         { label: 'Vorlagen für Antworten & Kampagnen-Nachrichten', enabled: true },
         { label: 'Standard-Support per E-Mail', enabled: true },
-        { label: 'Ideal für Studios mit einem Standort', enabled: true },
+        { label: 'Ideal für Studios mit einem Standort oder kleinem Team', enabled: true },
       ],
     },
     {
       id: 'featured',
       title: 'Pro',
       subtitle: 'Telefon, Kalender & Automationen',
-      monthlyPrice: '199',
-      setupFee: '999',
+      monthlyPrice: '249',
+      setupFee: '899',
       buttonText: 'Pro aktivieren',
       buttonClass:
         'btn btn-md btn-primary dark:hover:btn-white hover:btn-secondary w-full block text-center before:content-none first-letter:uppercase',
@@ -68,12 +68,13 @@ const Pricing = () => {
         { label: 'Erweiterte Workflows & Follow-up-Strecken', enabled: true },
         { label: 'Priorisierte Leads, Tags & Status-Pipelines', enabled: true },
         { label: 'Onboarding-Support & gemeinsamer Live-Check-in', enabled: true },
+        { label: 'KI-Coach über WhatsApp als zubuchbares Modul', enabled: true },
       ],
     },
     {
       id: 'premium',
       title: 'Elite',
-      subtitle: 'Coach, Growth & Multi-Location',
+      subtitle: 'KI-Coach, Growth & Multi-Location',
       buttonText: 'Elite anfragen',
       buttonClass:
         'btn btn-md hover:btn-primary dark:btn-white-dark btn-white w-full block text-center before:content-none first-letter:uppercase',
@@ -82,7 +83,7 @@ const Pricing = () => {
       isOnRequest: true,
       features: [
         { label: 'Alles aus Pro inklusive', enabled: true },
-        { label: 'KI-Coach für Trainingspläne & Mitglieder-Check-ins', enabled: true },
+        { label: 'KI-Coach für Trainingspläne & Mitglieder-Check-ins (WhatsApp & spätere App)', enabled: true },
         { label: 'Growth-Analytics & Kampagnen-Vorschläge der KI', enabled: true },
         { label: 'Mehrere Standorte & Marken in einem Account', enabled: true },
         { label: 'Optionale White-Label- und Multi-Studio-Add-ons', enabled: true },
@@ -106,9 +107,10 @@ const Pricing = () => {
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p className="mb-5 md:mb-7 max-w-[720px]">
-              Alle Pläne beinhalten eine einmalige Setup-Gebühr und eine monatliche Lizenz. Du startest mit dem Plan,
-              der zu deinem Studio passt – und kannst später jederzeit Module wie Voice, Coach, Creator oder
-              White-Label hinzufügen.
+              Alle Pläne bestehen aus einer einmaligen Setup-Gebühr für die Einrichtung deiner KI-Infrastruktur und
+              einer monatlichen Lizenz. Basic startet bei <strong>149&nbsp;€ / Monat</strong>, Pro bei
+              <strong> 249&nbsp;€ / Monat</strong>. Elite erhältst du als individuelles Angebot – inklusive KI-Coach,
+              Growth-Analytics und Multi-Location-Option.
             </p>
           </RevealAnimation>
         </div>
@@ -164,12 +166,13 @@ const Pricing = () => {
                         </div>
                         {!plan.isOnRequest && plan.setupFee && (
                           <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                            zzgl. einmalig <span className="font-medium">€{plan.setupFee}</span> Setup-Gebühr
+                            zzgl. einmalig <span className="font-medium">€{plan.setupFee}</span> Setup-Gebühr.
                           </p>
                         )}
                         {plan.isOnRequest && (
                           <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                            Individuelles Angebot inklusive Setup – ideal für Ketten, Multi-Standorte & White-Label.
+                            Individuelles Angebot inklusive Setup – ideal für Ketten, Multi-Standorte, White-Label und
+                            umfangreiche KI-Coach-Szenarien.
                           </p>
                         )}
                         <Link href={plan.href} className={plan.buttonClass}>
