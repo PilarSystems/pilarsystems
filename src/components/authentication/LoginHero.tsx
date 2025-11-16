@@ -1,23 +1,68 @@
+// src/components/authentication/LoginHero.tsx
 'use client';
 
 import RevealAnimation from '@/components/animation/RevealAnimation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
+import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
 
-type LoginHeroProps = {
-  loginAction?: (formData: FormData) => void;
-  status?: string;
-  error?: string;
-};
+type LoginError = 'missing_fields' | 'invalid_credentials' | 'not_confirmed' | 'unknown' | null;
 
-const LoginHero = ({ loginAction, status, error }: LoginHeroProps) => {
+const LoginHero = () => {
   const router = useRouter();
+  const [error, setError] = useState<LoginError>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
-    if (!loginAction) {
-      e.preventDefault();
-      router.push('/dashboard');
+  const handleClientSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const email = (formData.get('email') as string | null)?.trim() || '';
+    const password = (formData.get('password') as string | null) || '';
+
+    if (!email || !password) {
+      setError('missing_fields');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const supabase = createSupabaseBrowserClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        console.error('Supabase login error:', signInError);
+
+        const msg = (signInError.message || '').toLowerCase();
+
+        if (msg.includes('email not confirmed') || msg.includes('email not confirmed')) {
+          setError('not_confirmed');
+        } else if (msg.includes('invalid login credentials')) {
+          setError('invalid_credentials');
+        } else {
+          setError('unknown');
+        }
+
+        return;
+      }
+
+      // ✅ Login erfolgreich → erstmal auf Demo-Dashboard
+      // später: hier unterscheiden, ob Abo aktiv ist → /dashboard oder Demo
+      router.push('/dashboard-demo');
+    } catch (err) {
+      console.error('Login client error:', err);
+      setError('unknown');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -25,31 +70,28 @@ const LoginHero = ({ loginAction, status, error }: LoginHeroProps) => {
     'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
 
   const renderAlert = () => {
-    if (error) {
-      let message = 'Beim Einloggen ist ein Fehler aufgetreten. Bitte prüfe deine Daten.';
+    if (!error) return null;
 
-      if (error === 'missing_fields') {
-        message = 'Bitte fülle E-Mail und Passwort aus.';
-      } else if (error === 'invalid_credentials') {
-        message = 'E-Mail oder Passwort ist falsch. Bitte überprüfe deine Eingaben.';
-      }
+    let message =
+      'Beim Einloggen ist ein Fehler aufgetreten. Bitte prüfe deine Eingaben und versuche es erneut.';
 
-      return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
-          {message}
-        </div>
-      );
+    if (error === 'missing_fields') {
+      message = 'Bitte E-Mail und Passwort ausfüllen.';
+    } else if (error === 'invalid_credentials') {
+      message = 'E-Mail oder Passwort ist falsch. Bitte prüfe deine Eingabe.';
+    } else if (error === 'not_confirmed') {
+      message =
+        'Deine E-Mail ist noch nicht bestätigt. Bitte klicke auf den Bestätigungslink in der E-Mail, die wir dir geschickt haben.';
+    } else if (error === 'unknown') {
+      message =
+        'Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut oder kontaktiere den Support.';
     }
 
-    if (status === 'confirmed') {
-      return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen.
-        </div>
-      );
-    }
-
-    return null;
+    return (
+      <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-secondary/80 dark:text-accent/80">
+        {message}
+      </div>
+    );
   };
 
   return (
@@ -138,11 +180,7 @@ const LoginHero = ({ loginAction, status, error }: LoginHeroProps) => {
           {/* Right – Login-Form */}
           <RevealAnimation delay={0.25} direction="up">
             <div className="rounded-2xl border border-stroke-2 dark:border-stroke-6 bg-background-1/90 dark:bg-background-8/90 px-5 py-6 md:px-7 md:py-8 shadow-[0_0_40px_rgba(15,23,42,0.5)] backdrop-blur">
-              <form
-                action={loginAction}
-                onSubmit={handleClientSubmit}
-                className="space-y-6"
-              >
+              <form onSubmit={handleClientSubmit} className="space-y-6">
                 {/* Email */}
                 <div className="space-y-2">
                   <label
@@ -206,9 +244,10 @@ const LoginHero = ({ loginAction, status, error }: LoginHeroProps) => {
                 <div className="space-y-3 pt-1">
                   <button
                     type="submit"
-                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-md w-full"
+                    disabled={isSubmitting}
+                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-md w-full disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Einloggen
+                    {isSubmitting ? 'Wird eingeloggt…' : 'Einloggen'}
                   </button>
                   <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 text-center">
                     Noch kein Konto?{' '}
