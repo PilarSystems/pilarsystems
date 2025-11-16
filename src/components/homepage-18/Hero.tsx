@@ -30,8 +30,8 @@ const Hero = () => {
       id="scene"
       className="
         relative z-0 overflow-hidden
-        pt-32 md:pt-40 lg:pt-48
-        pb-16 md:pb-20 lg:pb-28
+        pt-24 md:pt-28 lg:pt-32
+        pb-16 md:pb-20 lg:pb-24
         bg-gradient-to-b from-[#f5f7ff] via-white to-[#f5fbff]
         dark:from-background-5 dark:via-background-7 dark:to-background-8
       "
@@ -46,8 +46,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="main-container">
-        <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-2">
+      <div className="main-container max-w-[1120px] mx-auto">
+        <div className="grid items-center gap-10 lg:gap-14 lg:grid-cols-2 min-h-[68vh]">
           {/* LEFT – Text + Benefits + CTAs */}
           <div className="text-left">
             <RevealAnimation delay={0.15}>
@@ -72,7 +72,7 @@ const Hero = () => {
               </p>
             </RevealAnimation>
 
-            <ul className="mb-10 flex flex-col gap-3">
+            <ul className="mb-8 flex flex-col gap-3">
               {benefits.map((item, idx) => (
                 <RevealAnimation key={item.id} delay={0.45 + idx * 0.1}>
                   <li className="flex items-start gap-2.5">
@@ -106,7 +106,7 @@ const Hero = () => {
             </RevealAnimation>
 
             <RevealAnimation delay={0.85}>
-              <div className="mt-6 flex items-center gap-3">
+              <div className="mt-5 flex items-center gap-3">
                 <figure className="flex -space-x-2">
                   <Image
                     src={avatar9}
@@ -126,8 +126,8 @@ const Hero = () => {
 
           {/* RIGHT – Clean Dashboard Card */}
           <RevealAnimation delay={0.4}>
-            <div className="relative mx-auto max-w-[520px] w-full">
-              <div className="absolute -inset-8 rounded-[32px] bg-white/40 blur-3xl dark:bg-background-9/40" />
+            <div className="relative mx-auto max-w-[480px] w-full lg:translate-y-[-8px]">
+              <div className="absolute -inset-6 rounded-[32px] bg-white/40 blur-3xl dark:bg-background-9/40" />
 
               <div className="relative rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_22px_60px_rgba(15,23,42,0.18)] dark:border-background-6 dark:bg-background-8/95">
                 <div className="mb-4 flex items-center justify-between gap-2">
