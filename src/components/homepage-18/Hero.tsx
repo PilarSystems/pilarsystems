@@ -22,30 +22,30 @@ import LinkButton from '../ui/button/LinkButton';
 const benefits = [
   {
     id: 1,
-    text: 'KI-Rezeption für Telefon, WhatsApp, E-Mail und Website-Formulare.',
+    text: 'Alle Anfragen aus Telefon, WhatsApp, E-Mail & DMs in einer KI-Inbox.',
   },
   {
     id: 2,
-    text: 'Automatisches Follow-up bis zum gebuchten Vertragstermin.',
+    text: 'Automatisches Follow-up bis zum gebuchten Probetraining oder Vertragsabschluss.',
   },
   {
     id: 3,
-    text: 'Trainingspläne, Terminplan und Mitgliederverwaltung in einem Dashboard.',
+    text: 'Trainingspläne, Terminplanung & Mitgliederkommunikation in einem Dashboard.',
   },
 ];
 
 const experienceList = [
   {
     id: 1,
-    text: 'Ersetzt Callcenter und Minijob-Rezeption – 24/7 in deinem Studio-Branding.',
+    text: 'Basic, Pro & Elite – Module für KI-Rezeption, Telefon, Coach & Growth frei kombinierbar.',
   },
   {
     id: 2,
-    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse und PT-Sessions.',
+    text: 'Synchroner Kalender für Probetrainings, Verträge, Kurse, PT-Sessions und Calls.',
   },
   {
     id: 3,
-    text: 'Geführtes Setup: Nach der Online-Buchung in wenigen Minuten startklar.',
+    text: 'Geführter Setup-Wizard: In wenigen Minuten live – komplett in deinem Studio-Branding.',
   },
 ];
 
@@ -78,7 +78,9 @@ const Hero = () => {
                 className="bg-white dark:bg-black p-4 w-full space-y-4 rounded-xl">
                 {/* heading  */}
                 <div className="flex items-center justify-between">
-                  <p className="text-secondary leading-[150%] dark:text-accent">Auslastung KI-Rezeption</p>
+                  <p className="text-secondary leading-[150%] dark:text-accent">
+                    Automatisierte Kontakte heute
+                  </p>
                   <p className="text-lg flex items-center font-medium leading-[150%] text-secondary dark:text-accent">
                     €
                     <NumberAnimation number={80224} speed={2000} interval={200} rooms={5} heightSpaceRatio={2.5} />
@@ -93,7 +95,7 @@ const Hero = () => {
                   <span>
                     <TransferSuccessIcon />
                   </span>
-                  <span className="text-white dark:text-white">Neuer Lead gebucht</span>
+                  <span className="text-white dark:text-white">Neuer Vertrag heute</span>
                 </div>
                 <div className="bg-background-1 dark:bg-secondary p-4 flex items-center justify-center rounded-xl">
                   <Image
@@ -122,7 +124,7 @@ const Hero = () => {
             <div className="w-[250px] lg:w-[270px] 2xl:w-[288px] absolute top-[60px] lg:top-[150px] xl:top-[60px] sm:right-5 xl:right-0 bg-white dark:bg-black rounded-2xl p-4 lg:p-6 hidden sm:block">
               <div className="text-left">
                 <span className="text-tagline-2 font-normal text-secondary dark:text-accent">
-                  Gesamt-Mitgliederwert
+                  Aktiver Mitgliederwert
                 </span>
                 <h3 className="text-heading-5 flex items-center lg:text-heading-3 font-normal leading-[1.2] mt-2 mb-[30px]">
                   €
@@ -159,22 +161,28 @@ const Hero = () => {
           </RevealAnimation>
         </div>
         <div className="text-left md:text-center max-md:pt-[150px] max-lg:pt-[200px]">
-          <RevealAnimation delay={0.2}>
-            <h1 className="mb-4">
-              Dein KI-Rezeptionist
+          <RevealAnimation delay={0.15}>
+            <p className="inline-flex items-center rounded-full border border-border bg-background-1/60 px-3 py-1 text-[13px] font-medium uppercase tracking-[0.14em] text-secondary dark:bg-background-8/80 dark:text-accent">
+              All-in-One KI-Infrastruktur für Gyms, Coaches & Studios
+            </p>
+          </RevealAnimation>
+          <RevealAnimation delay={0.25}>
+            <h1 className="mt-4 mb-4">
+              Die komplette KI-Plattform
               <br className="hidden md:block" />
-              für Fitnessstudios.
+              für dein Fitnessstudio.
             </h1>
           </RevealAnimation>
-          <RevealAnimation delay={0.3}>
-            <p className="max-w-[650px] mx-auto mb-6">
-              Pilar Systems beantwortet Anrufe und Nachrichten, bucht Probetrainings, erstellt Trainingspläne und hält
-              Leads automatisch nach – alles in einem klaren Dashboard für dein Gym.
+          <RevealAnimation delay={0.35}>
+            <p className="max-w-[720px] mx-auto mb-6">
+              PILAR SYSTEMS bündelt Telefonanlage, WhatsApp, E-Mail, DMs, Terminbuchung, Trainingspläne, Growth-Analytics
+              und Support in einer Plattform. Basic, Pro oder Elite – du kombinierst nur die KI-Module, die dein Studio
+              wirklich braucht.
             </p>
           </RevealAnimation>
           <ul className="list-none mb-14 flex flex-col md:flex-row md:items-center md:justify-center md:flex-wrap lg:flex-nowrap gap-4 md:gap-9 w-fit md:mx-auto">
             {benefits.map((item, idx) => (
-              <RevealAnimation key={item.id} delay={0.4 + idx * 0.1}>
+              <RevealAnimation key={item.id} delay={0.45 + idx * 0.1}>
                 <li className="flex items-center gap-2.5">
                   <span className="size-[19px] rounded-full bg-secondary dark:bg-accent/20">
                     <CheckIcon className="w-[18px] h-[18px] fill-white dark:fill-accent" />
@@ -185,16 +193,24 @@ const Hero = () => {
             ))}
           </ul>
           <RevealAnimation delay={0.7}>
-            <div className="block md:inline-block">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+              <div className="block md:inline-block">
+                <LinkButton
+                  href="/signup-01"
+                  className="btn btn-primary hover:btn-white dark:btn-accent btn-xl dark:hover:btn-primary w-[90%] md:w-auto mx-auto"
+                  aria-label="Account erstellen und mit PILAR SYSTEMS starten">
+                  Jetzt PILAR testen
+                </LinkButton>
+              </div>
               <LinkButton
-                href="/signup-01"
-                className="btn btn-primary hover:btn-white dark:btn-accent btn-xl dark:hover:btn-primary w-[90%] md:w-auto mx-auto"
-                aria-label="Zu den Preisen wechseln und einen Plan auswählen">
-                Jetzt starten
+                href="#pricing"
+                className="btn btn-ghost btn-md text-secondary dark:text-accent hover:btn-secondary/10"
+                aria-label="Zu den Preisen und Plänen von PILAR SYSTEMS springen">
+                Pläne vergleichen (Basic, Pro, Elite)
               </LinkButton>
             </div>
           </RevealAnimation>
-          <RevealAnimation delay={0.8} instant duration={0.9}>
+          <RevealAnimation delay={0.85} instant duration={0.9}>
             <figure className="max-w-[408px] mx-auto mt-20 md:mt-[124px] rounded-[20px] flex justify-center items-center overflow-hidden">
               <Image src={heroImage} alt="hero" className="inline-block dark:hidden w-full h-full object-cover" />
               <Image src={heroImageDark} alt="hero" className="hidden dark:inline-block w-full h-full object-cover" />
@@ -216,12 +232,13 @@ const Hero = () => {
             <div className="lg:flex-1/2 py-16 max-lg:px-5 lg:pl-14">
               <div className="mb-9">
                 <RevealAnimation delay={0.2}>
-                  <h2 className="mb-3">Mehr Leads, mehr Verträge, weniger Aufwand.</h2>
+                  <h2 className="mb-3">Mehr Leads, bessere Auslastung, klarer Überblick.</h2>
                 </RevealAnimation>
                 <RevealAnimation delay={0.3}>
                   <p className="max-w-[530px]">
-                    Pilar Systems ist keine generische Studio-Software: Deine KI kümmert sich um Anfragen, Termine,
-                    Trainingspläne und Onboarding – komplett automatisch, ohne lange Setup-Calls.
+                    PILAR SYSTEMS ist mehr als eine KI-Rezeption: Deine Plattform übernimmt Anfragen, Follow-ups,
+                    Terminbuchungen, Trainingspläne, Kampagnen-Ideen und Growth-Analysen – zentral steuerbar im
+                    Dashboard, ohne komplizierte Integrations-Calls.
                   </p>
                 </RevealAnimation>
               </div>
@@ -242,7 +259,7 @@ const Hero = () => {
                   <LinkButton
                     href="/our-team-02"
                     className="btn btn-secondary btn-md hover:btn-primary dark:btn-accent w-[85%] md:w-auto mx-auto">
-                    Mehr über Pilar Systems
+                    Mehr über PILAR SYSTEMS
                   </LinkButton>
                 </div>
               </RevealAnimation>

@@ -1,4 +1,5 @@
 'use client';
+
 import { Autoplay } from 'swiper/modules';
 import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
@@ -13,19 +14,44 @@ const Testimonial = () => {
   return (
     <section className="relative pt-[100px] pb-[100px] bg-white dark:bg-black bg-[url('/images/home-page-18/hero-bg.png')] bg-no-repeat bg-cover bg-top">
       <div className="main-container">
+        {/* Heading + Intro */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-[70px]">
           <RevealAnimation delay={0.2}>
+            <span className="badge badge-green mb-4">Social Proof</span>
+          </RevealAnimation>
+          <RevealAnimation delay={0.25}>
             <h2 className="max-w-[750px] mx-auto mb-4">
-              Was Studiobetreiber über Pilar Systems sagen.
+              Warum Studios & Coaches auf PILAR SYSTEMS setzen.
             </h2>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
             <p className="max-w-[872px] mx-auto">
-              Gyms und Studios setzen auf Pilar Systems, um Anfragen, Probetrainings und Mitgliederkommunikation zu
-              automatisieren. Weniger Telefonstress, mehr Abschlüsse – direkt spürbar im Alltag der Teams.
+              Studios nutzen PILAR, um Anfragen, Probetrainings, Verträge und Mitgliederkommunikation zu
+              automatisieren – ohne zusätzliche Rezeption, ohne Agentur-Projekte. Mehr gebuchte Termine, weniger
+              No-Shows und klare Abläufe für das Team.
             </p>
           </RevealAnimation>
+
+          {/* KPIs / Trust Badges */}
+          <RevealAnimation delay={0.35}>
+            <div className="mt-6 grid grid-cols-1 gap-4 text-tagline-2 text-secondary/70 dark:text-accent/70 sm:grid-cols-3">
+              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
+                <span className="font-semibold text-secondary dark:text-accent">+60%</span> mehr gebuchte
+                Probetrainings*
+              </div>
+              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
+                <span className="font-semibold text-secondary dark:text-accent">24/7</span> automatische
+                Beantwortung von Anfragen
+              </div>
+              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
+                <span className="font-semibold text-secondary dark:text-accent">Minuten</span> statt Wochen
+                Onboarding dank Setup-Wizard
+              </div>
+            </div>
+          </RevealAnimation>
         </div>
+
+        {/* Reviews Slider */}
         <RevealAnimation delay={0.4}>
           <div className="relative">
             <Swiper
@@ -58,7 +84,7 @@ const Testimonial = () => {
                           className="max-w-full"
                         />
                       </figure>
-                      <p className="text-secondary/60 dark:text-accent/60 line-clamp-2 review-text">
+                      <p className="text-secondary/60 dark:text-accent/60 line-clamp-3 review-text">
                         {review.quote}
                       </p>
                       <div>
@@ -76,13 +102,19 @@ const Testimonial = () => {
             </Swiper>
           </div>
         </RevealAnimation>
+
+        {/* CTA */}
         <RevealAnimation delay={0.5}>
           <div className="text-center mt-10">
             <LinkButton
-              href="/testimonial-01"
-              className="btn btn-secondary btn-md inline-block dark:btn-transparent dark:border-primary-50 hover:btn-primary w-[85%] md:w-auto mx-auto">
-              Weitere Stimmen unserer Kunden
+              href="/signup-01"
+              className="btn btn-secondary btn-md inline-block dark:btn-transparent dark:border-primary-50 hover:btn-primary w-[85%] md:w-auto mx-auto"
+              aria-label="Mit PILAR SYSTEMS starten">
+              Jetzt mit PILAR starten
             </LinkButton>
+            <p className="mt-3 text-tagline-2 text-secondary/60 dark:text-accent/60">
+              *Zahlen basieren auf ersten Pilotkunden – genaue Ergebnisse variieren je nach Studio und Setup.
+            </p>
           </div>
         </RevealAnimation>
       </div>
