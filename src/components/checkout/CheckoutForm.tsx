@@ -23,7 +23,7 @@ const planConfig: Record<
   }
 > = {
   starter: {
-    label: 'Growth Gym',
+    label: 'Basic Gym',
     subtitle: 'Ideal für kleine Studios',
     priceLabel: '149 € / Monat',
     setupLabel: 'Setup-Gebühr: 500 € einmalig',
