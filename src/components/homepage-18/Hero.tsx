@@ -12,15 +12,15 @@ import LinkButton from '../ui/button/LinkButton';
 const benefits = [
   {
     id: 1,
-    text: 'Telefonanlage, WhatsApp, E-Mail, DMs & Trainingspläne in EINER Plattform – kein Tool-Zoo mehr.',
+    text: 'Telefonanlage, WhatsApp, E-Mail & DMs in EINEM System – statt fünf verschiedenen Tools.',
   },
   {
     id: 2,
-    text: 'KI übernimmt Qualifizierung, Follow-up & Terminbuchung bis zum unterschriebenen Vertrag.',
+    text: 'KI qualifiziert Leads vor, schreibt nach und bucht Probetrainings automatisch in deinen Kalender.',
   },
   {
     id: 3,
-    text: 'Growth-Analytics & Kampagnen-Vorschläge statt „blinder“ Studio-Software ohne echte Intelligenz.',
+    text: 'Trainingspläne, Mitgliederkommunikation & Growth-Analytics direkt im Dashboard – ohne Excel.',
   },
 ];
 
@@ -36,18 +36,18 @@ const Hero = () => {
         dark:from-background-5 dark:via-background-7 dark:to-background-8
       "
     >
-      {/* weiches, dezentes Gradient-Overlay */}
+      {/* dezente Gradients im Hintergrund */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -right-[20%] -top-[40%] w-[640px] opacity-60 blur-3xl dark:opacity-40">
-          <Image src={gradient12} alt="Gradient" className="w-full h-full object-cover" />
+          <Image src={gradient12} alt="Gradient" className="h-full w-full object-cover" />
         </div>
         <div className="absolute -left-[20%] bottom-[-30%] w-[520px] opacity-50 blur-3xl dark:opacity-30">
-          <Image src={gradient12} alt="Gradient" className="w-full h-full object-cover rotate-180" />
+          <Image src={gradient12} alt="Gradient" className="h-full w-full rotate-180 object-cover" />
         </div>
       </div>
 
-      <div className="main-container max-w-[1120px] mx-auto">
-        <div className="grid items-center gap-10 lg:gap-14 lg:grid-cols-2 min-h-[68vh]">
+      <div className="main-container mx-auto max-w-[1120px]">
+        <div className="grid min-h-[68vh] items-center gap-10 lg:grid-cols-2 lg:gap-14">
           {/* LEFT – Text + Benefits + CTAs */}
           <div className="text-left">
             <RevealAnimation delay={0.15}>
@@ -57,7 +57,7 @@ const Hero = () => {
             </RevealAnimation>
 
             <RevealAnimation delay={0.25}>
-              <h1 className="mt-4 mb-4 max-w-[720px]">
+              <h1 className="mt-4 mb-4 max-w-[620px] leading-[1.05]">
                 Die komplette KI-Plattform
                 <br className="hidden md:block" />
                 für dein Fitnessstudio.
@@ -65,10 +65,10 @@ const Hero = () => {
             </RevealAnimation>
 
             <RevealAnimation delay={0.35}>
-              <p className="max-w-[640px] mb-6 text-secondary/80 dark:text-accent/80">
-                PILAR SYSTEMS ersetzt klassische Studio-Software, Callcenter und Excel-Listen: Telefonanlage, Messaging,
-                Trainingspläne, Growth-Analytics und Support laufen in einem System – modular buchbar als Basic, Pro
-                oder Elite, genau passend zu deinem Studio.
+              <p className="mb-6 max-w-[560px] text-secondary/80 dark:text-accent/80">
+                PILAR SYSTEMS ersetzt klassische Studio-Software, Callcenter und Excel-Listen.
+                Telefonanlage, Messaging, Trainingspläne, Growth-Analytics und Support laufen
+                in einer Plattform – modular buchbar als Basic, Pro oder Elite.
               </p>
             </RevealAnimation>
 
@@ -76,10 +76,12 @@ const Hero = () => {
               {benefits.map((item, idx) => (
                 <RevealAnimation key={item.id} delay={0.45 + idx * 0.1}>
                   <li className="flex items-start gap-2.5">
-                    <span className="mt-[2px] flex size-[19px] items-center justify-center rounded-full bg-secondary dark:bg-accent/20 shrink-0">
+                    <span className="mt-[3px] flex size-[19px] shrink-0 items-center justify-center rounded-full bg-secondary dark:bg-accent/20">
                       <CheckIcon className="h-[18px] w-[18px] fill-white dark:fill-accent" />
                     </span>
-                    <span className="text-tagline-2 text-secondary/90 dark:text-accent/80">{item.text}</span>
+                    <span className="text-tagline-2 text-secondary/90 dark:text-accent/80">
+                      {item.text}
+                    </span>
                   </li>
                 </RevealAnimation>
               ))}
@@ -113,7 +115,7 @@ const Hero = () => {
                     alt="Pilar Systems Kunde"
                     className="size-8 rounded-full border border-white bg-linear-[156deg,_#FFF_32.92%,_#C6F56F_91%]"
                   />
-                  <div className="size-8 rounded-full border border-white bg-secondary/10 text-xs flex items-center justify-center text-secondary/70 dark:text-accent/80">
+                  <div className="flex size-8 items-center justify-center rounded-full border border-white bg-secondary/10 text-xs text-secondary/70 dark:text-accent/80">
                     +240
                   </div>
                 </figure>
@@ -124,9 +126,9 @@ const Hero = () => {
             </RevealAnimation>
           </div>
 
-          {/* RIGHT – Clean, perfekt ausgerichtete Dashboard Card */}
+          {/* RIGHT – Dashboard Card mit einzeiligen Zahlen */}
           <RevealAnimation delay={0.4}>
-            <div className="relative mx-auto max-w-[480px] w-full lg:translate-y-[-8px]">
+            <div className="relative mx-auto w-full max-w-[480px] lg:translate-y-[-8px]">
               <div className="absolute -inset-6 rounded-[32px] bg-white/40 blur-3xl dark:bg-background-9/40" />
 
               <div className="relative rounded-[28px] border border-white/70 bg-white/90 p-6 shadow-[0_22px_60px_rgba(15,23,42,0.18)] dark:border-background-6 dark:bg-background-8/95">
@@ -144,14 +146,14 @@ const Hero = () => {
                 </div>
 
                 {/* Metrics Row */}
-                <div className="grid gap-4 sm:grid-cols-2 mb-6">
+                <div className="mb-6 grid gap-4 sm:grid-cols-2">
                   {/* Automatisierte Kontakte */}
-                  <div className="rounded-2xl bg-background-2 p-4 dark:bg-background-7 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 rounded-2xl bg-background-2 p-4 dark:bg-background-7">
                     <div>
                       <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
                         Automatisierte Kontakte
                       </p>
-                      <p className="text-xs text-secondary/60 dark:text-accent/60 mt-0.5">heute</p>
+                      <p className="mt-0.5 text-xs text-secondary/60 dark:text-accent/60">heute</p>
                     </div>
                     <p className="text-heading-5 font-normal text-secondary dark:text-accent">
                       <NumberAnimation
@@ -161,7 +163,7 @@ const Hero = () => {
                         rooms={3}
                         heightSpaceRatio={2}
                       />
-                      +
+                      <span className="ml-1 text-tagline-2 text-secondary/80 dark:text-accent/80">Kontakte</span>
                     </p>
                     <div className="mt-1">
                       <Progress />
@@ -169,12 +171,12 @@ const Hero = () => {
                   </div>
 
                   {/* Probetrainings */}
-                  <div className="rounded-2xl bg-background-1 p-4 dark:bg-background-6 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 rounded-2xl bg-background-1 p-4 dark:bg-background-6">
                     <div>
                       <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
                         Gebuchte Probetrainings
                       </p>
-                      <p className="text-xs text-secondary/60 dark:text-accent/60 mt-0.5">heute</p>
+                      <p className="mt-0.5 text-xs text-secondary/60 dark:text-accent/60">heute</p>
                     </div>
                     <p className="text-heading-5 font-normal text-secondary dark:text-accent">
                       <NumberAnimation
@@ -184,14 +186,15 @@ const Hero = () => {
                         rooms={2}
                         heightSpaceRatio={2}
                       />
+                      <span className="ml-1 text-tagline-2 text-secondary/80 dark:text-accent/80">Termine</span>
                     </p>
-                    <p className="text-tagline-2 text-emerald-600 dark:text-emerald-400 mt-0.5">
+                    <p className="mt-0.5 text-tagline-2 text-emerald-600 dark:text-emerald-400">
                       +87% vs. letzter Monat
                     </p>
                   </div>
                 </div>
 
-                {/* Saved Time Row */}
+                {/* Gesparte Zeit */}
                 <div className="rounded-2xl bg-background-2/80 p-4 dark:bg-background-7/90">
                   <div className="flex items-center justify-between gap-6">
                     <div>
@@ -206,10 +209,12 @@ const Hero = () => {
                           rooms={2}
                           heightSpaceRatio={2}
                         />
-                        h / Monat
+                        <span className="ml-1 text-tagline-2 text-secondary/80 dark:text-accent/80">
+                          h&nbsp;/&nbsp;Monat
+                        </span>
                       </p>
                     </div>
-                    <div className="text-right text-tagline-2 text-secondary/70 dark:text-accent/70 space-y-0.5">
+                    <div className="space-y-0.5 text-right text-tagline-2 text-secondary/70 dark:text-accent/70">
                       <p>Weniger Telefon</p>
                       <p>Mehr Betreuung auf der Fläche</p>
                     </div>
