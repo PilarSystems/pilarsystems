@@ -21,8 +21,9 @@ type SignupPageProps = {
 };
 
 const SignupPage = async ({ searchParams }: SignupPageProps) => {
-  // Wenn schon eingeloggt → direkt zum Checkout (Abo wählen)
   const supabase = await createSupabaseServerClient();
+
+  // Wenn schon eingeloggt → direkt zum Checkout (z.B. aus Header)
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -31,7 +32,7 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
     redirect('/checkout');
   }
 
-  // Server Action: Supabase-Signup + Redirect zum Checkout
+  // Server Action: Supabase Signup + Redirect zu /checkout
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -61,7 +62,8 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       email,
       password,
       options: {
-        emailRedirectTo: `${appUrl}/signup-01?status=confirmed`,
+        // Nach Klick auf Bestätigungslink → zurück auf Login mit Status
+        emailRedirectTo: `${appUrl}/login-01?status=confirmed`,
         data: {
           firstName,
           lastName,
@@ -78,8 +80,8 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ Registrierung geklappt → direkt zur Checkout-Seite mit E-Mail im Query
-    redirect(`/checkout?email=${encodeURIComponent(email)}`);
+    // ✅ Konto erstellt → Hinweis-Mail + weiter zum Checkout
+    redirect('/checkout?status=signup_success');
   }
 
   return (

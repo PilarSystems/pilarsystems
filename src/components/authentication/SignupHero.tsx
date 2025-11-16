@@ -46,20 +46,10 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
       );
     }
 
-    if (status === 'signup_success') {
-      return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Wir haben dir eine Bestätigungs-E-Mail geschickt. Bitte prüfe Posteingang
-          und Spam-Ordner und bestätige deine E-Mail, bevor du dich einloggst.
-        </div>
-      );
-    }
-
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen
-          und mit dem Setup fortfahren.
+          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und mit dem Setup fortfahren.
         </div>
       );
     }
@@ -78,8 +68,9 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
               Dein Pilar-Konto erstellen
             </h1>
             <p className="text-secondary/70 dark:text-accent/70 text-tagline-1 max-w-2xl mx-auto">
-              Sag uns kurz, wer du bist und wie dein Studio aussieht. Danach leitest du
-              dein Abo über Stripe ein und dein Dashboard wird automatisch für dich vorbereitet.
+              Sag uns kurz, wer du bist und wie dein Studio aussieht.
+              Danach leitest du dein Abo über Stripe ein und dein Dashboard
+              wird automatisch für dich vorbereitet.
             </p>
           </div>
         </RevealAnimation>
@@ -99,8 +90,9 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                 <span className={`ml-1 ${gradientTextClass}`}>Chaos zu Klarheit</span>.
               </h2>
               <p className="text-tagline-1 text-secondary/70 dark:text-accent/70">
-                Nach dem Setup läuft dein Empfang über WhatsApp, Telefon und E-Mail automatisch –
-                Leads, Termine und Antworten landen sauber in deinem Dashboard.
+                Nach dem Setup läuft dein Empfang über WhatsApp, Telefon
+                und E-Mail automatisch – Leads, Termine und Antworten
+                landen sauber in deinem Dashboard.
               </p>
 
               <div className="space-y-4">
@@ -137,7 +129,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                 <ul className="list-disc space-y-1 pl-4">
                   <li>Stammdaten für dich &amp; dein Studio</li>
                   <li>Basisinfos für die KI (Mitgliedergröße, Kontaktdaten)</li>
-                  <li>Direkter Übergang zur Zahlung via Stripe (im nächsten Schritt)</li>
+                  <li>Direkter Übergang zur Zahlung via Stripe</li>
                 </ul>
               </div>
             </div>

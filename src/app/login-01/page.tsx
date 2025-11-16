@@ -13,10 +13,17 @@ export const metadata: Metadata = {
   title: 'Login – Pilar Systems',
 };
 
-const LoginPage = async () => {
+type LoginPageProps = {
+  searchParams?: {
+    status?: string;
+    error?: string;
+  };
+};
+
+const LoginPage = async ({ searchParams }: LoginPageProps) => {
   const supabase = await createSupabaseServerClient();
 
-  // Wenn bereits eingeloggt → direkt ins Dashboard
+  // Wenn schon eingeloggt → Dashboard
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -48,7 +55,6 @@ const LoginPage = async () => {
       redirect('/login-01?error=invalid_credentials');
     }
 
-    // ✅ Login ok → ins Dashboard (von dort weiter zu Checkout / Setup)
     redirect('/dashboard');
   }
 
@@ -61,7 +67,11 @@ const LoginPage = async () => {
 
       <main className="bg-background-3 dark:bg-background-7 min-h-screen">
         <section className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16 py-16 md:py-20 lg:py-24">
-          <LoginHero loginAction={loginAction} />
+          <LoginHero
+            loginAction={loginAction}
+            status={searchParams?.status}
+            error={searchParams?.error}
+          />
         </section>
       </main>
 
