@@ -7,19 +7,18 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 
 type LoginHeroProps = {
-  // Server Action (vom Server übergeben)
+  // Server Action aus der Page
   loginAction?: (formData: FormData) => void;
-  // Query-Parameter aus /login-01?error=... (optional)
   error?: string;
   status?: string;
-  // Wohin nach dem Login (z. B. /checkout oder /dashboard)
   redirectTo?: string;
 };
 
-const LoginHero = ({ loginAction, error, redirectTo }: LoginHeroProps) => {
+const LoginHero = ({ loginAction, error, status, redirectTo }: LoginHeroProps) => {
   const router = useRouter();
 
   const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
+    // Falls mal keine Server Action übergeben wird → Fallback
     if (!loginAction) {
       e.preventDefault();
       router.push('/dashboard');
@@ -30,23 +29,35 @@ const LoginHero = ({ loginAction, error, redirectTo }: LoginHeroProps) => {
     'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
 
   const renderAlert = () => {
-    if (!error) return null;
+    // ❌ Fehler-Messages – gleiches Verhalten wie beim Signup
+    if (error) {
+      let message =
+        'Beim Einloggen ist ein Fehler aufgetreten. Bitte prüfe deine Eingaben und versuche es erneut.';
 
-    let message =
-      'Beim Einloggen ist ein Fehler aufgetreten. Bitte prüfe deine Eingaben und versuche es erneut.';
+      if (error === 'missing_fields') {
+        message = 'Bitte fülle sowohl E-Mail als auch Passwort aus.';
+      } else if (error === 'invalid_credentials') {
+        message =
+          'E-Mail oder Passwort ist falsch – oder es existiert noch kein Konto mit dieser Adresse. Falls du noch keinen Zugang hast, registriere dich bitte zuerst.';
+      }
 
-    if (error === 'invalid_credentials') {
-      message =
-        'Die Kombination aus E-Mail und Passwort ist nicht korrekt. Bitte überprüfe deine Eingabe.';
-    } else if (error === 'missing_fields') {
-      message = 'Bitte fülle beide Felder (E-Mail und Passwort) aus.';
+      return (
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/30 bg-red-500/5 px-4 py-3 text-sm text-secondary/90 dark:text-accent">
+          {message}
+        </div>
+      );
     }
 
-    return (
-      <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
-        {message}
-      </div>
-    );
+    // Optional: Status-Messages (z.B. nach E-Mail-Bestätigung)
+    if (status === 'confirmed') {
+      return (
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-secondary/90 dark:text-accent">
+          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt mit deinen Zugangsdaten einloggen.
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -66,6 +77,7 @@ const LoginHero = ({ loginAction, error, redirectTo }: LoginHeroProps) => {
           </div>
         </RevealAnimation>
 
+        {/* Alert (Fehler / Status) */}
         {renderAlert()}
 
         {/* Layout: links Info, rechts Formular */}
@@ -140,7 +152,7 @@ const LoginHero = ({ loginAction, error, redirectTo }: LoginHeroProps) => {
                 onSubmit={handleClientSubmit}
                 className="space-y-6"
               >
-                {/* hidden redirectTo (z. B. /checkout) */}
+                {/* redirectTo versteckt mitgeben */}
                 {redirectTo && (
                   <input type="hidden" name="redirectTo" value={redirectTo} />
                 )}
