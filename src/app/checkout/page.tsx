@@ -13,28 +13,21 @@ export const metadata: Metadata = {
   title: 'Checkout – Pilar Systems',
 };
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY;
+// Stripe einmal global initialisieren
+const stripeSecret = process.env.STRIPE_SECRET_KEY ?? '';
 
-if (!stripeSecret) {
-  throw new Error('STRIPE_SECRET_KEY fehlt in den Env-Variablen');
-}
+const stripe =
+  stripeSecret && typeof stripeSecret === 'string'
+    ? new Stripe(stripeSecret, {
+        apiVersion: '2024-06-20',
+      })
+    : null;
 
-const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2024-06-20' as any,
-});
-
-type CheckoutPageProps = {
-  searchParams?: {
-    status?: string;
-    error?: string;
-  };
-};
-
-// Server Action: Stripe Checkout Session erstellen
+// Server Action: Stripe-Checkout
 async function handleCheckout(formData: FormData) {
   'use server';
 
-  const plan = formData.get('plan') as string | null;
+  const plan = (formData.get('plan') as string | null) ?? '';
   const billingPeriod = (formData.get('billingPeriod') as string | null) ?? 'monthly';
   const vatId = (formData.get('vatId') as string | null) ?? '';
   const coupon = (formData.get('coupon') as string | null) ?? '';
@@ -43,25 +36,38 @@ async function handleCheckout(formData: FormData) {
     redirect('/checkout?error=noplan');
   }
 
-  // Pro/Enterprise → Kontaktformular
+  // Pro / Enterprise → Kontakt aufnehmen statt Stripe
   if (plan === 'pro') {
-    redirect('/contact-us?plan=pro');
+    redirect('/contact-us?plan=enterprise');
   }
+
+  if (!stripe) {
+    console.error('Stripe ist nicht konfiguriert (STRIPE_SECRET_KEY fehlt)');
+    redirect('/checkout?error=stripe_config');
+  }
+
+  const isYearly = billingPeriod === 'yearly';
 
   let subscriptionPriceId: string | undefined;
   let setupPriceId: string | undefined;
 
   switch (plan) {
     case 'starter':
-      subscriptionPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC || undefined;
-      setupPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC_SETUP || undefined;
+      subscriptionPriceId = isYearly
+        ? process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC_YEARLY || undefined
+        : process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC || undefined;
+      setupPriceId =
+        process.env.NEXT_PUBLIC_STRIPE_PRICE_BASIC_SETUP || undefined;
       break;
     case 'growth':
-      subscriptionPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_GROWTH || undefined;
-      setupPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_GROWTH_SETUP || undefined;
+      subscriptionPriceId = isYearly
+        ? process.env.NEXT_PUBLIC_STRIPE_PRICE_GROWTH_YEARLY || undefined
+        : process.env.NEXT_PUBLIC_STRIPE_PRICE_GROWTH || undefined;
+      setupPriceId =
+        process.env.NEXT_PUBLIC_STRIPE_PRICE_GROWTH_SETUP || undefined;
       break;
     default:
-      break;
+      redirect('/checkout?error=invalid_plan');
   }
 
   if (!subscriptionPriceId) {
@@ -83,7 +89,8 @@ async function handleCheckout(formData: FormData) {
     });
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || 'https://www.pilarsystems.com';
 
   const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
@@ -107,29 +114,51 @@ async function handleCheckout(formData: FormData) {
   redirect(session.url);
 }
 
+type CheckoutPageProps = {
+  searchParams?: {
+    plan?: string;
+    status?: string;
+    error?: string;
+  };
+};
+
 const CheckoutPage = ({ searchParams }: CheckoutPageProps) => {
   const status = searchParams?.status;
   const error = searchParams?.error;
+  const planFromQuery = (searchParams?.plan as string | undefined) ?? 'starter';
 
-  let alert: React.ReactNode = null;
+  let banner: JSX.Element | null = null;
 
   if (status === 'signup_success') {
-    alert = (
+    banner = (
       <div className="mb-6 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-        Wir haben dir eine Bestätigungs-E-Mail geschickt. Bitte bestätige deine Adresse in deinem Postfach.
-        Im nächsten Schritt richtest du dein Abo über Stripe ein.
+        <p className="font-semibold mb-1">E-Mail-Bestätigung versendet</p>
+        <p>
+          Wir haben dir eine Bestätigungs-E-Mail für dein Konto geschickt. Bitte
+          bestätige deine Adresse, während du hier dein Abo abschließt.
+        </p>
       </div>
     );
-  } else if (error === 'noprice') {
-    alert = (
+  } else if (error) {
+    let message =
+      'Beim Start deines Abos ist ein Fehler aufgetreten. Bitte versuche es erneut.';
+
+    if (error === 'noplan') {
+      message = 'Bitte wähle zuerst einen Plan aus.';
+    } else if (error === 'noprice') {
+      message =
+        'Für den gewählten Plan ist aktuell kein Stripe-Preis hinterlegt. Bitte kontaktiere den Support.';
+    } else if (error === 'stripe_config') {
+      message = 'Stripe ist noch nicht korrekt konfiguriert.';
+    } else if (error === 'nosession') {
+      message = 'Die Zahlungsseite konnte nicht gestartet werden.';
+    } else if (error === 'invalid_plan') {
+      message = 'Ungültiger Plan ausgewählt.';
+    }
+
+    banner = (
       <div className="mb-6 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
-        Für den gewählten Plan wurde kein Preis gefunden. Bitte lade die Seite neu oder kontaktiere den Support.
-      </div>
-    );
-  } else if (error === 'noplan') {
-    alert = (
-      <div className="mb-6 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
-        Bitte wähle einen Plan, bevor du fortfährst.
+        {message}
       </div>
     );
   }
@@ -143,8 +172,11 @@ const CheckoutPage = ({ searchParams }: CheckoutPageProps) => {
 
       <main className="bg-background-3 dark:bg-background-7 min-h-screen">
         <section className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16 py-16 md:py-20 lg:py-24">
-          {alert}
-          <CheckoutForm checkoutAction={handleCheckout} />
+          {banner}
+          <CheckoutForm
+            checkoutAction={handleCheckout}
+            defaultPlanFromQuery={planFromQuery}
+          />
         </section>
       </main>
 
