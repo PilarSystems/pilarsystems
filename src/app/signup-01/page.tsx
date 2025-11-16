@@ -21,17 +21,16 @@ type SignupPageProps = {
 };
 
 const SignupPage = async ({ searchParams }: SignupPageProps) => {
+  // optional: wenn schon eingeloggt → direkt zum Checkout
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Wenn schon eingeloggt → direkt zum Checkout
   if (user) {
     redirect('/checkout');
   }
 
-  // Server Action
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -78,8 +77,9 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ Jetzt NICHT direkt zum Checkout, sondern Erfolg-Banner auf Signup
-    redirect('/signup-01?status=signup_success');
+    // ✅ Hier: Signup erfolgreich → Mail wird von Supabase verschickt
+    // und wir schicken den User direkt zum Checkout (mit Status-Flag)
+    redirect('/checkout?status=signup_success');
   }
 
   return (
