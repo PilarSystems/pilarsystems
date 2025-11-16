@@ -36,38 +36,39 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
             <RevealAnimation delay={0.3}>
               <div className="max-w-[306px]">
                 <figure>
-                  <Image src={darkLogo} alt="Pilar Systems Logo" />
+                  <Image src={darkLogo} alt="PILAR SYSTEMS Logo" />
                 </figure>
                 <p className="text-accent/60 text-tagline-1 mt-4 mb-7 font-normal">
-                  Pilar Systems ist dein KI-Rezeptionist für Fitnessstudios: Anfragen, Probetrainings, Trainingspläne
-                  und Mitgliederverwaltung – alles in einem System, das wirklich in den Studioalltag passt.
+                  PILAR SYSTEMS ist deine komplette KI-Plattform für Fitnessstudios &amp; Coaches: Telefon, WhatsApp,
+                  E-Mail, DMs, Trainingspläne und Growth-Analytics – alles in einem System, das in den Studioalltag
+                  passt.
                 </p>
                 <div className="flex items-center gap-3">
                   <Link target="_blank" href="https://www.facebook.com" className="footer-social-link">
                     <span className="sr-only">Facebook</span>
                     <Image className="size-6" src={facebook} alt="Facebook" />
                   </Link>
-                  <div className="bg-stroke-1/20 h-6 w-px"></div>
+                  <div className="bg-stroke-1/20 h-6 w-px" />
                   <Link target="_blank" href="https://www.instagram.com" className="footer-social-link">
                     <span className="sr-only">Instagram</span>
                     <Image className="size-6" src={instagram} alt="Instagram" />
                   </Link>
-                  <div className="bg-stroke-1/20 h-6 w-px"></div>
+                  <div className="bg-stroke-1/20 h-6 w-px" />
                   <Link target="_blank" href="https://www.youtube.com" className="footer-social-link">
                     <span className="sr-only">Youtube</span>
                     <Image className="size-6" src={youtube} alt="Youtube" />
                   </Link>
-                  <div className="bg-stroke-1/20 h-6 w-px"></div>
+                  <div className="bg-stroke-1/20 h-6 w-px" />
                   <Link target="_blank" href="https://www.linkedin.com" className="footer-social-link">
                     <span className="sr-only">LinkedIn</span>
                     <Image className="size-6" src={linkedin} alt="LinkedIn" />
                   </Link>
-                  <div className="bg-stroke-1/20 h-6 w-px"></div>
+                  <div className="bg-stroke-1/20 h-6 w-px" />
                   <Link target="_blank" href="https://www.dribbble.com" className="footer-social-link">
                     <span className="sr-only">Dribbble</span>
                     <Image className="size-6" src={dribbble} alt="Dribbble" />
                   </Link>
-                  <div className="bg-stroke-1/20 h-6 w-px"></div>
+                  <div className="bg-stroke-1/20 h-6 w-px" />
                   <Link target="_blank" href="https://www.behance.net" className="footer-social-link">
                     <span className="sr-only">Behance</span>
                     <Image className="size-6" src={behance} alt="Behance" />
@@ -87,7 +88,7 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
                   <ul className="space-y-3 sm:space-y-5">
                     <li>
                       <Link href="/our-team-02" className="footer-link">
-                        Über Pilar
+                        Über PILAR
                       </Link>
                     </li>
                     <li>
@@ -117,22 +118,27 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
                   <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Produkt</p>
                   <ul className="space-y-3 sm:space-y-5">
                     <li>
-                      <Link href="/" className="footer-link">
+                      <Link href="/homepage-18" className="footer-link">
                         Startseite
                       </Link>
                     </li>
                     <li>
-                      <Link href="/signup-01" className="footer-link">
+                      <Link href="/homepage-18#pricing" className="footer-link">
                         Preise &amp; Pläne
                       </Link>
                     </li>
                     <li>
-                      <Link href="/login-04" className="footer-link">
+                      <Link href="/affiliate" className="footer-link">
+                        Affiliate-Programm
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/login-01" className="footer-link">
                         Login
                       </Link>
                     </li>
                     <li>
-                      <Link href="/sign-up-04" className="footer-link">
+                      <Link href="/signup-01" className="footer-link">
                         Account anlegen
                       </Link>
                     </li>
@@ -163,8 +169,8 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/gdpr" className="footer-link">
-                        DSGVO-Infos
+                      <Link href="/refund-policy" className="footer-link">
+                        Widerruf &amp; Rückerstattung
                       </Link>
                     </li>
                   </ul>
@@ -179,7 +185,7 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
           <FooterDivider />
           <RevealAnimation delay={0.7} offset={10} start="top 105%">
             <p className="text-tagline-1 text-primary-50 font-normal">
-              © {new Date().getFullYear()} Pilar Systems – KI-Rezeptionist für Fitnessstudios.
+              © {new Date().getFullYear()} PILAR SYSTEMS – KI-Infrastruktur für Fitnessstudios &amp; Coaches.
             </p>
           </RevealAnimation>
         </div>

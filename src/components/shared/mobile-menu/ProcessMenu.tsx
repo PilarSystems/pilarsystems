@@ -3,13 +3,14 @@ import MobileMenuItem from './MobileMenuItem';
 
 const ProcessMenu = () => {
   return (
-    <MobileMenuItem id="process" title="Ablauf" hasSubmenu={true}>
+    <MobileMenuItem id="process" title="Ablauf" hasSubmenu={false}>
       <ul>
         <li>
           <Link
             href="/process-01"
-            className="text-tagline-1 text-secondary/60 dark:text-accent/60 block w-full py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300">
-            So funktioniert Pilar Systems
+            className="text-tagline-1 text-secondary/60 dark:text-accent/60 block w-full py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300"
+          >
+            Ablauf & Setup
           </Link>
         </li>
       </ul>

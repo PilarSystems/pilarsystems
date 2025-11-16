@@ -9,28 +9,32 @@ const VisionStatement = () => {
       <div className="main-container space-y-12 md:space-y-16 lg:space-y-[100px]">
         <div className="space-y-3 text-center max-w-[780px] mx-auto">
           <RevealAnimation delay={0.2}>
-            <span className="badge badge-cyan mb-5">Passion meets purpose</span>
+            <span className="badge badge-cyan mb-5">Unsere Vision</span>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
-            <h2 className="font-medium">Built for progress. designed for possibility.</h2>
+            <h2 className="font-medium">
+              Weniger Chaos im Studioalltag. Mehr Fokus auf Mitglieder und Wachstum.
+            </h2>
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p>
-              At NextSaaS, we believe software should empower people, not overwhelm them. That&apos;s why we&apos;ve
-              created a flexible, intuitive platform that helps teams streamline operations, gain clarity from data, and
-              scale faster, without the complexity.
+              Pilar Systems ist aus einem einfachen Gedanken entstanden: Studios verlieren täglich Potenzial, weil
+              Telefon, WhatsApp, E-Mail und Schichtpläne nicht zusammenarbeiten. Unsere Vision ist ein System, das
+              Anfragen, Probetrainings, Check-ins und Trainingsorganisation so intelligent verbindet, dass dein Team
+              wieder Zeit für das Wesentliche hat – Menschen.
             </p>
           </RevealAnimation>
         </div>
+
         <article className="flex flex-col md:flex-row gap-8">
           <RevealAnimation delay={0.5} instant={true}>
             <figure className="rounded-[20px] overflow-hidden max-w-full md:max-w-[630px]">
-              <Image src={vision1Img} className="w-full h-full object-cover" alt="vision-1" />
+              <Image src={vision1Img} className="w-full h-full object-cover" alt="Modernes Gym mit strukturierter Organisation" />
             </figure>
           </RevealAnimation>
           <RevealAnimation delay={0.6} instant={true}>
             <figure className="rounded-[20px] overflow-hidden max-w-full md:max-w-[630px]">
-              <Image src={vision2Img} className="w-full h-full object-cover" alt="vision-2" />
+              <Image src={vision2Img} className="w-full h-full object-cover" alt="Digitales Dashboard für Fitnessstudios" />
             </figure>
           </RevealAnimation>
         </article>

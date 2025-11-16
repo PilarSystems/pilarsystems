@@ -11,25 +11,18 @@ import MobileMenuButton from './MobileMenuButton';
 import NavCTAButton from './NavCTAButton';
 import NavItemLink from './NavItemLink';
 
+import { navigationItems, headerConfig } from '@/data/header';
+
 interface NavbarOneProps {
   className?: string;
-  megaMenuColor?: string;
+  megaMenuColor?: string; // aktuell nicht genutzt, bleibt für Kompatibilität
   btnClassName?: string;
   navItemClass?: string;
 }
 
-// Custom Navigation für Pilar Systems – TS-kompatibel mit NavigationItem
-const navigationItems = [
-  { id: 'home', label: 'Home', href: '/homepage-18', hasDropdown: false },
-  { id: 'features', label: 'Funktionen', href: '/features-02', hasDropdown: false },
-  { id: 'about', label: 'Über uns', href: '/about-02', hasDropdown: false },
-  { id: 'pricing', label: 'Preise', href: '/signup-01', hasDropdown: false },
-  { id: 'customers', label: 'Kunden', href: '/testimonial-02', hasDropdown: false },
-  { id: 'login', label: 'Login', href: '/login-01', hasDropdown: false },
-];
-
-const NavbarOne: FC<NavbarOneProps> = ({ className, btnClassName }) => {
+const NavbarOne: FC<NavbarOneProps> = ({ className, btnClassName, navItemClass }) => {
   const { isScrolled } = useNavbarScroll(100);
+  const { cta } = headerConfig;
 
   return (
     <MobileMenuProvider>
@@ -48,20 +41,22 @@ const NavbarOne: FC<NavbarOneProps> = ({ className, btnClassName }) => {
           <nav className="hidden items-center xl:flex">
             <ul className="flex items-center gap-6">
               {navigationItems.map((item) => (
-                <li key={item.id} className="py-2.5">
+                <li key={item.id} className={cn('py-2.5', navItemClass)}>
                   <NavItemLink item={item} />
                 </li>
               ))}
             </ul>
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA Button → nutzt zentrale headerConfig */}
           <NavCTAButton
-  href="/signup-01"
-  btnClassName="btn btn-primary bg-[var(--color-primary-500)] text-white hover:opacity-80"
-  label="Jetzt starten"
-/>
-
+            href={cta.href}
+            label={cta.label}
+            btnClassName={cn(
+              'btn btn-primary bg-[var(--color-primary-500)] text-white hover:opacity-80',
+              btnClassName,
+            )}
+          />
 
           {/* Mobile Menu Button */}
           <MobileMenuButton />

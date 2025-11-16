@@ -3,13 +3,14 @@ import MobileMenuItem from './MobileMenuItem';
 
 const TeamsMenu = () => {
   return (
-    <MobileMenuItem id="teams" title="Team" hasSubmenu={true}>
+    <MobileMenuItem id="teams" title="Über uns" hasSubmenu={false}>
       <ul>
         <li>
           <Link
-            href="/our-team-02"
-            className="text-tagline-1 text-secondary/60 dark:text-accent/60 block w-full py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300">
-            Unser Team
+            href="/about-02"
+            className="text-tagline-1 text-secondary/60 dark:text-accent/60 block w-full py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300"
+          >
+            Über Pilar Systems
           </Link>
         </li>
       </ul>

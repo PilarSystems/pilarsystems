@@ -1,6 +1,9 @@
+'use client';
+
 import { NavigationItem } from '@/data/header';
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export type NavItemVariant = 'default' | 'border' | 'white' | 'light';
 
@@ -10,7 +13,7 @@ interface NavItemLinkProps {
 }
 
 const getVariantClasses = (variant: NavItemVariant = 'default'): string => {
-  const variants = {
+  const variants: Record<NavItemVariant, string> = {
     default:
       'flex items-center gap-1 px-4 py-2 border border-transparent group-hover/nav:border-stroke-2 group-hover/nav:dark:border-stroke-7 rounded-full group-hover/nav:bg-accent/20 group-hover/nav:dark:bg-transparent text-tagline-1 font-normal text-secondary/60 group-hover/nav:text-secondary dark:text-accent/60 group-hover/nav:dark:text-accent transition-all duration-200',
     border:
@@ -25,8 +28,24 @@ const getVariantClasses = (variant: NavItemVariant = 'default'): string => {
 };
 
 const NavItemLink = ({ item, variant = 'default' }: NavItemLinkProps) => {
+  const pathname = usePathname();
+  const href = item.href ?? '#';
+
+  // Hash (#pricing) ignorieren, wir vergleichen nur den Pfad
+  const hrefPath = href.split('#')[0];
+  const isActive = hrefPath !== '#' && pathname === hrefPath;
+
   return (
-    <Link href={item.href ?? '#'} className={cn(getVariantClasses(variant))}>
+    <Link
+      href={href}
+      className={cn(
+        getVariantClasses(variant),
+        isActive &&
+          // dezenter Active-State – gleiche Sprache wie dein Design
+          'bg-accent/20 text-secondary dark:text-accent border border-stroke-2 dark:border-stroke-7',
+      )}
+      aria-current={isActive ? 'page' : undefined}
+    >
       <span>{item?.label}</span>
       {item?.hasDropdown && (
         <span className="block origin-center translate-y-px transition-all duration-300 group-hover/nav:rotate-180">
@@ -36,7 +55,8 @@ const NavItemLink = ({ item, variant = 'default' }: NavItemLinkProps) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-4">
+            className="size-4"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
           </svg>
         </span>

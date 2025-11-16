@@ -94,7 +94,8 @@ const Pricing = () => {
   return (
     <section
       id="pricing"
-      className="relative pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px]">
+      className="relative pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px]"
+    >
       <div className="main-container flex flex-col gap-[70px]">
         <div className="flex flex-col items-center text-center">
           <RevealAnimation delay={0.2}>
@@ -122,7 +123,8 @@ const Pricing = () => {
                     plan.planType === 'featured'
                       ? 'p-2.5 relative overflow-hidden'
                       : 'bg-white dark:bg-black p-8 xl:py-[60px] xl:px-14',
-                  )}>
+                  )}
+                >
                   {/* Featured plan gradient background */}
                   {plan.planType === 'featured' && (
                     <figure className="w-[810px] md:w-[950px] lg:w-[810px] left-[-30%] md:left-[-20%] lg:left-[-30%] top-[-20%] md:top-[-40%] lg:top-[-20%] absolute rotate-[30deg] select-none pointer-events-none">
@@ -135,7 +137,8 @@ const Pricing = () => {
                       'space-y-8',
                       plan.planType === 'featured' &&
                         'bg-white relative z-10 dark:bg-black p-8 xl:py-[60px] xl:px-14 rounded-[20px] flex flex-col h-full gap-6',
-                    )}>
+                    )}
+                  >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <h5 className="font-normal text-heading-5">{plan.title}</h5>
@@ -146,16 +149,12 @@ const Pricing = () => {
                         )}
                       </div>
                       {plan.subtitle && (
-                        <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                          {plan.subtitle}
-                        </p>
+                        <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">{plan.subtitle}</p>
                       )}
                       <div className="border-b border-stroke-2 dark:border-stroke-6 pb-8">
                         <div className="price-month mb-4">
                           {plan.isOnRequest ? (
-                            <h4 className="text-heading-6 sm:text-heading-4 font-normal">
-                              Preis auf Anfrage
-                            </h4>
+                            <h4 className="text-heading-6 sm:text-heading-4 font-normal">Preis auf Anfrage</h4>
                           ) : (
                             <h4 className="text-heading-6 sm:text-heading-4 font-normal">
                               €<span>{plan.monthlyPrice}</span>
@@ -186,7 +185,8 @@ const Pricing = () => {
                             className={cn(
                               'flex size-5 items-center justify-center rounded-full shrink-0',
                               feature.enabled ? 'bg-secondary dark:bg-accent' : 'bg-secondary/40 dark:bg-accent/40',
-                            )}>
+                            )}
+                          >
                             <CheckIcon className="fill-white dark:fill-black" />
                           </span>
                           <span
@@ -195,7 +195,8 @@ const Pricing = () => {
                               feature.enabled
                                 ? 'text-secondary dark:text-accent'
                                 : 'text-secondary dark:text-accent/60',
-                            )}>
+                            )}
+                          >
                             {feature.label}
                           </span>
                         </li>

@@ -14,25 +14,32 @@ const Reviews = () => {
               <div className="absolute select-none pointer-events-none -top-[90%] md:-top-[73%] lg:-top-[70%] -left-[65%] max-[376px]:-left-[76%] md:-left-[30%] lg:-left-[21%] xl:-left-[15%] rotate-[34deg] w-[500px] h-[600px]">
                 <Image
                   src={gradient6Img}
-                  alt="Decorative gradient background overlay"
+                  alt="Dekorativer Farbverlauf"
                   className="w-full h-full object-cover"
                 />
               </div>
             </RevealAnimation>
+
             <figure className="space-y-4 flex flex-col items-center justify-center">
               <Image
                 src={avatar1Img}
-                alt="Avatar"
+                alt="Gründer von Pilar Systems"
                 className="size-10 bg-ns-yellow ring-2 ring-white rounded-full object-cover"
               />
-              <figcaption className="text-tagline-2 font-medium dark:text-accent">From our CEO</figcaption>
+              <figcaption className="text-tagline-2 font-medium dark:text-accent">
+                Von unserem Gründer
+              </figcaption>
             </figure>
+
             <p className="mt-6 mb-4 text-xl max-w-[626px] text-center mx-auto max-sm:text-tagline-2 max-sm:px-2">
-              NextSaaS was born from a simple idea: What if the tools we use to run our businesses made things easier?
-              We&apos;re building a platform that scales with you, adapts to your needs, and grows with your team.
+              Pilar Systems ist aus der Frage entstanden: Warum fühlen sich so viele Studios an der Rezeption noch an
+              wie 2005, obwohl auf der Trainingsfläche alles modern ist? Wir wollen die Lücke schließen – mit einer
+              Infrastruktur, die Anfragen, Probetrainings und Mitgliederkommunikation endlich auf das Niveau bringt, das
+              deine Mitglieder bereits von deinem Training gewohnt sind.
             </p>
+
             <strong className="text-lg leading-[1.5] font-medium dark:text-accent">
-              Daniel Carter, CEO &amp; Co-Founder
+              Team Pilar Systems
             </strong>
           </div>
         </RevealAnimation>

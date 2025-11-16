@@ -15,9 +15,9 @@ import { Fragment } from 'react';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Pilar Systems – KI-Rezeptionist für Fitnessstudios',
+  title: 'PILAR SYSTEMS – KI-Infrastruktur für Fitnessstudios & Coaches',
   description:
-    'Pilar Systems automatisiert Telefon, WhatsApp und Terminvergabe für Fitnessstudios – inklusive KI-Rezeptionist, Lead-Management und Trainingsplan-Generator.',
+    'PILAR SYSTEMS automatisiert Telefon, WhatsApp, E-Mail und DMs, qualifiziert Leads, bucht Probetrainings, erstellt Trainingspläne und liefert Growth-Analytics – eine komplette KI-Infrastruktur für Fitnessstudios und Coaches.',
 };
 
 const Homepage18 = () => {

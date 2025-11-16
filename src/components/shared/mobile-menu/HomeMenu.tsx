@@ -3,12 +3,13 @@ import MobileMenuItem from './MobileMenuItem';
 
 const HomeMenu = () => {
   return (
-    <MobileMenuItem id="home" title="Home" hasSubmenu={true}>
+    <MobileMenuItem id="home" title="Home" hasSubmenu={false}>
       <ul>
         <li>
           <Link
             href="/homepage-18"
-            className="text-tagline-1 text-secondary/60 dark:text-accent/60 border-stroke-4 dark:border-stroke-6 block w-full border-b py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300">
+            className="text-tagline-1 text-secondary/60 dark:text-accent/60 block w-full py-3 text-left font-normal transition-all duration-200 hover:text-primary-500 dark:hover:text-primary-300"
+          >
             Pilar Systems Startseite
           </Link>
         </li>
@@ -18,5 +19,4 @@ const HomeMenu = () => {
 };
 
 HomeMenu.displayName = 'HomeMenu';
-
 export default HomeMenu;

@@ -1,8 +1,3 @@
-{
-  /* =========================
-Feature v1 section
-===========================*/
-}
 import cardOneImgDark from '@public/images/home-page-9/feature-card-img-01-dark.png';
 import cardOneImg from '@public/images/home-page-9/feature-card-img-01.png';
 import cardTwoImgDark from '@public/images/home-page-9/feature-card-img-02-dark.png';
@@ -15,163 +10,174 @@ import cardFiveImgDark from '@public/images/home-page-9/feature-card-img-05-dark
 import cardFiveImg from '@public/images/home-page-9/feature-card-img-05.png';
 import Image from 'next/image';
 import RevealAnimation from '../animation/RevealAnimation';
+
 const Features = () => {
   return (
-    <section className="pb-[200px] pt-[100px]" aria-label="Features">
+    <section className="pb-[200px] pt-[100px]" aria-label="Pilar Systems Funktionen">
       <div className="main-container">
         <div className="space-y-[70px]">
-          {/* feature heading  */}
+          {/* Heading */}
           <div className="space-y-3 text-center">
             <RevealAnimation delay={0.3}>
-              <h2 className="max-w-[814px] mx-auto">Everything you need to manage money smarter</h2>
+              <h2 className="max-w-[814px] mx-auto">
+                Die komplette KI-Infrastruktur für moderne Fitnessstudios.
+              </h2>
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
               <p className="max-w-[734px] mx-auto">
-                NextSaaS simplifies finance with powerful tools designed for clarity, speed, and growth. Whether you’re
-                budgeting, forecasting, or tracking cash flow—our platform keeps you in control.
+                Pilar Systems bündelt Telefon, WhatsApp, E-Mail, Terminbuchung, Trainingspläne, Coach und
+                Growth-Analytics in einer Plattform. Statt fünf Einzellösungen hast du ein System, das deinen Studioalltag
+                wirklich versteht.
               </p>
             </RevealAnimation>
           </div>
-          {/* feature cards  */}
-          {/* 1st row cards  */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-y-8 sm:gap-x-8">
-            {/* card one  */}
 
+          {/* 1. Zeile – Kommunikations- & Terminmodule */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-y-8 sm:gap-x-8">
+            {/* Karte 1 – Omni-Channel KI-Inbox */}
             <RevealAnimation delay={0.5}>
               <div className="space-y-3">
-                {/* card img  */}
                 <div className="max-w-[409px] w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
                   <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
                     <Image
                       src={cardOneImg}
-                      alt="Fast and secure cloud upload feature"
+                      alt="Omni-Channel KI-Inbox für WhatsApp, E-Mail und Website"
                       className="w-full h-full object-cover dark:hidden"
                       loading="lazy"
                     />
                     <Image
                       src={cardOneImgDark}
-                      alt="Fast and secure cloud upload feature"
+                      alt="Omni-Channel KI-Inbox für WhatsApp, E-Mail und Website"
                       className="w-full h-full object-cover hidden dark:block"
                       loading="lazy"
                     />
                   </figure>
                 </div>
-                {/* card content  */}
                 <div className="space-y-1">
-                  <h3 className="text-heading-5">Fast &amp; secure cloud upload</h3>
-                  <p>Store, access, and manage data from anywhere.</p>
+                  <h3 className="text-heading-5">Omni-Channel KI-Inbox</h3>
+                  <p>
+                    Eine Inbox für WhatsApp, E-Mail und Website-Anfragen: Deine KI beantwortet Fragen, qualifiziert
+                    Leads vor und begleitet sie bis zum gebuchten Probetraining – immer in deinem Studio-Branding.
+                  </p>
                 </div>
               </div>
             </RevealAnimation>
-            {/* card two  */}
+
+            {/* Karte 2 – KI-Telefonanlage */}
             <RevealAnimation delay={0.6}>
               <div className="space-y-3">
-                {/* card img  */}
                 <div className="max-w-[409px] w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
                   <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
                     <Image
                       src={cardTwoImg}
-                      alt="Automated workflows feature"
+                      alt="KI-Telefonanlage für eingehende und verpasste Anrufe"
                       className="w-full h-full object-cover dark:hidden"
                       loading="lazy"
                     />
                     <Image
                       src={cardTwoImgDark}
-                      alt="Automated workflows feature"
+                      alt="KI-Telefonanlage für eingehende und verpasste Anrufe"
                       className="w-full h-full object-cover hidden dark:block"
                       loading="lazy"
                     />
                   </figure>
                 </div>
-                {/* card content  */}
                 <div className="space-y-1">
-                  <h3 className="text-heading-5">Automated workflows</h3>
-                  <p>Store, access, and manage data from anywhere.</p>
+                  <h3 className="text-heading-5">24/7 KI-Telefonanlage</h3>
+                  <p>
+                    Deine KI geht ans Telefon, übernimmt Rückrufe bei verpassten Anrufen und sammelt alle relevanten
+                    Infos – von Probetrainingswunsch bis Vertragsinteresse. Kein Klingeln ins Leere mehr.
+                  </p>
                 </div>
               </div>
             </RevealAnimation>
-            {/* card three  */}
+
+            {/* Karte 3 – Kalender & Funnel */}
             <RevealAnimation delay={0.7}>
               <div className="space-y-3">
-                {/* card img  */}
                 <div className="max-w-[409px] w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
                   <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
                     <Image
                       src={cardThreeImg}
-                      alt="Smart search and AI insights feature"
+                      alt="Kalender und Termin-Funnel für Probetrainings und Verträge"
                       className="w-full h-full object-cover dark:hidden"
                       loading="lazy"
                     />
                     <Image
                       src={cardThreeImgDark}
-                      alt="Smart search and AI insights feature"
+                      alt="Kalender und Termin-Funnel für Probetrainings und Verträge"
                       className="w-full h-full object-cover hidden dark:block"
                       loading="lazy"
                     />
                   </figure>
                 </div>
-                {/* card content  */}
                 <div className="space-y-1">
-                  <h3 className="text-heading-5">Smart search &amp; AI insights</h3>
-                  <p>Store, access, and manage data from anywhere.</p>
+                  <h3 className="text-heading-5">Kalender &amp; Termin-Funnel</h3>
+                  <p>
+                    Probetrainings, Beratungstermine und Vertragsabschlüsse werden direkt in deinen Kalender gebucht.
+                    Mit klaren Pipelines siehst du jederzeit, welcher Lead in welcher Phase steckt.
+                  </p>
                 </div>
               </div>
             </RevealAnimation>
           </div>
-          {/* 2nd row cards  */}
 
+          {/* 2. Zeile – Coach & Growth-Module */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-y-8 sm:gap-x-8">
-            {/* card four  */}
+            {/* Karte 4 – Coach & Trainingspläne */}
             <RevealAnimation delay={0.8}>
               <div className="space-y-3">
-                {/* card img  */}
                 <div className="max-w-[409px] w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
                   <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
                     <Image
                       src={cardFourImg}
-                      alt="Teamwork and leadership feature"
+                      alt="KI-Coach für Trainingspläne und Mitglieder-Check-ins"
                       className="w-full h-full object-cover dark:hidden"
                       loading="lazy"
                     />
                     <Image
                       src={cardFourImgDark}
-                      alt="Teamwork and leadership feature"
+                      alt="KI-Coach für Trainingspläne und Mitglieder-Check-ins"
                       className="w-full h-full object-cover hidden dark:block"
                       loading="lazy"
                     />
                   </figure>
                 </div>
-                {/* card content  */}
                 <div className="space-y-1">
-                  <h3 className="text-heading-5">Teamwork &amp; leadership</h3>
-                  <p>Store, access, and manage data from anywhere.</p>
+                  <h3 className="text-heading-5">KI-Coach &amp; Trainingspläne</h3>
+                  <p>
+                    Erstelle individuelle Trainingspläne, halte Mitglieder mit automatischen Check-ins accountable und
+                    dokumentiere Fortschritte direkt im System – ohne Excel und Zettelwirtschaft.
+                  </p>
                 </div>
               </div>
             </RevealAnimation>
-            {/* card five  */}
+
+            {/* Karte 5 – Growth & Automationen */}
             <RevealAnimation delay={0.9}>
               <div className="space-y-3">
-                {/* card img  */}
                 <div className="max-w-[409px] w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
                   <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
                     <Image
                       src={cardFiveImg}
-                      alt="Custom dashboards feature"
+                      alt="Growth Analytics und Automationen für Fitnessstudios"
                       className="w-full h-full object-cover dark:hidden"
                       loading="lazy"
                     />
                     <Image
                       src={cardFiveImgDark}
-                      alt="Custom dashboards feature"
+                      alt="Growth Analytics und Automationen für Fitnessstudios"
                       className="w-full h-full object-cover hidden dark:block"
                       loading="lazy"
                     />
                   </figure>
                 </div>
-                {/* card content  */}
                 <div className="space-y-1">
-                  <h3 className="text-heading-5">Custom dashboards</h3>
-                  <p>Store, access, and manage data from anywhere.</p>
+                  <h3 className="text-heading-5">Growth-Analytics &amp; Automationen</h3>
+                  <p>
+                    Sieh auf einen Blick, welche Kampagnen funktionieren, welche Kanäle Leads bringen und wo Potenzial
+                    verschenkt wird. Automationen kümmern sich um Follow-ups, Reaktivierungen und No-Show-Nachfass.
+                  </p>
                 </div>
               </div>
             </RevealAnimation>
@@ -181,5 +187,7 @@ const Features = () => {
     </section>
   );
 };
+
 Features.displayName = 'Features';
+
 export default Features;
