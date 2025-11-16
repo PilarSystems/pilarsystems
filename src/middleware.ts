@@ -1,54 +1,72 @@
 // src/middleware.ts
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
-const PROTECTED_PATHS = ['/dashboard', '/checkout', '/onboarding'];
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const url = req.nextUrl.clone();
+  const path = url.pathname;
 
-export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
-    request,
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Wenn Supabase-Env fehlt → keine Auth-Logik, Seite normal durchlassen
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('[middleware] Supabase Env fehlt, überspringe Auth.');
+    return res;
+  }
+
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get(name) {
+        return req.cookies.get(name)?.value;
+      },
+      set(name, value, options) {
+        res.cookies.set({
+          name,
+          value,
+          ...options,
+        });
+      },
+      remove(name, options) {
+        res.cookies.set({
+          name,
+          value: '',
+          ...options,
+          maxAge: 0,
+        });
+      },
+    },
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          // Cookies im Response-Objekt setzen
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
-          });
-        },
-      },
-    }
-  );
-
-  // User über Supabase laden
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
-  const isProtected = PROTECTED_PATHS.some((p) =>
-    path === p || path.startsWith(`${p}/`)
-  );
+  const isAuthRoute = path.startsWith('/login-01') || path.startsWith('/signup-01');
 
-  if (isProtected && !user) {
-    const url = new URL('/login-01', request.url);
-    url.searchParams.set('redirectTo', path);
+  // ⚠️ Nur das Dashboard ist geschützt – NICHT /checkout!
+  const isProtectedRoute = path.startsWith('/dashboard');
+
+  // Nicht eingeloggt & will ins Dashboard → auf Login mit redirectTo
+  if (isProtectedRoute && !user) {
+    const redirectTo = encodeURIComponent(path + (url.search || ''));
+    url.pathname = '/login-01';
+    url.search = `?redirectTo=${redirectTo}`;
     return NextResponse.redirect(url);
   }
 
-  return response;
+  // Schon eingeloggt & geht auf Login/Signup → direkt ins Dashboard
+  if (isAuthRoute && user) {
+    url.pathname = '/dashboard';
+    url.search = '';
+    return NextResponse.redirect(url);
+  }
+
+  return res;
 }
 
+// Nur auf diese Routen anwenden
 export const config = {
-  matcher: [
-    // alles außer _next, static assets, favicon etc.
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+  matcher: ['/dashboard/:path*', '/login-01', '/signup-01'],
 };
