@@ -1,93 +1,60 @@
-// src/components/dashboard/DashboardGuard.tsx
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabaseClient } from '@/lib/supabaseClient';
+import createSupabaseBrowserClient from '@/lib/supabaseClient';
 
 type DashboardGuardProps = {
   children: ReactNode;
 };
 
-type GuardState =
-  | 'checking'
-  | 'no_user'
-  | 'no_payment'
-  | 'allowed';
-
 const DashboardGuard = ({ children }: DashboardGuardProps) => {
   const router = useRouter();
-  const [state, setState] = useState<GuardState>('checking');
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const checkAccess = async () => {
+    const checkSession = async () => {
       try {
-        // 1. User checken
+        const supabase = createSupabaseBrowserClient();
+
         const {
-          data: { user },
-        } = await supabaseClient.auth.getUser();
+          data: { session },
+        } = await supabase.auth.getSession();
 
-        if (!user) {
-          setState('no_user');
-          router.replace('/login-01');
+        if (!session) {
+          // aktuelle URL merken, damit wir nach Login zurückleiten können
+          const current =
+            typeof window !== 'undefined'
+              ? window.location.pathname + window.location.search
+              : '/dashboard';
+
+          const redirectTo = encodeURIComponent(current);
+
+          router.replace(`/login-01?redirectTo=${redirectTo}`);
           return;
         }
-
-        const email = user.email;
-        if (!email) {
-          setState('no_user');
-          router.replace('/login-01');
-          return;
-        }
-
-        // 2. Paid-Status checken
-        const { data, error } = await supabaseClient
-          .from('paid_customers')
-          .select('status')
-          .eq('email', email)
-          .maybeSingle();
-
-        if (error) {
-          console.error('Fehler beim Laden paid_customers:', error);
-        }
-
-        if (!data || data.status !== 'active') {
-          setState('no_payment');
-          router.replace('/signup-01');
-          return;
-        }
-
-        setState('allowed');
       } catch (err) {
-        console.error('DashboardGuard Fehler:', err);
-        setState('no_user');
+        console.error('DashboardGuard – Fehler beim Session-Check:', err);
         router.replace('/login-01');
+        return;
+      } finally {
+        setChecking(false);
       }
     };
 
-    void checkAccess();
+    checkSession();
   }, [router]);
 
-  // Loading / Check-UI
-  if (state === 'checking') {
+  if (checking) {
     return (
-      <div className="w-full min-h-[50vh] flex flex-col items-center justify-center gap-4">
-        <div className="relative h-12 w-12">
-          <div className="absolute inset-0 rounded-full border-2 border-accent/30 border-t-accent animate-spin" />
-        </div>
-        <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
-          Wir prüfen kurz deinen Zugang & dein Abo…
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <p className="text-secondary/70 dark:text-accent/70 text-tagline-1">
+          Dashboard wird geladen …
         </p>
       </div>
     );
   }
 
-  if (state === 'no_user' || state === 'no_payment') {
-    // Während redirect einfach nichts Spezielles anzeigen
-    return null;
-  }
-
-  // allowed
   return <>{children}</>;
 };
 
