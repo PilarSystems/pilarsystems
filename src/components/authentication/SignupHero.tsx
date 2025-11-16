@@ -1,24 +1,125 @@
+// src/components/authentication/SignupHero.tsx
 'use client';
 
 import RevealAnimation from '@/components/animation/RevealAnimation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
+import { createSupabaseBrowserClient } from '@/lib/supabaseClient';
 
 type SignupHeroProps = {
-  signupAction?: (formData: FormData) => void;
-  status?: string;
-  error?: string;
-  email?: string;
+  // Nur zum initialen Anzeigen, wird danach lokal im State weitergeführt
+  initialStatus?: string;
+  initialEmail?: string;
 };
 
-const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => {
-  const router = useRouter();
+type SignupStatus = 'idle' | 'signup_success';
 
-  const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
-    if (!signupAction) {
-      e.preventDefault();
-      router.push('/checkout');
+type SignupError =
+  | 'missing_fields'
+  | 'password_mismatch'
+  | 'signup_failed'
+  | null;
+
+const SignupHero = ({ initialStatus, initialEmail }: SignupHeroProps) => {
+  const router = useRouter();
+  const [status, setStatus] = useState<SignupStatus>(
+    initialStatus === 'signup_success' ? 'signup_success' : 'idle',
+  );
+  const [error, setError] = useState<SignupError>(null);
+  const [emailState, setEmailState] = useState<string | undefined>(
+    initialEmail,
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleClientSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const firstName =
+      (formData.get('firstName') as string | null)?.trim() || '';
+    const lastName =
+      (formData.get('lastName') as string | null)?.trim() || '';
+    const email =
+      (formData.get('email') as string | null)?.trim() || '';
+    const studioName =
+      (formData.get('studioName') as string | null)?.trim() || '';
+    const studioWebsite =
+      (formData.get('studioWebsite') as string | null)?.trim() || '';
+    const members = (formData.get('members') as string | null) || '';
+    const phone =
+      (formData.get('phone') as string | null)?.trim() || '';
+    const password = (formData.get('password') as string | null) || '';
+    const passwordConfirm =
+      (formData.get('passwordConfirm') as string | null) || '';
+
+    // HTML required kümmert sich um vieles, aber wir machen zur Sicherheit nochmal:
+    if (!email || !password || !firstName || !lastName || !studioName || !phone) {
+      setError('missing_fields');
+      setStatus('idle');
+      return;
+    }
+
+    // Passwort-Mismatch → KEIN Submit, KEIN Redirect
+    if (password !== passwordConfirm) {
+      setError('password_mismatch');
+      setStatus('idle');
+      return;
+    }
+
+    // AGB-Checkbox checken (nur zur Sicherheit, Browser macht das schon)
+    const termsChecked = formData.get('terms');
+    if (!termsChecked) {
+      setError('missing_fields');
+      setStatus('idle');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError(null);
+
+      const supabase = createSupabaseBrowserClient();
+
+      const appUrl =
+        process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
+
+      const { error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${appUrl}/signup-01?status=confirmed`,
+          data: {
+            firstName,
+            lastName,
+            studioName,
+            studioWebsite,
+            members,
+            phone,
+          },
+        },
+      });
+
+      if (signUpError) {
+        console.error('Supabase signUp error:', signUpError.message);
+        setError('signup_failed');
+        setStatus('idle');
+        return;
+      }
+
+      // ✅ Wenn wir hier sind: Account in Supabase angelegt & Mail verschickt
+      setEmailState(email);
+      setStatus('signup_success');
+      setError(null);
+    } catch (err) {
+      console.error('Signup client error:', err);
+      setError('signup_failed');
+      setStatus('idle');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -26,68 +127,56 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
     'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
 
   const renderAlert = () => {
-    // ❌ Fehler-Messages (Passwort-Mismatch etc.) – Text jetzt GRAU, nicht weiß
+    // ❌ Fehler-Messages (kein Redirect, nur UI)
     if (error) {
       let message =
         'Beim Erstellen deines Kontos ist ein Fehler aufgetreten. Bitte versuche es erneut.';
 
       if (error === 'missing_fields') {
-        message = 'Bitte fülle alle Pflichtfelder aus.';
+        message =
+          'Bitte fülle alle Pflichtfelder aus und akzeptiere die Bedingungen.';
       } else if (error === 'password_mismatch') {
         message =
-          'Die beiden Passwörter stimmen nicht überein. Bitte überprüfe deine Eingabe.';
+          'Die beiden Passwörter stimmen nicht überein. Bitte prüfe deine Eingabe.';
       } else if (error === 'signup_failed') {
         message =
-          'Dein Konto konnte nicht erstellt werden. Prüfe deine E-Mail und versuche es erneut.';
+          'Dein Konto konnte nicht erstellt werden. Prüfe deine E-Mail oder versuche es später erneut.';
       }
 
       return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/5 px-4 py-3 text-sm text-secondary dark:text-accent">
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-secondary/80 dark:text-accent/80">
           {message}
         </div>
       );
     }
 
-    // ✅ Schritt 1: Signup erfolgreich, Bestätigungs-Mail raus
-    // wir behandeln sowohl status=signup_success als auch status=verify_email gleich
-    if (status === 'signup_success' || status === 'verify_email') {
+    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
+    if (status === 'signup_success') {
       return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/5 px-4 py-3 text-sm text-secondary dark:text-accent">
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
           <p className="font-semibold mb-1">Bestätigungs-E-Mail wurde versendet</p>
           <p className="mb-1">
-            Wir haben dir soeben eine E-Mail geschickt
-            {email ? (
-              <>
-                {' '}
-                an <span className="font-semibold">{email}</span>
-              </>
-            ) : (
-              ''
-            )}
-            . Bitte bestätige deine Adresse, damit dein Zugang zu Pilar Systems
-            vollständig aktiviert wird.
+            Wir haben dir soeben eine E-Mail geschickt. Bitte bestätige deine Adresse,
+            damit dein Zugang zu Pilar Systems vollständig aktiviert wird.
           </p>
-          <p className="mb-3">
-            Während du dein Postfach checkst, kannst du direkt{' '}
-            <span className="font-semibold">mit der Zahlung fortfahren</span>.
+          {emailState && (
+            <p className="mb-1">
+              Gesendet an:{' '}
+              <span className="font-semibold underline underline-offset-2">
+                {emailState}
+              </span>
+            </p>
+          )}
+          <p>
+            <span className="font-semibold">
+              Öffne jetzt dein Postfach und klicke auf den Bestätigungslink.
+            </span>{' '}
+            Danach leiten wir dich automatisch zum Zahlungs-Schritt weiter.
           </p>
-          <button
-            type="button"
-            onClick={() => router.push('/checkout')}
-            className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-sm w-full md:w-auto"
-          >
-            Weiter zur Zahlung
-          </button>
-        </div>
-      );
-    }
-
-    // ✅ Schritt 2: E-Mail aus Link bestätigt
-    if (status === 'confirmed') {
-      return (
-        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/5 px-4 py-3 text-sm text-secondary dark:text-accent">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen
-          und mit dem Setup fortfahren.
+          <p className="mt-2 text-xs opacity-80">
+            Tipp: Schau auch im Spam- oder Werbe-Ordner nach, falls die E-Mail nicht
+            direkt im Posteingang auftaucht.
+          </p>
         </div>
       );
     }
@@ -168,7 +257,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
                 <ul className="list-disc space-y-1 pl-4">
                   <li>Stammdaten für dich &amp; dein Studio</li>
                   <li>Basisinfos für die KI (Mitgliedergröße, Kontaktdaten)</li>
-                  <li>Direkter Übergang zur Zahlung via Stripe</li>
+                  <li>Bestätigungs-Mail für deinen Zugang</li>
                 </ul>
               </div>
             </div>
@@ -177,11 +266,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
           {/* Right – Formular */}
           <RevealAnimation delay={0.25} direction="up">
             <div className="rounded-2xl border border-stroke-2 dark:border-stroke-6 bg-background-1/90 dark:bg-background-8/90 px-5 py-6 md:px-7 md:py-8 shadow-[0_0_40px_rgba(15,23,42,0.5)] backdrop-blur">
-              <form
-                action={signupAction}
-                onSubmit={handleClientSubmit}
-                className="space-y-6"
-              >
+              <form onSubmit={handleClientSubmit} className="space-y-6">
                 {/* Vorname / Nachname */}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
@@ -389,9 +474,10 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
                 <div className="space-y-3 pt-1">
                   <button
                     type="submit"
-                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-md w-full"
+                    disabled={isSubmitting}
+                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-md w-full disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Weiter zur Zahlung
+                    {isSubmitting ? 'Wird erstellt…' : 'Weiter zur Zahlung'}
                   </button>
                   <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 text-center">
                     Du hast bereits Zugang?{' '}

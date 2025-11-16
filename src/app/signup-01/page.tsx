@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 type SignupPageProps = {
   searchParams?: {
     status?: string;
-    error?: string;
     email?: string;
   };
 };
@@ -24,68 +23,18 @@ type SignupPageProps = {
 const SignupPage = async ({ searchParams }: SignupPageProps) => {
   const supabase = await createSupabaseServerClient();
 
-  // Wenn schon eingeloggt und kein spezieller Status im Query → direkt zum Checkout
+  // Wenn User schon eingeloggt ist → direkt zum Checkout
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user && !searchParams?.status) {
+  if (user) {
     redirect('/checkout');
   }
 
-  // Server Action: Signup bei Supabase
-  async function handleSignup(formData: FormData) {
-    'use server';
-
-    const supabase = await createSupabaseServerClient();
-
-    const firstName = (formData.get('firstName') as string | null)?.trim() || '';
-    const lastName = (formData.get('lastName') as string | null)?.trim() || '';
-    const email = (formData.get('email') as string | null)?.trim() || '';
-    const studioName = (formData.get('studioName') as string | null)?.trim() || '';
-    const studioWebsite = (formData.get('studioWebsite') as string | null)?.trim() || '';
-    const members = (formData.get('members') as string | null) || '';
-    const phone = (formData.get('phone') as string | null)?.trim() || '';
-    const password = (formData.get('password') as string | null) || '';
-    const passwordConfirm = (formData.get('passwordConfirm') as string | null) || '';
-
-    // Pflichtfelder checken
-    if (!email || !password || !firstName || !lastName || !studioName || !phone) {
-      redirect('/signup-01?error=missing_fields');
-    }
-
-    // Passwort-Mismatch → Fehler-Banner (kein Account wird angelegt)
-    if (password !== passwordConfirm) {
-      redirect('/signup-01?error=password_mismatch');
-    }
-
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.pilarsystems.com';
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${appUrl}/login-01?status=confirmed`,
-        data: {
-          firstName,
-          lastName,
-          studioName,
-          studioWebsite,
-          members,
-          phone,
-        },
-      },
-    });
-
-    if (error) {
-      console.error('Supabase signUp error:', error.message);
-      redirect('/signup-01?error=signup_failed');
-    }
-
-    // ✅ Signup erfolgreich → Seite zeigt Banner "Mail versendet" + Button "Weiter zur Zahlung"
-    redirect(
-      `/signup-01?status=verify_email&email=${encodeURIComponent(email)}`
-    );
+  // Wenn Link aus Bestätigungs-Mail geklickt wurde → direkt zum Checkout
+  if (searchParams?.status === 'confirmed') {
+    redirect('/checkout');
   }
 
   return (
@@ -96,11 +45,10 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       />
       <main className="bg-background-3 dark:bg-background-7 min-h-screen">
         <section className="max-w-[1200px] mx-auto px-5 md:px-6 lg:px-10 xl:px-16 py-16 md:py-20 lg:py-24">
+          {/* Status / Email aus URL können wir optional ins UI geben */}
           <SignupHero
-            signupAction={handleSignup}
-            status={searchParams?.status}
-            error={searchParams?.error}
-            email={searchParams?.email}
+            initialStatus={searchParams?.status}
+            initialEmail={searchParams?.email}
           />
         </section>
       </main>
