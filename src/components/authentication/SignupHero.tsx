@@ -47,8 +47,8 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
       );
     }
 
-    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
-    if (status === 'verify_email' || status === 'signup_success') {
+    // ✅ Signup erfolgreich → Mail verschickt, warten auf Bestätigung
+    if (status === 'signup_success') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
           <p className="font-semibold mb-1">Bestätigungs-E-Mail wurde versendet</p>
@@ -66,9 +66,9 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
           )}
           <p>
             <span className="font-semibold">
-              Öffne dein Postfach und klicke auf den Bestätigungslink.
+              Öffne jetzt dein Postfach und klicke auf den Bestätigungslink.
             </span>{' '}
-            Danach leiten wir dich direkt zum Zahlungs-Schritt weiter.
+            Danach schicken wir dich automatisch in den Zahlungs-Schritt.
           </p>
           <p className="mt-2 text-xs opacity-80">
             Tipp: Schau auch im Spam- oder Werbe-Ordner nach, falls die E-Mail nicht
@@ -78,7 +78,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
       );
     }
 
-    // Optional: falls wir später ?status=confirmed verwenden wollen
+    // Optional: falls wir später ?status=confirmed irgendwo nutzen wollen
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -164,7 +164,7 @@ const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => 
                 <ul className="list-disc space-y-1 pl-4">
                   <li>Stammdaten für dich &amp; dein Studio</li>
                   <li>Basisinfos für die KI (Mitgliedergröße, Kontaktdaten)</li>
-                  <li>Direkter Übergang zur Zahlung via Stripe</li>
+                  <li>Bestätigungs-Mail für deinen Zugang</li>
                 </ul>
               </div>
             </div>

@@ -33,7 +33,7 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
     redirect('/checkout');
   }
 
-  // ⚙️ Server Action: Signup + Bestätigungs-Mail
+  // 🧠 Server Action: Signup + Bestätigungs-Mail
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -49,21 +49,23 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
     const password = (formData.get('password') as string | null) || '';
     const passwordConfirm = (formData.get('passwordConfirm') as string | null) || '';
 
+    // ❌ Pflichtfelder check
     if (!email || !password || !firstName || !lastName || !studioName || !phone) {
       redirect('/signup-01?error=missing_fields');
     }
 
+    // ❌ Passwort-Mismatch → KEIN Account
     if (password !== passwordConfirm) {
       redirect('/signup-01?error=password_mismatch');
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
+    // 📨 Supabase SignUp + Bestätigungslink → /checkout?status=confirmed
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        // 👇 Nach E-Mail-Bestätigung → direkt zum Checkout
         emailRedirectTo: `${appUrl}/checkout?status=confirmed`,
         data: {
           firstName,
@@ -81,9 +83,10 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ Account angelegt + Mail verschickt → zurück auf Signup mit Banner & E-Mail Anzeige
+    // ✅ Account angelegt + Mail verschickt
+    // → zurück zur Signup-Seite mit Status + Email im Query
     redirect(
-      `/signup-01?status=verify_email&email=${encodeURIComponent(email)}`
+      `/signup-01?status=signup_success&email=${encodeURIComponent(email)}`
     );
   }
 
