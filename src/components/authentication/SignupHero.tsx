@@ -9,9 +9,10 @@ type SignupHeroProps = {
   signupAction?: (formData: FormData) => void;
   status?: string;
   error?: string;
+  email?: string;
 };
 
-const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
+const SignupHero = ({ signupAction, status, error, email }: SignupHeroProps) => {
   const router = useRouter();
 
   const handleClientSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -46,7 +47,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
       );
     }
 
-    // ✅ Bestätigungs-Mail verschickt – bleibt sichtbar, bis User bestätigt
+    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
     if (status === 'verify_email' || status === 'signup_success') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -55,11 +56,19 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
             Wir haben dir soeben eine E-Mail geschickt. Bitte bestätige deine Adresse,
             damit dein Zugang zu Pilar Systems vollständig aktiviert wird.
           </p>
+          {email && (
+            <p className="mb-1">
+              Gesendet an:{' '}
+              <span className="font-semibold underline underline-offset-2">
+                {email}
+              </span>
+            </p>
+          )}
           <p>
             <span className="font-semibold">
               Öffne dein Postfach und klicke auf den Bestätigungslink.
             </span>{' '}
-            Danach leiten wir dich automatisch zum Zahlungs-Schritt (Checkout) weiter.
+            Danach leiten wir dich direkt zum Zahlungs-Schritt weiter.
           </p>
           <p className="mt-2 text-xs opacity-80">
             Tipp: Schau auch im Spam- oder Werbe-Ordner nach, falls die E-Mail nicht
@@ -69,7 +78,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
       );
     }
 
-    // Optional: falls du später mal ?status=confirmed nutzen willst
+    // Optional: falls wir später ?status=confirmed verwenden wollen
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -158,8 +167,6 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                   <li>Direkter Übergang zur Zahlung via Stripe</li>
                 </ul>
               </div>
-
-              {/* Kein direkter „Weiter zur Zahlung“-Button mehr hier */}
             </div>
           </RevealAnimation>
 

@@ -17,20 +17,23 @@ type SignupPageProps = {
   searchParams?: {
     status?: string;
     error?: string;
+    email?: string;
   };
 };
 
 const SignupPage = async ({ searchParams }: SignupPageProps) => {
   const supabase = await createSupabaseServerClient();
+
+  // Wenn schon eingeloggt → direkt zum Checkout
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Wenn schon eingeloggt → direkt Checkout
   if (user) {
     redirect('/checkout');
   }
 
+  // ⚙️ Server Action: Signup + Bestätigungs-Mail
   async function handleSignup(formData: FormData) {
     'use server';
 
@@ -54,13 +57,13 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=password_mismatch');
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.pilarsystems.com';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        // 👇 Nach E-Mail-Bestätigung: direkt zum Checkout
+        // 👇 Nach E-Mail-Bestätigung → direkt zum Checkout
         emailRedirectTo: `${appUrl}/checkout?status=confirmed`,
         data: {
           firstName,
@@ -78,9 +81,10 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ WICHTIG: Hier NICHT zum Checkout!
-    // Wir bleiben auf Signup mit Status = verify_email → Banner "Mail versendet"
-    redirect('/signup-01?status=verify_email');
+    // ✅ Account angelegt + Mail verschickt → zurück auf Signup mit Banner & E-Mail Anzeige
+    redirect(
+      `/signup-01?status=verify_email&email=${encodeURIComponent(email)}`
+    );
   }
 
   return (
@@ -95,6 +99,7 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
             signupAction={handleSignup}
             status={searchParams?.status}
             error={searchParams?.error}
+            email={searchParams?.email}
           />
         </section>
       </main>
