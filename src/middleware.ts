@@ -1,34 +1,46 @@
 // src/middleware.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
-  const url = req.nextUrl.clone();
-  const path = url.pathname;
+
+  // Nur bestimmte Routen schützen
+  const protectedPaths = ['/dashboard'];
+  const pathname = req.nextUrl.pathname;
+
+  const isProtected = protectedPaths.some((path) =>
+    pathname.startsWith(path),
+  );
+
+  if (!isProtected) {
+    return res;
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // Wenn Supabase-Env fehlt → keine Auth-Logik, Seite normal durchlassen
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('[middleware] Supabase Env fehlt, überspringe Auth.');
+    console.warn(
+      'Supabase Middleware: ENV Variablen fehlen (NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY)',
+    );
     return res;
   }
 
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
-      get(name) {
+      get(name: string) {
         return req.cookies.get(name)?.value;
       },
-      set(name, value, options) {
+      set(name: string, value: string, options: any) {
         res.cookies.set({
           name,
           value,
           ...options,
         });
       },
-      remove(name, options) {
+      remove(name: string, options: any) {
         res.cookies.set({
           name,
           value: '',
@@ -43,30 +55,18 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAuthRoute = path.startsWith('/login-01') || path.startsWith('/signup-01');
-
-  // ⚠️ Nur das Dashboard ist geschützt – NICHT /checkout!
-  const isProtectedRoute = path.startsWith('/dashboard');
-
-  // Nicht eingeloggt & will ins Dashboard → auf Login mit redirectTo
-  if (isProtectedRoute && !user) {
-    const redirectTo = encodeURIComponent(path + (url.search || ''));
-    url.pathname = '/login-01';
-    url.search = `?redirectTo=${redirectTo}`;
-    return NextResponse.redirect(url);
+  // Nicht eingeloggt → auf Login umleiten
+  if (!user) {
+    const redirectUrl = new URL('/login-01', req.url);
+    redirectUrl.searchParams.set('redirectTo', pathname);
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // Schon eingeloggt & geht auf Login/Signup → direkt ins Dashboard
-  if (isAuthRoute && user) {
-    url.pathname = '/dashboard';
-    url.search = '';
-    return NextResponse.redirect(url);
-  }
-
+  // Eingeloggt → darf Dashboard sehen (kein Demo-Redirect mehr)
   return res;
 }
 
-// Nur auf diese Routen anwenden
+// Nur auf /dashboard wirken
 export const config = {
-  matcher: ['/dashboard/:path*', '/login-01', '/signup-01'],
+  matcher: ['/dashboard/:path*'],
 };
