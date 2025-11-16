@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 
 type SignupHeroProps = {
-  // wenn nicht übergeben → Fallback: nur Router-Push auf /checkout
   signupAction?: (formData: FormData) => void;
   status?: string;
   error?: string;
@@ -26,6 +25,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
     'bg-gradient-to-r from-[#4F46E5] via-[#6366F1] to-[#A855F7] bg-clip-text text-transparent';
 
   const renderAlert = () => {
+    // ❌ Fehler-Messages
     if (error) {
       let message =
         'Beim Erstellen deines Kontos ist ein Fehler aufgetreten. Bitte versuche es erneut.';
@@ -46,10 +46,29 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
       );
     }
 
+    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
+    if (status === 'signup_success') {
+      return (
+        <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+          <p className="font-semibold mb-1">Bestätigungs-E-Mail wurde versendet</p>
+          <p className="mb-1">
+            Wir haben dir soeben eine E-Mail geschickt. Bitte bestätige deine Adresse,
+            damit dein Zugang zu Pilar Systems vollständig aktiviert wird.
+          </p>
+          <p>
+            Während du dein Postfach checkst, kannst du direkt{' '}
+            <span className="font-semibold">mit der Zahlung fortfahren</span>.
+          </p>
+        </div>
+      );
+    }
+
+    // ✅ Schritt 2: E-Mail aus Link bestätigt (optional für später)
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und mit dem Setup fortfahren.
+          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und
+          mit dem Setup fortfahren.
         </div>
       );
     }
@@ -124,6 +143,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                 ))}
               </div>
 
+              {/* CTA Box links */}
               <div className="mt-4 rounded-xl bg-accent/10 px-4 py-3 text-tagline-3 text-secondary/80 dark:text-accent">
                 <p className="font-semibold mb-1">Was du jetzt erledigst:</p>
                 <ul className="list-disc space-y-1 pl-4">
@@ -132,6 +152,19 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                   <li>Direkter Übergang zur Zahlung via Stripe</li>
                 </ul>
               </div>
+
+              {/* Falls Signup erfolgreich → extra Button zum Checkout */}
+              {status === 'signup_success' && (
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    onClick={() => router.push('/checkout')}
+                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-sm w-full md:w-auto"
+                  >
+                    Weiter zur Zahlung
+                  </button>
+                </div>
+              )}
             </div>
           </RevealAnimation>
 
@@ -143,7 +176,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                 onSubmit={handleClientSubmit}
                 className="space-y-6"
               >
-                {/* Name */}
+                {/* Vorname / Nachname */}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <label
@@ -181,7 +214,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                   </div>
                 </div>
 
-                {/* Kontakt */}
+                {/* E-Mail */}
                 <div className="space-y-2">
                   <label
                     htmlFor="email"
