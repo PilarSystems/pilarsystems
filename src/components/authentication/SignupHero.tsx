@@ -91,7 +91,7 @@ const SignupHero = ({ initialStatus, initialEmail }: SignupHeroProps) => {
         email,
         password,
         options: {
-          emailRedirectTo: `${appUrl}/signup-01?status=confirmed`,
+          emailRedirectTo: `${appUrl}/checkout?status=confirmed`,
           data: {
             firstName,
             lastName,
