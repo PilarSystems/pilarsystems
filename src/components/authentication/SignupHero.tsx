@@ -46,8 +46,8 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
       );
     }
 
-    // ✅ Schritt 1: Signup erfolgreich, Mail wurde verschickt
-    if (status === 'signup_success') {
+    // ✅ Bestätigungs-Mail verschickt – bleibt sichtbar, bis User bestätigt
+    if (status === 'verify_email' || status === 'signup_success') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
           <p className="font-semibold mb-1">Bestätigungs-E-Mail wurde versendet</p>
@@ -56,19 +56,25 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
             damit dein Zugang zu Pilar Systems vollständig aktiviert wird.
           </p>
           <p>
-            Während du dein Postfach checkst, kannst du direkt{' '}
-            <span className="font-semibold">mit der Zahlung fortfahren</span>.
+            <span className="font-semibold">
+              Öffne dein Postfach und klicke auf den Bestätigungslink.
+            </span>{' '}
+            Danach leiten wir dich automatisch zum Zahlungs-Schritt (Checkout) weiter.
+          </p>
+          <p className="mt-2 text-xs opacity-80">
+            Tipp: Schau auch im Spam- oder Werbe-Ordner nach, falls die E-Mail nicht
+            direkt im Posteingang auftaucht.
           </p>
         </div>
       );
     }
 
-    // ✅ Schritt 2: E-Mail aus Link bestätigt (optional für später)
+    // Optional: falls du später mal ?status=confirmed nutzen willst
     if (status === 'confirmed') {
       return (
         <div className="mb-5 max-w-2xl mx-auto rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
-          Deine E-Mail wurde erfolgreich bestätigt. Du kannst dich jetzt einloggen und
-          mit dem Setup fortfahren.
+          Deine E-Mail wurde erfolgreich bestätigt. Du kannst jetzt mit der Zahlung und
+          dem Setup deiner KI-Rezeption fortfahren.
         </div>
       );
     }
@@ -153,18 +159,7 @@ const SignupHero = ({ signupAction, status, error }: SignupHeroProps) => {
                 </ul>
               </div>
 
-              {/* Falls Signup erfolgreich → extra Button zum Checkout */}
-              {status === 'signup_success' && (
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    onClick={() => router.push('/checkout')}
-                    className="btn btn-primary hover:btn-secondary dark:hover:btn-accent btn-sm w-full md:w-auto"
-                  >
-                    Weiter zur Zahlung
-                  </button>
-                </div>
-              )}
+              {/* Kein direkter „Weiter zur Zahlung“-Button mehr hier */}
             </div>
           </RevealAnimation>
 

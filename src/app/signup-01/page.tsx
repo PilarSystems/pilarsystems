@@ -21,12 +21,12 @@ type SignupPageProps = {
 };
 
 const SignupPage = async ({ searchParams }: SignupPageProps) => {
-  // optional: wenn schon eingeloggt → direkt zum Checkout
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Wenn schon eingeloggt → direkt Checkout
   if (user) {
     redirect('/checkout');
   }
@@ -60,7 +60,8 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       email,
       password,
       options: {
-        emailRedirectTo: `${appUrl}/login-01?status=confirmed`,
+        // 👇 Nach E-Mail-Bestätigung: direkt zum Checkout
+        emailRedirectTo: `${appUrl}/checkout?status=confirmed`,
         data: {
           firstName,
           lastName,
@@ -77,9 +78,9 @@ const SignupPage = async ({ searchParams }: SignupPageProps) => {
       redirect('/signup-01?error=signup_failed');
     }
 
-    // ✅ Hier: Signup erfolgreich → Mail wird von Supabase verschickt
-    // und wir schicken den User direkt zum Checkout (mit Status-Flag)
-    redirect('/checkout?status=signup_success');
+    // ✅ WICHTIG: Hier NICHT zum Checkout!
+    // Wir bleiben auf Signup mit Status = verify_email → Banner "Mail versendet"
+    redirect('/signup-01?status=verify_email');
   }
 
   return (
