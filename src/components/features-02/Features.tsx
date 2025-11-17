@@ -1,21 +1,10 @@
 {
   /* =========================
    * Features – Pilar Systems
-   * Übersicht aller Kernmodule
+   * Übersicht aller Kernmodule (ohne Template-Bilder)
    ===========================*/
 }
-import inboxImgLight from '@public/images/home-page-9/feature-card-img-01.png';
-import inboxImgDark from '@public/images/home-page-9/feature-card-img-01-dark.png';
-import phoneImgLight from '@public/images/home-page-9/feature-card-img-02.png';
-import phoneImgDark from '@public/images/home-page-9/feature-card-img-02-dark.png';
-import coachImgLight from '@public/images/home-page-9/feature-card-img-03.png';
-import coachImgDark from '@public/images/home-page-9/feature-card-img-03-dark.png';
-import calendarImgLight from '@public/images/home-page-9/feature-card-img-04.png';
-import calendarImgDark from '@public/images/home-page-9/feature-card-img-04-dark.png';
-import analyticsImgLight from '@public/images/home-page-9/feature-card-img-05.png';
-import analyticsImgDark from '@public/images/home-page-9/feature-card-img-05-dark.png';
 
-import Image from 'next/image';
 import RevealAnimation from '../animation/RevealAnimation';
 
 type FeatureCard = {
@@ -24,8 +13,7 @@ type FeatureCard = {
   kicker: string;
   description: string;
   bullets: string[];
-  imgLight: any;
-  imgDark: any;
+  badge: string;
 };
 
 const featureCards: FeatureCard[] = [
@@ -38,10 +26,9 @@ const featureCards: FeatureCard[] = [
     bullets: [
       'Eingehende & verpasste Anrufe, WhatsApp, E-Mails & Website-Formulare zentral gesammelt.',
       'KI beantwortet Standardfragen und qualifiziert Interessenten automatisch vor.',
-      'Alle Leads sauber dokumentiert – inklusive Tags, Quelle und Nächster-Schritt.',
+      'Alle Leads sauber dokumentiert – inklusive Tags, Quelle und „Nächster Schritt“.',
     ],
-    imgLight: inboxImgLight,
-    imgDark: inboxImgDark,
+    badge: 'Core-Modul · Basic & Pro',
   },
   {
     id: 'phone',
@@ -54,8 +41,7 @@ const featureCards: FeatureCard[] = [
       'Smartes Follow-up per WhatsApp, SMS oder E-Mail bis zum Termin.',
       'Dynamische Skripte für Angebote, Aktionen & Kampagnen.',
     ],
-    imgLight: phoneImgLight,
-    imgDark: phoneImgDark,
+    badge: 'Voice · ab Pro',
   },
   {
     id: 'coach',
@@ -68,8 +54,7 @@ const featureCards: FeatureCard[] = [
       'Regelmäßige Check-ins, Anpassungen & Erinnerungen durch die KI.',
       'Später nahtlos erweiterbar auf eine eigene Mitglieder-App (PILAR OS).',
     ],
-    imgLight: coachImgLight,
-    imgDark: coachImgDark,
+    badge: 'KI-Coach · Elite',
   },
   {
     id: 'calendar',
@@ -82,28 +67,29 @@ const featureCards: FeatureCard[] = [
       'Automatische Bestätigungs- und Erinnerungsnachrichten.',
       'No-Show-Handling & Wiedervorlagen für nicht erschienene Leads.',
     ],
-    imgLight: calendarImgLight,
-    imgDark: calendarImgDark,
+    badge: 'Scheduling · Basic & Pro',
   },
   {
     id: 'analytics',
     kicker: 'Growth & Reporting',
     title: 'Growth-Analytics statt „blinder“ Studio-Software.',
     description:
-      'PILAR SYSTEMS zeigt dir, welche Kampagnen funktionieren, wie viele Leads wirklich zu Verträgen werden und wo Kapazitäten frei sind. Ohne Excel, ohne manuelle Listen.',
+      'PILAR SYSTEMS zeigt dir, welche Kampagnen funktionieren, wie viele Leads wirklich zu Verträgen werden und wo Kapazitäten frei sind – ohne Excel und ohne manuelle Listen.',
     bullets: [
       'Übersicht: Leads, Probetrainings, Abschlüsse, Kündigungen & aktive Verträge.',
       'Auswertungen pro Kanal (Telefon, WhatsApp, Kampagne, Empfehlung, …).',
       'Geplante Growth-Vorschläge direkt von der KI – für Aktionen & Füllung von schwachen Zeiten.',
     ],
-    imgLight: analyticsImgLight,
-    imgDark: analyticsImgDark,
+    badge: 'Growth · ab Pro',
   },
 ];
 
 const Features = () => {
   return (
-    <section className="pb-[200px] pt-[100px]" aria-label="Funktionen von Pilar Systems">
+    <section
+      className="pb-[200px] pt-[100px] bg-background-3/50 dark:bg-background-7/60"
+      aria-label="Funktionen von Pilar Systems"
+    >
       <div className="main-container">
         <div className="space-y-[70px]">
           {/* Headline */}
@@ -114,7 +100,7 @@ const Features = () => {
               </h2>
             </RevealAnimation>
             <RevealAnimation delay={0.4}>
-              <p className="max-w-[734px] mx-auto">
+              <p className="max-w-[734px] mx-auto text-secondary/80 dark:text-accent/80">
                 Statt fünf verschiedenen Tools für Telefon, WhatsApp, Trainingspläne, Kalender und Reporting
                 bekommst du mit PILAR SYSTEMS eine durchdachte KI-Infrastruktur – modular buchbar als Basic,
                 Pro oder Elite.
@@ -122,42 +108,54 @@ const Features = () => {
             </RevealAnimation>
           </div>
 
-          {/* Feature Cards Grid */}
+          {/* Kleine Modul-Legende */}
+          <RevealAnimation delay={0.45}>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-[13px]">
+              <span className="px-3 py-1 rounded-full border border-border/60 bg-background-1/70 dark:bg-background-8/70">
+                Basic · KI-Inbox & Messaging
+              </span>
+              <span className="px-3 py-1 rounded-full border border-border/60 bg-background-1/70 dark:bg-background-8/70">
+                Pro · Telefon, Kalender & Automationen
+              </span>
+              <span className="px-3 py-1 rounded-full border border-border/60 bg-background-1/70 dark:bg-background-8/70">
+                Elite · KI-Coach, Growth & Multi-Location
+              </span>
+            </div>
+          </RevealAnimation>
+
+          {/* Feature Cards Grid – reine Code-Blöcke, keine Bilder */}
           <div className="flex flex-col gap-y-10">
             {/* Erste Reihe */}
-            <div className="flex flex-col sm:flex-row items-start justify-center gap-y-8 sm:gap-x-8">
+            <div className="flex flex-col sm:flex-row items-stretch justify-center gap-y-8 sm:gap-x-8">
               {featureCards.slice(0, 3).map((card, index) => (
                 <RevealAnimation key={card.id} delay={0.5 + index * 0.1}>
-                  <article className="space-y-3 max-w-[409px] w-full">
-                    {/* Bild */}
-                    <div className="w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
-                      <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
-                        <Image
-                          src={card.imgLight}
-                          alt={card.title}
-                          className="w-full h-full object-cover dark:hidden"
-                          loading="lazy"
-                        />
-                        <Image
-                          src={card.imgDark}
-                          alt={card.title}
-                          className="w-full h-full object-cover hidden dark:block"
-                          loading="lazy"
-                        />
-                      </figure>
-                    </div>
-                    {/* Content */}
-                    <div className="space-y-2">
+                  <article className="max-w-[409px] w-full rounded-3xl border border-border/60 bg-background-1/90 dark:bg-background-8/80 px-5 py-6 shadow-sm">
+                    {/* Oberer Block mit Badge / Kicker */}
+                    <div className="mb-4 flex flex-col gap-2">
+                      <span className="inline-flex items-center gap-2 self-start rounded-full bg-gradient-to-r from-[rgba(123,212,255,0.12)] via-[rgba(92,178,255,0.08)] to-[rgba(60,130,255,0.12)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-secondary/70 dark:text-accent/80">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[rgba(123,212,255,0.9)]" />
+                        {card.badge}
+                      </span>
                       <p className="text-tagline-2 uppercase tracking-[0.16em] text-secondary/60 dark:text-accent/60">
                         {card.kicker}
                       </p>
-                      <h3 className="text-heading-5">{card.title}</h3>
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-2">
+                      <h3 className="text-heading-5 leading-snug">{card.title}</h3>
                       <p className="text-secondary/80 dark:text-accent/80">{card.description}</p>
-                      <ul className="mt-2 space-y-1.5 text-tagline-1 text-secondary/70 dark:text-accent/70 list-disc list-inside">
+                      <ul className="mt-3 space-y-1.5 text-tagline-1 text-secondary/75 dark:text-accent/75 list-disc list-inside">
                         {card.bullets.map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
                       </ul>
+                    </div>
+
+                    {/* Unterer Meta-Bereich */}
+                    <div className="mt-5 flex items-center justify-between text-[12px] text-secondary/60 dark:text-accent/60 border-t border-border/60 pt-3">
+                      <span>PILAR · {card.id.toUpperCase()}</span>
+                      <span>Infrastruktur statt Einzeltool</span>
                     </div>
                   </article>
                 </RevealAnimation>
@@ -165,37 +163,33 @@ const Features = () => {
             </div>
 
             {/* Zweite Reihe */}
-            <div className="flex flex-col sm:flex-row items-start justify-center gap-y-8 sm:gap-x-8">
+            <div className="flex flex-col sm:flex-row items-stretch justify-center gap-y-8 sm:gap-x-8">
               {featureCards.slice(3).map((card, index) => (
                 <RevealAnimation key={card.id} delay={0.8 + index * 0.1}>
-                  <article className="space-y-3 max-w-[409px] w-full">
-                    <div className="w-full rounded-[20px] bg-white dark:bg-background-5 p-2.5">
-                      <figure className="overflow-hidden p-4 bg-background-3 dark:bg-background-7 rounded-2xl">
-                        <Image
-                          src={card.imgLight}
-                          alt={card.title}
-                          className="w-full h-full object-cover dark:hidden"
-                          loading="lazy"
-                        />
-                        <Image
-                          src={card.imgDark}
-                          alt={card.title}
-                          className="w-full h-full object-cover hidden dark:block"
-                          loading="lazy"
-                        />
-                      </figure>
-                    </div>
-                    <div className="space-y-2">
+                  <article className="max-w-[409px] w-full rounded-3xl border border-border/60 bg-background-1/90 dark:bg-background-8/80 px-5 py-6 shadow-sm">
+                    <div className="mb-4 flex flex-col gap-2">
+                      <span className="inline-flex items-center gap-2 self-start rounded-full bg-gradient-to-r from-[rgba(123,212,255,0.12)] via-[rgba(92,178,255,0.08)] to-[rgba(60,130,255,0.12)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-secondary/70 dark:text-accent/80">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[rgba(123,212,255,0.9)]" />
+                        {card.badge}
+                      </span>
                       <p className="text-tagline-2 uppercase tracking-[0.16em] text-secondary/60 dark:text-accent/60">
                         {card.kicker}
                       </p>
-                      <h3 className="text-heading-5">{card.title}</h3>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h3 className="text-heading-5 leading-snug">{card.title}</h3>
                       <p className="text-secondary/80 dark:text-accent/80">{card.description}</p>
-                      <ul className="mt-2 space-y-1.5 text-tagline-1 text-secondary/70 dark:text-accent/70 list-disc list-inside">
+                      <ul className="mt-3 space-y-1.5 text-tagline-1 text-secondary/75 dark:text-accent/75 list-disc list-inside">
                         {card.bullets.map((bullet, idx) => (
                           <li key={idx}>{bullet}</li>
                         ))}
                       </ul>
+                    </div>
+
+                    <div className="mt-5 flex items-center justify-between text-[12px] text-secondary/60 dark:text-accent/60 border-t border-border/60 pt-3">
+                      <span>PILAR · {card.id.toUpperCase()}</span>
+                      <span>Für Gyms & Studios gebaut</span>
                     </div>
                   </article>
                 </RevealAnimation>
@@ -209,4 +203,5 @@ const Features = () => {
 };
 
 Features.displayName = 'Features';
+
 export default Features;

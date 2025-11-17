@@ -1,6 +1,6 @@
 {
   /* =========================
-   Prozess-Schritte – Pilar Systems
+   Prozess-Schritte – PILAR SYSTEMS
    ===========================*/
 }
 import RevealAnimation from '../animation/RevealAnimation';
@@ -21,10 +21,10 @@ const ProcessStep = () => {
       stepNumber: 'Schritt 1',
       title: 'Plan wählen & Account erstellen',
       description:
-        'Du wählst deinen passenden PILAR Plan (Basic, Pro oder Elite), legst dein Studio an und erhältst sofort Zugang zum Dashboard.',
+        'Du wählst deinen passenden PILAR Plan (Basic, Pro oder Elite), legst dein Studio an und erhältst sofort Zugang zur Plattform.',
       icon: 'ns-shape-36',
       features: [
-        'Online-Registrierung in wenigen Minuten',
+        'Online-Registrierung in wenigen Minuten – komplett digital',
         'Keine Vor-Ort-Termine oder Agenturprojekte nötig',
         'Direkter Zugang zum Setup-Wizard nach dem Signup',
       ],
@@ -34,7 +34,7 @@ const ProcessStep = () => {
       stepNumber: 'Schritt 2',
       title: 'Geführten Setup-Wizard durchlaufen',
       description:
-        'Im Setup-Wizard beantwortest du gezielte Fragen zu deinem Studio, damit die KI dich und deine Angebote versteht.',
+        'Im Setup-Wizard beantwortest du gezielte Fragen zu deinem Studio, damit die KI versteht, wie ihr arbeitet und wie ihr kommuniziert.',
       icon: 'ns-shape-8',
       features: [
         'Standort, Öffnungszeiten & Kontaktwege hinterlegen',
@@ -47,7 +47,7 @@ const ProcessStep = () => {
       stepNumber: 'Schritt 3',
       title: 'Kanäle verbinden & testen',
       description:
-        'Jetzt werden deine bestehenden Systeme angebunden – und wir testen gemeinsam typische Szenarien aus Sicht deiner Interessenten.',
+        'Jetzt werden deine bestehenden Systeme angebunden – und wir testen typische Szenarien aus Sicht deiner Interessenten einmal durch.',
       icon: 'ns-shape-2',
       features: [
         'Telefonanlage, WhatsApp & E-Mail-Postfach verknüpfen',
@@ -65,7 +65,7 @@ const ProcessStep = () => {
       features: [
         'Lead-Prioritäten & Status-Pipelines einrichten',
         'Automatische Follow-ups & Erinnerungen konfigurieren',
-        'Angebote, Promotions & Upsells als Playbooks hinterlegen',
+        'Angebote, Aktionen & Upsells als Playbooks hinterlegen',
       ],
     },
     {
@@ -73,12 +73,12 @@ const ProcessStep = () => {
       stepNumber: 'Schritt 5',
       title: 'Live gehen & kontinuierlich optimieren',
       description:
-        'Sobald alles sitzt, geht Pilar Systems live. Deine KI übernimmt den Alltag – und du optimierst auf Basis echter Daten.',
+        'Sobald alles sitzt, geht PILAR SYSTEMS live. Deine KI übernimmt den Alltag – und du optimierst auf Basis echter Daten und Auslastung.',
       icon: 'ns-shape-41',
       features: [
-        'Live-Übersicht über Leads, Termine & Abschlüsse',
+        'Live-Übersicht über Leads, Termine & Abschlüsse im Dashboard',
         'Auswertungen zu Kanälen, Kampagnen & Show-up-Rate',
-        'Laufende Anpassung von Regeln & Automationen möglich',
+        'Laufende Anpassung von Regeln, Automationen & Modulen (z. B. KI-Coach, weitere Standorte)',
       ],
     },
   ];
@@ -89,13 +89,13 @@ const ProcessStep = () => {
         <div className="text-center space-y-3 mb-[72px]">
           <RevealAnimation delay={0.3}>
             <h2 className="max-w-[552px] mx-auto">
-              Von der Online-Buchung bis zur live laufenden KI-Rezeption – in wenigen Schritten.
+              Von der Planwahl zur laufenden KI-Infrastruktur – in wenigen Schritten.
             </h2>
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p className="max-w-[692px] mx-auto">
               Der Ablauf ist bewusst schlank gehalten: Dein Studio startet komplett digital, ohne lange Onboarding-Calls
-              und ohne komplexe IT-Projekte – trotzdem mit voller Kontrolle über Regeln, Angebote und Kommunikation.
+              und ohne komplexe IT-Projekte – mit voller Kontrolle über Regeln, Angebote und Kommunikation.
             </p>
           </RevealAnimation>
         </div>

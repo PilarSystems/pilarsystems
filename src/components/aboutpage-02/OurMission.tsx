@@ -9,39 +9,44 @@ const OurMission = () => {
     <section className="pt-14 md:pt-16 lg:pt-[88px] xl:pt-[100px] pb-14 md:pb-16 lg:pb-[88px] xl:pb-[100px] overflow-hidden">
       <div className="main-container">
         <div className="grid grid-cols-12 lg:gap-x-0 xl:gap-x-28 gap-y-12 items-center">
+          {/* Text-Bereich */}
           <div className="col-span-12 lg:col-span-6">
             <div className="space-y-3">
               <RevealAnimation delay={0.2}>
                 <span className="badge badge-cyan mb-5">Unsere Mission</span>
               </RevealAnimation>
               <RevealAnimation delay={0.3}>
-                <h2>
-                  Wir machen aus jedem Gym eine skalierbare Vertriebs- und Service-Maschine.
-                </h2>
+                <h2>Wir machen aus jedem Gym eine skalierbare Vertriebs- und Service-Maschine.</h2>
               </RevealAnimation>
               <RevealAnimation delay={0.4}>
                 <p>
                   Unsere Mission ist es, Fitnessstudios von manuellen Abläufen zu befreien. Statt Zettelwirtschaft,
-                  überfüllten Postfächern und verpassten Anrufen sorgt Pilar Systems dafür, dass Leads automatisch
-                  erfasst, qualifiziert, nachverfolgt und in Verträge verwandelt werden – alles in einem System.
+                  überfüllten Postfächern und verpassten Anrufen sorgt PILAR SYSTEMS dafür, dass Leads automatisch
+                  erfasst, qualifiziert, nachverfolgt und in Verträge verwandelt werden – mit KI-Inbox, Telefon-KI,
+                  Kalender-Logik, Coach- und Growth-Modulen in einer Infrastruktur.
                 </p>
               </RevealAnimation>
               <RevealAnimation delay={0.5}>
                 <p>
-                  Dabei geht es nicht nur um KI, sondern um Klarheit: Was passiert mit jeder Anfrage? Wer kommt wirklich
-                  zum Probetraining? Welche Kampagne bringt Verträge? Pilar macht diese Fragen messbar – und damit
-                  steuerbar.
+                  Dabei geht es nicht nur um „KI“ als Buzzword, sondern um Klarheit im Alltag: Was passiert mit jeder
+                  Anfrage? Wer kommt wirklich zum Probetraining? Welche Kampagne bringt Verträge und füllt freie Slots?
+                  PILAR macht diese Fragen messbar – und damit steuerbar, Standort für Standort.
                 </p>
               </RevealAnimation>
             </div>
           </div>
 
+          {/* Visual / KPI-Card */}
           <div className="col-span-12 lg:col-span-6">
             <div>
               <figure className="relative w-full md:w-[500px]">
                 <RevealAnimation delay={0.4}>
                   <div className="w-full">
-                    <Image src={feature1Img} alt="Dashboard-Ansicht von Pilar Systems" className="w-full" />
+                    <Image
+                      src={feature1Img}
+                      alt="Dashboard-Ansicht von PILAR SYSTEMS"
+                      className="w-full"
+                    />
                   </div>
                 </RevealAnimation>
                 <RevealAnimation delay={0.5} direction="right" offset={100}>
