@@ -1,190 +1,235 @@
 'use client';
-
 import Link from 'next/link';
+import { useState } from 'react';
 import RevealAnimation from '../animation/RevealAnimation';
 
-type Plan = {
-  id: 'basic' | 'pro' | 'elite';
-  name: string;
-  label: string;
-  monthlyPrice?: string;
-  setupFee?: string;
-  isPopular?: boolean;
-  isOnRequest?: boolean;
-  features: string[];
-  href: string;
-};
-
-const plans: Plan[] = [
-  {
-    id: 'basic',
-    name: 'Basic',
-    label: 'KI-Inbox & Messaging',
-    monthlyPrice: '149',
-    setupFee: '500',
-    href: '/signup-01?plan=basic',
-    features: [
-      'KI-Inbox für WhatsApp, E-Mail & Website-Formulare',
-      'Automatisches Follow-up bis zum Probetraining',
-      'Lead- & Kontaktverwaltung im Basis-Dashboard',
-      'Antwort-Vorlagen für wiederkehrende Anfragen',
-      'Standard-Support per E-Mail',
-      'Ideal für Studios mit einem Standort',
-    ],
-  },
-  {
-    id: 'pro',
-    name: 'Pro',
-    label: 'Telefon, Kalender & Automationen',
-    monthlyPrice: '249',
-    setupFee: '899',
-    isPopular: true,
-    href: '/signup-01?plan=pro',
-    features: [
-      'Alles aus Basic inklusive',
-      'KI-Telefonanlage für eingehende & verpasste Anrufe',
-      'Synchroner Kalender für Probetrainings & Verträge',
-      'Erweiterte Workflows & Follow-up-Strecken',
-      'Priorisierte Leads, Tags & Status-Pipelines',
-      'Onboarding-Support & gemeinsamer Live-Check-in',
-      'KI-Coach über WhatsApp als zubuchbares Modul',
-    ],
-  },
-  {
-    id: 'elite',
-    name: 'Elite',
-    label: 'KI-Coach, Growth & Multi-Location',
-    isOnRequest: true,
-    href: '/signup-01?plan=elite',
-    features: [
-      'Alles aus Pro inklusive',
-      'KI-Coach für Trainingspläne & Mitglieder-Check-ins (WhatsApp & spätere App)',
-      'Growth-Analytics & Kampagnen-Vorschläge der KI',
-      'Mehrere Standorte & Marken in einem Account',
-      'Optionale White-Label- und Multi-Studio-Add-ons',
-      'Individuelles Setup & persönlicher Ansprechpartner',
-    ],
-  },
-];
-
 const Pricing = () => {
+  const [isAnnual, setIsAnnual] = useState<boolean>(false);
+
+  const basicMonthly = 149;
+  const proMonthly = 249;
+  const basicYearly = basicMonthly * 10; // 2 Monate geschenkt
+  const proYearly = proMonthly * 10;
+
   return (
     <section className="relative pb-20 md:pb-[100px] lg:pb-[150px] xl:pb-[200px] pt-[100px]">
       <div className="main-container flex flex-col gap-[70px]">
-        {/* Header */}
         <div className="flex flex-col items-center text-center">
           <RevealAnimation delay={0.2}>
-            <span className="badge badge-green mb-5">Preise & Tarife</span>
+            <span className="badge badge-yellow-v2 mb-5">Preise & Pakete</span>
           </RevealAnimation>
           <RevealAnimation delay={0.3}>
             <h2 className="max-w-[650px] mx-auto mb-4">
-              Wähle den Pilar Systems Plan, der zu deinem Studio passt.
+              Wähle den PILAR Plan, der zu deinem Studio passt.
             </h2>
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
-            <p className="max-w-[720px] mx-auto text-secondary/70 dark:text-accent/70">
-              Alle Pläne bestehen aus einer einmaligen Setup-Gebühr für die Einrichtung deiner KI-Infrastruktur
-              und einer monatlichen Lizenz. Du startest mit Basic oder Pro – Elite erhältst du als individuelles
-              Angebot für Ketten, Multi-Standorte und Studios mit KI-Coach & Growth-Fokus.
+            <p className="max-w-[620px] mx-auto mb-8 text-secondary/70 dark:text-accent/70">
+              Alle Pläne bestehen aus einer einmaligen Setup-Gebühr und einer monatlichen Lizenz. Du startest mit Basic
+              oder Pro – und kannst später Add-ons wie Voice, KI-Coach, Creator oder White-Label ergänzen.
             </p>
+          </RevealAnimation>
+
+          <RevealAnimation delay={0.5}>
+            <div className="relative z-0">
+              <RevealAnimation delay={1} duration={1.2} direction="up" offset={200}>
+                <span className="absolute z-11 -right-6 -top-2.5 bg-secondary dark:bg-accent text-accent dark:text-secondary inline-block font-normal capitalize text-tagline-2 px-3.5 py-1.5 shadow-xs rounded-[36px] rotate-[20deg] w-[110px]">
+                  2 Monate frei
+                </span>
+              </RevealAnimation>
+              <label className="relative inline-flex items-center cursor-pointer z-[10] bg-white dark:bg-background-9 py-4 px-6 rounded-full gap-3 shadow-1/40">
+                <span className="text-sm md:text-base text-secondary dark:text-accent font-normal">
+                  Monatlich
+                </span>
+                <input
+                  type="checkbox"
+                  id="priceCheck"
+                  checked={isAnnual}
+                  onChange={(e) => setIsAnnual(e.target.checked)}
+                  className="sr-only peer"
+                  aria-label="Zwischen monatlicher und jährlicher Abrechnung wechseln"
+                />
+                <span className="relative w-13 h-[28px] bg-secondary rounded-[34px] dark:bg-accent peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:start-[2px] peer-checked:after:start-[2px] after:bg-accent dark:after:bg-background-9 after:rounded-full after:h-6 after:w-6 after:transition-all" />
+                <span className="text-sm md:text-base text-secondary dark:text-accent font-normal">
+                  Jährlich
+                </span>
+              </label>
+            </div>
           </RevealAnimation>
         </div>
 
-        {/* Cards */}
         <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-3 items-stretch gap-8">
-            {plans.map((plan, index) => (
-              <RevealAnimation key={plan.id} delay={0.3 + index * 0.1} instant>
-                <div
-                  className={[
-                    'flex flex-col justify-between rounded-[20px] p-8 max-lg:w-full',
-                    plan.isPopular
-                      ? 'bg-background-2 dark:bg-background-7 border border-primary-200 dark:border-primary-500 shadow-lg shadow-primary-200/40 dark:shadow-primary-900/30 relative'
-                      : 'bg-background-3 dark:bg-background-5',
-                  ].join(' ')}
-                >
-                  {/* Popular Badge */}
-                  {plan.isPopular && (
-                    <span className="absolute -top-3 right-6 rounded-full bg-primary-500 text-white text-[11px] font-semibold tracking-[0.14em] px-3 py-1 uppercase">
-                      Meist gewählt
-                    </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-8">
+            {/* Basic */}
+            <RevealAnimation delay={0.3} instant>
+              <div className="bg-background-3 dark:bg-background-5 flex-1 p-8 rounded-[20px] max-lg:w-full">
+                <h3 className="mb-1 font-normal text-heading-5">Basic</h3>
+                <p className="mb-6 max-w-[260px] text-secondary/70 dark:text-accent/70">
+                  Für Studios, die ihre Anfragen endlich sauber bündeln und automatisieren wollen.
+                </p>
+                <div className="mb-4">
+                  {isAnnual ? (
+                    <>
+                      <p className="text-heading-4 font-normal">
+                        €<span>{basicYearly.toLocaleString('de-DE')}</span>
+                      </p>
+                      <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">
+                        pro Jahr (2 Monate geschenkt)
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-heading-4 font-normal">
+                        €<span>{basicMonthly}</span>
+                      </p>
+                      <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">pro Monat</p>
+                    </>
                   )}
+                </div>
+                <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-6">
+                  Setup-Gebühr: <span className="font-medium">500&nbsp;€ einmalig</span>
+                </p>
 
-                  {/* Header */}
-                  <div>
-                    <h3 className="mb-1 font-normal text-heading-5">{plan.name}</h3>
-                    <p className="mb-6 text-secondary/60 dark:text-accent/60 text-tagline-1">{plan.label}</p>
+                <Link
+                  href="/signup-01?plan=starter"
+                  className="btn btn-md btn-white dark:btn-white-dark hover:btn-secondary dark:hover:btn-accent w-full block text-center mb-8 before:content-none first-letter:uppercase"
+                >
+                  Basic wählen
+                </Link>
+                <ul className="relative list-none space-y-2.5 text-tagline-1">
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                    <span className="text-secondary dark:text-accent">
+                      KI-Inbox für WhatsApp, E-Mail & Website
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                    <span className="text-secondary dark:text-accent">
+                      Automatisches Follow-up bis zum Probetraining
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary/30 dark:bg-accent/30 flex items-center justify-center" />
+                    <span className="text-secondary/70 dark:text-accent/70">
+                      Basis-Dashboard für Leads & Kontakte
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </RevealAnimation>
 
-                    {/* Pricing */}
-                    <div className="mb-6">
-                      {plan.isOnRequest ? (
-                        <div className="price-request">
-                          <h4 className="text-heading-4 font-normal mb-1">Preis auf Anfrage</h4>
-                          <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">
-                            Individuelles Angebot inkl. Setup – ideal für Ketten & Multi-Standorte.
+            {/* Pro – Meist gewählt */}
+            <RevealAnimation delay={0.4} instant>
+              <div className="p-2.5 rounded-[20px] flex-1 bg-[url('/images/home-page-2/price-bg.png')] bg-no-repeat bg-center bg-cover max-lg:w-full">
+                <div className="bg-white dark:bg-background-8 p-8 rounded-[12px] relative overflow-hidden">
+                  <span className="absolute -top-4 left-0 rounded-full bg-accent/90 px-3 py-[2px] text-[11px] font-medium text-black">
+                    Meist gewählt
+                  </span>
+                  <div className="mt-3">
+                    <h3 className="mb-1.5 font-normal text-heading-5">Pro</h3>
+                    <p className="mb-6 text-secondary/70 dark:text-accent/70 max-w-[260px]">
+                      Für Studios mit höherem Anfragevolumen, Telefon, mehreren Kanälen & Standorten.
+                    </p>
+                    <div className="mb-4">
+                      {isAnnual ? (
+                        <>
+                          <p className="text-heading-4 font-normal">
+                            €<span>{proYearly.toLocaleString('de-DE')}</span>
                           </p>
-                        </div>
+                          <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">
+                            pro Jahr (2 Monate geschenkt)
+                          </p>
+                        </>
                       ) : (
                         <>
-                          <div className="price-month mb-2">
-                            <h4 className="text-heading-4 font-normal">
-                              €<span>{plan.monthlyPrice}</span>
-                              <span className="text-tagline-2"> / Monat</span>
-                            </h4>
-                          </div>
-                          {plan.setupFee && (
-                            <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">
-                              zzgl. einmalig <span className="font-medium">€{plan.setupFee}</span> Setup-Gebühr.
-                            </p>
-                          )}
+                          <p className="text-heading-4 font-normal">
+                            €<span>{proMonthly}</span>
+                          </p>
+                          <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">pro Monat</p>
                         </>
                       )}
                     </div>
+                    <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-6">
+                      Setup-Gebühr: <span className="font-medium">899&nbsp;€ einmalig</span>
+                    </p>
 
-                    {/* CTA */}
                     <Link
-                      href={plan.href}
-                      className={[
-                        'btn btn-md w-full block mb-6 text-center before:content-none first-letter:uppercase',
-                        plan.isPopular
-                          ? 'btn-primary dark:btn-accent hover:btn-secondary dark:hover:btn-white'
-                          : 'btn-white dark:btn-white-dark hover:btn-primary dark:hover:btn-accent',
-                      ].join(' ')}
+                      href="/signup-01?plan=growth"
+                      className="btn btn-md btn-secondary dark:btn-accent hover:btn-primary w-full block mb-8 before:content-none first-letter:uppercase"
                     >
-                      {plan.isOnRequest ? 'Beratung & Angebot anfragen' : `${plan.name} wählen`}
+                      Pro aktivieren
                     </Link>
-                  </div>
-
-                  {/* Feature-Liste */}
-                  <ul className="relative list-none space-y-2.5 mt-2">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2.5">
-                        <svg
-                          width={20}
-                          height={20}
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="shrink-0 mt-0.5"
-                        >
-                          <rect
-                            width={20}
-                            height={20}
-                            rx={10}
-                            className={plan.isPopular ? 'fill-primary-500' : 'fill-secondary dark:fill-accent'}
-                          />
-                          <path
-                            d="M9.31661 13.7561L14.7491 8.42144C15.0836 8.0959 15.0836 7.5697 14.7491 7.24416C14.4145 6.91861 13.8736 6.91861 13.539 7.24416L8.7116 11.9901L6.46096 9.78807C6.12636 9.46253 5.58554 9.46253 5.25095 9.78807C4.91635 10.1136 4.91635 10.6398 5.25095 10.9654L8.1066 13.7561C8.27347 13.9184 8.49253 14 8.7116 14C8.93067 14 9.14974 13.9184 9.31661 13.7561Z"
-                            className="fill-white dark:fill-black"
-                          />
-                        </svg>
-                        <span className="text-secondary dark:text-accent font-normal text-tagline-1">{feature}</span>
+                    <ul className="relative list-none space-y-2.5 text-tagline-1">
+                      <li className="flex items-center gap-2.5">
+                        <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                        <span className="text-secondary dark:text-accent">
+                          Alles aus Basic plus KI-Telefonanlage
+                        </span>
                       </li>
-                    ))}
-                  </ul>
+                      <li className="flex items-center gap-2.5">
+                        <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                        <span className="text-secondary dark:text-accent">
+                          Synchroner Kalender für Probetrainings & Verträge
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-2.5">
+                        <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                        <span className="text-secondary dark:text-accent">
+                          Erweiterte Workflows & Prioritäts-Support
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </RevealAnimation>
-            ))}
+              </div>
+            </RevealAnimation>
+
+            {/* Elite */}
+            <RevealAnimation delay={0.5} instant>
+              <div className="bg-background-3 dark:bg-background-5 flex-1 p-8 rounded-[20px] max-lg:w-full">
+                <h3 className="mb-1 font-normal text-heading-5">Elite</h3>
+                <p className="mb-6 max-w-[260px] text-secondary/70 dark:text-accent/70">
+                  Für Ketten, Franchise-Systeme & High-Volume-Gyms mit mehreren Standorten & Marken.
+                </p>
+                <div className="mb-4">
+                  <p className="text-heading-4 font-normal">Preis auf Anfrage</p>
+                  <p className="text-secondary/70 dark:text-accent/70 text-tagline-2">
+                    inklusive Setup & individueller Konditionen
+                  </p>
+                </div>
+                <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-6">
+                  KI-Coach, Growth-Analytics, Multi-Location, White-Label & individuelle SLAs.
+                </p>
+
+                <Link
+                  href="/contact-us?plan=elite"
+                  className="btn btn-md btn-white dark:btn-white-dark hover:btn-secondary dark:hover:btn-accent w-full block mb-8 before:content-none first-letter:uppercase"
+                >
+                  Elite anfragen
+                </Link>
+                <ul className="relative list-none space-y-2.5 text-tagline-1">
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                    <span className="text-secondary dark:text-accent">
+                      KI-Coach über WhatsApp – später eigene App
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                    <span className="text-secondary dark:text-accent">
+                      Multi-Location & mehrere Marken in einem Account
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <span className="size-5 rounded-full bg-secondary dark:bg-accent flex items-center justify-center" />
+                    <span className="text-secondary dark:text-accent">
+                      Individuelle Workflows, SLAs & Growth-Support
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </RevealAnimation>
           </div>
         </div>
       </div>

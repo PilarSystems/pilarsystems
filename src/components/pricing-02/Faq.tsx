@@ -9,22 +9,22 @@ const faqItems: FaqItem[] = [
   {
     question: 'Gibt es eine Mindestlaufzeit?',
     answer:
-      'Standardmäßig arbeiten wir mit einer monatlichen Laufzeit. Du kannst Pilar Systems also flexibel testen. Für Ketten und größere Volumina sind individuelle Laufzeiten und Rahmenverträge möglich.',
+      'Standardmäßig arbeiten wir mit einer monatlichen Laufzeit. Du kannst Pilar Systems flexibel testen. Für Ketten und größere Volumina sind individuelle Laufzeiten und Rahmenverträge möglich.',
   },
   {
     question: 'Was ist in der Setup-Gebühr enthalten?',
     answer:
-      'Im Setup richten wir deine KI-Plattform ein: Anbindung von Telefonanlage, WhatsApp, E-Mail & Website, Konfiguration der KI-Dialoge auf dein Studio, Grundaufbau von Pipelines & Kalendern sowie gemeinsame Tests typischer Szenarien – bis alles sauber läuft.',
+      'Im Setup richten wir deine KI-Inbox und – je nach Paket – Telefonanlage, WhatsApp, E-Mail, Webseite und Kalender ein. Wir passen Dialoge an dein Studio an und testen gemeinsam typische Szenarien – bis alles sauber läuft.',
   },
   {
     question: 'Für welche Studios eignet sich welcher Plan?',
     answer:
-      'Basic ist ideal für einzelne Studios mit Fokus auf KI-Inbox & Messaging. Pro richtet sich an Studios mit höherem Anfragevolumen, Telefonanlage und mehreren Kalendern. Elite ist für Ketten, Multi-Standorte, White-Label-Setups und Studios gedacht, die KI-Coach & Growth-Analytics voll ausnutzen wollen.',
+      'Basic ist ideal für einzelne Studios mit Fokus auf KI-Inbox & Messaging. Pro richtet sich an Studios mit höherem Anfragevolumen oder mehreren Kanälen (Telefon, Kalender, Automationen). Elite ist für Ketten, Franchise-Systeme und Studios mit mehreren Standorten gedacht, inklusive KI-Coach & Growth-Modulen.',
   },
   {
     question: 'Kann ich später in einen anderen Plan wechseln?',
     answer:
-      'Ja. Du kannst mit Basic starten und später auf Pro oder Elite wechseln, sobald dein Anfragevolumen steigt, zusätzliche Standorte dazukommen oder du den KI-Coach bzw. weitere Module aktivieren möchtest.',
+      'Ja. Du kannst jederzeit mit Basic starten und bei wachsendem Volumen oder zusätzlichen Standorten in Pro oder Elite wechseln.',
   },
   {
     question: 'Wie funktioniert die Kündigung?',
@@ -51,8 +51,8 @@ const Faq = () => {
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p className="text-secondary/60 dark:text-accent/60">
-              Noch unsicher, welcher Plan zu deinem Studio passt? Hier findest du die wichtigsten Antworten rund um
-              Preise, Laufzeiten, Setup und DSGVO.
+              Noch unsicher, welcher Plan zu deinem Studio passt? Hier sind die wichtigsten Antworten rund um Preise,
+              Laufzeiten und Setup.
             </p>
           </RevealAnimation>
         </div>

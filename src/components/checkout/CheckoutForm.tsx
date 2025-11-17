@@ -7,7 +7,6 @@ type CheckoutFormProps = {
   checkoutAction: (formData: FormData) => void | Promise<void>;
 };
 
-
 type PlanId = 'starter' | 'growth' | 'pro';
 type BillingPeriod = 'monthly' | 'yearly';
 
@@ -23,24 +22,24 @@ const planConfig: Record<
   }
 > = {
   starter: {
-    label: 'Basic Gym',
-    subtitle: 'Ideal für kleine Studios',
+    label: 'Basic',
+    subtitle: 'KI-Inbox & Messaging',
     priceLabel: '149 € / Monat',
     setupLabel: 'Setup-Gebühr: 500 € einmalig',
     priceValue: 149,
     setupValue: 500,
   },
   growth: {
-    label: 'Growth Gym',
-    subtitle: 'Für ambitionierte Studios',
-    priceLabel: '199 € / Monat',
-    setupLabel: 'Setup-Gebühr: 1.000 € einmalig',
-    priceValue: 199,
-    setupValue: 1000,
+    label: 'Pro',
+    subtitle: 'Telefon, Kalender & Automationen',
+    priceLabel: '249 € / Monat',
+    setupLabel: 'Setup-Gebühr: 899 € einmalig',
+    priceValue: 249,
+    setupValue: 899,
   },
   pro: {
-    label: 'Elite / Multi-Location',
-    subtitle: 'Für Ketten & High-Volume-Gyms',
+    label: 'Elite',
+    subtitle: 'Coach, Growth & Multi-Location',
     priceLabel: 'Preis auf Anfrage',
     setupLabel: 'Setup-Gebühr: auf Anfrage',
   },
@@ -69,7 +68,7 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
 
     if (billingPeriod === 'yearly') {
       // 2 Monate geschenkt bei yearly
-      const yearly = base * 10; // 12 Monate zahlen, 2 geschenkt = 10x
+      const yearly = base * 10;
       const totalToday = yearly + setup;
       return {
         title: `${plan.label} (jährlich)`,
@@ -125,7 +124,7 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
           </h1>
           <p className="text-secondary/70 dark:text-accent/70 text-tagline-1 max-w-2xl mx-auto">
             Wähle dein Paket, bestätige dein Abo und schließe die Zahlung über Stripe ab.
-            Direkt danach startet dein Onboarding-Assistent und dein Dashboard wird eingerichtet.
+            Direkt danach startet dein Onboarding-Assistent und dein PILAR Dashboard wird eingerichtet.
           </p>
         </div>
       </RevealAnimation>
@@ -144,11 +143,11 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                 <h2 className="text-heading-6">Tarif auswählen</h2>
                 <p className="text-tagline-2 text-secondary/70 dark:text-accent/70">
                   Du kannst deinen Tarif jederzeit upgraden. Für die meisten Studios passt
-                  der <span className="font-semibold">Wachstum</span>-Plan perfekt.
+                  der <span className="font-semibold">Pro-Plan</span> perfekt.
                 </p>
 
                 <div className="grid gap-4 md:grid-cols-3">
-                  {/* Starter */}
+                  {/* Basic */}
                   <label className={getPlanCardClasses('starter')}>
                     <div className="flex items-center justify-between gap-2">
                       <div className="space-y-1">
@@ -174,11 +173,11 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                       {planConfig.starter.setupLabel}
                     </p>
                     <p className="text-tagline-2 text-secondary/60 dark:text-accent/60">
-                      KI-Rezeption, Basis-Automatisierungen, Standard-Support.
+                      KI-Inbox, Lead-Funnel, Basis-Automatisierungen & Standard-Support.
                     </p>
                   </label>
 
-                  {/* Wachstum (Empfohlen) */}
+                  {/* Pro (empfohlen) */}
                   <label className={getPlanCardClasses('growth')}>
                     <div className="relative">
                       <span className="absolute -top-4 left-0 rounded-full bg-accent/90 px-3 py-[2px] text-[11px] font-medium text-black">
@@ -208,11 +207,11 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                       {planConfig.growth.setupLabel}
                     </p>
                     <p className="text-tagline-2 text-secondary/60 dark:text-accent/60">
-                      Mehr Kanäle, Lead-Funnel, erweiterte Automatisierungen & Prioritäts-Support.
+                      Alles aus Basic plus KI-Telefonanlage, Kalender-Sync & erweiterte Automatisierungen.
                     </p>
                   </label>
 
-                  {/* Pro */}
+                  {/* Elite */}
                   <label className={getPlanCardClasses('pro')}>
                     <div className="flex items-center justify-between gap-2">
                       <div className="space-y-1">
@@ -237,7 +236,7 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                       {planConfig.pro.setupLabel}
                     </p>
                     <p className="text-tagline-2 text-secondary/60 dark:text-accent/60">
-                      Individuelle Volumenpreise, mehrere Standorte, individuelle SLAs.
+                      KI-Coach, Growth-Analytics, Multi-Standorte & individuelle SLAs – perfekt für Ketten.
                     </p>
                   </label>
                 </div>
@@ -336,8 +335,8 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                     htmlFor="billingTerms"
                     className="text-tagline-2 text-secondary/80 dark:text-accent/80"
                   >
-                    Ich bestätige, dass das Abo nach der Testphase automatisch
-                    weiterläuft, solange es nicht fristgerecht gekündigt wird.
+                    Ich bestätige, dass das Abo nach der Testphase automatisch weiterläuft,
+                    solange es nicht fristgerecht gekündigt wird.
                   </label>
                 </div>
                 <div className="flex items-start gap-3">
@@ -372,7 +371,7 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
                 </button>
                 <p className="text-tagline-2 text-secondary/60 dark:text-accent/60">
                   Im nächsten Schritt wirst du zu Stripe weitergeleitet. Sobald die Zahlung
-                  durch ist, legen wir automatisch dein Abo an und bringen dich ins Dashboard.
+                  durch ist, legen wir automatisch dein Abo an und bringen dich in dein PILAR Dashboard.
                 </p>
               </div>
             </form>
@@ -406,9 +405,9 @@ const CheckoutForm = ({ checkoutAction }: CheckoutFormProps) => {
               <div className="mt-4 rounded-xl bg-accent/10 px-4 py-3 text-tagline-3 text-secondary/80 dark:text-accent">
                 <p className="font-semibold mb-1">Was passiert nach der Zahlung?</p>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li>Automatische Aktivierung deines Pilar-Accounts</li>
+                  <li>Automatische Aktivierung deines PILAR Accounts</li>
                   <li>Direkter Zugang zum Onboarding-Assistenten</li>
-                  <li>Einrichtung des Dashboards und der KI-Kanäle</li>
+                  <li>Einrichtung des Dashboards und der KI-Kanäle (Telefon, WhatsApp, E-Mail, Coach)</li>
                 </ul>
               </div>
             </aside>
