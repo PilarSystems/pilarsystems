@@ -3,7 +3,7 @@ import LinkButton from '../ui/button/LinkButton';
 
 const Services = () => {
   return (
-    <section className="pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px] bg-[url('/images/home-page-18/hero-bg.png')] bg-no-repeat bg-cover bg-top">
+    <section className="pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px] bg-gradient-to-b from-background-3/70 via-background-1 to-background-3 dark:from-background-8 dark:via-background-9 dark:to-background-8">
       <div className="main-container">
         {/* Heading */}
         <div className="text-center space-y-5 max-w-[750px] mx-auto mb-14">

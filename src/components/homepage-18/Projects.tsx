@@ -1,11 +1,61 @@
 import { ICaseStudy } from '@/interface';
 import getMarkDownData from '@/utils/getMarkDownData';
-import Image from 'next/image';
 import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
 
 const Projects = () => {
   const featuredProjects: ICaseStudy[] = getMarkDownData('src/data/case-study').slice(0, 4);
+
+  const renderCardVisual = (project: ICaseStudy) => {
+    const initials =
+      project?.title
+        ?.split(' ')
+        .map((p) => p.charAt(0))
+        .join('')
+        .slice(0, 3) || 'PS';
+
+    return (
+      <div className="relative w-full h-[300px] lg:h-[576px] rounded-[20px] overflow-hidden group cursor-pointer bg-gradient-to-br from-accent/22 via-background-1 to-background-3 dark:from-accent/28 dark:via-background-8 dark:to-background-9">
+        {/* weiche Overlays wie vorher beim Hover */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-all duration-500 ease-in-out" />
+
+        {/* „Thumbnail“-Look über reine CSS-Grafik */}
+        <div className="absolute inset-0 px-6 py-5 flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-3 text-[11px] text-white/80">
+            <span className="rounded-full bg-white/10 px-3 py-1 uppercase tracking-[0.16em]">
+              Erfolgsgeschichte
+            </span>
+            <span className="rounded-full bg-white/5 px-3 py-1">
+              {project.result || 'Mehr Probetrainings & Abschlüsse'}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-3 max-w-[80%]">
+            <div className="flex items-center gap-3">
+              <div className="flex size-10 items-center justify-center rounded-full bg-white/90 text-xs font-semibold tracking-[0.18em] text-secondary">
+                {initials}
+              </div>
+              <div className="space-y-1">
+                <p className="text-[11px] text-white/70">Case Study</p>
+                <h3 className="text-base sm:text-lg font-medium text-white line-clamp-2">
+                  {project.title}
+                </h3>
+              </div>
+            </div>
+            <p className="text-[12px] text-white/70 line-clamp-2">{project.description}</p>
+          </div>
+        </div>
+
+        {/* CTA-Button (Overlay) */}
+        <LinkButton
+          href={`/case-study/${project.slug}`}
+          className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu"
+        >
+          Case ansehen
+        </LinkButton>
+      </div>
+    );
+  };
 
   return (
     <section className="pt-16 md:pt-20 lg:pt-[90px] xl:pt-[160px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[160px] bg-white dark:bg-black">
@@ -36,21 +86,7 @@ const Projects = () => {
             <RevealAnimation delay={0.5}>
               <div className="col-span-12">
                 <figure className="space-y-6">
-                  <div className="relative w-full h-[300px] lg:h-[576px] rounded-[20px] overflow-hidden group cursor-pointer">
-                    <Image
-                      src={featuredProjects[0].thumbnail}
-                      className="w-full h-full object-cover rounded-[20px] transition-transform duration-500 group-hover:scale-110"
-                      alt={featuredProjects[0].title}
-                      fill
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
-                    <LinkButton
-                      href={`/case-study/${featuredProjects[0].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 -translate-x-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      Case ansehen
-                    </LinkButton>
-                  </div>
+                  {renderCardVisual(featuredProjects[0])}
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
                     <h3 className="text-heading-6 sm:text-heading-5">{featuredProjects[0].title}</h3>
                     <p className="max-w-[257px] text-left md:text-right line-clamp-2">
@@ -65,21 +101,7 @@ const Projects = () => {
             <RevealAnimation delay={0.6}>
               <div className="col-span-12 lg:col-span-6">
                 <figure className="space-y-6">
-                  <div className="relative w-full h-[300px] lg:h-[576px] rounded-[20px] overflow-hidden group cursor-pointer">
-                    <Image
-                      src={featuredProjects[1].thumbnail}
-                      fill
-                      priority
-                      className="w-full h-full object-cover rounded-[20px] transition-transform duration-500 group-hover:scale-110"
-                      alt={featuredProjects[1].title}
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
-                    <LinkButton
-                      href={`/case-study/${featuredProjects[1].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      Case ansehen
-                    </LinkButton>
-                  </div>
+                  {renderCardVisual(featuredProjects[1])}
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
                     <h3 className="text-heading-6 sm:text-heading-5">{featuredProjects[1].title}</h3>
                     <p className="max-w-[257px] text-left md:text-right line-clamp-2">
@@ -94,21 +116,7 @@ const Projects = () => {
             <RevealAnimation delay={0.7}>
               <div className="col-span-12 lg:col-span-6">
                 <figure className="space-y-6">
-                  <div className="relative w-full h-[300px] lg:h-[576px] rounded-[20px] overflow-hidden group cursor-pointer">
-                    <Image
-                      src={featuredProjects[2].thumbnail}
-                      fill
-                      priority
-                      alt={featuredProjects[2].title}
-                      className="w-full h-full object-cover rounded-[20px] transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
-                    <LinkButton
-                      href={`/case-study/${featuredProjects[2].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      Case ansehen
-                    </LinkButton>
-                  </div>
+                  {renderCardVisual(featuredProjects[2])}
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
                     <h3 className="text-heading-6 sm:text-heading-5">{featuredProjects[2].title}</h3>
                     <p className="max-w-[257px] text-left md:text-right line-clamp-2">
@@ -123,21 +131,7 @@ const Projects = () => {
             <RevealAnimation delay={0.8}>
               <div className="col-span-12">
                 <figure className="space-y-6">
-                  <div className="relative w-full h-[300px] lg:h-[576px] rounded-[20px] overflow-hidden group cursor-pointer">
-                    <Image
-                      src={featuredProjects[3].thumbnail}
-                      fill
-                      priority
-                      className="w-full h-full object-cover rounded-[20px] transition-transform duration-500 group-hover:scale-110"
-                      alt={featuredProjects[3].title}
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 ease-in-out" />
-                    <LinkButton
-                      href={`/case-study/${featuredProjects[3].slug}`}
-                      className="group-hover:opacity-100 group-hover:scale-110 group-hover:-translate-y-1/2 opacity-0 scale-95 -translate-y-[calc(50%-8px)] transition-all duration-500 ease-out absolute top-1/2 left-1/2 btn btn-md hover:btn-primary dark:btn-accent btn-secondary transform-gpu">
-                      Case ansehen
-                    </LinkButton>
-                  </div>
+                  {renderCardVisual(featuredProjects[3])}
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
                     <h3 className="text-heading-6 sm:text-heading-5">{featuredProjects[3].title}</h3>
                     <p className="max-w-[257px] text-left md:text-right line-clamp-2">
@@ -155,7 +149,8 @@ const Projects = () => {
           <div className="text-center space-y-3">
             <LinkButton
               href="/case-study"
-              className="btn btn-secondary btn-md hover:btn-primary dark:btn-transparent mx-auto">
+              className="btn btn-secondary btn-md hover:btn-primary dark:btn-transparent mx-auto"
+            >
               Alle Erfolgsgeschichten ansehen
             </LinkButton>
             <p className="text-tagline-2 text-secondary/60 dark:text-accent/60">
@@ -163,7 +158,8 @@ const Projects = () => {
             </p>
             <LinkButton
               href="/signup-01"
-              className="btn btn-primary btn-sm hover:btn-white dark:hover:btn-accent mx-auto">
+              className="btn btn-primary btn-sm hover:btn-white dark:hover:btn-accent mx-auto"
+            >
               Jetzt mit PILAR starten
             </LinkButton>
           </div>

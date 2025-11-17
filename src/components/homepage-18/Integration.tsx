@@ -1,15 +1,3 @@
-import gradient32 from '@public/images/gradient/gradient-32.png';
-import gradient33 from '@public/images/gradient/gradient-33.png';
-import gradient34 from '@public/images/gradient/gradient-34.png';
-import gradient9 from '@public/images/gradient/gradient-9.png';
-import integrationImage1 from '@public/images/home-page-18/integration-image-1.png';
-import integrationImage2Dark from '@public/images/home-page-18/integration-image-2-dark.png';
-import integrationImage2 from '@public/images/home-page-18/integration-image-2.png';
-import integrationImage3Dark from '@public/images/home-page-18/integration-image-3-dark.png';
-import integrationImage3 from '@public/images/home-page-18/integration-image-3.png';
-import integrationImage4Dark from '@public/images/home-page-18/integration-image-4-dark.png';
-import integrationImage4 from '@public/images/home-page-18/integration-image-4.png';
-import Image from 'next/image';
 import Link from 'next/link';
 import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
@@ -22,6 +10,7 @@ const Integration = () => {
       <div className="bg-background-2 dark:bg-background-5">
         <div className="main-container">
           <div className="flex flex-col lg:flex-row items-start gap-y-24 gap-x-[140px]">
+            {/* Left copy */}
             <div className="w-full lg:flex-1 lg:sticky lg:top-28 lg:max-w-full max-w-[520px] lg:mx-0 mx-auto text-center lg:text-left">
               <RevealAnimation delay={0.2}>
                 <span className="badge badge-green mb-5">Ablauf</span>
@@ -40,42 +29,61 @@ const Integration = () => {
                   <LinkButton
                     href="/process-01"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary hover:btn-primary dark:btn-transparent btn-md w-[85%] md:w-auto mx-auto">
+                    className="btn btn-secondary hover:btn-primary dark:btn-transparent btn-md w-[85%] md:w-auto mx-auto"
+                  >
                     Ablauf im Detail ansehen
                   </LinkButton>
                 </div>
               </RevealAnimation>
             </div>
 
+            {/* Right: Stack cards – nur visuelle Layer geändert */}
             <StackCardWrapper
               topOffset="15vh"
               gap="24px"
               initDelay={100}
-              className="w-full lg:flex-1 lg:max-w-full md:max-w-[50%] sm:max-w-[60%] lg:mx-0 mx-auto max-w-full">
+              className="w-full lg:flex-1 lg:max-w-full md:max-w-[50%] sm:max-w-[60%] lg:mx-0 mx-auto max-w-full"
+            >
               {/* Step 1 */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
                   <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-66%] md:top-[-99%] left-[-52%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient32} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
+                    {/* Gradient Frame via CSS statt Bild */}
+                    <div className="pointer-events-none absolute inset-[-60%] -z-10 rotate-[-41deg] bg-gradient-to-tr from-accent/25 via-background-1/40 to-secondary/25 dark:from-accent/35 dark:via-background-8/60 dark:to-background-5/60" />
+
+                    <div className="space-y-6 rounded-xl bg-white p-8 dark:bg-background-5">
+                      <div className="space-y-2">
                         <h5>Online starten und Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[250px]">
                           Dein Studio wählt einen Plan, erstellt einen Account und führt den geführten Setup-Wizard
                           durch – ganz ohne Telefontermin oder Vor-Ort-Besuch.
                         </p>
-                      </figcaption>
-                      <figure className="max-w-[385px] w-full">
-                        <Image
-                          src={integrationImage1}
-                          alt="Online-Setup und Account-Erstellung"
-                          className="w-full md:max-h-[300px] md:min-h-[300px]"
-                        />
-                      </figure>
-                    </figure>
+                      </div>
+
+                      {/* Fake UI Card */}
+                      <div className="relative w-full rounded-2xl bg-gradient-to-br from-accent/15 via-background-1 to-background-2 p-4 dark:from-accent/20 dark:via-background-7 dark:to-background-8">
+                        <div className="mb-3 flex items-center justify-between text-[11px] text-secondary/70 dark:text-accent/70">
+                          <span className="rounded-full bg-background-1/70 px-3 py-1 text-[10px] uppercase tracking-[0.14em] dark:bg-background-9/70">
+                            Setup-Wizard
+                          </span>
+                          <span>Schritt 1/4</span>
+                        </div>
+                        <div className="space-y-2 text-[11px]">
+                          <div className="flex items-center justify-between rounded-xl bg-background-1/90 px-3 py-2 dark:bg-background-9/90">
+                            <span>Plan wählen (Basic / Pro / Elite)</span>
+                            <span className="text-emerald-500/90">fertig</span>
+                          </div>
+                          <div className="flex items-center justify-between rounded-xl bg-background-1/90 px-3 py-2 dark:bg-background-9/90">
+                            <span>Studio-Daten eintragen</span>
+                            <span className="text-secondary/60 dark:text-accent/60">aktiv</span>
+                          </div>
+                          <div className="flex items-center justify-between rounded-xl bg-background-1/50 px-3 py-2 dark:bg-background-9/50">
+                            <span>Kanäle vorbereiten</span>
+                            <span className="text-secondary/40 dark:text-accent/40">als Nächstes</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -84,31 +92,44 @@ const Integration = () => {
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
                   <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-76%] md:top-[-111%] left-[-62%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient33} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
+                    <div className="pointer-events-none absolute inset-[-60%] -z-10 rotate-[-41deg] bg-gradient-to-tr from-accent/20 via-background-1/30 to-secondary/20 dark:from-accent/30 dark:via-background-8/50 dark:to-background-5/50" />
+
+                    <div className="space-y-6 rounded-xl bg-white p-8 dark:bg-background-5">
+                      <div className="space-y-2">
                         <h5>Systeme verbinden und alles testen.</h5>
                         <p className="max-w-[250px]">
                           Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach testest du
                           gemeinsam mit uns typische Szenarien aus Sicht deiner Mitglieder.
                         </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Image
-                          src={integrationImage2}
-                          alt="Systeme verbinden"
-                          className="w-full dark:hidden md:max-h-[300px] md:min-h-[300px]"
-                        />
-                        <Image
-                          src={integrationImage2Dark}
-                          alt="Systeme verbinden"
-                          className="w-full hidden dark:block md:max-h-[300px] md:min-h-[300px]"
-                        />
                       </div>
-                    </figure>
+
+                      <div className="relative w-full rounded-2xl bg-gradient-to-br from-accent/12 via-background-1 to-background-2 p-4 dark:from-accent/22 dark:via-background-7 dark:to-background-8">
+                        <div className="grid grid-cols-2 gap-2 text-[11px]">
+                          {['Telefonanlage', 'WhatsApp', 'E-Mail', 'Kalender'].map((label, idx) => (
+                            <div
+                              key={label}
+                              className="flex items-center justify-between rounded-xl bg-background-1/90 px-3 py-2 dark:bg-background-9/90"
+                            >
+                              <span>{label}</span>
+                              <span
+                                className={
+                                  idx < 2
+                                    ? 'text-emerald-500/90'
+                                    : 'text-secondary/55 dark:text-accent/60'
+                                }
+                              >
+                                {idx < 2 ? 'verbunden' : 'ausstehend'}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mt-4 flex items-center justify-between text-[10px] text-secondary/60 dark:text-accent/60">
+                          <span>Test-Call & Test-WhatsApp aus Sicht eines Interessenten</span>
+                          <span>✓ Szenarien durchgespielt</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -117,31 +138,43 @@ const Integration = () => {
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
                   <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-75%] md:top-[-111%] left-[-65%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient34} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
+                    <div className="pointer-events-none absolute inset-[-60%] -z-10 rotate-[-41deg] bg-gradient-to-tr from-accent/18 via-background-1/30 to-secondary/18 dark:from-accent/28 dark:via-background-8/50 dark:to-background-5/50" />
+
+                    <div className="space-y-6 rounded-xl bg-white p-8 dark:bg-background-5">
+                      <div className="space-y-2">
                         <h5>Ziele und Regeln für deine KI festlegen.</h5>
                         <p className="max-w-[250px]">
                           Du definierst, welche Leads priorisiert werden, wie Probetrainings vergeben werden und welche
                           Angebote kommuniziert werden – die KI hält sich an deine Regeln.
                         </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Image
-                          src={integrationImage3}
-                          alt="KI-Regeln festlegen"
-                          className="w-full dark:hidden md:max-h-[300px] md:min-h-[300px]"
-                        />
-                        <Image
-                          src={integrationImage3Dark}
-                          alt="KI-Regeln festlegen"
-                          className="w-full hidden dark:block md:max-h-[300px] md:min-h-[300px]"
-                        />
                       </div>
-                    </figure>
+
+                      <div className="relative w-full rounded-2xl bg-gradient-to-br from-accent/12 via-background-1 to-background-2 p-4 dark:from-accent/22 dark:via-background-7 dark:to-background-8">
+                        <div className="space-y-3 text-[11px]">
+                          <div className="flex items-center justify-between">
+                            <span className="rounded-full bg-background-1/80 px-3 py-1 text-[10px] uppercase tracking-[0.14em] dark:bg-background-9/80">
+                              Lead-Regeln
+                            </span>
+                            <span className="text-secondary/60 dark:text-accent/60">3 aktive Regeln</span>
+                          </div>
+
+                          <ul className="space-y-2">
+                            <li className="flex items-center justify-between rounded-xl bg-background-1/90 px-3 py-2 dark:bg-background-9/90">
+                              <span>Leads mit Tel.-Nr. → Priorität hoch</span>
+                              <span className="text-emerald-500/90">aktiv</span>
+                            </li>
+                            <li className="flex items-center justify-between rounded-xl bg-background-1/90 px-3 py-2 dark:bg-background-9/90">
+                              <span>No-Shows → automatische Nachfass-Nachricht</span>
+                              <span className="text-emerald-500/90">aktiv</span>
+                            </li>
+                            <li className="flex items-center justify-between rounded-xl bg-background-1/60 px-3 py-2 dark:bg-background-9/60">
+                              <span>Upgrade-Angebote nach 8 Wochen</span>
+                              <span className="text-secondary/55 dark:text-accent/60">geplant</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -150,33 +183,46 @@ const Integration = () => {
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
                   <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-66%] md:top-[-97%] max-[376px]:left-[-40%] left-[-30%] md:left-[-60%] lg:left-[-48%] rotate-[245deg] select-none pointer-events-none">
-                      <Image src={gradient9} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
+                    <div className="pointer-events-none absolute inset-[-60%] -z-10 rotate-[245deg] bg-gradient-to-tr from-accent/22 via-background-1/35 to-secondary/22 dark:from-accent/32 dark:via-background-8/55 dark:to-background-5/55" />
+
+                    <div className="space-y-6 rounded-xl bg-white p-8 dark:bg-background-5">
+                      <div className="space-y-2">
                         <h5>Live gehen und Automatisierung nutzen.</h5>
                         <p className="max-w-[250px]">
                           Danach übernimmt Pilar Systems die Routine: Anfragen beantworten, Leads nachfassen und
                           Probetrainings koordinieren – dein Team konzentriert sich aufs Training.
                         </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Link href="/process-01">
-                          <Image
-                            src={integrationImage4}
-                            alt="Live-Automatisierung"
-                            className="w-full dark:hidden rounded-xl md:max-h-[300px] md:min-h-[300px]"
-                          />
-                          <Image
-                            src={integrationImage4Dark}
-                            alt="Live-Automatisierung"
-                            className="w-full hidden dark:block rounded-xl md:max-h-[300px] md:min-h-[300px]"
-                          />
-                        </Link>
                       </div>
-                    </figure>
+
+                      <div className="relative w-full rounded-2xl bg-gradient-to-br from-accent/16 via-background-1 to-background-2 p-4 dark:from-accent/26 dark:via-background-7 dark:to-background-9">
+                        <div className="flex items-center justify-between text-[11px] text-secondary/70 dark:text-accent/70 mb-3">
+                          <span>Status: Live</span>
+                          <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-[10px] text-emerald-400">
+                            Live-Automatisierung aktiv
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-[10px]">
+                          <div className="rounded-xl bg-background-1/85 p-2 dark:bg-background-9/85">
+                            <p>Neue Anfragen</p>
+                            <p className="mt-1 text-emerald-500/90">+38% / Monat</p>
+                          </div>
+                          <div className="rounded-xl bg-background-1/85 p-2 dark:bg-background-9/85">
+                            <p>No-Show-Rate</p>
+                            <p className="mt-1 text-emerald-500/90">-24%</p>
+                          </div>
+                          <div className="rounded-xl bg-background-1/85 p-2 dark:bg-background-9/85">
+                            <p>Reaktionszeit</p>
+                            <p className="mt-1 text-emerald-500/90">&lt; 1 Min</p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 text-right text-[11px]">
+                          <Link href="/process-01" className="underline underline-offset-4 text-secondary/75 dark:text-accent/80">
+                            Detaillierten Ablauf ansehen
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>

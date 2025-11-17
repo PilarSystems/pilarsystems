@@ -5,14 +5,13 @@ import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
 
 import reviews from '@/data/json/testimonials/testimonials.json';
-import Image from 'next/image';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import GradientOverlay from '../shared/reviews/GradientOverlay';
 
 const Testimonial = () => {
   return (
-    <section className="relative pt-[100px] pb-[100px] bg-white dark:bg-black bg-[url('/images/home-page-18/hero-bg.png')] bg-no-repeat bg-cover bg-top">
+    <section className="relative pt-[100px] pb-[100px] bg-gradient-to-b from-background-3/70 via-background-1 to-background-3 dark:from-background-9 dark:via-background-8 dark:to-background-9">
       <div className="main-container">
         {/* Heading + Intro */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-[70px]">
@@ -68,36 +67,39 @@ const Testimonial = () => {
               modules={[Autoplay]}
               navigation={false}
               pagination={false}
-              scrollbar={false}>
+              scrollbar={false}
+            >
               <div className="swiper-wrapper">
-                {reviews.map((review) => (
-                  <SwiperSlide key={review.id} className="swiper-slide">
-                    <div className="bg-background-2 dark:bg-background-5 relative z-0 mx-1 flex flex-col gap-y-8 overflow-hidden rounded-[20px] p-8 sm:mx-0">
-                      <GradientOverlay />
-                      <figure className="relative inline-block size-14 overflow-hidden rounded-full bg-linear-[156deg,_#FFF_32.92%,_#83E7EE_91%] ring-4 ring-white dark:ring-background-5">
-                        <Image
-                          src={review.avatar}
-                          height={100}
-                          width={100}
-                          quality={100}
-                          alt="avatar"
-                          className="max-w-full"
-                        />
-                      </figure>
-                      <p className="text-secondary/60 dark:text-accent/60 line-clamp-3 review-text">
-                        {review.quote}
-                      </p>
-                      <div>
-                        <p className="text-secondary dark:text-accent review-name text-lg leading-[1.5] font-medium">
-                          {review.name}
+                {reviews.map((review: any) => {
+                  const initials =
+                    review?.name
+                      ?.split(' ')
+                      .map((p: string) => p.charAt(0))
+                      .join('')
+                      .slice(0, 3) || 'PS';
+
+                  return (
+                    <SwiperSlide key={review.id} className="swiper-slide">
+                      <div className="bg-background-2 dark:bg-background-5 relative z-0 mx-1 flex flex-col gap-y-8 overflow-hidden rounded-[20px] p-8 sm:mx-0">
+                        <GradientOverlay />
+                        <figure className="relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-white via-accent/70 to-secondary/80 text-xs font-semibold tracking-[0.16em] text-secondary ring-4 ring-white dark:ring-background-5">
+                          {initials}
+                        </figure>
+                        <p className="text-secondary/60 dark:text-accent/60 line-clamp-3 review-text">
+                          {review.quote}
                         </p>
-                        <p className="text-secondary/60 dark:text-accent/60 text-tagline-2 review-title">
-                          {review.position}
-                        </p>
+                        <div>
+                          <p className="text-secondary dark:text-accent review-name text-lg leading-[1.5] font-medium">
+                            {review.name}
+                          </p>
+                          <p className="text-secondary/60 dark:text-accent/60 text-tagline-2 review-title">
+                            {review.position}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                    </SwiperSlide>
+                  );
+                })}
               </div>
             </Swiper>
           </div>
@@ -109,7 +111,8 @@ const Testimonial = () => {
             <LinkButton
               href="/signup-01"
               className="btn btn-secondary btn-md inline-block dark:btn-transparent dark:border-primary-50 hover:btn-primary w-[85%] md:w-auto mx-auto"
-              aria-label="Mit PILAR SYSTEMS starten">
+              aria-label="Mit PILAR SYSTEMS starten"
+            >
               Jetzt mit PILAR starten
             </LinkButton>
             <p className="mt-3 text-tagline-2 text-secondary/60 dark:text-accent/60">

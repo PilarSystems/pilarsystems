@@ -29,7 +29,7 @@ Site Badges Styles
 }
 
 @utility badge-cyan {
-  @apply bg-ns-cyan-light dark:text-ns-green dark:bg-accent/10;
+  @apply bg-ns-cyan-light dark:text-ns-cyan dark:bg-accent/10;
 }
 
 @utility badge-cyan-v2 {
@@ -65,7 +65,7 @@ Site Badges Styles
 }
 
 @utility badge-primary {
-  @apply bg-background-4 text-primary-500 dark:bg-accent/10 dark:text-ns-green;
+  @apply bg-background-4 text-primary-500 dark:bg-accent/10 dark:text-ns-cyan;
 }
 
 @utility badge-primary-light {
@@ -81,7 +81,7 @@ Site Badges Styles
 }
 
 @utility badge-blur-light {
-  @apply bg-accent/10 text-accent dark:text-ns-yellow;
+  @apply bg-accent/10 text-accent dark:text-ns-cyan;
 }
 
 @utility badge-secondary-light {

@@ -2,8 +2,6 @@
 
 import { CheckIcon } from '@/icons';
 import { cn } from '@/utils/cn';
-import gradient51 from '@public/images/gradient/gradient-51.png';
-import Image from 'next/image';
 import Link from 'next/link';
 import RevealAnimation from '../animation/RevealAnimation';
 
@@ -126,11 +124,9 @@ const Pricing = () => {
                       : 'bg-white dark:bg-black p-8 xl:py-[60px] xl:px-14',
                   )}
                 >
-                  {/* Featured plan gradient background */}
+                  {/* Featured plan gradient background (ohne Image) */}
                   {plan.planType === 'featured' && (
-                    <figure className="w-[810px] md:w-[950px] lg:w-[810px] left-[-30%] md:left-[-20%] lg:left-[-30%] top-[-20%] md:top-[-40%] lg:top-[-20%] absolute rotate-[30deg] select-none pointer-events-none">
-                      <Image src={gradient51} alt="gradient-bg" className="w-full h-full object-cover" />
-                    </figure>
+                    <div className="pointer-events-none absolute inset-[-40%] -z-10 rotate-[30deg] bg-gradient-to-tr from-accent/60 via-secondary/40 to-background-3/40 dark:from-accent/70 dark:via-background-6/60 dark:to-background-9/70" />
                   )}
 
                   <div
