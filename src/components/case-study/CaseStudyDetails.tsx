@@ -6,11 +6,38 @@ import RevealAnimation from '../animation/RevealAnimation';
 import CaseStudyTestimonial from './CaseStudyTestimonial';
 
 interface CaseStudyDetailsProps {
-  slug: string;
+  slug?: string;
 }
 
 const CaseStudyDetails = ({ slug }: CaseStudyDetailsProps) => {
-  // @ts-expect-error - ICaseStudy is not fully typed
+  // Fallback, falls aus irgendeinem Grund kein Slug übergeben wird
+  if (!slug) {
+    return (
+      <section className="pt-7 pb-24 md:pb-28 lg:pb-32 xl:pb-[200px]">
+        <div className="main-container">
+          <div className="max-w-[700px] space-y-4">
+            <RevealAnimation delay={0.2}>
+              <h2 className="text-heading-3">
+                Für diese Erfolgsgeschichte liegen aktuell keine Details vor.
+              </h2>
+            </RevealAnimation>
+            <RevealAnimation delay={0.3}>
+              <p className="text-tagline-1 text-secondary/80 dark:text-accent/80">
+                Bitte gehe zurück zur Übersicht der Erfolgsgeschichten oder wähle eine andere Case Study aus. 
+                Falls der Fehler weiterhin auftritt, prüfe, ob die entsprechende Markdown-Datei im Ordner 
+                <code className="mx-1 rounded-md bg-background-1 px-1.5 py-0.5 text-[12px]">
+                  src/data/case-study
+                </code>
+                vorhanden ist.
+              </p>
+            </RevealAnimation>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // @ts-expect-error - ICaseStudy ist nicht vollständig typisiert
   const caseStudy: ICaseStudy = getMarkDownContent('src/data/case-study/', slug);
 
   return (
@@ -61,7 +88,6 @@ const CaseStudyDetails = ({ slug }: CaseStudyDetailsProps) => {
                 <RevealAnimation delay={0.6}>
                   <div className="max-w-[306] text-center px-6 bg-white dark:bg-background-6 rounded-[20px] [&>p]:border-b [&>p]:border-b-stroke-4 dark:[&>p]:border-b-stroke-7 [&>p]:last:border-b-0">
                     <p className="py-4 text-secondary font-medium border-b dark:text-accent">Vorher</p>
-
                     {caseStudy.data.before?.map((item: string, index: number) => (
                       <p key={index} className="py-4 border-b last:border-b-0">
                         {item}
