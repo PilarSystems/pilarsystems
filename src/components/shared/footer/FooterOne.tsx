@@ -128,7 +128,7 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/affiliate" className="footer-link">
+                      <Link href="/affiliates" className="footer-link">
                         Affiliate-Programm
                       </Link>
                     </li>

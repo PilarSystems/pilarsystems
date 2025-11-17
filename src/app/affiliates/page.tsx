@@ -1,19 +1,21 @@
 import AffiliateProcess from '@/components/affiliates/AffiliateProcess';
 import AffiliateProgram from '@/components/affiliates/AffiliateProgram';
 import CTAV1 from '@/components/shared/cta/CTAV1';
-import FooterThree from '@/components/shared/footer/FooterThree';
+import FooterOne from '@/components/shared/footer/FooterOne';
 import NavbarOne from '@/components/shared/header/NavbarOne';
 import PageHero from '@/components/shared/PageHero';
 import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Fragment } from 'react';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Affiliates - NextSaaS',
+  title: 'Affiliate-Programm – PILAR SYSTEMS',
+  description:
+    'Werde Affiliate von PILAR SYSTEMS und verdiene wiederkehrende Provisionen mit Fitnessstudios, Gyms & Coaches, die unsere KI-Infrastruktur nutzen.',
 };
 
-const AffiliatePolicy = () => {
+const AffiliatePage = () => {
   return (
     <Fragment>
       <NavbarOne
@@ -21,22 +23,31 @@ const AffiliatePolicy = () => {
         btnClassName="btn-primary hover:btn-secondary dark:hover:btn-accent"
       />
       <main className="bg-background-3 dark:bg-background-7">
-        <PageHero title="Affiliates" heading="Affiliates" link="/affiliates" />
+        <PageHero
+          title="Affiliate-Programm"
+          heading="Verdiene mit PILAR SYSTEMS wiederkehrende Provisionen."
+          link="/affiliate"
+        />
+
+        {/* Programm-Übersicht: Konditionen, Zielgruppe, Vorteile */}
         <AffiliateProgram />
+
+        {/* Ablauf: So funktioniert das PILAR Affiliate-Setup */}
         <AffiliateProcess />
+
         <CTAV1
           className="dark:bg-background-5 bg-white"
           badgeClass="!badge-yellow-v2"
-          badgeText="Get Started"
-          ctaHeading="Ready to start earning with NextSaaS?"
-          description="If you have any questions, feel free to reach out to our team."
+          badgeText="Affiliate werden"
+          ctaHeading="Bereit, mit Studios & Coaches gemeinsam zu skalieren?"
+          description="Bewirb dich als Affiliate-Partner von PILAR SYSTEMS, teile deinen persönlichen Empfehlungslink und verdiene wiederkehrende Provisionen für jedes aktive Studio, das über dich zu PILAR wechselt."
           btnClass="hover:btn-secondary dark:hover:btn-accent"
-          ctaBtnText="Get started"
+          ctaBtnText="Jetzt Affiliate-Anfrage senden"
         />
       </main>
-      <FooterThree />
+      <FooterOne />
     </Fragment>
   );
 };
 
-export default AffiliatePolicy;
+export default AffiliatePage;

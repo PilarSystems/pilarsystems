@@ -11,27 +11,27 @@ interface AffiliateStep {
 const affiliateStepsData: AffiliateStep[] = [
   {
     id: '1',
-    stepNumber: 'Step 1',
+    stepNumber: 'Schritt 1',
     icon: 'ns-shape-35',
-    title: 'Register as an affiliate',
+    title: 'Als Affiliate bewerben',
     description:
-      "Join our affiliate program and start earning today! As an affiliate, you'll have the opportunity to promote our products or services",
+      'Du meldest dich über das Formular oder per Kontakt bei uns und erzählst kurz, wie du Studios, Gyms oder Coaches erreichst – z. B. Social Media, E-Mail-Liste, Netzwerk oder Ads.',
   },
   {
     id: '2',
-    stepNumber: 'Step 2',
+    stepNumber: 'Schritt 2',
     icon: 'ns-shape-12',
-    title: 'Get to know our products',
+    title: 'PILAR & Material kennenlernen',
     description:
-      'Learn about our products and services to effectively promote them to your audience. We provide comprehensive resources and training materials.',
+      'Du bekommst von uns eine kurze Einführung in die wichtigsten Use Cases von PILAR SYSTEMS sowie Vorlagen, Hooks und Beispiele, wie du das Produkt positionieren kannst.',
   },
   {
     id: '3',
-    stepNumber: 'Step 3',
+    stepNumber: 'Schritt 3',
     icon: 'ns-shape-3',
-    title: 'Earn commissions on every sale',
+    title: 'Studios empfehlen & Provisionen aufbauen',
     description:
-      'Start earning generous commissions for every successful referral. Track your performance and earnings through our affiliate dashboard.',
+      'Du empfiehlst PILAR an passende Studios und Coaches. Für jedes gewonnene, aktive Studio erhältst du eine wiederkehrende Provision – wir tracken alles transparent über dein Partner-Setup.',
   },
 ];
 
