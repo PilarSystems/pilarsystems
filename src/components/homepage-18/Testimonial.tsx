@@ -1,128 +1,37 @@
-'use client';
-
-import { Autoplay } from 'swiper/modules';
-import RevealAnimation from '../animation/RevealAnimation';
-import LinkButton from '../ui/button/LinkButton';
-
-import reviews from '@/data/json/testimonials/testimonials.json';
-import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import GradientOverlay from '../shared/reviews/GradientOverlay';
-
-const Testimonial = () => {
-  return (
-    <section className="relative pt-[100px] pb-[100px] bg-gradient-to-b from-background-3/70 via-background-1 to-background-3 dark:from-background-9 dark:via-background-8 dark:to-background-9">
-      <div className="main-container">
-        {/* Heading + Intro */}
-        <div className="flex flex-col items-center text-center mb-10 md:mb-[70px]">
-          <RevealAnimation delay={0.2}>
-            <span className="badge badge-green mb-4">Social Proof</span>
-          </RevealAnimation>
-          <RevealAnimation delay={0.25}>
-            <h2 className="max-w-[750px] mx-auto mb-4">
-              Warum Studios & Coaches auf PILAR SYSTEMS setzen.
-            </h2>
-          </RevealAnimation>
-          <RevealAnimation delay={0.3}>
-            <p className="max-w-[872px] mx-auto">
-              Studios nutzen PILAR, um Anfragen, Probetrainings, Verträge und Mitgliederkommunikation zu
-              automatisieren – ohne zusätzliche Rezeption, ohne Agentur-Projekte. Mehr gebuchte Termine, weniger
-              No-Shows und klare Abläufe für das Team.
-            </p>
-          </RevealAnimation>
-
-          {/* KPIs / Trust Badges */}
-          <RevealAnimation delay={0.35}>
-            <div className="mt-6 grid grid-cols-1 gap-4 text-tagline-2 text-secondary/70 dark:text-accent/70 sm:grid-cols-3">
-              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">+60%</span> mehr gebuchte
-                Probetrainings*
-              </div>
-              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">24/7</span> automatische
-                Beantwortung von Anfragen
-              </div>
-              <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">Minuten</span> statt Wochen
-                Onboarding dank Setup-Wizard
-              </div>
-            </div>
-          </RevealAnimation>
-        </div>
-
-        {/* Reviews Slider */}
-        <RevealAnimation delay={0.4}>
-          <div className="relative">
-            <Swiper
-              className="swiper reviews-swiper"
-              spaceBetween={30}
-              slidesPerView={3}
-              centeredSlides={true}
-              loop={true}
-              speed={1500}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              modules={[Autoplay]}
-              navigation={false}
-              pagination={false}
-              scrollbar={false}
-            >
-              <div className="swiper-wrapper">
-                {reviews.map((review: any) => {
-                  const initials =
-                    review?.name
-                      ?.split(' ')
-                      .map((p: string) => p.charAt(0))
-                      .join('')
-                      .slice(0, 3) || 'PS';
-
-                  return (
-                    <SwiperSlide key={review.id} className="swiper-slide">
-                      <div className="bg-background-2 dark:bg-background-5 relative z-0 mx-1 flex flex-col gap-y-8 overflow-hidden rounded-[20px] p-8 sm:mx-0">
-                        <GradientOverlay />
-                        <figure className="relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-white via-accent/70 to-secondary/80 text-xs font-semibold tracking-[0.16em] text-secondary ring-4 ring-white dark:ring-background-5">
-                          {initials}
-                        </figure>
-                        <p className="text-secondary/60 dark:text-accent/60 line-clamp-3 review-text">
-                          {review.quote}
-                        </p>
-                        <div>
-                          <p className="text-secondary dark:text-accent review-name text-lg leading-[1.5] font-medium">
-                            {review.name}
-                          </p>
-                          <p className="text-secondary/60 dark:text-accent/60 text-tagline-2 review-title">
-                            {review.position}
-                          </p>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  );
-                })}
-              </div>
-            </Swiper>
-          </div>
-        </RevealAnimation>
-
-        {/* CTA */}
-        <RevealAnimation delay={0.5}>
-          <div className="text-center mt-10">
-            <LinkButton
-              href="/signup-01"
-              className="btn btn-secondary btn-md inline-block dark:btn-transparent dark:border-primary-50 hover:btn-primary w-[85%] md:w-auto mx-auto"
-              aria-label="Mit PILAR SYSTEMS starten"
-            >
-              Jetzt mit PILAR starten
-            </LinkButton>
-            <p className="mt-3 text-tagline-2 text-secondary/60 dark:text-accent/60">
-              *Zahlen basieren auf ersten Pilotkunden – genaue Ergebnisse variieren je nach Studio und Setup.
-            </p>
-          </div>
-        </RevealAnimation>
-      </div>
-    </section>
-  );
-};
-
-export default Testimonial;
+[
+  {
+    "id": 1,
+    "name": "Lisa M.",
+    "position": "Studioleitung, Boutique-Gym in Berlin",
+    "quote": "Wir hatten vorher drei Handys, ein Festnetztelefon und einen überfüllten Posteingang. Seit PILAR laufen alle Anfragen an einer Stelle zusammen – und wir sehen zum ersten Mal, wie viele Leads wirklich zu Verträgen werden.",
+    "avatar": "/images/avatar/avatar-1.png"
+  },
+  {
+    "id": 2,
+    "name": "Jonas M.",
+    "position": "Inhaber, Functional Fitness Studio in NRW",
+    "quote": "Gerade abends und am Wochenende war vorher niemand erreichbar. Die KI von PILAR nimmt jetzt Anrufe und WhatsApps entgegen, qualifiziert vor und bucht Probetrainings direkt in unseren Kalender. Das merkt man jeden Monat in den Zahlen.",
+    "avatar": "/images/avatar/avatar-2.png"
+  },
+  {
+    "id": 3,
+    "name": "Sophie K.",
+    "position": "Head of Sales, Studio-Kette mit 3 Standorten",
+    "quote": "Wir haben mit PILAR unsere komplette Lead-Pipeline strukturiert. Keine Excel-Listen mehr, keine verloren gegangenen Interessenten – jeder Lead hat einen klaren Status und eine klar definierte nächste Aktion.",
+    "avatar": "/images/avatar/avatar-3.png"
+  },
+  {
+    "id": 4,
+    "name": "Marco M.",
+    "position": "Personal Trainer & Online-Coach",
+    "quote": "Ich nutze PILAR vor allem für WhatsApp und Follow-ups. Die KI erinnert meine Leads, schickt Infos zu Angeboten raus und qualifiziert vor – ich fokussiere mich auf meine Coachings und nicht mehr auf Admin-Aufgaben.",
+    "avatar": "/images/avatar/avatar-4.png"
+  },
+  {
+    "id": 5,
+    "name": "Katrin L.",
+    "position": "Operations Managerin, Premium Fitness Club",
+    "quote": "Das Onboarding ging deutlich schneller als erwartet. Setup-Wizard durchlaufen, Kanäle verbinden, ein paar Regeln definieren – und nach wenigen Tagen lief der Großteil der Standardanfragen komplett automatisiert.",
+    "avatar": "/images/avatar/avatar-5.png"
+  }
+]
