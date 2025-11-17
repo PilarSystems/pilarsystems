@@ -16,10 +16,10 @@ const Success = () => {
               <h2 className="text-heading-3">Weitere Erfolgsgeschichten</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.2}>
-              <p className="max-w-[738px] mx-auto">
-                Hier findest du weitere Beispiele von Studios, Gyms und Coaches, die mit der KI-Infrastruktur von
-                PILAR SYSTEMS arbeiten – von mehr Probetrainings über bessere Auslastung bis hin zu klareren Zahlen im
-                Dashboard.
+              <p className="mx-auto max-w-[738px] text-tagline-1 text-secondary/85 dark:text-accent/85">
+                Hier findest du weitere Beispiele von Studios, Gyms und Coaches, die mit der KI-Infrastruktur von PILAR
+                SYSTEMS arbeiten – von mehr erschienenen Probetrainings über bessere Auslastung bis hin zu klareren
+                Zahlen in deinem Studioalltag.
               </p>
             </RevealAnimation>
           </div>
