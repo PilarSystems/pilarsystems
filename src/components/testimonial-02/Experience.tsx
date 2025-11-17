@@ -9,13 +9,13 @@ const Experience = () => {
         <div className="space-y-[70px]">
           <div className="space-y-3 text-center">
             <RevealAnimation delay={0.2}>
-              <h2>Over a decade of experience in this field.</h2>
+              <h2>Ergebnisse statt Versprechen – warum Studios mit PILAR arbeiten.</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.3}>
               <p className="max-w-[798px] md:w-full mx-auto">
-                With more than ten years of hands-on experience, we&apos;ve built a strong foundation of knowledge,
-                skill, and trust in our industry. Over the years, we&apos;ve navigated evolving trends, embraced new
-                technologies, and
+                PILAR SYSTEMS entsteht direkt aus dem Studioalltag: volle Telefone, unbeantwortete WhatsApps,
+                verstreute Leads. Die Kombination aus echter Praxis, klarer Prozesslogik und moderner KI sorgt dafür,
+                dass Anfragen nicht mehr verloren gehen – und aus Interessenten Mitglieder werden.
               </p>
             </RevealAnimation>
           </div>
