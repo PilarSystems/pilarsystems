@@ -10,21 +10,22 @@ const Success = () => {
     <section className="py-[50px] lg:py-[100px]">
       <div className="main-container">
         <div className="space-y-[70px]">
-          {/* heading  */}
+          {/* heading */}
           <div className="space-y-3 text-center">
             <RevealAnimation delay={0.1}>
-              <h2 className="text-heading-3">More success stories</h2>
+              <h2 className="text-heading-3">Weitere Erfolgsgeschichten</h2>
             </RevealAnimation>
             <RevealAnimation delay={0.2}>
               <p className="max-w-[738px] mx-auto">
-                Our recent news and insights highlight the latest developments, achievements, and thought leadership
-                shaping our journey forward. From product innovations and strategic partnerships to industry trends
+                Hier findest du weitere Beispiele von Studios, Gyms und Coaches, die mit der KI-Infrastruktur von
+                PILAR SYSTEMS arbeiten – von mehr Probetrainings über bessere Auslastung bis hin zu klareren Zahlen im
+                Dashboard.
               </p>
             </RevealAnimation>
           </div>
-          {/* success blog   */}
+
+          {/* Case Studies mit Pagination */}
           <div className="space-y-14">
-            {/*  pagination  */}
             <CaseStudyPaginationWrapper caseStudies={caseStudies} />
           </div>
         </div>

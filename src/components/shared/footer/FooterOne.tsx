@@ -87,7 +87,7 @@ const FooterOne: FC<FooterOneProps> = ({ className, defaultTheme }) => {
                   <p className="sm:text-heading-6 text-tagline-1 text-primary-50 font-normal">Unternehmen</p>
                   <ul className="space-y-3 sm:space-y-5">
                     <li>
-                      <Link href="/our-team-02" className="footer-link">
+                      <Link href="/about-02" className="footer-link">
                         Über PILAR
                       </Link>
                     </li>

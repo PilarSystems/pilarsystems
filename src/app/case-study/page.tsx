@@ -2,15 +2,17 @@ import CaseStudy from '@/components/case-study/CaseStudy';
 import Feature from '@/components/case-study/Feature';
 import Success from '@/components/case-study/Success';
 import CTAV1 from '@/components/shared/cta/CTAV1';
-import FooterThree from '@/components/shared/footer/FooterThree';
+import FooterOne from '@/components/shared/footer/FooterOne';
 import NavbarOne from '@/components/shared/header/NavbarOne';
 import PageHero from '@/components/shared/PageHero';
 import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
-  title: 'Case Study - NextSaaS',
+  title: 'Erfolgsgeschichten – PILAR SYSTEMS',
+  description:
+    'Erfolgsgeschichten von Fitnessstudios, Gyms und Coaches, die mit der KI-Infrastruktur von PILAR SYSTEMS mehr Leads, Probetrainings und Abschlüsse erzielen.',
 };
 
 const CaseStudyPage = () => {
@@ -22,27 +24,30 @@ const CaseStudyPage = () => {
       />
       <main className="bg-background-3 dark:bg-background-7">
         <PageHero
-          title="Case Study"
-          heading="Case Study"
+          title="Erfolgsgeschichten"
+          heading="Wie Studios mit PILAR SYSTEMS arbeiten."
           link="/case-study"
           className="pt-24 md:pt-36 lg:pt-40 xl:pt-[200px]"
         />
+
         <CaseStudy />
         <Success />
         <Feature />
+
         <CTAV1
           className="dark:bg-background-5 bg-white"
           badgeClass="!badge-yellow-v2"
-          badgeText="Get started"
-          ctaHeading="Build a complete website using the assistance"
-          description="Start your free trial today and see your ideas come to life easily and creatively."
-          ctaBtnText="Get started"
+          badgeText="Nächster Schritt"
+          ctaHeading="Dein Studio könnte die nächste Erfolgsgeschichte sein."
+          description="Sprich mit uns über dein Studio-Setup oder starte direkt mit Basic oder Pro – PILAR SYSTEMS übernimmt Leads, Terminbuchung und Follow-ups."
+          ctaBtnText="Jetzt Pilar testen"
           btnClass="hover:btn-secondary dark:hover:btn-accent"
         />
       </main>
-      <FooterThree />
+      <FooterOne />
     </>
   );
 };
+
 CaseStudyPage.displayName = 'CaseStudyPage';
 export default CaseStudyPage;

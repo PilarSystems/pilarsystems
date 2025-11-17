@@ -7,23 +7,24 @@ const CaseStudyTestimonial = ({ userReview }: { userReview: ICaseStudy['userRevi
     <section>
       <div className="max-w-[950px] mx-auto">
         <div className="space-y-14">
-          {/* heading  */}
+          {/* heading */}
           <div className="space-y-3">
             <RevealAnimation delay={0.1}>
               <h4 className="text-heading-2" id="testimonials-title">
-                What our users say
+                Was Studios über PILAR SYSTEMS sagen
               </h4>
             </RevealAnimation>
             <blockquote>
               <RevealAnimation delay={0.2}>
                 <p>
-                  &quot;Nextsaas delivered our entire platform ahead of schedule—flawless execution and real
-                  partnership.&quot;
+                  &quot;PILAR hat unseren Alltag an der Theke komplett verändert – weniger Chaos in den Kanälen,
+                  mehr strukturierte Leads und deutlich mehr Probetrainings, die wirklich erscheinen.&quot;
                 </p>
               </RevealAnimation>
             </blockquote>
           </div>
-          {/* testimonial card  */}
+
+          {/* testimonial card */}
           <RevealAnimation delay={0.3}>
             <div className="bg-secondary dark:bg-background-6 p-8 rounded-[20px] space-y-6 max-w-[950px]">
               <figure className="size-14 rounded-full overflow-hidden bg-(image:--color-gradient-7)">
@@ -36,7 +37,7 @@ const CaseStudyTestimonial = ({ userReview }: { userReview: ICaseStudy['userRevi
                   alt={userReview.userName}
                 />
               </figure>
-              <blockquote cite="https://velocityfinance.com">
+              <blockquote>
                 <p className="text-white dark:text-accent/60">{userReview.reviewText}</p>
               </blockquote>
               <div className="pb-4">
