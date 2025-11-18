@@ -4,10 +4,10 @@ import LinkButton from '../ui/button/LinkButton';
 import StackCardItem from '../ui/stack-card/StackCardItem';
 import StackCardWrapper from '../ui/stack-card/StackCardWrapper';
 
-const gradientBorderStyle: React.CSSProperties = {
-  borderImageSource: 'linear-gradient(135deg,#38bdf8,#6366f1,#a855f7)',
-  borderImageSlice: 1,
-};
+const gradientTopClass =
+  'pointer-events-none absolute left-0 top-0 h-[10px] w-2/3 rounded-t-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] opacity-90';
+const gradientLeftClass =
+  'pointer-events-none absolute left-0 top-0 w-[10px] h-2/3 rounded-l-[20px] bg-gradient-to-b from-[#38bdf8] via-[#6366f1] to-[#a855f7] opacity-90';
 
 const Integration = () => {
   return (
@@ -54,12 +54,12 @@ const Integration = () => {
               {/* Step 1 – Online starten */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  {/* Top-/Left-Gradient-Border */}
-                  <div
-                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
-                    style={gradientBorderStyle}
-                  >
-                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
+                  <div className="relative rounded-[20px]">
+                    {/* Gradient-Stroke nur oben/links */}
+                    <div className={gradientTopClass} />
+                    <div className={gradientLeftClass} />
+
+                    <figure className="relative z-[1] p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Online starten und Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -126,11 +126,11 @@ const Integration = () => {
               {/* Step 2 – Systeme verbinden */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div
-                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
-                    style={gradientBorderStyle}
-                  >
-                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
+                  <div className="relative rounded-[20px]">
+                    <div className={gradientTopClass} />
+                    <div className={gradientLeftClass} />
+
+                    <figure className="relative z-[1] p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Systeme verbinden und alles testen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -201,11 +201,11 @@ const Integration = () => {
               {/* Step 3 – Regeln definieren */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div
-                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
-                    style={gradientBorderStyle}
-                  >
-                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
+                  <div className="relative rounded-[20px]">
+                    <div className={gradientTopClass} />
+                    <div className={gradientLeftClass} />
+
+                    <figure className="relative z-[1] p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Ziele und Regeln für deine KI festlegen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -277,11 +277,11 @@ const Integration = () => {
               {/* Step 4 – Live gehen */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div
-                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
-                    style={gradientBorderStyle}
-                  >
-                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
+                  <div className="relative rounded-[20px]">
+                    <div className={gradientTopClass} />
+                    <div className={gradientLeftClass} />
+
+                    <figure className="relative z-[1] p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Live gehen und Automatisierung nutzen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -304,9 +304,7 @@ const Integration = () => {
 
                               <div className="grid grid-cols-3 gap-2 text-[11px] text-secondary/70 dark:text-accent/80">
                                 <div className="rounded-xl bg-background-1 dark:bg-background-6 p-2">
-                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">
-                                    Anfragen
-                                  </p>
+                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">Anfragen</p>
                                   <p className="text-lg font-semibold text-secondary dark:text-accent leading-none">
                                     +132
                                   </p>
@@ -315,9 +313,7 @@ const Integration = () => {
                                   </p>
                                 </div>
                                 <div className="rounded-xl bg-background-1 dark:bg-background-6 p-2">
-                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">
-                                    Show-ups
-                                  </p>
+                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">Show-ups</p>
                                   <p className="text-lg font-semibold text-secondary dark:text-accent leading-none">
                                     +87%
                                   </p>
@@ -326,9 +322,7 @@ const Integration = () => {
                                   </p>
                                 </div>
                                 <div className="rounded-xl bg-background-1 dark:bg-background-6 p-2">
-                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">
-                                    No-Shows
-                                  </p>
+                                  <p className="text-[10px] uppercase tracking-[0.14em] mb-1">No-Shows</p>
                                   <p className="text-lg font-semibold text-secondary dark:text-accent leading-none">
                                     -34%
                                   </p>
