@@ -1,14 +1,7 @@
-import gradient39 from '@public/images/gradient/gradient-39.png';
-import gradient43 from '@public/images/gradient/gradient-43.png';
-import integrationImage1 from '@public/images/home-page-18/integration-image-1.png';
-import integrationImage2Dark from '@public/images/home-page-18/integration-image-2-dark.png';
-import integrationImage2 from '@public/images/home-page-18/integration-image-2.png';
-import integrationImage3Dark from '@public/images/home-page-18/integration-image-3-dark.png';
-import integrationImage3 from '@public/images/home-page-18/integration-image-3.png';
-import integrationImage4Dark from '@public/images/home-page-18/integration-image-4-dark.png';
-import integrationImage4 from '@public/images/home-page-18/integration-image-4.png';
+import gradient28 from '@public/images/gradient/gradient-28.png';
+import gradient31 from '@public/images/gradient/gradient-31.png';
+import gradient46 from '@public/images/gradient/gradient-46.png';
 import Image from 'next/image';
-import Link from 'next/link';
 import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
 import StackCardItem from '../ui/stack-card/StackCardItem';
@@ -16,11 +9,19 @@ import StackCardWrapper from '../ui/stack-card/StackCardWrapper';
 
 const Integration = () => {
   return (
-    <section className="pt-16 md:pt-20 lg:pt-[90px] xl:pt-[150px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[250px]">
-      <div className="bg-background-2 dark:bg-background-5">
+    <section className="relative overflow-hidden pt-16 md:pt-20 lg:pt-[90px] xl:pt-[150px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[250px]">
+      {/* große Hintergrund-Gradients */}
+      <div className="pointer-events-none select-none absolute -top-40 -left-24 w-[260px] opacity-70 md:w-[320px]">
+        <Image src={gradient28} alt="" className="w-full h-auto object-contain" />
+      </div>
+      <div className="pointer-events-none select-none absolute -bottom-52 -right-20 w-[260px] opacity-70 md:w-[340px]">
+        <Image src={gradient46} alt="" className="w-full h-auto object-contain" />
+      </div>
+
+      <div className="bg-background-2 dark:bg-background-5/80">
         <div className="main-container">
           <div className="flex flex-col lg:flex-row items-start gap-y-24 gap-x-[140px]">
-            {/* Text-Spalte */}
+            {/* Text / Sticky Intro */}
             <div className="w-full lg:flex-1 lg:sticky lg:top-28 lg:max-w-full max-w-[520px] lg:mx-0 mx-auto text-center lg:text-left">
               <RevealAnimation delay={0.2}>
                 <span className="badge badge-green mb-5">Ablauf</span>
@@ -30,8 +31,8 @@ const Integration = () => {
               </RevealAnimation>
               <RevealAnimation delay={0.4}>
                 <p className="mb-7 lg:max-w-[620px]">
-                  Von der Online-Buchung über das Setup bis zur laufenden Automatisierung – Pilar Systems fügt sich in
-                  deinen Alltag ein, ohne dein Team zu überfordern.
+                  Von der Online-Buchung über das Setup bis zur laufenden Automatisierung – PILAR SYSTEMS fügt sich in
+                  deinen Alltag ein, ohne dein Team zu überfordern. Klare Schritte, keine IT-Projekte.
                 </p>
               </RevealAnimation>
               <RevealAnimation delay={0.5}>
@@ -47,7 +48,7 @@ const Integration = () => {
               </RevealAnimation>
             </div>
 
-            {/* Stack Cards – Animation bleibt identisch, nur Gradients getauscht */}
+            {/* Scroll / Stack Cards – nur Code-UI, keine Screenshots */}
             <StackCardWrapper
               topOffset="15vh"
               gap="24px"
@@ -57,27 +58,40 @@ const Integration = () => {
               {/* Step 1 */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[700px] md:w-[900px] xl:w-[1050px] top-[-70%] md:top-[-95%] left-[-55%] md:left-[-90%] rotate-[-35deg] select-none pointer-events-none opacity-80">
-                      <Image src={gradient39} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
-                        <h5>Online starten und Setup-Wizard durchlaufen.</h5>
-                        <p className="max-w-[250px]">
-                          Dein Studio wählt einen Plan, erstellt einen Account und führt den geführten Setup-Wizard
-                          durch – ganz ohne Telefontermin oder Vor-Ort-Besuch.
-                        </p>
-                      </figcaption>
-                      <figure className="max-w-[385px] w-full">
-                        <Image
-                          src={integrationImage1}
-                          alt="Online-Setup und Account-Erstellung"
-                          className="w-full md:max-h-[300px] md:min-h-[300px]"
-                        />
-                      </figure>
-                    </figure>
+                  <div className="rounded-[20px] relative z-[10] overflow-hidden border border-border/40 bg-background-1/80 dark:bg-background-7/80 p-6">
+                    <div className="pointer-events-none select-none absolute -top-10 -right-8 w-[160px] opacity-80">
+                      <Image src={gradient31} alt="" className="w-full h-auto object-contain" />
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                      <h5 className="text-heading-6">Online starten & Setup-Wizard durchlaufen.</h5>
+                      <p className="text-tagline-1 text-secondary/70 dark:text-accent/70 max-w-[260px]">
+                        Plan wählen, Account erstellen, Standort & Öffnungszeiten eintragen – alles in wenigen Minuten
+                        direkt im Browser.
+                      </p>
+
+                      {/* Code-UI: kleiner Setup-Wizard */}
+                      <div className="mt-4 rounded-2xl bg-background-3 dark:bg-background-8 p-4 space-y-3">
+                        <div className="flex items-center justify-between text-[11px] text-secondary/70 dark:text-accent/70 mb-1">
+                          <span>Setup-Status</span>
+                          <span>3 / 5</span>
+                        </div>
+                        <div className="w-full h-2 rounded-full bg-background-2 dark:bg-background-7 overflow-hidden">
+                          <div className="h-full w-3/5 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 mt-3 text-[11px]">
+                          <span className="rounded-full bg-white/80 dark:bg-background-6 px-3 py-1 text-center">
+                            Studio-Daten
+                          </span>
+                          <span className="rounded-full bg-white/40 dark:bg-background-6/60 px-3 py-1 text-center">
+                            Kanäle
+                          </span>
+                          <span className="rounded-full bg-white/20 dark:bg-background-6/40 px-3 py-1 text-center">
+                            Regeln
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -85,32 +99,40 @@ const Integration = () => {
               {/* Step 2 */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[700px] md:w-[900px] xl:w-[1050px] top-[-80%] md:top-[-110%] left-[-60%] md:left-[-95%] rotate-[-35deg] select-none pointer-events-none opacity-80">
-                      <Image src={gradient43} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
-                        <h5>Systeme verbinden und alles testen.</h5>
-                        <p className="max-w-[250px]">
-                          Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach testest du
-                          gemeinsam mit uns typische Szenarien aus Sicht deiner Mitglieder.
+                  <div className="rounded-[20px] relative z-[10] overflow-hidden border border-border/40 bg-background-1/80 dark:bg-background-7/80 p-6">
+                    <div className="pointer-events-none select-none absolute -bottom-10 -left-10 w-[180px] opacity-80">
+                      <Image src={gradient28} alt="" className="w-full h-auto object-contain" />
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                      <h5 className="text-heading-6">Systeme verbinden & Szenarien testen.</h5>
+                      <p className="text-tagline-1 text-secondary/70 dark:text-accent/70 max-w-[260px]">
+                        Telefonanlage, WhatsApp, E-Mail-Postfach und Kalender werden angebunden – danach spielst du
+                        typische Member-Szenarien einmal durch.
+                      </p>
+
+                      {/* Code-UI: Channel-Matrix */}
+                      <div className="mt-4 rounded-2xl bg-background-3 dark:bg-background-8 p-4 space-y-3">
+                        <div className="grid grid-cols-4 gap-2 text-[11px]">
+                          {['Telefon', 'WhatsApp', 'E-Mail', 'Kalender'].map((label) => (
+                            <div
+                              key={label}
+                              className="flex flex-col items-center justify-center rounded-lg bg-white/80 dark:bg-background-6/90 px-2 py-2"
+                            >
+                              <span className="mb-1 h-1.5 w-6 rounded-full bg-gradient-to-r from-cyan-300 to-sky-500" />
+                              <span>{label}</span>
+                              <span className="mt-1 text-[10px] text-emerald-500 dark:text-emerald-300">
+                                verbunden
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="mt-2 text-[11px] text-secondary/60 dark:text-accent/60">
+                          Test-Calls & Test-Nachrichten zeigen dir, wie sich die KI aus Sicht deiner Interessenten
+                          verhält.
                         </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Image
-                          src={integrationImage2}
-                          alt="Systeme verbinden"
-                          className="w-full dark:hidden md:max-h-[300px] md:min-h-[300px]"
-                        />
-                        <Image
-                          src={integrationImage2Dark}
-                          alt="Systeme verbinden"
-                          className="w-full hidden dark:block md:max-h-[300px] md:min-h-[300px]"
-                        />
                       </div>
-                    </figure>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -118,32 +140,42 @@ const Integration = () => {
               {/* Step 3 */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[700px] md:w-[900px] xl:w-[1050px] top-[-78%] md:top-[-110%] left-[-63%] md:left-[-95%] rotate-[-35deg] select-none pointer-events-none opacity-80">
-                      <Image src={gradient39} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
-                        <h5>Ziele und Regeln für deine KI festlegen.</h5>
-                        <p className="max-w-[250px]">
-                          Du definierst, welche Leads priorisiert werden, wie Probetrainings vergeben werden und welche
-                          Angebote kommuniziert werden – die KI hält sich an deine Regeln.
-                        </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Image
-                          src={integrationImage3}
-                          alt="KI-Regeln festlegen"
-                          className="w-full dark:hidden md:max-h-[300px] md:min-h-[300px]"
-                        />
-                        <Image
-                          src={integrationImage3Dark}
-                          alt="KI-Regeln festlegen"
-                          className="w-full hidden dark:block md:max-h-[300px] md:min-h-[300px]"
-                        />
+                  <div className="rounded-[20px] relative z-[10] overflow-hidden border border-border/40 bg-background-1/80 dark:bg-background-7/80 p-6">
+                    <div className="pointer-events-none select-none absolute -top-10 -right-14 w-[200px] opacity-80">
+                      <Image src={gradient46} alt="" className="w-full h-auto object-contain" />
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                      <h5 className="text-heading-6">Ziele & Regeln für deine KI festlegen.</h5>
+                      <p className="text-tagline-1 text-secondary/70 dark:text-accent/70 max-w-[260px]">
+                        Lead-Prioritäten, Probetrainings-Regeln, Angebote & Tonalität – du definierst das Spielfeld,
+                        die KI hält sich daran.
+                      </p>
+
+                      {/* Code-UI: Regel-Liste */}
+                      <div className="mt-4 rounded-2xl bg-background-3 dark:bg-background-8 p-4 space-y-3">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span>Regel-Engine</span>
+                          <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-emerald-500">
+                            aktiv
+                          </span>
+                        </div>
+                        <ul className="space-y-2 text-[11px] text-secondary/70 dark:text-accent/70">
+                          <li className="flex items-center gap-2">
+                            <span className="size-1.5 rounded-full bg-sky-400" />
+                            Leads mit Vertrag-Interesse &gt; Probetraining &gt; Probetraining-Anfrage
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="size-1.5 rounded-full bg-sky-400" />
+                            Max. 2 Probetrainings-Slots pro Stunde & pro Trainer
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <span className="size-1.5 rounded-full bg-sky-400" />
+                            Angebote nur innerhalb der definierten Kampagnenzeiträume
+                          </li>
+                        </ul>
                       </div>
-                    </figure>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
@@ -151,34 +183,40 @@ const Integration = () => {
               {/* Step 4 */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[700px] md:w-[900px] xl:w-[1050px] top-[-72%] md:top-[-100%] left-[-40%] md:left-[-70%] lg:left-[-55%] rotate-[-25deg] select-none pointer-events-none opacity-80">
-                      <Image src={gradient43} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
-                      <figcaption className="space-y-2">
-                        <h5>Live gehen und Automatisierung nutzen.</h5>
-                        <p className="max-w-[250px]">
-                          Danach übernimmt Pilar Systems die Routine: Anfragen beantworten, Leads nachfassen und
-                          Probetrainings koordinieren – dein Team konzentriert sich aufs Training.
+                  <div className="rounded-[20px] relative z-[10] overflow-hidden border border-border/40 bg-background-1/80 dark:bg-background-7/80 p-6">
+                    <div className="pointer-events-none select-none absolute -bottom-12 -left-12 w-[190px] opacity-80">
+                      <Image src={gradient31} alt="" className="w-full h-auto object-contain" />
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                      <h5 className="text-heading-6">Live gehen & kontinuierlich optimieren.</h5>
+                      <p className="text-tagline-1 text-secondary/70 dark:text-accent/70 max-w-[260px]">
+                        Nach dem Go-Live läuft der Alltag über PILAR – du bekommst klare Zahlen zu Leads, Show-ups &
+                        Abschlüssen und kannst Regeln jederzeit anpassen.
+                      </p>
+
+                      {/* Code-UI: Mini-Dashboard aus reinen Divs */}
+                      <div className="mt-4 rounded-2xl bg-background-3 dark:bg-background-8 p-4 space-y-3">
+                        <div className="grid grid-cols-3 gap-3 text-[11px]">
+                          <div className="rounded-lg bg-white/80 dark:bg-background-6/90 p-2">
+                            <p className="text-secondary/60 dark:text-accent/60 mb-1">Leads (30 Tage)</p>
+                            <p className="text-base font-semibold">+214</p>
+                          </div>
+                          <div className="rounded-lg bg-white/80 dark:bg-background-6/90 p-2">
+                            <p className="text-secondary/60 dark:text-accent/60 mb-1">Show-up Rate</p>
+                            <p className="text-base font-semibold">+18%</p>
+                          </div>
+                          <div className="rounded-lg bg-white/80 dark:bg-background-6/90 p-2">
+                            <p className="text-secondary/60 dark:text-accent/60 mb-1">No-Shows</p>
+                            <p className="text-base font-semibold text-emerald-500">-32%</p>
+                          </div>
+                        </div>
+                        <p className="mt-2 text-[11px] text-secondary/60 dark:text-accent/60">
+                          Alles live im Dashboard sichtbar – ohne dass du dich durch fünf verschiedene Tools klicken
+                          musst.
                         </p>
-                      </figcaption>
-                      <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <Link href="/process-01">
-                          <Image
-                            src={integrationImage4}
-                            alt="Live-Automatisierung"
-                            className="w-full dark:hidden rounded-xl md:max-h-[300px] md:min-h-[300px]"
-                          />
-                          <Image
-                            src={integrationImage4Dark}
-                            alt="Live-Automisierung"
-                            className="w-full hidden dark:block rounded-xl md:max-h-[300px] md:min-h-[300px]"
-                          />
-                        </Link>
                       </div>
-                    </figure>
+                    </div>
                   </div>
                 </div>
               </StackCardItem>
