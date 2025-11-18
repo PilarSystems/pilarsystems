@@ -3,7 +3,6 @@
 import { CheckIcon } from '@/icons';
 import { cn } from '@/utils/cn';
 import gradient30 from '@public/images/gradient/gradient-30.png';
-import gradient39 from '@public/images/gradient/gradient-39.png';
 import gradient42 from '@public/images/gradient/gradient-42.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -99,12 +98,7 @@ const Pricing = () => {
       className="relative overflow-hidden pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px]"
     >
       {/* Hintergrund-Gradients für den gesamten Bereich */}
-      <div className="pointer-events-none select-none absolute -top-32 -left-20 w-[260px] opacity-60 md:w-[320px]">
-        <Image src={gradient30} alt="" className="w-full h-auto object-contain" />
-      </div>
-      <div className="pointer-events-none select-none absolute -bottom-40 -right-24 w-[320px] opacity-60 md:w-[380px]">
-        <Image src={gradient39} alt="" className="w-full h-auto object-contain" />
-      </div>
+    
 
       <div className="main-container flex flex-col gap-[70px] relative z-[1]">
         <div className="flex flex-col items-center text-center">
