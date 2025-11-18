@@ -1,7 +1,6 @@
 'use client';
 import 'leaflet/dist/leaflet.css';
-import { TileLayer } from 'react-leaflet';
-import { MapContainer } from 'react-leaflet/MapContainer';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
 const position: [number, number] = [39.8283, -98.5795];
 
