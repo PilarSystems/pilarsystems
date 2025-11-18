@@ -50,7 +50,7 @@ const Integration = () => {
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
                   {/* äussere Card mit Gradient-Rand */}
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
                     <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Online starten und Setup-Wizard durchlaufen.</h5>
@@ -118,7 +118,7 @@ const Integration = () => {
               {/* Step 2 – Systeme verbinden */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
                     <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Systeme verbinden und alles testen.</h5>
@@ -190,7 +190,7 @@ const Integration = () => {
               {/* Step 3 – Regeln definieren */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
                     <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Ziele und Regeln für deine KI festlegen.</h5>
@@ -262,8 +262,8 @@ const Integration = () => {
 
               {/* Step 4 – Live gehen */}
               <StackCardItem>
-                <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                <div className="lg-max-w-[483px] max-w-full max-sm:min-h-[433px] lg:max-w-[483px]">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
                     <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Live gehen und Automatisierung nutzen.</h5>
