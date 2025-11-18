@@ -1,12 +1,8 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    resolveAlias: {
-      '@': './src',
-      '@public': './public',
-    },
-  },
+  serverExternalPackages: ['pino', 'pino-pretty', 'thread-stream'],
+  turbopack: {},
 };
 
 export default nextConfig;
