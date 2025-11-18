@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { processWhatsAppMessage } from '@/services/ai/whatsapp-ai'
 import { logger } from '@/lib/logger'

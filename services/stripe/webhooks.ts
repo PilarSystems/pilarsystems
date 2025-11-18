@@ -69,8 +69,8 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
         plan,
         status: 'active',
         whatsappAddon,
-        currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+        currentPeriodStart: new Date((stripeSubscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((stripeSubscription as any).current_period_end * 1000),
       },
     })
 
@@ -113,8 +113,8 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
       where: { stripeSubscriptionId: subscription.id },
       update: {
         status: subscription.status as any,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
       create: {
         workspaceId,
@@ -123,8 +123,8 @@ async function handleSubscriptionCreated(subscription: Stripe.Subscription) {
         plan: (subscription.metadata?.plan as 'BASIC' | 'PRO') || 'BASIC',
         status: subscription.status as any,
         whatsappAddon: subscription.metadata?.whatsappAddon === 'true',
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     })
 
@@ -143,8 +143,8 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       where: { stripeSubscriptionId: subscription.id },
       data: {
         status: subscription.status as any,
-        currentPeriodStart: new Date(subscription.current_period_start * 1000),
-        currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     })
 
@@ -181,7 +181,7 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
       where: { stripeCustomerId: invoice.customer as string },
     })
 
-    if (subscription) {
+    if (subscription && subscription.workspaceId) {
       await prisma.activityLog.create({
         data: {
           workspaceId: subscription.workspaceId,
@@ -215,17 +215,19 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
         data: { status: 'past_due' },
       })
 
-      await prisma.activityLog.create({
-        data: {
-          workspaceId: subscription.workspaceId,
-          actionType: 'payment_failed',
-          description: `Payment of ${invoice.amount_due / 100} EUR failed`,
-          metadata: {
-            invoiceId: invoice.id,
-            amount: invoice.amount_due,
+      if (subscription.workspaceId) {
+        await prisma.activityLog.create({
+          data: {
+            workspaceId: subscription.workspaceId,
+            actionType: 'payment_failed',
+            description: `Payment of ${invoice.amount_due / 100} EUR failed`,
+            metadata: {
+              invoiceId: invoice.id,
+              amount: invoice.amount_due,
+            },
           },
-        },
-      })
+        })
+      }
     }
 
     logger.info({ invoiceId: invoice.id }, 'Invoice payment failure logged')

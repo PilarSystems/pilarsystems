@@ -2,9 +2,9 @@ import { google } from 'googleapis'
 
 export function getGoogleCalendarClient(accessToken: string, refreshToken: string) {
   const oauth2Client = new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID!,
-    process.env.GOOGLE_CLIENT_SECRET!,
-    process.env.GOOGLE_REDIRECT_URI!
+    process.env.GOOGLE_CLIENT_ID || 'placeholder-client-id',
+    process.env.GOOGLE_CLIENT_SECRET || 'placeholder-client-secret',
+    process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/callback/google'
   )
 
   oauth2Client.setCredentials({

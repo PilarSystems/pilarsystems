@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { processMissedCall } from '@/services/ai/phone-ai'
 import { logger } from '@/lib/logger'
