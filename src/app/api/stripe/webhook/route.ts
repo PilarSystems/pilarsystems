@@ -7,7 +7,7 @@ const stripeSecret = process.env.STRIPE_SECRET_KEY!;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2025-10-29.clover',
+  apiVersion: '2025-11-17.clover',
 });
 
 export async function POST(req: NextRequest) {

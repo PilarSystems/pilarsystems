@@ -19,7 +19,7 @@ const stripeSecret = process.env.STRIPE_SECRET_KEY ?? '';
 const stripe =
   stripeSecret && typeof stripeSecret === 'string'
     ? new Stripe(stripeSecret, {
-        apiVersion: '2025-10-29.clover',
+        apiVersion: '2025-11-17.clover',
       })
     : null;
 
