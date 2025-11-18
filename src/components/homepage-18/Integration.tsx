@@ -1,8 +1,3 @@
-import gradient32 from '@public/images/gradient/gradient-32.png';
-import gradient33 from '@public/images/gradient/gradient-33.png';
-import gradient34 from '@public/images/gradient/gradient-34.png';
-import gradient9 from '@public/images/gradient/gradient-9.png';
-import Image from 'next/image';
 import Link from 'next/link';
 import RevealAnimation from '../animation/RevealAnimation';
 import LinkButton from '../ui/button/LinkButton';
@@ -44,7 +39,7 @@ const Integration = () => {
               </RevealAnimation>
             </div>
 
-            {/* Right: Sticky StackCards (Animation bleibt unverändert) */}
+            {/* Right: Sticky StackCards */}
             <StackCardWrapper
               topOffset="15vh"
               gap="24px"
@@ -54,13 +49,9 @@ const Integration = () => {
               {/* Step 1 – Online starten */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-66%] md:top-[-99%] left-[-52%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient32} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
+                  {/* äussere Card mit Gradient-Rand */}
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Online starten und Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -69,7 +60,7 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual – weißer Card, grauer Text, dunkle Zahlen, bunter Rand */}
+                      {/* Inneres Visual – weiß/hell, grauer Text, fette Zahlen */}
                       <div className="max-w-[385px] w-full">
                         <div className="rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
                           <div className="rounded-[15px] bg-white dark:bg-background-4 h-[220px] md:h-[260px] p-5 flex flex-col justify-between">
@@ -84,7 +75,7 @@ const Integration = () => {
                               </span>
                             </div>
 
-                            {/* Middle: Steps */}
+                            {/* Steps */}
                             <div className="space-y-2 text-[11px]">
                               {['Account erstellen', 'Standort & Öffnungszeiten', 'Tarife & Angebote'].map(
                                 (label, idx) => (
@@ -106,7 +97,7 @@ const Integration = () => {
                               )}
                             </div>
 
-                            {/* Bottom: Progress */}
+                            {/* Progress */}
                             <div className="mt-3">
                               <div className="flex items-center justify-between text-[10px] mb-1 text-secondary/60 dark:text-accent/70">
                                 <span>Fortschritt</span>
@@ -127,13 +118,8 @@ const Integration = () => {
               {/* Step 2 – Systeme verbinden */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-76%] md:top-[-111%] left-[-62%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient33} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Systeme verbinden und alles testen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -142,7 +128,7 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual – weißer Card, grauer Text */}
+                      {/* Inneres Visual */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <div className="rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
                           <div className="h-[220px] md:h-[260px] rounded-[15px] bg-white dark:bg-background-4 p-5 flex flex-col justify-between">
@@ -154,7 +140,9 @@ const Integration = () => {
                                 </span>
                                 <span>Telefonanlage</span>
                               </div>
-                              <span className="text-[10px] font-semibold text-secondary dark:text-accent">Verbunden</span>
+                              <span className="text-[10px] font-semibold text-secondary dark:text-accent">
+                                Verbunden
+                              </span>
                             </div>
                             <div className="flex items-center justify-between text-[11px] text-secondary/70 dark:text-accent/80 mb-3">
                               <div className="flex items-center gap-2">
@@ -163,7 +151,9 @@ const Integration = () => {
                                 </span>
                                 <span>WhatsApp Business</span>
                               </div>
-                              <span className="text-[10px] font-semibold text-secondary dark:text-accent">Verbunden</span>
+                              <span className="text-[10px] font-semibold text-secondary dark:text-accent">
+                                Verbunden
+                              </span>
                             </div>
                             <div className="flex items-center justify-between text-[11px] text-secondary/70 dark:text-accent/80 mb-4">
                               <div className="flex items-center gap-2">
@@ -200,13 +190,8 @@ const Integration = () => {
               {/* Step 3 – Regeln definieren */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-75%] md:top-[-111%] left-[-65%] md:left-[-103%] rotate-[-41deg] select-none pointer-events-none">
-                      <Image src={gradient34} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Ziele und Regeln für deine KI festlegen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -215,7 +200,7 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual – gleiche Farbwelt wie Step 1 */}
+                      {/* Inneres Visual */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <div className="rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
                           <div className="h-[220px] md:h-[260px] rounded-[15px] bg-white dark:bg-background-4 p-5 flex flex-col gap-3">
@@ -278,13 +263,8 @@ const Integration = () => {
               {/* Step 4 – Live gehen */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="p-2.5 rounded-[20px] relative z-[10] overflow-hidden">
-                    {/* gradient border img */}
-                    <figure className="absolute z-[-1] w-[600px] md:w-[900px] xl:w-[1050px] top-[-66%] md:top-[-97%] max-[376px]:left-[-40%] left-[-30%] md:left-[-60%] lg:left-[-48%] rotate-[245deg] select-none pointer-events-none">
-                      <Image src={gradient9} alt="gradient-border" className="w-full h-full object-cover" />
-                    </figure>
-
-                    <figure className="p-8 bg-white dark:bg-background-5 rounded-xl space-y-6">
+                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
+                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Live gehen und Automatisierung nutzen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -293,7 +273,7 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual – weißer Card, fette Zahlen */}
+                      {/* Inneres Visual mit fetten Zahlen */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <Link href="/process-01">
                           <div className="rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px] cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
