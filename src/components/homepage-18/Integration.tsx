@@ -4,6 +4,11 @@ import LinkButton from '../ui/button/LinkButton';
 import StackCardItem from '../ui/stack-card/StackCardItem';
 import StackCardWrapper from '../ui/stack-card/StackCardWrapper';
 
+const gradientBorderStyle: React.CSSProperties = {
+  borderImageSource: 'linear-gradient(135deg,#38bdf8,#6366f1,#a855f7)',
+  borderImageSlice: 1,
+};
+
 const Integration = () => {
   return (
     <section className="pt-16 md:pt-20 lg:pt-[90px] xl:pt-[150px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[250px]">
@@ -49,9 +54,12 @@ const Integration = () => {
               {/* Step 1 – Online starten */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  {/* äussere Card mit Gradient-Rand */}
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
-                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
+                  {/* Top-/Left-Gradient-Border */}
+                  <div
+                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
+                    style={gradientBorderStyle}
+                  >
+                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Online starten und Setup-Wizard durchlaufen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -60,7 +68,7 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Inneres Visual – weiß/hell, grauer Text, fette Zahlen */}
+                      {/* Inneres Visual – weißer Hintergrund, grauer Text, fette Zahlen */}
                       <div className="max-w-[385px] w-full">
                         <div className="rounded-2xl bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-[1px]">
                           <div className="rounded-[15px] bg-white dark:bg-background-4 h-[220px] md:h-[260px] p-5 flex flex-col justify-between">
@@ -118,8 +126,11 @@ const Integration = () => {
               {/* Step 2 – Systeme verbinden */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
-                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
+                  <div
+                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
+                    style={gradientBorderStyle}
+                  >
+                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Systeme verbinden und alles testen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -190,8 +201,11 @@ const Integration = () => {
               {/* Step 3 – Regeln definieren */}
               <StackCardItem>
                 <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
-                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
+                  <div
+                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
+                    style={gradientBorderStyle}
+                  >
+                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Ziele und Regeln für deine KI festlegen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
@@ -262,9 +276,12 @@ const Integration = () => {
 
               {/* Step 4 – Live gehen */}
               <StackCardItem>
-                <div className="lg-max-w-[483px] max-w-full max-sm:min-h-[433px] lg:max-w-[483px]">
-                  <div className="rounded-[20px] bg-gradient-to-r from-[#38bdf8] via-[#6366f1] to-[#a855f7] p-2.5">
-                    <figure className="p-8 rounded-[18px] bg-white dark:bg-background-5 space-y-6">
+                <div className="lg:max-w-[483px] max-w-full max-sm:min-h-[433px]">
+                  <div
+                    className="rounded-[20px] border-t-[3px] border-l-[3px] border-r-0 border-b-0"
+                    style={gradientBorderStyle}
+                  >
+                    <figure className="p-8 rounded-[20px] bg-white dark:bg-background-5 space-y-6">
                       <figcaption className="space-y-2">
                         <h5>Live gehen und Automatisierung nutzen.</h5>
                         <p className="max-w-[260px] text-secondary/60 dark:text-accent/70">
