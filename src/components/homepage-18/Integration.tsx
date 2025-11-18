@@ -44,7 +44,7 @@ const Integration = () => {
               </RevealAnimation>
             </div>
 
-            {/* Right: Sticky StackCards (Animation bleibt 1:1) */}
+            {/* Right: Sticky StackCards (Animation bleibt unverändert) */}
             <StackCardWrapper
               topOffset="15vh"
               gap="24px"
@@ -69,16 +69,16 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual */}
+                      {/* Code-only Visual – harmonischer Cyan-Card */}
                       <div className="max-w-[385px] w-full">
-                        <div className="rounded-2xl border border-white/60 dark:border-white/10 bg-gradient-to-br from-white via-cyan-50/70 to-sky-100/80 dark:from-background-4 dark:via-background-6 dark:to-background-7 h-[220px] md:h-[260px] p-5 flex flex-col justify-between">
+                        <div className="rounded-2xl border border-secondary/10 dark:border-accent/10 bg-gradient-to-br from-white via-cyan-50/70 to-cyan-100/70 dark:from-background-4 dark:via-background-6 dark:to-background-7 h-[220px] md:h-[260px] p-5 flex flex-col justify-between">
                           {/* Top: URL + Status */}
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2 text-[11px] text-secondary/60 dark:text-accent/60">
                               <span className="size-2 rounded-full bg-emerald-400" />
                               <span>studio.pilar.app</span>
                             </div>
-                            <span className="rounded-full bg-white/70 dark:bg-background-7 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-secondary/70 dark:text-accent/70">
+                            <span className="rounded-full bg-white/80 dark:bg-background-7/80 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-secondary/70 dark:text-accent/70">
                               Setup-Wizard
                             </span>
                           </div>
@@ -89,10 +89,10 @@ const Integration = () => {
                               (label, idx) => (
                                 <div
                                   key={label}
-                                  className="flex items-center justify-between rounded-xl bg-white/80 dark:bg-background-7/80 px-3 py-2"
+                                  className="flex items-center justify-between rounded-xl bg-white/90 dark:bg-background-7/90 px-3 py-2"
                                 >
                                   <div className="flex items-center gap-2">
-                                    <span className="size-4 rounded-full border border-secondary/10 dark:border-accent/20 flex items-center justify-center text-[9px]">
+                                    <span className="size-4 rounded-full border border-secondary/15 dark:border-accent/25 flex items-center justify-center text-[9px] text-secondary/70 dark:text-accent/70">
                                       {idx + 1}
                                     </span>
                                     <span className="text-secondary/80 dark:text-accent/80">{label}</span>
@@ -111,8 +111,8 @@ const Integration = () => {
                               <span>Fortschritt</span>
                               <span>62%</span>
                             </div>
-                            <div className="h-1.5 rounded-full bg-white/60 dark:bg-background-7/80 overflow-hidden">
-                              <div className="h-full w-[62%] rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" />
+                            <div className="h-1.5 rounded-full bg-white/70 dark:bg-background-7/80 overflow-hidden">
+                              <div className="h-full w-[62%] rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
                             </div>
                           </div>
                         </div>
@@ -140,9 +140,9 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual */}
+                      {/* Code-only Visual – unified dark card */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-background-4 dark:via-background-6 dark:to-background-8 p-5 flex flex-col justify-between">
+                        <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-background-4 via-background-6 to-background-8 dark:from-background-4 dark:via-background-6 dark:to-background-8 p-5 flex flex-col justify-between">
                           {/* Icons row */}
                           <div className="flex items-center justify-between text-[11px] text-accent/80 mb-3">
                             <div className="flex items-center gap-2">
@@ -169,11 +169,11 @@ const Integration = () => {
                               </span>
                               <span>Kalender</span>
                             </div>
-                            <span className="text-yellow-200 text-[10px]">Testläufe</span>
+                            <span className="text-cyan-200 text-[10px]">Testläufe</span>
                           </div>
 
                           {/* Test-Szenario */}
-                          <div className="rounded-xl bg-white/5 border border-white/10 p-3 space-y-2">
+                          <div className="rounded-xl bg-white/5 border border-white/12 p-3 space-y-2">
                             <div className="flex items-center justify-between text-[11px] text-accent/80">
                               <span>Test: „Probetraining buchen“</span>
                               <span className="text-[10px] text-emerald-300">✓ erfolgreich</span>
@@ -207,9 +207,9 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual */}
+                      {/* Code-only Visual – gleiche Farbwelt wie Step 1 */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
-                        <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-white via-sky-50 to-cyan-100 dark:from-background-4 dark:via-background-6 dark:to-background-7 p-5 flex flex-col gap-3">
+                        <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-white via-cyan-50/70 to-cyan-100/70 dark:from-background-4 dark:via-background-6 dark:to-background-7 p-5 flex flex-col gap-3">
                           <div className="flex items-center justify-between text-[11px] text-secondary/80 dark:text-accent/80 mb-1">
                             <span>Lead-Regeln</span>
                             <span className="rounded-full bg-white/80 dark:bg-background-7/80 px-2 py-0.5 text-[9px]">
@@ -219,7 +219,7 @@ const Integration = () => {
 
                           <div className="space-y-2 text-[11px]">
                             <div className="flex items-start gap-2">
-                              <span className="mt-[3px] size-4 rounded-full bg-emerald-400/20 flex items-center justify-center text-[10px] text-emerald-700">
+                              <span className="mt-[3px] size-4 rounded-full bg-emerald-400/18 flex items-center justify-center text-[10px] text-emerald-700">
                                 A
                               </span>
                               <p>
@@ -228,7 +228,7 @@ const Integration = () => {
                               </p>
                             </div>
                             <div className="flex items-start gap-2">
-                              <span className="mt-[3px] size-4 rounded-full bg-cyan-400/20 flex items-center justify-center text-[10px] text-cyan-700">
+                              <span className="mt-[3px] size-4 rounded-full bg-cyan-400/18 flex items-center justify-center text-[10px] text-cyan-700">
                                 B
                               </span>
                               <p>
@@ -237,7 +237,7 @@ const Integration = () => {
                               </p>
                             </div>
                             <div className="flex items-start gap-2">
-                              <span className="mt-[3px] size-4 rounded-full bg-slate-400/20 flex items-center justify-center text-[10px] text-slate-700">
+                              <span className="mt-[3px] size-4 rounded-full bg-slate-400/18 flex items-center justify-center text-[10px] text-slate-700">
                                 C
                               </span>
                               <p>
@@ -251,7 +251,7 @@ const Integration = () => {
                             {['Probetraining', 'Rückruf', 'Vertrag'].map((label) => (
                               <div
                                 key={label}
-                                className="rounded-lg bg-white/80 dark:bg-background-7/80 border border-secondary/5 dark:border-accent/10 px-2 py-2 text-center"
+                                className="rounded-lg bg-white/85 dark:bg-background-7/90 border border-secondary/5 dark:border-accent/10 px-2 py-2 text-center"
                               >
                                 <p className="font-medium text-secondary/80 dark:text-accent/80">{label}</p>
                                 <p className="text-secondary/50 dark:text-accent/50">Regel aktiv</p>
@@ -283,10 +283,10 @@ const Integration = () => {
                         </p>
                       </figcaption>
 
-                      {/* Code-only Visual mit Link zum Prozess */}
+                      {/* Code-only Visual – stärkerer, aber gleiche Palette */}
                       <div className="rounded-2xl overflow-hidden max-w-[400px] w-full">
                         <Link href="/process-01">
-                          <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-emerald-400 via-cyan-400 to-sky-400 dark:from-emerald-500 dark:via-cyan-500 dark:to-sky-500 p-5 flex flex-col justify-between cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
+                          <div className="h-[220px] md:h-[260px] rounded-2xl bg-gradient-to-br from-emerald-400 via-cyan-400 to-teal-400 dark:from-emerald-500 dark:via-cyan-500 dark:to-teal-500 p-5 flex flex-col justify-between cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
                             <div className="flex items-center justify-between text-white/90 text-[11px] mb-2">
                               <span>Live-Automatisierung</span>
                               <span className="rounded-full bg-white/15 px-2 py-0.5 text-[9px] uppercase tracking-[0.16em]">

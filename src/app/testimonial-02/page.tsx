@@ -29,11 +29,11 @@ const TestimonialTwoPage = () => {
         <CTAV1
           className="dark:bg-background-6 bg-white"
           badgeClass="badge-cyan"
-          badgeText="Get started"
-          ctaHeading="Build a complete website using the"
-          spanText="assistance"
-          description="Start your free trial today and see your ideas come to life easily and creatively."
-          ctaBtnText="Get started"
+          badgeText="Jetzt Starten"
+          ctaHeading="Bereit, Telefonstress & Zettelwirtschaft zu ersetzen?"
+          spanText="PILAR SYSTEMS"
+          description="Starte mit Basic oder Pro und lass KI Telefon, WhatsApp, E-Mail, Follow-ups, Trainingspläne und Growth-Analysen für dein Studio übernehmen – ohne lange Onboarding-Calls."
+          ctaBtnText="Jetzt Starten"
           btnClass="hover:btn-secondary dark:hover:btn-accent"
         />
       </main>
