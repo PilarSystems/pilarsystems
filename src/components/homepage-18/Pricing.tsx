@@ -2,8 +2,8 @@
 
 import { CheckIcon } from '@/icons';
 import { cn } from '@/utils/cn';
-import gradient51 from '@public/images/gradient/gradient-51.png';
-import gradient49 from '@public/images/gradient/gradient-49.png';
+import gradient30 from '@public/images/gradient/gradient-30.png';
+import gradient39 from '@public/images/gradient/gradient-39.png';
 import gradient42 from '@public/images/gradient/gradient-42.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -84,11 +84,7 @@ const Pricing = () => {
       isOnRequest: true,
       features: [
         { label: 'Alles aus Pro inklusive', enabled: true },
-        {
-          label:
-            'KI-Coach für Trainingspläne & Mitglieder-Check-ins (zuerst WhatsApp, später App)',
-          enabled: true,
-        },
+        { label: 'KI-Coach für Trainingspläne & Mitglieder-Check-ins (zuerst WhatsApp, später App)', enabled: true },
         { label: 'Growth-Analytics & Kampagnen-Vorschläge der KI', enabled: true },
         { label: 'Mehrere Standorte & Marken in einem Account', enabled: true },
         { label: 'Optionale White-Label-, Multi-Studio- & Creator-Add-ons', enabled: true },
@@ -100,29 +96,17 @@ const Pricing = () => {
   return (
     <section
       id="pricing"
-      className="relative pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px] overflow-hidden"
+      className="relative overflow-hidden pt-16 md:pt-20 lg:pt-[90px] xl:pt-[100px] pb-16 md:pb-20 lg:pb-[90px] xl:pb-[100px]"
     >
-      {/* dekorative Gradients im Hintergrund */}
-      <div className="pointer-events-none select-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 -left-20 md:-top-40 md:-left-10 w-[260px] md:w-[320px] opacity-[0.55] dark:opacity-70">
-          <Image
-            src={gradient49}
-            alt="Dekorativer Farbverlauf"
-            className="w-full h-full object-contain"
-            priority={false}
-          />
-        </div>
-        <div className="absolute -bottom-40 -right-24 md:-bottom-48 md:-right-10 w-[260px] md:w-[320px] opacity-[0.55] dark:opacity-70">
-          <Image
-            src={gradient42}
-            alt="Dekorativer Farbverlauf"
-            className="w-full h-full object-contain"
-            priority={false}
-          />
-        </div>
+      {/* Hintergrund-Gradients für den gesamten Bereich */}
+      <div className="pointer-events-none select-none absolute -top-32 -left-20 w-[260px] opacity-60 md:w-[320px]">
+        <Image src={gradient30} alt="" className="w-full h-auto object-contain" />
+      </div>
+      <div className="pointer-events-none select-none absolute -bottom-40 -right-24 w-[320px] opacity-60 md:w-[380px]">
+        <Image src={gradient39} alt="" className="w-full h-auto object-contain" />
       </div>
 
-      <div className="main-container flex flex-col gap-[70px]">
+      <div className="main-container flex flex-col gap-[70px] relative z-[1]">
         <div className="flex flex-col items-center text-center">
           <RevealAnimation delay={0.2}>
             <span className="badge badge-green mb-5">Preise & Pläne</span>
@@ -132,7 +116,7 @@ const Pricing = () => {
           </RevealAnimation>
           <RevealAnimation delay={0.4}>
             <p className="mb-5 md:mb-7 max-w-[720px]">
-              Alle Pläne beinhalten eine einmalige Setup-Gebühr und eine monatliche Lizenz.{' '}
+              Alle Pläne beinhalten eine einmalige Setup-Gebühr und eine monatliche Lizenz.{` `}
               <span className="font-medium">
                 Basic ab 149&nbsp;€ / Monat, Pro ab 249&nbsp;€ / Monat
               </span>{' '}
@@ -154,10 +138,10 @@ const Pricing = () => {
                       : 'bg-white dark:bg-black p-8 xl:py-[60px] xl:px-14',
                   )}
                 >
-                  {/* Featured plan gradient background */}
+                  {/* Featured plan gradient background – neuer harmonischer Gradient */}
                   {plan.planType === 'featured' && (
                     <figure className="w-[810px] md:w-[950px] lg:w-[810px] left-[-30%] md:left-[-20%] lg:left-[-30%] top-[-20%] md:top-[-40%] lg:top-[-20%] absolute rotate-[30deg] select-none pointer-events-none opacity-80">
-                      <Image src={gradient51} alt="gradient-bg" className="w-full h-full object-cover" />
+                      <Image src={gradient42} alt="gradient-bg" className="w-full h-full object-cover" />
                     </figure>
                   )}
 
@@ -165,7 +149,7 @@ const Pricing = () => {
                     className={cn(
                       'space-y-8',
                       plan.planType === 'featured' &&
-                        'bg-white relative z-10 dark:bg-black p-8 xl:py-[60px] xl:px-14 rounded-[20px] flex flex-col h-full gap-6 shadow-[0_18px_80px_rgba(15,23,42,0.25)]',
+                        'bg-white relative z-10 dark:bg-black p-8 xl:py-[60px] xl:px-14 rounded-[20px] flex flex-col h-full gap-6',
                     )}
                   >
                     <div>
@@ -178,16 +162,12 @@ const Pricing = () => {
                         )}
                       </div>
                       {plan.subtitle && (
-                        <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                          {plan.subtitle}
-                        </p>
+                        <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">{plan.subtitle}</p>
                       )}
                       <div className="border-b border-stroke-2 dark:border-stroke-6 pb-8">
                         <div className="price-month mb-4">
                           {plan.isOnRequest ? (
-                            <h4 className="text-heading-6 sm:text-heading-4 font-normal">
-                              Preis auf Anfrage
-                            </h4>
+                            <h4 className="text-heading-6 sm:text-heading-4 font-normal">Preis auf Anfrage</h4>
                           ) : (
                             <h4 className="text-heading-6 sm:text-heading-4 font-normal">
                               €<span>{plan.monthlyPrice}</span>
@@ -202,7 +182,7 @@ const Pricing = () => {
                         )}
                         {plan.isOnRequest && (
                           <p className="text-tagline-2 text-secondary/70 dark:text-accent/70 mb-4">
-                            Individuelles Angebot inklusive Setup – ideal für Ketten, Multi-Standorte & White-Label.
+                            Individuelles Angebot inklusive Setup – ideal für Ketten, Multi-Standorte &amp; White-Label.
                           </p>
                         )}
                         <Link href={plan.href} className={plan.buttonClass}>
