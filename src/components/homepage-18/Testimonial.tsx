@@ -9,38 +9,38 @@ import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Eigene PILAR-Reviews statt Template-JSON
+// Anonyme PILAR-Reviews – keine Studio- oder Personennamen
 const pilarReviews = [
   {
-    id: 'gym-nord',
-    name: 'Fitness Loft Nord',
-    position: 'Inhaber & Studioleiter',
+    id: 'studio-1',
+    name: 'Studioinhaber (anonym)',
+    position: 'Fitnessstudio, 1 Standort',
     quote:
-      'Seit wir PILAR einsetzen, läuft die Rezeption endlich ruhig. Anfragen werden automatisch beantwortet, Probetrainings sind voll – und mein Team hat wieder Zeit für die Fläche.',
+      'Seit wir PILAR einsetzen, läuft der Empfang deutlich entspannter. Anfragen werden automatisch beantwortet, Probetrainings sind besser ausgelastet und mein Team kann sich mehr auf die Mitglieder konzentrieren.',
     avatar: '/images/avatar/avatar-1.png',
   },
   {
-    id: 'pt-lounge',
-    name: 'PT Lounge Braunschweig',
-    position: 'Personal Trainer Studio',
+    id: 'studio-2',
+    name: 'Leitung Vertrieb',
+    position: 'Premium-Gym mit Fokus auf Mitgliedschaftsverkäufe',
     quote:
-      'WhatsApp, Telefon und E-Mail waren vorher kompletter Flickenteppich. Jetzt landen alle Leads in einer Inbox, Follow-ups laufen automatisch und wir sehen genau, welche Kampagne wirklich zieht.',
+      'Vorher hatten wir WhatsApp, Telefon und E-Mails völlig verstreut. Jetzt landet alles in einer Inbox, Follow-ups laufen automatisiert und wir sehen endlich, welcher Kanal wirklich Verträge bringt.',
     avatar: '/images/avatar/avatar-2.png',
   },
   {
-    id: 'box-gym',
-    name: 'The Box Gym',
-    position: 'Head Coach',
+    id: 'studio-3',
+    name: 'Inhaber Duo',
+    position: 'Boutique-Studio mit Personal Training',
     quote:
-      'Früher sind uns Anfragen einfach durchgerutscht, wenn es im Studio voll war. Mit PILAR kommen deutlich mehr Leute wirklich zum Probetraining – und wir schließen mehr Verträge ab.',
+      'Uns sind regelmäßig Leads verloren gegangen, wenn viel los war. Mit PILAR kommen mehr Interessenten wirklich zum Probetraining – und wir schließen spürbar mehr Abschlüsse ab.',
     avatar: '/images/avatar/avatar-3.png',
   },
   {
-    id: 'health-club',
-    name: 'Health Club 24',
-    position: 'Multi-Standort-Betreiber',
+    id: 'studio-4',
+    name: 'Operations Manager',
+    position: 'Studioverbund mit mehreren Standorten',
     quote:
-      'Besonders stark ist für uns die Kombination aus Telefon-KI und Kalenderlogik. Kein Zettelchaos mehr, klare Slots für Probetrainings und ein Dashboard, das wir endlich verstehen.',
+      'Besonders hilfreich ist die Kombination aus Telefon-KI und Kalenderlogik. Kein Zettelchaos mehr, klare Slots für Probetrainings und ein Dashboard, das wir ohne Schulung verstehen.',
     avatar: '/images/avatar/avatar-4.png',
   },
 ];
@@ -54,13 +54,11 @@ const Testimonial = () => {
           <RevealAnimation delay={0.2}>
             <span className="badge badge-green mb-4">Social Proof</span>
           </RevealAnimation>
-
           <RevealAnimation delay={0.25}>
             <h2 className="max-w-[750px] mx-auto mb-4">
               Warum Studios & Coaches auf PILAR SYSTEMS setzen.
             </h2>
           </RevealAnimation>
-
           <RevealAnimation delay={0.3}>
             <p className="max-w-[872px] mx-auto">
               Studios nutzen PILAR, um Anfragen, Probetrainings, Verträge und Mitgliederkommunikation zu automatisieren –
