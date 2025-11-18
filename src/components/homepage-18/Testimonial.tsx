@@ -1,14 +1,49 @@
 'use client';
 
-import reviews from '@/data/json/testimonials/testimonials.json';
 import RevealAnimation from '../animation/RevealAnimation';
-import GradientOverlay from '../shared/reviews/GradientOverlay';
 import LinkButton from '../ui/button/LinkButton';
+import GradientOverlay from '../shared/reviews/GradientOverlay';
 
 import Image from 'next/image';
 import 'swiper/css';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Eigene PILAR-Reviews statt Template-JSON
+const pilarReviews = [
+  {
+    id: 'gym-nord',
+    name: 'Fitness Loft Nord',
+    position: 'Inhaber & Studioleiter',
+    quote:
+      'Seit wir PILAR einsetzen, läuft die Rezeption endlich ruhig. Anfragen werden automatisch beantwortet, Probetrainings sind voll – und mein Team hat wieder Zeit für die Fläche.',
+    avatar: '/images/avatar/avatar-1.png',
+  },
+  {
+    id: 'pt-lounge',
+    name: 'PT Lounge Braunschweig',
+    position: 'Personal Trainer Studio',
+    quote:
+      'WhatsApp, Telefon und E-Mail waren vorher kompletter Flickenteppich. Jetzt landen alle Leads in einer Inbox, Follow-ups laufen automatisch und wir sehen genau, welche Kampagne wirklich zieht.',
+    avatar: '/images/avatar/avatar-2.png',
+  },
+  {
+    id: 'box-gym',
+    name: 'The Box Gym',
+    position: 'Head Coach',
+    quote:
+      'Früher sind uns Anfragen einfach durchgerutscht, wenn es im Studio voll war. Mit PILAR kommen deutlich mehr Leute wirklich zum Probetraining – und wir schließen mehr Verträge ab.',
+    avatar: '/images/avatar/avatar-3.png',
+  },
+  {
+    id: 'health-club',
+    name: 'Health Club 24',
+    position: 'Multi-Standort-Betreiber',
+    quote:
+      'Besonders stark ist für uns die Kombination aus Telefon-KI und Kalenderlogik. Kein Zettelchaos mehr, klare Slots für Probetrainings und ein Dashboard, das wir endlich verstehen.',
+    avatar: '/images/avatar/avatar-4.png',
+  },
+];
 
 const Testimonial = () => {
   return (
@@ -38,15 +73,16 @@ const Testimonial = () => {
           <RevealAnimation delay={0.35}>
             <div className="mt-6 grid grid-cols-1 gap-4 text-tagline-2 text-secondary/70 dark:text-accent/70 sm:grid-cols-3">
               <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">+60%</span> mehr gebuchte Probetrainings*
+                <span className="font-semibold text-secondary dark:text-accent">+60%</span> mehr gebuchte
+                Probetrainings*
               </div>
               <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">24/7</span> automatische Beantwortung von
-                Anfragen
+                <span className="font-semibold text-secondary dark:text-accent">24/7</span> automatische
+                Beantwortung von Anfragen
               </div>
               <div className="rounded-full border border-border bg-background-1/60 px-4 py-2 dark:bg-background-8/60">
-                <span className="font-semibold text-secondary dark:text-accent">Minuten</span> statt Wochen Onboarding
-                dank Setup-Wizard
+                <span className="font-semibold text-secondary dark:text-accent">Minuten</span> statt Wochen
+                Onboarding dank Setup-Wizard
               </div>
             </div>
           </RevealAnimation>
@@ -72,7 +108,7 @@ const Testimonial = () => {
               scrollbar={false}
             >
               <div className="swiper-wrapper">
-                {reviews.map((review: any) => (
+                {pilarReviews.map((review) => (
                   <SwiperSlide key={review.id} className="swiper-slide">
                     <div className="bg-background-2 dark:bg-background-5 relative z-0 mx-1 flex flex-col gap-y-8 overflow-hidden rounded-[20px] p-8 sm:mx-0">
                       <GradientOverlay />

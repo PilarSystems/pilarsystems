@@ -13,11 +13,11 @@ type ProjectCard = {
 const projects: ProjectCard[] = [
   {
     id: 'boutique-gym-berlin',
-    title: 'Boutique-Gym in Berlin',
+    title: 'Gym in Berlin',
     subtitle: 'Mehr Probetrainings, weniger Zettelwirtschaft',
     result: '+68 % mehr gebuchte Probetrainings in 90 Tagen',
     location: 'Berlin',
-    studioType: 'Boutique-Studio (ca. 800 Mitglieder)',
+    studioType: 'Studio in Berlin (ca. 800 Mitglieder)',
   },
   {
     id: 'kette-nrw',
