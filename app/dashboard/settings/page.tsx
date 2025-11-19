@@ -13,9 +13,9 @@ export default function SettingsPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Settings</h1>
+          <h1 className="text-3xl font-bold">Einstellungen</h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Manage your studio settings and integrations
+            Verwalte deine Studio-Einstellungen und Integrationen
           </p>
         </div>
 
