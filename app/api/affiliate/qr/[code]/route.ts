@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
     const config = getConfig()
@@ -20,7 +20,7 @@ export async function GET(
       )
     }
 
-    const { code } = params
+    const { code } = await params
 
     const link = await prisma.affiliateLink.findUnique({
       where: { code },
