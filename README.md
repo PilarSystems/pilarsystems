@@ -2,6 +2,41 @@
 
 A fully production-ready, automated multichannel AI SaaS platform for fitness studios, built on top of a modern Next.js marketing site template.
 
+## 🚀 Schnellstart (Quick Start)
+
+Get the platform running locally in 5 minutes:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/PilarSystems/pilarsystems.git
+cd pilarsystems
+
+# 2. Install dependencies
+yarn install
+
+# 3. Set up environment variables
+cp .env.example .env.local
+# Edit .env.local and fill in all required values (see ENV_SETUP.md for details)
+
+# 4. Generate Prisma client and run migrations
+npx prisma generate
+npx prisma migrate dev
+
+# 5. Create Stripe products (optional for local testing)
+npx ts-node scripts/create-stripe-products.ts
+# Copy the returned Price IDs to your .env.local
+
+# 6. Start development server
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see the marketing site.  
+Navigate to [http://localhost:3000/signup](http://localhost:3000/signup) to test the SaaS platform.
+
+**📖 For detailed setup instructions, see [ENV_SETUP.md](./ENV_SETUP.md)**
+
+---
+
 ## Overview
 
 This repository contains two integrated applications:
@@ -148,9 +183,57 @@ See `.env.example` for all required environment variables. Key variables include
 - `ENCRYPTION_KEY` - 64-character hex key for encrypting integration credentials
 - `NEXTAUTH_SECRET` - NextAuth secret for session encryption
 
-## Vercel Deployment Configuration
+## 🚀 Deployment
 
-**IMPORTANT**: When deploying to Vercel, configure environment variables directly in the Vercel dashboard (Project Settings → Environment Variables), not as secret references. The `DATABASE_URL` and other sensitive variables should be added as plain environment variables, not as references to Vercel secrets.
+### Vercel Deployment (Recommended)
+
+1. **Push to GitHub:**
+   ```bash
+   git push origin main
+   ```
+
+2. **Import to Vercel:**
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click **Add New** → **Project**
+   - Import your GitHub repository
+   - Click **Import**
+
+3. **Configure Environment Variables:**
+   - Go to **Settings** → **Environment Variables**
+   - Add ALL variables from `.env.local` (see [ENV_SETUP.md](./ENV_SETUP.md) for complete list)
+   - **IMPORTANT**: Add variables as plain environment variables, NOT as secret references
+   - Select environments: **Production**, **Preview**, **Development**
+
+4. **Deploy:**
+   - Click **Deploy**
+   - Wait for build to complete
+   - Your app will be live at `https://your-project.vercel.app`
+
+5. **Configure Webhooks:**
+   - Update webhook URLs in Stripe, Twilio, and WhatsApp to use your production domain
+   - See [ENV_SETUP.md](./ENV_SETUP.md#webhook-configuration) for detailed instructions
+
+6. **Custom Domain (Optional):**
+   - Go to **Settings** → **Domains**
+   - Add your custom domain
+   - Update `NEXT_PUBLIC_APP_URL` environment variable
+
+### Production Checklist
+
+Before going live, ensure:
+
+- [ ] All environment variables are set in Vercel
+- [ ] Database migrations have been run
+- [ ] Stripe products have been created
+- [ ] Stripe webhooks are configured
+- [ ] Twilio webhooks are configured (if using Phone AI)
+- [ ] WhatsApp webhooks are configured (if using WhatsApp AI)
+- [ ] Google Calendar OAuth is configured (if using Calendar sync)
+- [ ] Custom domain is connected (optional)
+- [ ] SSL certificate is active
+- [ ] Test signup → checkout → onboarding → dashboard flow
+
+**📖 For detailed deployment instructions, see [ENV_SETUP.md](./ENV_SETUP.md#production-setup-vercel)**
 
 ## Project Structure
 
