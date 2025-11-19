@@ -187,7 +187,7 @@ export class EmailAutomationService {
           })
         })
 
-        imap.once('error', (err) => {
+        imap.once('error', (err: Error) => {
           reject(err)
         })
 
