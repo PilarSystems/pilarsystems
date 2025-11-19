@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
-import { sendContactNotification, sendContactConfirmation } from '@/lib/email'
+import { sendContactNotification, sendContactConfirmation } from '@/lib/email-contact'
 import { getConfig } from '@/lib/config/env'
 import { z } from 'zod'
 
