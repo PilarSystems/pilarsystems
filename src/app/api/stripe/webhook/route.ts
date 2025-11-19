@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
           break;
         }
 
-        const { error } = await supabaseAdmin
+        const { error } = await (supabaseAdmin as any)
           .from('profiles')
           .update({
             subscription_status: 'active',
