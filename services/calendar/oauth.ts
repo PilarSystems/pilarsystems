@@ -4,23 +4,28 @@ import { logger } from '@/lib/logger'
 import { secretsService } from '@/lib/secrets'
 import { auditService } from '@/lib/audit'
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!
-const GOOGLE_REDIRECT_URI = `${process.env.NEXT_PUBLIC_APP_URL}/api/oauth/google/callback`
+function getGoogleOAuthConfig() {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const redirectUri = `${appUrl}/api/oauth/google/callback`;
+  
+  if (!clientId || !clientSecret) {
+    throw new Error('Google OAuth credentials not configured (GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET required)');
+  }
+  
+  return { clientId, clientSecret, redirectUri };
+}
 
-/**
- * Calendar OAuth Service
- * Handles Google Calendar OAuth flow and token management
- */
 export class CalendarOAuthService {
   private oauth2Client: any
 
-  constructor() {
-    this.oauth2Client = new google.auth.OAuth2(
-      GOOGLE_CLIENT_ID,
-      GOOGLE_CLIENT_SECRET,
-      GOOGLE_REDIRECT_URI
-    )
+  private getOAuth2Client() {
+    if (!this.oauth2Client) {
+      const { clientId, clientSecret, redirectUri } = getGoogleOAuthConfig();
+      this.oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+    }
+    return this.oauth2Client;
   }
 
   /**
@@ -32,7 +37,7 @@ export class CalendarOAuthService {
       'https://www.googleapis.com/auth/calendar.events',
     ]
 
-    const url = this.oauth2Client.generateAuthUrl({
+    const url = this.getOAuth2Client().generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
       state: workspaceId, // Pass workspaceId in state
@@ -51,7 +56,7 @@ export class CalendarOAuthService {
     try {
       logger.info({ workspaceId }, 'Exchanging code for tokens')
 
-      const { tokens } = await this.oauth2Client.getToken(code)
+      const { tokens } = await this.getOAuth2Client().getToken(code)
 
       if (!tokens.access_token || !tokens.refresh_token) {
         throw new Error('No tokens received from Google')
@@ -150,11 +155,11 @@ export class CalendarOAuthService {
     try {
       const refreshToken = secretsService.decrypt(encryptedRefreshToken)
 
-      this.oauth2Client.setCredentials({
+      this.getOAuth2Client().setCredentials({
         refresh_token: refreshToken,
       })
 
-      const { credentials } = await this.oauth2Client.refreshAccessToken()
+      const { credentials } = await this.getOAuth2Client().refreshAccessToken()
 
       if (!credentials.access_token) {
         throw new Error('No access token received from refresh')
@@ -209,7 +214,7 @@ export class CalendarOAuthService {
 
       const accessToken = secretsService.decrypt(tokenRecord.accessToken)
 
-      await this.oauth2Client.revokeToken(accessToken)
+      await this.getOAuth2Client().revokeToken(accessToken)
 
       await prisma.oAuthToken.delete({
         where: {
@@ -265,11 +270,11 @@ export class CalendarOAuthService {
     try {
       const accessToken = await this.getAccessToken(workspaceId)
 
-      this.oauth2Client.setCredentials({
+      this.getOAuth2Client().setCredentials({
         access_token: accessToken,
       })
 
-      const calendar = google.calendar({ version: 'v3', auth: this.oauth2Client })
+      const calendar = google.calendar({ version: 'v3', auth: this.getOAuth2Client() })
 
       const now = new Date()
       const thirtyDaysLater = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)

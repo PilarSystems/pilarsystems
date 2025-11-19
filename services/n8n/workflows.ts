@@ -3,8 +3,16 @@ import { logger } from '@/lib/logger'
 import { auditService } from '@/lib/audit'
 import axios from 'axios'
 
-const N8N_API_URL = process.env.N8N_API_URL || 'http://localhost:5678/api/v1'
-const N8N_API_KEY = process.env.N8N_API_KEY!
+function getN8nConfig() {
+  const apiUrl = process.env.N8N_API_URL || 'http://localhost:5678/api/v1';
+  const apiKey = process.env.N8N_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error('N8N_API_KEY not configured');
+  }
+  
+  return { apiUrl, apiKey };
+}
 
 export interface WorkflowConfig {
   workspaceId: string
@@ -12,23 +20,20 @@ export interface WorkflowConfig {
   name: string
 }
 
-/**
- * n8n Workflow Service
- * Handles tenant-aware workflow management
- * 
- * Note: This implementation uses a shared workflow approach with workspace filtering
- * rather than creating separate workflows per tenant (more scalable for 10k+ tenants)
- */
 export class N8nWorkflowService {
   private apiClient: any
 
-  constructor() {
-    this.apiClient = axios.create({
-      baseURL: N8N_API_URL,
-      headers: {
-        'X-N8N-API-KEY': N8N_API_KEY,
-      },
-    })
+  private getApiClient() {
+    if (!this.apiClient) {
+      const { apiUrl, apiKey } = getN8nConfig();
+      this.apiClient = axios.create({
+        baseURL: apiUrl,
+        headers: {
+          'X-N8N-API-KEY': apiKey,
+        },
+      });
+    }
+    return this.apiClient;
   }
 
   /**

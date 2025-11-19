@@ -4,7 +4,9 @@ import { logger } from '@/lib/logger'
 import { auditService } from '@/lib/audit'
 import { twilioSubaccountService } from './subaccount'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+function getAppUrl(): string {
+  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+}
 
 export interface NumberProvisioningConfig {
   workspaceId: string
@@ -139,11 +141,11 @@ export class TwilioNumberProvisioner {
       const purchasedNumber = await client.incomingPhoneNumbers.create({
         phoneNumber: selectedNumber.phoneNumber,
         friendlyName: `PILAR ${config.workspaceId}`,
-        voiceUrl: `${APP_URL}/api/webhooks/twilio`,
+        voiceUrl: `${getAppUrl()}/api/webhooks/twilio`,
         voiceMethod: 'POST',
-        statusCallback: `${APP_URL}/api/webhooks/twilio/status`,
+        statusCallback: `${getAppUrl()}/api/webhooks/twilio/status`,
         statusCallbackMethod: 'POST',
-        smsUrl: `${APP_URL}/api/webhooks/twilio`,
+        smsUrl: `${getAppUrl()}/api/webhooks/twilio`,
         smsMethod: 'POST',
         voiceReceiveMode: 'voice',
       })
@@ -223,11 +225,11 @@ export class TwilioNumberProvisioner {
       })
 
       await client.incomingPhoneNumbers(subaccount.phoneNumberSid).update({
-        voiceUrl: `${APP_URL}/api/webhooks/twilio`,
+        voiceUrl: `${getAppUrl()}/api/webhooks/twilio`,
         voiceMethod: 'POST',
-        statusCallback: `${APP_URL}/api/webhooks/twilio/status`,
+        statusCallback: `${getAppUrl()}/api/webhooks/twilio/status`,
         statusCallbackMethod: 'POST',
-        smsUrl: `${APP_URL}/api/webhooks/twilio`,
+        smsUrl: `${getAppUrl()}/api/webhooks/twilio`,
         smsMethod: 'POST',
       })
 

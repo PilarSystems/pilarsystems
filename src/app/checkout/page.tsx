@@ -13,17 +13,16 @@ export const metadata: Metadata = {
   title: 'Checkout – Pilar Systems',
 };
 
-// Stripe einmal global initialisieren
-const stripeSecret = process.env.STRIPE_SECRET_KEY ?? '';
+function getStripeClient(): Stripe | null {
+  const stripeSecret = process.env.STRIPE_SECRET_KEY;
+  if (!stripeSecret) {
+    return null;
+  }
+  return new Stripe(stripeSecret, {
+    apiVersion: '2025-11-17.clover',
+  });
+}
 
-const stripe =
-  stripeSecret && typeof stripeSecret === 'string'
-    ? new Stripe(stripeSecret, {
-        apiVersion: '2025-11-17.clover',
-      })
-    : null;
-
-// Server Action: Stripe-Checkout
 async function handleCheckout(formData: FormData) {
   'use server';
 
@@ -36,11 +35,11 @@ async function handleCheckout(formData: FormData) {
     redirect('/checkout?error=noplan');
   }
 
-  // Pro / Enterprise → Kontakt aufnehmen statt Stripe
   if (plan === 'pro') {
     redirect('/contact-us?plan=enterprise');
   }
 
+  const stripe = getStripeClient();
   if (!stripe) {
     console.error('Stripe ist nicht konfiguriert (STRIPE_SECRET_KEY fehlt)');
     redirect('/checkout?error=stripe_config');

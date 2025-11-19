@@ -4,8 +4,16 @@ import { logger } from '@/lib/logger'
 import { secretsService } from '@/lib/secrets'
 import { auditService } from '@/lib/audit'
 
-const MASTER_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID!
-const MASTER_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN!
+function getTwilioMasterCredentials() {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  
+  if (!accountSid || !authToken) {
+    throw new Error('Twilio master credentials not configured (TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN required)');
+  }
+  
+  return { accountSid, authToken };
+}
 
 export interface SubaccountConfig {
   workspaceId: string
@@ -18,19 +26,13 @@ export interface SubaccountResult {
   apiKeySecret: string
 }
 
-/**
- * Twilio Subaccount Service
- * Handles automatic creation and management of Twilio subaccounts per tenant
- */
 export class TwilioSubaccountService {
   private client: twilio.Twilio | null = null
 
   private getClient(): twilio.Twilio {
     if (!this.client) {
-      if (!MASTER_ACCOUNT_SID || !MASTER_AUTH_TOKEN) {
-        throw new Error('Twilio master credentials not configured')
-      }
-      this.client = twilio(MASTER_ACCOUNT_SID, MASTER_AUTH_TOKEN)
+      const { accountSid, authToken } = getTwilioMasterCredentials();
+      this.client = twilio(accountSid, authToken)
     }
     return this.client
   }
