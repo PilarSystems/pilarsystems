@@ -1,7 +1,7 @@
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
-const createNoOpRateLimiter = () => ({
+const createNoOpRateLimiter = (): Ratelimit => ({
   limit: async () => ({ 
     success: true, 
     limit: 0, 
@@ -9,7 +9,7 @@ const createNoOpRateLimiter = () => ({
     reset: 0, 
     pending: Promise.resolve() 
   })
-} as Ratelimit)
+} as any as Ratelimit)
 
 let redis: Redis | null = null
 if (process.env.RATE_LIMIT_REDIS_URL && process.env.RATE_LIMIT_REDIS_TOKEN) {
