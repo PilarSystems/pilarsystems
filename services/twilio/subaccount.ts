@@ -23,13 +23,16 @@ export interface SubaccountResult {
  * Handles automatic creation and management of Twilio subaccounts per tenant
  */
 export class TwilioSubaccountService {
-  private client: twilio.Twilio
+  private client: twilio.Twilio | null = null
 
-  constructor() {
-    if (!MASTER_ACCOUNT_SID || !MASTER_AUTH_TOKEN) {
-      throw new Error('Twilio master credentials not configured')
+  private getClient(): twilio.Twilio {
+    if (!this.client) {
+      if (!MASTER_ACCOUNT_SID || !MASTER_AUTH_TOKEN) {
+        throw new Error('Twilio master credentials not configured')
+      }
+      this.client = twilio(MASTER_ACCOUNT_SID, MASTER_AUTH_TOKEN)
     }
-    this.client = twilio(MASTER_ACCOUNT_SID, MASTER_AUTH_TOKEN)
+    return this.client
   }
 
   /**
@@ -202,7 +205,8 @@ export class TwilioSubaccountService {
         throw new Error('Subaccount not found')
       }
 
-      await this.client.api.v2010.accounts(subaccount.subaccountSid).update({
+      const client = this.getClient()
+      await client.api.v2010.accounts(subaccount.subaccountSid).update({
         status: 'suspended',
       })
 
@@ -239,7 +243,8 @@ export class TwilioSubaccountService {
         throw new Error('Subaccount not found')
       }
 
-      await this.client.api.v2010.accounts(subaccount.subaccountSid).update({
+      const client = this.getClient()
+      await client.api.v2010.accounts(subaccount.subaccountSid).update({
         status: 'active',
       })
 
