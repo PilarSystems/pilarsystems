@@ -279,7 +279,34 @@ EMAIL_SMTP_SECURE=false
 
 ---
 
-### 9. n8n Workflow Automation
+### 9. ElevenLabs (Voice AI)
+
+**Required for:** Production (Optional for Development)
+
+```env
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
+```
+
+**How to get:**
+1. Go to [ElevenLabs](https://elevenlabs.io)
+2. Sign up or log in to your account
+3. Navigate to **Profile** → **API Keys**
+4. Click **Generate API Key** or copy existing key
+5. Copy the API key → `ELEVENLABS_API_KEY`
+
+**Used in:** `production` (optional for `development`)
+
+**Used for:** 
+- Voice selection in onboarding wizard (Step 3)
+- Voice preview playback in settings
+- Text-to-speech for phone AI and WhatsApp voice messages
+- AI assistant voice personality customization
+
+**Note:** The free tier includes 10,000 characters/month. For production use, consider upgrading to a paid plan.
+
+---
+
+### 10. n8n Workflow Automation
 
 **Required for:** Production (Optional for Development)
 
@@ -298,7 +325,7 @@ N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook
 
 ---
 
-### 10. Security & Encryption
+### 11. Security & Encryption
 
 **Required for:** Development & Production
 
@@ -325,7 +352,7 @@ openssl rand -base64 32
 
 ---
 
-### 11. Rate Limiting (Optional)
+### 12. Rate Limiting (Optional)
 
 **Required for:** Production (Recommended)
 
@@ -348,7 +375,7 @@ RATE_LIMIT_REDIS_TOKEN=your-upstash-redis-token
 
 ---
 
-### 12. Application Settings
+### 13. Application Settings
 
 **Required for:** Development & Production
 
@@ -413,6 +440,7 @@ LOG_LEVEL=info
    STRIPE_PRO_SETUP_FEE_ID
    STRIPE_WHATSAPP_ADDON_PRICE_ID
    OPENAI_API_KEY
+   ELEVENLABS_API_KEY
    TWILIO_ACCOUNT_SID
    TWILIO_AUTH_TOKEN
    TWILIO_PHONE_NUMBER
@@ -468,6 +496,7 @@ LOG_LEVEL=info
 | `STRIPE_WEBHOOK_SECRET` | Required | Required | Different for dev and prod |
 | `STRIPE_*_PRICE_ID` | Required | Required | Create separate products for dev and prod |
 | `OPENAI_API_KEY` | Required | Required | Same for both |
+| `ELEVENLABS_API_KEY` | Optional | Required | Only needed for voice selection testing in dev |
 | `TWILIO_*` | Optional | Required | Only needed for phone AI testing in dev |
 | `WHATSAPP_*` | Optional | Required | Only needed for WhatsApp AI testing in dev |
 | `GOOGLE_*` | Optional | Required | Only needed for calendar sync testing in dev |
