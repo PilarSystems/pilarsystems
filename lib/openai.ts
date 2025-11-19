@@ -11,8 +11,6 @@ export function getOpenAI(): OpenAI {
   return openaiInstance
 }
 
-export const openai = getOpenAI()
-
 export const AI_MODELS = {
   GPT4: 'gpt-4-turbo-preview',
   GPT4_MINI: 'gpt-4o-mini',

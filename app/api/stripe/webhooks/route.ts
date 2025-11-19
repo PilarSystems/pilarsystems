@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { handleStripeWebhook } from '@/services/stripe/webhooks'
 import { logger } from '@/lib/logger'
 
@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No signature' }, { status: 400 })
     }
 
+    const stripe = getStripe()
     const event = stripe.webhooks.constructEvent(
       body,
       signature,

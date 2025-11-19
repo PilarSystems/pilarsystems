@@ -1,4 +1,4 @@
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import Stripe from 'stripe'
@@ -57,6 +57,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       throw new Error('Missing metadata in checkout session')
     }
 
+    const stripe = getStripe()
     const stripeSubscription = await stripe.subscriptions.retrieve(
       session.subscription as string
     )

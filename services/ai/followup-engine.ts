@@ -3,7 +3,7 @@ import { sendWhatsAppMessage } from '@/lib/whatsapp'
 import { sendEmail } from '@/lib/email'
 import { twilioClient, TWILIO_PHONE_NUMBER } from '@/lib/twilio'
 import { logger } from '@/lib/logger'
-import { openai, AI_MODELS } from '@/lib/openai'
+import { getOpenAI, AI_MODELS } from '@/lib/openai'
 
 export async function processScheduledFollowups() {
   try {
@@ -182,7 +182,7 @@ Create a warm, personalized follow-up that:
 
 Keep it concise (${channel === 'sms' ? '160' : '200'} characters max for ${channel}).`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.7,

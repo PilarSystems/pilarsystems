@@ -1,7 +1,7 @@
 // src/app/api/stripe/webhook/route.ts
 import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
-import { supabaseAdmin } from '@/lib/supabaseAdmin';
+import { getSupabaseAdmin } from '@/lib/supabase';
 
 const stripeSecret = process.env.STRIPE_SECRET_KEY!;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Falls Supabase Admin nicht konfiguriert ist → nur loggen, kein Crash
+        const supabaseAdmin = getSupabaseAdmin()
         if (!supabaseAdmin) {
           console.error(
             '❌ Supabase Admin ist nicht konfiguriert – kein DB-Update möglich.'

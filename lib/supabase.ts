@@ -28,6 +28,3 @@ export function getSupabaseAdmin() {
   }
   return supabaseAdminInstance
 }
-
-export const supabase = getSupabase()
-export const supabaseAdmin = getSupabaseAdmin()

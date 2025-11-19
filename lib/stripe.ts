@@ -16,8 +16,6 @@ export function getStripe(): Stripe {
   return stripeInstance
 }
 
-export const stripe = getStripe()
-
 export const STRIPE_PLANS = {
   BASIC: {
     name: 'PILAR BASIC',
