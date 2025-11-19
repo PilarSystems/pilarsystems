@@ -4,6 +4,7 @@ import { twilioSubaccountService } from '@/services/twilio/subaccount'
 import { twilioNumberProvisioner } from '@/services/twilio/number-provisioner'
 import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
+import { getCachedConfig } from '@/lib/config/env'
 import { z } from 'zod'
 
 const provisionSchema = z.object({
@@ -16,6 +17,19 @@ const provisionSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    const config = getCachedConfig()
+    if (!config.twilioEnabled) {
+      logger.warn('Twilio auto-provisioning requested but master credentials not configured')
+      return NextResponse.json(
+        {
+          error: 'Twilio auto-provisioning not available',
+          code: 'FEATURE_DISABLED_TWILIO_MASTER',
+          message: 'Phone AI auto-provisioning ist derzeit vom Admin nicht konfiguriert. Bitte verwende eine eigene Twilio-Nummer oder kontaktiere den Support.',
+        },
+        { status: 501 }
+      )
+    }
+
     const body = await request.json()
     const data = provisionSchema.parse(body)
 
