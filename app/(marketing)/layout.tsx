@@ -29,7 +29,7 @@ export default function MarketingLayout({
           {children}
         </main>
         <Footer />
-        <CookieBanner />
+        <ConsentManager />
       </body>
     </html>
   )
