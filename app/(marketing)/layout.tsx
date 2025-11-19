@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/marketing/Header'
 import { Footer } from '@/components/marketing/Footer'
-import { CookieBanner } from '@/components/marketing/CookieBanner'
+import { ConsentManager } from '@/components/marketing/ConsentManager'
 import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
