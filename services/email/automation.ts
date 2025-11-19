@@ -159,7 +159,7 @@ export class EmailAutomationService {
 
               fetch.on('message', (msg) => {
                 msg.on('body', (stream) => {
-                  simpleParser(stream, async (err, parsed) => {
+                  simpleParser(stream as any, async (err, parsed) => {
                     if (err) {
                       logger.error({ error: err }, 'Failed to parse email')
                       return
