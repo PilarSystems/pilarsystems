@@ -11,12 +11,13 @@ const checkoutSchema = z.object({
   whatsappAddon: z.boolean(),
   userId: z.string(),
   email: z.string().email(),
+  affiliateRef: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { plan, whatsappAddon, userId, email } = checkoutSchema.parse(body)
+    const { plan, whatsappAddon, userId, email, affiliateRef } = checkoutSchema.parse(body)
 
     let workspace = await prisma.workspace.findFirst({
       where: { ownerId: userId },
@@ -31,7 +32,27 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const session = await createCheckoutSession(workspace.id, plan, whatsappAddon)
+    let affiliateConversionId: string | undefined
+    if (affiliateRef) {
+      const affiliateLink = await prisma.affiliateLink.findUnique({
+        where: { code: affiliateRef },
+        include: { affiliate: true },
+      })
+
+      if (affiliateLink && affiliateLink.active && affiliateLink.affiliate.status === 'active') {
+        const conversion = await prisma.affiliateConversion.create({
+          data: {
+            affiliateId: affiliateLink.affiliateId,
+            affiliateLinkId: affiliateLink.id,
+            status: 'pending',
+          },
+        })
+        affiliateConversionId = conversion.id
+        logger.info({ conversionId: conversion.id, affiliateRef }, 'Affiliate conversion pending')
+      }
+    }
+
+    const session = await createCheckoutSession(workspace.id, plan, whatsappAddon, affiliateConversionId)
 
     return NextResponse.json({ url: session.url })
   } catch (error) {
