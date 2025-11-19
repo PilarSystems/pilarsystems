@@ -19,9 +19,39 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 5000)
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'contact-page',
+        }),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          studioName: '',
+          studioSize: '',
+          message: ''
+        })
+        setTimeout(() => setSubmitted(false), 8000)
+      } else {
+        alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

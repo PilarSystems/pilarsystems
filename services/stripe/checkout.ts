@@ -6,7 +6,8 @@ import { Plan } from '@/types'
 export async function createCheckoutSession(
   workspaceId: string,
   plan: Plan,
-  whatsappAddon: boolean = false
+  whatsappAddon: boolean = false,
+  affiliateConversionId?: string
 ) {
   try {
     logger.info({ workspaceId, plan, whatsappAddon }, 'Creating Stripe checkout session')
@@ -46,6 +47,17 @@ export async function createCheckoutSession(
     }
 
     const stripe = getStripe()
+    
+    const metadata: Record<string, string> = {
+      workspaceId,
+      plan,
+      whatsappAddon: whatsappAddon.toString(),
+    }
+    
+    if (affiliateConversionId) {
+      metadata.affiliateConversionId = affiliateConversionId
+    }
+    
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
@@ -54,17 +66,9 @@ export async function createCheckoutSession(
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
       customer_email: owner.email,
       client_reference_id: workspaceId,
-      metadata: {
-        workspaceId,
-        plan,
-        whatsappAddon: whatsappAddon.toString(),
-      },
+      metadata,
       subscription_data: {
-        metadata: {
-          workspaceId,
-          plan,
-          whatsappAddon: whatsappAddon.toString(),
-        },
+        metadata,
       },
     })
 

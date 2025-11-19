@@ -93,6 +93,53 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     }
 
     logger.info({ workspaceId, plan }, 'Subscription created successfully')
+
+    const affiliateConversionId = session.metadata?.affiliateConversionId
+    if (affiliateConversionId) {
+      try {
+        const conversion = await prisma.affiliateConversion.findUnique({
+          where: { id: affiliateConversionId },
+          include: { affiliate: true },
+        })
+
+        if (conversion && conversion.status === 'pending') {
+          const setupFeeAmount = session.amount_total ? session.amount_total / 100 : 0
+          const recurringAmount = stripeSubscription.items.data[0]?.price.unit_amount 
+            ? stripeSubscription.items.data[0].price.unit_amount / 100 
+            : 0
+
+          const commissionSetup = (setupFeeAmount * conversion.affiliate.commissionSetup) / 100
+          const commissionRecurring = (recurringAmount * conversion.affiliate.commissionRecurring) / 100
+          const totalCommission = commissionSetup + commissionRecurring
+
+          await prisma.affiliateConversion.update({
+            where: { id: affiliateConversionId },
+            data: {
+              status: 'approved',
+              stripeCheckoutSessionId: session.id,
+              stripeCustomerId: session.customer as string,
+              stripeSubscriptionId: session.subscription as string,
+              setupFeeAmount,
+              recurringAmount,
+              commissionSetup: Math.round(commissionSetup * 100) / 100,
+              commissionRecurring: Math.round(commissionRecurring * 100) / 100,
+              totalCommission: Math.round(totalCommission * 100) / 100,
+            },
+          })
+
+          logger.info(
+            { 
+              conversionId: affiliateConversionId, 
+              affiliateId: conversion.affiliateId,
+              totalCommission 
+            }, 
+            'Affiliate conversion approved'
+          )
+        }
+      } catch (error) {
+        logger.error({ error, affiliateConversionId }, 'Failed to process affiliate conversion')
+      }
+    }
   } catch (error) {
     logger.error({ error, sessionId: session.id }, 'Error handling checkout session')
     throw error

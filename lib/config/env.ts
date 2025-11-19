@@ -45,6 +45,24 @@ export interface AppConfig {
   upstashRedisUrl: string | null
   upstashRedisToken: string | null
   rateLimitingEnabled: boolean
+  
+  affiliatesEnabled: boolean
+  affiliateAutoApprove: boolean
+  affiliateCommissionSetup: number // percentage
+  affiliateCommissionRecurring: number // percentage
+  
+  contactEmailEnabled: boolean
+  smtpHost: string | null
+  smtpPort: number | null
+  smtpUser: string | null
+  smtpPass: string | null
+  smtpFrom: string | null
+  contactTo: string | null
+  
+  analyticsEnabled: boolean
+  plausibleDomain: string | null
+  
+  adminEmails: string[]
 }
 
 function getEnv(key: string): string | null {
@@ -112,6 +130,25 @@ export function getConfig(): AppConfig {
   const upstashRedisToken = getEnv('UPSTASH_REDIS_REST_TOKEN')
   const rateLimitingEnabled = !!upstashRedisUrl && !!upstashRedisToken
   
+  const affiliatesEnabled = getEnv('AFFILIATES_ENABLED') === 'true'
+  const affiliateAutoApprove = getEnv('AFFILIATE_AUTO_APPROVE') !== 'false' // default true
+  const affiliateCommissionSetup = parseInt(getEnv('AFFILIATE_COMMISSION_SETUP') || '10', 10)
+  const affiliateCommissionRecurring = parseInt(getEnv('AFFILIATE_COMMISSION_RECURRING') || '10', 10)
+  
+  const smtpHost = getEnv('SMTP_HOST')
+  const smtpPort = getEnv('SMTP_PORT') ? parseInt(getEnv('SMTP_PORT')!, 10) : null
+  const smtpUser = getEnv('SMTP_USER')
+  const smtpPass = getEnv('SMTP_PASS')
+  const smtpFrom = getEnv('SMTP_FROM') || 'PILAR SYSTEMS <no-reply@pilarsystems.com>'
+  const contactTo = getEnv('CONTACT_TO')
+  const contactEmailEnabled = !!smtpHost && !!smtpPort && !!smtpUser && !!smtpPass && !!contactTo
+  
+  const analyticsEnabled = getEnv('ANALYTICS_ENABLED') === 'true'
+  const plausibleDomain = getEnv('PLAUSIBLE_DOMAIN')
+  
+  const adminEmailsStr = getEnv('ADMIN_EMAILS') || ''
+  const adminEmails = adminEmailsStr.split(',').map(e => e.trim()).filter(Boolean)
+  
   return {
     nodeEnv,
     appUrl,
@@ -142,6 +179,20 @@ export function getConfig(): AppConfig {
     upstashRedisUrl,
     upstashRedisToken,
     rateLimitingEnabled,
+    affiliatesEnabled,
+    affiliateAutoApprove,
+    affiliateCommissionSetup,
+    affiliateCommissionRecurring,
+    contactEmailEnabled,
+    smtpHost,
+    smtpPort,
+    smtpUser,
+    smtpPass,
+    smtpFrom,
+    contactTo,
+    analyticsEnabled,
+    plausibleDomain,
+    adminEmails,
   }
 }
 
@@ -161,6 +212,8 @@ export function getPublicFeatureFlags() {
     googleCalendarEnabled: config.googleEnabled,
     n8nEnabled: config.n8nEnabled,
     encryptionReady: config.encryptionReady,
+    affiliatesEnabled: config.affiliatesEnabled,
+    analyticsEnabled: config.analyticsEnabled,
   }
 }
 
