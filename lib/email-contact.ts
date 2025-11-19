@@ -19,7 +19,7 @@ function getTransporter() {
     return null
   }
 
-  transporter = nodemailer.createTransporter({
+  transporter = nodemailer.createTransport({
     host: config.smtpHost!,
     port: config.smtpPort!,
     secure: config.smtpPort === 465,
