@@ -1,4 +1,4 @@
-import { openai, AI_MODELS } from '@/lib/openai'
+import { getOpenAI, AI_MODELS } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
 import { sendWhatsAppMessage } from '@/lib/whatsapp'
 import { logger } from '@/lib/logger'
@@ -128,7 +128,7 @@ Generate a helpful, concise response. If the customer is asking about:
 
 Keep responses under 200 characters when possible.`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -193,7 +193,7 @@ Respond in JSON format:
   "suggestedActions": ["action1", "action2"]
 }`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.3,

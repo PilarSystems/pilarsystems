@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "sh -c 'export DATABASE_URL=${DATABASE_URL:-postgresql://user:pass@localhost:5432/db}; prisma generate; next build'",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "echo 'Skipping prisma generate on Vercel - will run during build'"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

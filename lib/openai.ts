@@ -1,8 +1,15 @@
 import OpenAI from 'openai'
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'sk-placeholder',
-})
+let openaiInstance: OpenAI | null = null
+
+export function getOpenAI(): OpenAI {
+  if (!openaiInstance) {
+    openaiInstance = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY || 'sk-placeholder',
+    })
+  }
+  return openaiInstance
+}
 
 export const AI_MODELS = {
   GPT4: 'gpt-4-turbo-preview',

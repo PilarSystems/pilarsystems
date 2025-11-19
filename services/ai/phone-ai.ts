@@ -1,4 +1,4 @@
-import { openai, AI_MODELS } from '@/lib/openai'
+import { getOpenAI, AI_MODELS } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
 import { twilioClient, TWILIO_PHONE_NUMBER } from '@/lib/twilio'
 import { logger } from '@/lib/logger'
@@ -110,7 +110,7 @@ Respond in JSON format:
   "smsMessage": "message content"
 }`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.3,
@@ -146,7 +146,7 @@ export async function transcribeVoicemail(recordingUrl: string): Promise<string>
     const audioBuffer = await response.arrayBuffer()
     const audioFile = new File([audioBuffer], 'voicemail.mp3', { type: 'audio/mpeg' })
 
-    const transcription = await openai.audio.transcriptions.create({
+    const transcription = await getOpenAI().audio.transcriptions.create({
       file: audioFile,
       model: 'whisper-1',
       language: 'de',

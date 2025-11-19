@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export default function OnboardingStep1() {
   const router = useRouter()
@@ -26,7 +26,7 @@ export default function OnboardingStep1() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { user } } = await getSupabase().auth.getUser()
       if (!user) {
         router.push('/login')
       }
@@ -39,7 +39,7 @@ export default function OnboardingStep1() {
     setLoading(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { user } } = await getSupabase().auth.getUser()
       if (!user) throw new Error('Not authenticated')
 
       const response = await fetch('/api/onboarding/step1', {

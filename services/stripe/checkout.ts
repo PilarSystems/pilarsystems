@@ -1,4 +1,4 @@
-import { stripe, STRIPE_PLANS } from '@/lib/stripe'
+import { getStripe, STRIPE_PLANS } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { Plan } from '@/types'
@@ -45,6 +45,7 @@ export async function createCheckoutSession(
       })
     }
 
+    const stripe = getStripe()
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
@@ -88,6 +89,7 @@ export async function createPortalSession(workspaceId: string) {
       throw new Error('No subscription found')
     }
 
+    const stripe = getStripe()
     const session = await stripe.billingPortal.sessions.create({
       customer: subscription.stripeCustomerId,
       return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings/billing`,

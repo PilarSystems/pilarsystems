@@ -1,4 +1,4 @@
-import { openai, AI_MODELS } from '@/lib/openai'
+import { getOpenAI, AI_MODELS } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
 import { sendEmail } from '@/lib/email'
 import { logger } from '@/lib/logger'
@@ -108,7 +108,7 @@ Respond in JSON format:
   "requiresResponse": true | false
 }`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.3,
@@ -165,7 +165,7 @@ Write a warm, professional response that:
 
 Keep it concise and friendly.`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4_MINI,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.7,

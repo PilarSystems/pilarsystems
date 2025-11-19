@@ -1,13 +1,23 @@
 import axios from 'axios'
 
 const WHATSAPP_API_URL = 'https://graph.facebook.com/v18.0'
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN!
-const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!
+
+function getWhatsAppConfig() {
+  const token = process.env.WHATSAPP_API_TOKEN;
+  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  
+  if (!token || !phoneNumberId) {
+    throw new Error('WHATSAPP_API_TOKEN and WHATSAPP_PHONE_NUMBER_ID are required');
+  }
+  
+  return { token, phoneNumberId };
+}
 
 export async function sendWhatsAppMessage(to: string, message: string) {
   try {
+    const { token, phoneNumberId } = getWhatsAppConfig();
     const response = await axios.post(
-      `${WHATSAPP_API_URL}/${WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      `${WHATSAPP_API_URL}/${phoneNumberId}/messages`,
       {
         messaging_product: 'whatsapp',
         to,
@@ -16,7 +26,7 @@ export async function sendWhatsAppMessage(to: string, message: string) {
       },
       {
         headers: {
-          Authorization: `Bearer ${WHATSAPP_API_TOKEN}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       }
@@ -30,8 +40,9 @@ export async function sendWhatsAppMessage(to: string, message: string) {
 
 export async function markMessageAsRead(messageId: string) {
   try {
+    const { token, phoneNumberId } = getWhatsAppConfig();
     await axios.post(
-      `${WHATSAPP_API_URL}/${WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      `${WHATSAPP_API_URL}/${phoneNumberId}/messages`,
       {
         messaging_product: 'whatsapp',
         status: 'read',
@@ -39,7 +50,7 @@ export async function markMessageAsRead(messageId: string) {
       },
       {
         headers: {
-          Authorization: `Bearer ${WHATSAPP_API_TOKEN}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       }

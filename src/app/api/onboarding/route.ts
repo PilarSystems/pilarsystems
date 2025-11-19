@@ -1,6 +1,6 @@
 // src/app/api/onboarding/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabaseAdmin';
+import { getSupabaseAdmin } from '@/lib/supabase';
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
     // - Workspace / Profile in Supabase updaten
     //   z.B. workspace_settings, channels, voice_profile etc.
 
+    const supabaseAdmin = getSupabaseAdmin()
     if (!supabaseAdmin) {
       console.warn(
         '⚠️ Supabase Admin ist nicht konfiguriert – Daten werden nicht in die DB geschrieben (nur Logging).'
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Beispiel-Struktur (anpassen, sobald Tabellen stehen)
-    // await supabaseAdmin.from('workspace_settings').upsert({
+    // await getSupabaseAdmin().from('workspace_settings').upsert({
     //   user_id: userId,
     //   gym: body.gym,
     //   channels: body.channels,

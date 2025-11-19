@@ -1,4 +1,4 @@
-import { openai, AI_MODELS } from '@/lib/openai'
+import { getOpenAI, AI_MODELS } from '@/lib/openai'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { LeadClassification, Priority } from '@/types'
@@ -99,7 +99,7 @@ Respond in JSON format:
   "suggestedActions": ["action1", "action2", "action3"]
 }`
 
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: AI_MODELS.GPT4,
       messages: [{ role: 'system', content: systemPrompt }],
       temperature: 0.3,

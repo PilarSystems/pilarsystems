@@ -12,52 +12,59 @@ datasource db {
 
 // Core user and workspace models
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            String        @id @default(uuid())
+  email         String        @unique
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   workspaceId   String?
-  workspace     Workspace? @relation(fields: [workspaceId], references: [id])
-  assignedLeads Lead[]   @relation("AssignedLeads")
+  workspace     Workspace?    @relation(fields: [workspaceId], references: [id])
+  assignedLeads Lead[]        @relation("AssignedLeads")
   activityLogs  ActivityLog[]
-  assignedTasks Task[]   @relation("AssignedTasks")
+  assignedTasks Task[]        @relation("AssignedTasks")
 }
 
 model Workspace {
-  id              String         @id @default(uuid())
-  name            String
-  ownerId         String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  subscriptionId  String?        @unique
-  subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
-  users           User[]
-  wizardProgress  WizardProgress[]
-  integrations    Integration[]
-  leads           Lead[]
-  messages        Message[]
-  callLogs        CallLog[]
-  followups       Followup[]
-  calendarEvents  CalendarEvent[]
-  aiRules         AiRule[]
-  activityLogs    ActivityLog[]
-  tasks           Task[]
-  studioInfo      Json?
+  id                  String               @id @default(uuid())
+  name                String
+  ownerId             String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  subscriptionId      String?              @unique
+  subscription        Subscription?        @relation(fields: [subscriptionId], references: [id])
+  users               User[]
+  wizardProgress      WizardProgress[]
+  integrations        Integration[]
+  leads               Lead[]
+  messages            Message[]
+  callLogs            CallLog[]
+  followups           Followup[]
+  calendarEvents      CalendarEvent[]
+  aiRules             AiRule[]
+  activityLogs        ActivityLog[]
+  tasks               Task[]
+  studioInfo          Json?
+  provisioningJobs    ProvisioningJob[]
+  twilioSubaccount    TwilioSubaccount?
+  whatsappIntegration WhatsAppIntegration?
+  oauthTokens         OAuthToken[]
+  emailCredential     EmailCredential?
+  n8nWorkflows        N8nWorkflow[]
+  auditLogs           AuditLog[]
 }
 
 model Subscription {
-  id                    String    @id @default(uuid())
-  workspaceId           String?   @unique
-  workspace             Workspace?
-  stripeCustomerId      String    @unique
-  stripeSubscriptionId  String    @unique
-  plan                  Plan
-  status                SubscriptionStatus
-  whatsappAddon         Boolean   @default(false)
-  currentPeriodStart    DateTime
-  currentPeriodEnd      DateTime
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  id                   String             @id @default(uuid())
+  workspaceId          String?            @unique
+  workspace            Workspace?
+  stripeCustomerId     String             @unique
+  stripeSubscriptionId String             @unique
+  plan                 Plan
+  status               SubscriptionStatus
+  whatsappAddon        Boolean            @default(false)
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 }
 
 enum Plan {
@@ -87,14 +94,14 @@ model WizardProgress {
 }
 
 model Integration {
-  id          String           @id @default(uuid())
+  id          String            @id @default(uuid())
   workspaceId String
-  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace   Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   type        IntegrationType
-  config      String           // Encrypted JSON
+  config      String // Encrypted JSON
   status      IntegrationStatus
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
   @@unique([workspaceId, type])
 }
@@ -113,21 +120,21 @@ enum IntegrationStatus {
 }
 
 model Lead {
-  id             String         @id @default(uuid())
+  id             String              @id @default(uuid())
   workspaceId    String
-  workspace      Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace      Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   name           String
   email          String?
   phone          String?
   classification LeadClassification?
-  status         LeadStatus     @default(new)
+  status         LeadStatus          @default(new)
   source         LeadSource
-  priority       Priority       @default(medium)
+  priority       Priority            @default(medium)
   assignedToId   String?
-  assignedTo     User?          @relation("AssignedLeads", fields: [assignedToId], references: [id])
+  assignedTo     User?               @relation("AssignedLeads", fields: [assignedToId], references: [id])
   metadata       Json?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
   messages       Message[]
   callLogs       CallLog[]
   followups      Followup[]
@@ -168,17 +175,17 @@ enum Priority {
 }
 
 model Message {
-  id           String         @id @default(uuid())
-  workspaceId  String
-  workspace    Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  leadId       String?
-  lead         Lead?          @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  channel      MessageChannel
-  direction    MessageDirection
-  content      String         @db.Text
-  metadata     Json?
-  aiGenerated  Boolean        @default(false)
-  createdAt    DateTime       @default(now())
+  id          String           @id @default(uuid())
+  workspaceId String
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId      String?
+  lead        Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  channel     MessageChannel
+  direction   MessageDirection
+  content     String           @db.Text
+  metadata    Json?
+  aiGenerated Boolean          @default(false)
+  createdAt   DateTime         @default(now())
 
   @@index([workspaceId, leadId])
   @@index([workspaceId, createdAt])
@@ -196,20 +203,20 @@ enum MessageDirection {
 }
 
 model CallLog {
-  id           String       @id @default(uuid())
+  id           String        @id @default(uuid())
   workspaceId  String
-  workspace    Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   leadId       String?
-  lead         Lead?        @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  lead         Lead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
   phoneNumber  String
   direction    CallDirection
-  duration     Int?         // in seconds
+  duration     Int? // in seconds
   recordingUrl String?
-  transcript   String?      @db.Text
-  aiSummary    String?      @db.Text
+  transcript   String?       @db.Text
+  aiSummary    String?       @db.Text
   aiActions    Json?
   status       CallStatus
-  createdAt    DateTime     @default(now())
+  createdAt    DateTime      @default(now())
 
   @@index([workspaceId, leadId])
   @@index([workspaceId, createdAt])
@@ -229,17 +236,17 @@ enum CallStatus {
 }
 
 model Followup {
-  id          String        @id @default(uuid())
+  id          String         @id @default(uuid())
   workspaceId String
-  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   leadId      String
-  lead        Lead          @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  lead        Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
   type        MessageChannel
   scheduledAt DateTime
   completedAt DateTime?
   status      FollowupStatus @default(pending)
-  content     String        @db.Text
-  createdAt   DateTime      @default(now())
+  content     String         @db.Text
+  createdAt   DateTime       @default(now())
 
   @@index([workspaceId, scheduledAt])
   @@index([workspaceId, status])
@@ -253,21 +260,21 @@ enum FollowupStatus {
 }
 
 model CalendarEvent {
-  id             String            @id @default(uuid())
-  workspaceId    String
-  workspace      Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  leadId         String?
-  lead           Lead?             @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  type           CalendarEventType
-  title          String
-  startTime      DateTime
-  endTime        DateTime
-  location       String?
-  googleEventId  String?
-  status         EventStatus       @default(scheduled)
-  reminderSent   Boolean           @default(false)
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
+  id            String            @id @default(uuid())
+  workspaceId   String
+  workspace     Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId        String?
+  lead          Lead?             @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  type          CalendarEventType
+  title         String
+  startTime     DateTime
+  endTime       DateTime
+  location      String?
+  googleEventId String?
+  status        EventStatus       @default(scheduled)
+  reminderSent  Boolean           @default(false)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
 
   @@index([workspaceId, startTime])
   @@index([workspaceId, status])
@@ -288,15 +295,15 @@ enum EventStatus {
 }
 
 model AiRule {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   ruleType    RuleType
   conditions  Json
   actions     Json
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([workspaceId, ruleType, active])
 }
@@ -349,4 +356,156 @@ enum TaskStatus {
   pending
   completed
   cancelled
+}
+
+// Automation and provisioning models
+model ProvisioningJob {
+  id          String              @id @default(uuid())
+  workspaceId String
+  workspace   Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  jobType     ProvisioningJobType
+  status      JobStatus           @default(pending)
+  progress    Int                 @default(0) // 0-100
+  result      Json?
+  error       String?             @db.Text
+  retryCount  Int                 @default(0)
+  maxRetries  Int                 @default(3)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  completedAt DateTime?
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, jobType])
+}
+
+enum ProvisioningJobType {
+  twilio_subaccount
+  twilio_number
+  whatsapp_setup
+  calendar_oauth
+  email_setup
+  n8n_workflow
+}
+
+enum JobStatus {
+  pending
+  in_progress
+  completed
+  failed
+  cancelled
+}
+
+model TwilioSubaccount {
+  id                 String    @id @default(uuid())
+  workspaceId        String    @unique
+  workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  subaccountSid      String    @unique
+  apiKeySid          String
+  apiKeySecret       String // Encrypted
+  phoneNumberSid     String?
+  phoneNumber        String?
+  webhooksConfigured Boolean   @default(false)
+  status             String    @default("active")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model WhatsAppIntegration {
+  id                 String    @id @default(uuid())
+  workspaceId        String    @unique
+  workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  wabaId             String
+  phoneNumberId      String    @unique
+  phoneNumber        String
+  accessToken        String // Encrypted
+  systemUserId       String?
+  webhookVerifyToken String // Encrypted
+  status             String    @default("active")
+  tokenExpiresAt     DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model OAuthToken {
+  id           String        @id @default(uuid())
+  workspaceId  String
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  provider     OAuthProvider
+  accessToken  String        @db.Text // Encrypted
+  refreshToken String?       @db.Text // Encrypted
+  expiresAt    DateTime?
+  scope        String?
+  metadata     Json?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([workspaceId, provider])
+  @@index([workspaceId, provider])
+}
+
+enum OAuthProvider {
+  google_calendar
+  microsoft_calendar
+  gmail
+  outlook
+}
+
+model EmailCredential {
+  id          String        @id @default(uuid())
+  workspaceId String        @unique
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  provider    EmailProvider
+  email       String
+  imapHost    String
+  imapPort    Int
+  smtpHost    String
+  smtpPort    Int
+  username    String
+  password    String // Encrypted
+  useTLS      Boolean       @default(true)
+  lastSyncAt  DateTime?
+  status      String        @default("active")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum EmailProvider {
+  gmail
+  outlook
+  custom
+}
+
+model N8nWorkflow {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workflowId  String    @unique
+  name        String
+  webhookUrl  String?
+  active      Boolean   @default(true)
+  config      Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId, active])
+}
+
+model AuditLog {
+  id           String     @id @default(uuid())
+  workspaceId  String?
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId       String?
+  action       String
+  resource     String
+  resourceId   String?
+  changes      Json?
+  ipAddress    String?
+  userAgent    String?
+  success      Boolean    @default(true)
+  errorMessage String?    @db.Text
+  createdAt    DateTime   @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([action, createdAt])
+  @@index([userId, createdAt])
 }
