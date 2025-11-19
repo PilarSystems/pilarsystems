@@ -530,3 +530,113 @@ model ContactRequest {
   @@index([status, createdAt])
   @@index([email])
 }
+
+model Affiliate {
+  id                  String                @id @default(uuid())
+  email               String                @unique
+  name                String
+  company             String?
+  phone               String?
+  status              AffiliateStatus       @default(pending)
+  commissionSetup     Float                 @default(10) // percentage
+  commissionRecurring Float                 @default(10) // percentage
+  payoutMethod        String? // IBAN, PayPal, etc.
+  payoutDetails       String?               @db.Text // Encrypted
+  notes               String?               @db.Text
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  links               AffiliateLink[]
+  conversions         AffiliateConversion[]
+  payouts             AffiliatePayout[]
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+enum AffiliateStatus {
+  pending
+  active
+  suspended
+  rejected
+}
+
+model AffiliateLink {
+  id          String                @id @default(uuid())
+  affiliateId String
+  affiliate   Affiliate             @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  code        String                @unique
+  name        String
+  url         String?
+  active      Boolean               @default(true)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  clicks      AffiliateClick[]
+  conversions AffiliateConversion[]
+
+  @@index([affiliateId, active])
+  @@index([code])
+}
+
+model AffiliateClick {
+  id              String        @id @default(uuid())
+  affiliateLinkId String
+  affiliateLink   AffiliateLink @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+  ipHash          String // HMAC hash of IP for GDPR compliance
+  userAgent       String?
+  referer         String?
+  landingPage     String?
+  createdAt       DateTime      @default(now())
+
+  @@index([affiliateLinkId, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+model AffiliateConversion {
+  id                      String                    @id @default(uuid())
+  affiliateId             String
+  affiliate               Affiliate                 @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  affiliateLinkId         String
+  affiliateLink           AffiliateLink             @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+  stripeCheckoutSessionId String?                   @unique
+  stripeCustomerId        String?
+  stripeSubscriptionId    String?
+  status                  AffiliateConversionStatus @default(pending)
+  setupFeeAmount          Float?
+  recurringAmount         Float?
+  commissionSetup         Float?
+  commissionRecurring     Float?
+  totalCommission         Float?
+  paidOut                 Boolean                   @default(false)
+  paidOutAt               DateTime?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+
+  @@index([affiliateId, status])
+  @@index([affiliateLinkId, status])
+  @@index([stripeCheckoutSessionId])
+  @@index([paidOut, createdAt])
+}
+
+enum AffiliateConversionStatus {
+  pending
+  approved
+  reversed
+  cancelled
+}
+
+model AffiliatePayout {
+  id          String    @id @default(uuid())
+  affiliateId String
+  affiliate   Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  amount      Float
+  method      String
+  reference   String?
+  status      String    @default("pending") // pending, processing, completed, failed
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+
+  @@index([affiliateId, status])
+  @@index([status, createdAt])
+}
