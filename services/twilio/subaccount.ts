@@ -55,7 +55,8 @@ export class TwilioSubaccountService {
         }
       }
 
-      const subaccount = await this.client.api.v2010.accounts.create({
+      const client = this.getClient()
+      const subaccount = await client.api.v2010.accounts.create({
         friendlyName: config.friendlyName,
       })
 
@@ -147,7 +148,8 @@ export class TwilioSubaccountService {
 
       logger.info({ workspaceId, subaccountSid: subaccount.subaccountSid }, 'Rotating API key')
 
-      const subaccountDetails = await this.client.api.v2010
+      const client = this.getClient()
+      const subaccountDetails = await client.api.v2010
         .accounts(subaccount.subaccountSid)
         .fetch()
 
