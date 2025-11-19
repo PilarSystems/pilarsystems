@@ -3,12 +3,15 @@ import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
 import { getSupabaseAdmin } from '@/lib/supabase';
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY!;
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
-
-const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2025-11-17.clover',
-});
+function getStripeClient(): Stripe {
+  const stripeSecret = process.env.STRIPE_SECRET_KEY;
+  if (!stripeSecret) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(stripeSecret, {
+    apiVersion: '2025-11-17.clover',
+  });
+}
 
 export async function POST(req: NextRequest) {
   const sig = req.headers.get('stripe-signature');
@@ -22,6 +25,11 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
 
   try {
+    const stripe = getStripeClient();
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      throw new Error('STRIPE_WEBHOOK_SECRET is not configured');
+    }
     event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err: any) {
     console.error('❌ Webhook Error:', err.message);
