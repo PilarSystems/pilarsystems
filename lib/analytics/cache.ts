@@ -31,7 +31,8 @@ export async function getCachedAnalytics(workspaceId: string): Promise<Analytics
       return null
     }
 
-    return typeof cached === 'string' ? JSON.parse(cached) : cached
+    const data = typeof cached === 'string' ? JSON.parse(cached) : cached
+    return data as AnalyticsCache
   } catch (error) {
     console.error('Failed to get cached analytics:', error)
     return null
