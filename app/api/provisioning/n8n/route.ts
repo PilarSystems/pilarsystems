@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { n8nWorkflowService } from '@/services/n8n/workflows'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
@@ -12,6 +13,11 @@ const activateSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('n8n')) {
+      logger.warn('n8n workflow activation requested but feature is disabled')
+      return NextResponse.json(disabledFeatureResponse('n8n'), { status: 200 })
+    }
+
     const body = await request.json()
     const data = activateSchema.parse(body)
 
