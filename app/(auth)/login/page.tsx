@@ -28,10 +28,10 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      toast.success('Logged in successfully')
+      toast.success('Erfolgreich angemeldet')
       router.push('/dashboard')
     } catch (error: any) {
-      toast.error(error.message || 'Failed to login')
+      toast.error(error.message || 'Anmeldung fehlgeschlagen')
     } finally {
       setLoading(false)
     }
@@ -50,9 +50,9 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      toast.success('Magic link sent to your email')
+      toast.success('Magic Link wurde an Ihre E-Mail gesendet')
     } catch (error: any) {
-      toast.error(error.message || 'Failed to send magic link')
+      toast.error(error.message || 'Magic Link konnte nicht gesendet werden')
     } finally {
       setLoading(false)
     }
@@ -62,26 +62,26 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
+          <CardTitle className="text-2xl font-bold">Willkommen zurück</CardTitle>
           <CardDescription>
-            Sign in to your PILAR SYSTEMS account
+            Melden Sie sich bei Ihrem PILAR SYSTEMS Konto an
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-Mail</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="ihre@email.de"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Passwort</Label>
               <Input
                 id="password"
                 type="password"
@@ -96,13 +96,13 @@ export default function LoginPage() {
                 href="/reset-password"
                 className="text-sm text-blue-600 hover:underline"
               >
-                Forgot password?
+                Passwort vergessen?
               </Link>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? 'Anmeldung läuft...' : 'Anmelden'}
             </Button>
             <Button
               type="button"
@@ -111,12 +111,12 @@ export default function LoginPage() {
               onClick={handleMagicLink}
               disabled={loading || !email}
             >
-              Send magic link
+              Magic Link senden
             </Button>
             <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
+              Noch kein Konto?{' '}
               <Link href="/signup" className="text-blue-600 hover:underline">
-                Sign up
+                Jetzt registrieren
               </Link>
             </p>
           </CardFooter>

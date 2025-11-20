@@ -23,12 +23,12 @@ export default function SignupPage() {
     e.preventDefault()
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error('Passwörter stimmen nicht überein')
       return
     }
 
     if (password.length < 8) {
-      toast.error('Password must be at least 8 characters')
+      toast.error('Passwort muss mindestens 8 Zeichen lang sein')
       return
     }
 
@@ -49,11 +49,11 @@ export default function SignupPage() {
 
       if (error) throw error
 
-      toast.success('Account created! Please check your email to verify.')
+      toast.success('Konto erstellt! Bitte prüfen Sie Ihre E-Mail zur Verifizierung.')
       
       router.push('/checkout')
     } catch (error: any) {
-      toast.error(error.message || 'Failed to create account')
+      toast.error(error.message || 'Konto konnte nicht erstellt werden')
     } finally {
       setLoading(false)
     }
@@ -63,19 +63,19 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+          <CardTitle className="text-2xl font-bold">Konto erstellen</CardTitle>
           <CardDescription>
-            Start your 14-day free trial with PILAR SYSTEMS
+            Starten Sie jetzt mit PILAR SYSTEMS
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSignup}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="fullName">Vollständiger Name</Label>
               <Input
                 id="fullName"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Max Mustermann"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
@@ -86,25 +86,25 @@ export default function SignupPage() {
               <Input
                 id="studioName"
                 type="text"
-                placeholder="My Fitness Studio"
+                placeholder="Mein Fitness Studio"
                 value={studioName}
                 onChange={(e) => setStudioName(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-Mail</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="ihre@email.de"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Passwort</Label>
               <Input
                 id="password"
                 type="password"
@@ -115,7 +115,7 @@ export default function SignupPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Passwort bestätigen</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -128,16 +128,16 @@ export default function SignupPage() {
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating account...' : 'Create account'}
+              {loading ? 'Konto wird erstellt...' : 'Konto erstellen'}
             </Button>
             <p className="text-sm text-center text-gray-600 dark:text-gray-400">
-              Already have an account?{' '}
+              Bereits ein Konto?{' '}
               <Link href="/login" className="text-blue-600 hover:underline">
-                Sign in
+                Jetzt anmelden
               </Link>
             </p>
             <p className="text-xs text-center text-gray-500 dark:text-gray-500">
-              By signing up, you agree to our Terms of Service and Privacy Policy
+              Mit der Registrierung stimmen Sie unseren AGB und Datenschutzbestimmungen zu
             </p>
           </CardFooter>
         </form>
