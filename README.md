@@ -1,6 +1,10 @@
 # PILAR SYSTEMS - AI-Powered Fitness Studio SaaS Platform
 
-A fully production-ready, automated multichannel AI SaaS platform for fitness studios, built on top of a modern Next.js marketing site template.
+**High-End Mode Enabled** 🚀
+
+Eine vollautomatische SaaS-Plattform für Fitnessstudios im DACH-Raum mit Apple-Style Design, Ultra-Animationen und vollständiger Backend-Automatisierung.
+
+A fully production-ready, automated multichannel AI SaaS platform for fitness studios in the DACH region (Germany, Austria, Switzerland), featuring Apple-style design, ultra-animations, and complete backend automation.
 
 ## 🚀 Schnellstart (Quick Start)
 
@@ -39,10 +43,12 @@ Navigate to [http://localhost:3000/signup](http://localhost:3000/signup) to test
 
 ## Overview
 
-This repository contains two integrated applications:
+This repository contains a fully integrated, production-ready platform:
 
-1. **Marketing Site** (`src/` directory) - Modern Next.js 15 template with 20+ homepage variations
-2. **SaaS Platform** (`app/` directory) - Complete AI-powered fitness studio management system
+1. **Marketing Website** - Apple-style design with ultra-animations, 6 pages, German content, SEO-optimized
+2. **SaaS Platform** - Complete AI-powered fitness studio management system with full automation
+3. **Blog System** - 3 German blog posts with static generation
+4. **Backend Hardening** - Feature flags, graceful degradation, multi-tenant security
 
 ## SaaS Platform Features
 
@@ -74,26 +80,46 @@ This repository contains two integrated applications:
 - Email IMAP/SMTP
 - n8n Automation Workflows
 
-## Marketing Site Features
+## High-End Mode Features
 
-- **20+ Homepage Variations** - Different layouts and styles for various business needs
-- **50+ Inner Pages** - Authentication, pricing, blog, about, services, contact, and more
-- **500+ Components** - Reusable React components with modern design
+### Marketing Website (Apple-Style Design)
+- **6 Marketing Pages** - Home, Pricing, Features, WhatsApp Coach, Solutions, About
+- **Ultra-Animationen** - Framer Motion with AnimatedGradient, DepthCard, MicroButton, ScrollSection
+- **Code-Based Visuals** - No images, all animated components (NodeFlow, AnimatedGradient, etc.)
+- **DACH-Optimized** - Complete German content, conversion-strong copy
+- **SEO-Optimized** - Metadata, OpenGraph, Sitemap, Robots.txt
+- **Blog System** - 3 German blog posts with static generation
 - **Dark/Light Mode** - Seamless theme switching with next-themes
-- **Smooth Animations** - GSAP and Lenis for premium interactions
 - **Responsive Design** - Mobile-first approach with Tailwind CSS
+
+### Motion Primitives Library
+- `PageTransition` - Smooth page transitions
+- `AnimatedGradient` - Animated gradient backgrounds (radial/conic/linear)
+- `DepthCard` - 3D hover effects with depth
+- `MicroButton` - Spring animations on hover
+- `ScrollSection` - Scroll-triggered animations with stagger
+- `NodeFlow` - Animated node graphs
+- `TransitionRoot` - Root-level transition wrapper
+
+### Backend Hardening
+- **Feature Flag System** - Graceful degradation when ENV vars missing
+- **API Protection** - All integration endpoints protected
+- **No Crashes** - Returns 200 with informative message when disabled
+- **Multi-Tenant Safe** - Per-tenant secrets loading
+- **Idempotent Webhooks** - Safe retry handling
 
 ## Tech Stack
 
-- **Frontend**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, shadcn/ui
+- **Frontend**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4
+- **Animations**: Framer Motion 12.23.24 (ultra-animations)
 - **Backend**: Next.js API Routes, Prisma ORM
 - **Database**: PostgreSQL (via Supabase)
 - **Authentication**: Supabase Auth
-- **Payment**: Stripe
-- **AI**: OpenAI GPT-4 and GPT-4o-mini
-- **Animations**: GSAP 3.13, Lenis smooth scrolling
-- **Maps**: Leaflet with React integration
+- **Payment**: Stripe (BASIC €100/mo + €500 setup, PRO €149/mo + €1000 setup)
+- **AI**: OpenAI GPT-4, ElevenLabs Voice AI
+- **Integrations**: Twilio, WhatsApp Business API, Google Calendar, n8n
 - **Deployment**: Vercel
+- **Theme**: next-themes 0.4.6 (dark/light mode)
 
 ## Database Schema
 
