@@ -1,15 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { 
   Container, 
   Section, 
   Heading, 
-  Copy, 
-  GlassCard, 
-  MotionInView 
+  Copy,
 } from '@/components/marketing/core'
+import { 
+  AnimatedGradient,
+  DepthCard,
+  MicroButton,
+  ScrollSection,
+} from '@/components/motion'
 import { 
   Calendar, 
   Clock, 
@@ -22,6 +25,7 @@ import {
   Target
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { marketing } from '@/content/marketing.de'
 
 const blogPosts = [
   {
@@ -100,9 +104,8 @@ export function BlogPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section noPadding className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-background to-brand-cyan-dark/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(79,209,197,0.1),transparent_50%)]" />
+      <Section id="hero" noPadding className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <AnimatedGradient type="radial" className="absolute inset-0 opacity-30" />
         
         <Container className="relative z-10 py-32">
           <motion.div
@@ -122,22 +125,18 @@ export function BlogPage() {
             </motion.div>
 
             <Heading as="h1" size="3xl" className="mb-6">
-              Insights & Best Practices
-              <br />
-              <span className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark bg-clip-text text-transparent">
-                für Fitnessstudios
-              </span>
+              {marketing.blog.hero.title}
             </Heading>
 
             <Copy size="xl" className="max-w-3xl mx-auto" muted>
-              Tipps, Trends und Strategien für erfolgreiches Studio-Management im digitalen Zeitalter
+              {marketing.blog.hero.subtitle}
             </Copy>
           </motion.div>
         </Container>
       </Section>
 
       {/* Categories */}
-      <Section>
+      <Section id="posts">
         <Container>
           <div className="flex flex-wrap gap-3 justify-center mb-16">
             {categories.map((category, i) => (
@@ -166,9 +165,8 @@ export function BlogPage() {
               {blogPosts.filter(post => post.featured).map((post, i) => {
                 const Icon = post.icon
                 return (
-                  <MotionInView key={i} delay={i * 0.1}>
-                    <Link href={`/blog/${post.slug}`}>
-                      <GlassCard className="h-full hover:border-brand-cyan/50 transition-all cursor-pointer group">
+                  <Link key={i} href={`/blog/${post.slug}`}>
+                    <DepthCard className="h-full hover:border-brand-cyan/50 transition-all cursor-pointer group">
                         {/* Icon */}
                         <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-cyan/10 mb-4 group-hover:bg-brand-cyan/20 transition-colors">
                           <Icon className="w-6 h-6 text-brand-cyan" />
@@ -200,11 +198,10 @@ export function BlogPage() {
                           <Clock className="h-4 w-4" />
                           {post.readTime} Lesezeit
                         </div>
-                      </GlassCard>
+                      </DepthCard>
                     </Link>
-                  </MotionInView>
-                )
-              })}
+                  )
+                })}
             </div>
           </div>
 
@@ -217,9 +214,8 @@ export function BlogPage() {
               {blogPosts.map((post, i) => {
                 const Icon = post.icon
                 return (
-                  <MotionInView key={i} delay={i * 0.05}>
-                    <Link href={`/blog/${post.slug}`}>
-                      <GlassCard className="hover:border-brand-cyan/50 transition-all cursor-pointer group">
+                  <Link key={i} href={`/blog/${post.slug}`}>
+                    <DepthCard className="hover:border-brand-cyan/50 transition-all cursor-pointer group">
                         <div className="flex gap-4">
                           {/* Icon */}
                           <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-cyan/10 flex-shrink-0 group-hover:bg-brand-cyan/20 transition-colors">
@@ -255,75 +251,81 @@ export function BlogPage() {
                             </div>
                           </div>
                         </div>
-                      </GlassCard>
+                      </DepthCard>
                     </Link>
-                  </MotionInView>
-                )
-              })}
+                  )
+                })}
             </div>
           </div>
         </Container>
       </Section>
 
       {/* Newsletter CTA */}
-      <Section background="gradient">
+      <Section id="newsletter" background="muted">
         <Container>
-          <MotionInView>
-            <GlassCard className="text-center py-16 border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/10 to-brand-cyan-dark/10">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-cyan/10 mx-auto mb-6">
-                <BookOpen className="w-8 h-8 text-brand-cyan" />
+          <ScrollSection>
+            <DepthCard className="text-center py-16 border-brand-cyan/30 relative overflow-hidden">
+              <AnimatedGradient type="linear" className="absolute inset-0 opacity-20" />
+              <div className="relative z-10">
+                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-cyan/10 mx-auto mb-6">
+                  <BookOpen className="w-8 h-8 text-brand-cyan" />
+                </div>
+                <Heading size="xl" className="mb-4">
+                  Bleib auf dem Laufenden
+                </Heading>
+                <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
+                  Erhalte die neuesten Artikel, Tipps und Insights direkt in dein Postfach
+                </Copy>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                  <input
+                    type="email"
+                    placeholder="deine@email.de"
+                    className="flex-1 px-4 py-3 rounded-lg bg-background border border-border focus:outline-none focus:border-brand-cyan"
+                  />
+                  <MicroButton variant="primary">
+                    Abonnieren
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </MicroButton>
+                </div>
+                <Copy size="sm" muted className="mt-4">
+                  Kein Spam. Jederzeit abmelden.
+                </Copy>
               </div>
-              <Heading size="xl" className="mb-4">
-                Bleib auf dem Laufenden
-              </Heading>
-              <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
-                Erhalte die neuesten Artikel, Tipps und Insights direkt in dein Postfach
-              </Copy>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="deine@email.de"
-                  className="flex-1 px-4 py-3 rounded-lg bg-background border border-border focus:outline-none focus:border-brand-cyan"
-                />
-                <Button className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                  Abonnieren
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-              <Copy size="sm" muted className="mt-4">
-                Kein Spam. Jederzeit abmelden.
-              </Copy>
-            </GlassCard>
-          </MotionInView>
+            </DepthCard>
+          </ScrollSection>
         </Container>
       </Section>
 
       {/* CTA Section */}
-      <Section>
+      <Section id="cta">
         <Container>
-          <MotionInView>
-            <GlassCard className="text-center py-16 border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/10 to-brand-cyan-dark/10">
-              <Heading size="xl" className="mb-4">
-                Bereit, PILAR auszuprobieren?
-              </Heading>
-              <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
-                Starte jetzt und automatisiere dein Fitnessstudio in wenigen Minuten
-              </Copy>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                    Jetzt starten
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/pricing">
-                  <Button size="lg" variant="outline">
-                    Preise ansehen
-                  </Button>
-                </Link>
+          <ScrollSection>
+            <DepthCard className="text-center py-16 border-brand-cyan/30 relative overflow-hidden">
+              <AnimatedGradient type="conic" className="absolute inset-0 opacity-20" />
+              
+              <div className="relative z-10">
+                <Heading size="xl" className="mb-4">
+                  Bereit, PILAR auszuprobieren?
+                </Heading>
+                <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
+                  Starte jetzt und automatisiere dein Fitnessstudio in wenigen Minuten
+                </Copy>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/signup">
+                    <MicroButton variant="primary" size="lg">
+                      Jetzt starten
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </MicroButton>
+                  </Link>
+                  <Link href="/pricing">
+                    <MicroButton variant="secondary" size="lg">
+                      Preise ansehen
+                    </MicroButton>
+                  </Link>
+                </div>
               </div>
-            </GlassCard>
-          </MotionInView>
+            </DepthCard>
+          </ScrollSection>
         </Container>
       </Section>
     </div>

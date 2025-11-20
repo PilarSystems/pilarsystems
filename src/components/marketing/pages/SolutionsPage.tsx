@@ -1,15 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { 
   Container, 
   Section, 
   Heading, 
-  Copy, 
-  GlassCard, 
-  MotionInView 
+  Copy,
 } from '@/components/marketing/core'
+import { 
+  AnimatedGradient,
+  DepthCard,
+  MicroButton,
+  ScrollSection,
+} from '@/components/motion'
 import { 
   Building2, 
   Users, 
@@ -21,6 +24,7 @@ import {
   Shield
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { marketing } from '@/content/marketing.de'
 
 const personas = [
   {
@@ -110,9 +114,8 @@ export function SolutionsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-background to-brand-cyan-dark/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(79,209,197,0.1),transparent_50%)]" />
+      <Section id="hero" noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <AnimatedGradient type="radial" className="absolute inset-0 opacity-30" />
         
         <Container className="relative z-10 py-32">
           <motion.div
@@ -132,15 +135,11 @@ export function SolutionsPage() {
             </motion.div>
 
             <Heading as="h1" size="3xl" className="mb-6">
-              Die perfekte Lösung
-              <br />
-              <span className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark bg-clip-text text-transparent">
-                für dein Business
-              </span>
+              {marketing.solutions.hero.title}
             </Heading>
 
             <Copy size="xl" className="max-w-3xl mx-auto mb-10" muted>
-              Egal ob Einzelstudio, Kette oder Personal Trainer – PILAR passt sich deinen Bedürfnissen an
+              {marketing.solutions.hero.subtitle}
             </Copy>
 
             {/* Quick Stats */}
@@ -173,11 +172,12 @@ export function SolutionsPage() {
 
         return (
           <Section 
-            key={index} 
+            key={index}
+            id={`persona-${index}`}
             background={isEven ? 'default' : 'muted'}
           >
             <Container>
-              <MotionInView>
+              <ScrollSection stagger>
                 {/* Header */}
                 <div className="text-center mb-16">
                   <div className="flex items-center justify-center gap-3 mb-6">
@@ -197,7 +197,7 @@ export function SolutionsPage() {
                 {/* Challenges & Solutions */}
                 <div className="grid md:grid-cols-2 gap-8 mb-12">
                   {/* Challenges */}
-                  <GlassCard className="border-red-500/20 bg-red-500/5">
+                  <DepthCard className="border-red-500/20 bg-red-500/5">
                     <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
                       <Shield className="h-5 w-5 text-red-400" />
                       Deine Herausforderungen
@@ -210,10 +210,10 @@ export function SolutionsPage() {
                         </div>
                       ))}
                     </div>
-                  </GlassCard>
+                  </DepthCard>
 
                   {/* Solutions */}
-                  <GlassCard className="border-brand-cyan/20 bg-brand-cyan/5">
+                  <DepthCard className="border-brand-cyan/20 bg-brand-cyan/5">
                     <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
                       <CheckCircle2 className="h-5 w-5 text-brand-cyan" />
                       PILAR Lösung
@@ -226,19 +226,19 @@ export function SolutionsPage() {
                         </div>
                       ))}
                     </div>
-                  </GlassCard>
+                  </DepthCard>
                 </div>
 
                 {/* Results */}
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   {persona.results.map((result, i) => (
-                    <GlassCard key={i} className="text-center">
+                    <DepthCard key={i} className="text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <TrendingUp className="h-5 w-5 text-brand-cyan" />
                         <div className="text-4xl font-bold text-brand-cyan">{result.metric}</div>
                       </div>
                       <Copy muted>{result.label}</Copy>
-                    </GlassCard>
+                    </DepthCard>
                   ))}
                 </div>
 
@@ -251,21 +251,21 @@ export function SolutionsPage() {
                       <Copy size="sm" className="text-brand-cyan">{persona.price}</Copy>
                     </div>
                     <Link href="/signup">
-                      <Button className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
+                      <MicroButton variant="primary">
                         Jetzt starten
                         <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
+                      </MicroButton>
                     </Link>
                   </div>
                 </div>
-              </MotionInView>
+              </ScrollSection>
             </Container>
           </Section>
         )
       })}
 
       {/* Comparison Table */}
-      <Section background="gradient">
+      <Section id="comparison" background="muted">
         <Container>
           <div className="text-center mb-16">
             <Heading size="xl" className="mb-4">
@@ -328,31 +328,35 @@ export function SolutionsPage() {
       </Section>
 
       {/* Final CTA */}
-      <Section>
+      <Section id="cta">
         <Container>
-          <MotionInView>
-            <GlassCard className="text-center py-16 border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/10 to-brand-cyan-dark/10">
-              <Heading size="xl" className="mb-4">
-                Bereit für deine Lösung?
-              </Heading>
-              <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
-                Starte jetzt und finde heraus, wie PILAR dein Business transformiert
-              </Copy>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                    Jetzt starten
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/pricing">
-                  <Button size="lg" variant="outline">
-                    Preise vergleichen
-                  </Button>
-                </Link>
+          <ScrollSection>
+            <DepthCard className="text-center py-16 border-brand-cyan/30 relative overflow-hidden">
+              <AnimatedGradient type="conic" className="absolute inset-0 opacity-20" />
+              
+              <div className="relative z-10">
+                <Heading size="xl" className="mb-4">
+                  Bereit für deine Lösung?
+                </Heading>
+                <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
+                  Starte jetzt und finde heraus, wie PILAR dein Business transformiert
+                </Copy>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/signup">
+                    <MicroButton variant="primary" size="lg">
+                      Jetzt starten
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </MicroButton>
+                  </Link>
+                  <Link href="/pricing">
+                    <MicroButton variant="secondary" size="lg">
+                      Preise vergleichen
+                    </MicroButton>
+                  </Link>
+                </div>
               </div>
-            </GlassCard>
-          </MotionInView>
+            </DepthCard>
+          </ScrollSection>
         </Container>
       </Section>
     </div>
