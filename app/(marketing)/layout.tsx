@@ -3,6 +3,7 @@ import { Header } from '@/components/marketing/Header'
 import { Footer } from '@/components/marketing/Footer'
 import { ConsentManager } from '@/components/marketing/ConsentManager'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { TransitionRoot } from '@/components/motion/TransitionRoot'
 import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -46,7 +47,7 @@ export default function MarketingLayout({
         >
           <Header />
           <main className="pt-16">
-            {children}
+            <TransitionRoot>{children}</TransitionRoot>
           </main>
           <Footer />
           <ConsentManager />
