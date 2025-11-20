@@ -13,7 +13,7 @@ interface UseParallaxOptions {
    * Reference to the container element
    * If not provided, uses window scroll
    */
-  ref?: RefObject<HTMLElement>
+  ref?: RefObject<HTMLElement | null>
 }
 
 /**
@@ -39,7 +39,7 @@ export function useParallax({ speed = 0.5, ref }: UseParallaxOptions = {}): Moti
  * useScrollProgress - Get scroll progress as a value between 0 and 1
  * Useful for scroll-based animations
  */
-export function useScrollProgress(ref?: RefObject<HTMLElement>): MotionValue<number> {
+export function useScrollProgress(ref?: RefObject<HTMLElement | null>): MotionValue<number> {
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],

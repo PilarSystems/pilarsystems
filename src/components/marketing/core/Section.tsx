@@ -7,6 +7,7 @@ interface SectionProps {
   containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
   noPadding?: boolean
   background?: 'default' | 'muted' | 'gradient'
+  id?: string
 }
 
 const backgroundClasses = {
@@ -21,9 +22,11 @@ export function Section({
   containerSize = 'xl',
   noPadding = false,
   background = 'default',
+  id,
 }: SectionProps) {
   return (
     <section
+      id={id}
       className={cn(
         !noPadding && 'py-16 sm:py-24 lg:py-32',
         backgroundClasses[background],
