@@ -458,9 +458,9 @@ npx ts-node scripts/create-stripe-products.ts
 ```
 
 Das Script erstellt folgende Produkte in Stripe:
-- **PILAR SYSTEMS Basic** - €100/Monat
+- **PILAR SYSTEMS Basic** - €100/Monat (monatlich) oder €85/Monat (jährlich, 15% Rabatt)
 - **PILAR SYSTEMS Basic - Setup Fee** - €500 einmalig
-- **PILAR SYSTEMS Pro** - €149/Monat
+- **PILAR SYSTEMS Pro** - €149/Monat (monatlich) oder €127/Monat (jährlich, 15% Rabatt)
 - **PILAR SYSTEMS Pro - Setup Fee** - €1000 einmalig
 - **WhatsApp Add-on** - €20/Monat
 
@@ -469,8 +469,10 @@ Das Script erstellt folgende Produkte in Stripe:
 2. Kopiere alle Price IDs in deine `.env.local`:
    ```env
    STRIPE_BASIC_PRICE_ID="price_xxxxx"
+   STRIPE_BASIC_YEARLY_PRICE_ID="price_xxxxx"
    STRIPE_BASIC_SETUP_FEE_ID="price_xxxxx"
    STRIPE_PRO_PRICE_ID="price_xxxxx"
+   STRIPE_PRO_YEARLY_PRICE_ID="price_xxxxx"
    STRIPE_PRO_SETUP_FEE_ID="price_xxxxx"
    STRIPE_WHATSAPP_ADDON_PRICE_ID="price_xxxxx"
    ```
