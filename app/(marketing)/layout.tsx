@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import { Header } from '@/components/marketing/Header'
 import { Footer } from '@/components/marketing/Footer'
 import { ConsentManager } from '@/components/marketing/ConsentManager'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,14 +23,34 @@ export default function MarketingLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="de" className="dark">
-      <body className={`${inter.className} bg-black text-white antialiased`}>
-        <Header />
-        <main className="pt-16">
-          {children}
-        </main>
-        <Footer />
-        <ConsentManager />
+    <html lang="de" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <Header />
+          <main className="pt-16">
+            {children}
+          </main>
+          <Footer />
+          <ConsentManager />
+        </ThemeProvider>
       </body>
     </html>
   )

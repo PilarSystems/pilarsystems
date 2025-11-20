@@ -55,6 +55,12 @@ export function ConsentManager() {
       timestamp: Date.now(),
     }
     localStorage.setItem('cookie-consent-v2', JSON.stringify(toSave))
+    
+    if (typeof document !== 'undefined') {
+      document.cookie = `marketing_consent=${toSave.marketing ? '1' : '0'}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`
+      document.cookie = `analytics_consent=${toSave.analytics ? '1' : '0'}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`
+    }
+    
     setPreferences(toSave)
     loadScripts(toSave)
     setShowBanner(false)
