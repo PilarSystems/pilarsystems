@@ -640,3 +640,44 @@ model AffiliatePayout {
   @@index([affiliateId, status])
   @@index([status, createdAt])
 }
+
+// Webhook idempotency and queueing
+model WebhookEvent {
+  id            String   @id @default(uuid())
+  source        String   // stripe, twilio, whatsapp
+  externalId    String   // event.id, CallSid, message.id
+  workspaceId   String?
+  status        String   @default("pending") // pending, processing, completed, failed
+  attempts      Int      @default(0)
+  maxAttempts   Int      @default(3)
+  payload       Json
+  payloadHash   String
+  error         String?  @db.Text
+  processedAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([source, externalId])
+  @@index([workspaceId, status])
+  @@index([status, createdAt])
+}
+
+// WhatsApp conversation state for sequential processing
+model ConversationState {
+  id            String    @id @default(uuid())
+  workspaceId   String
+  leadId        String
+  state         String    @default("idle") // idle, waiting_response, processing
+  lastMessageAt DateTime?
+  nextActionAt  DateTime?
+  lockedAt      DateTime?
+  lockedBy      String?   // process/worker ID
+  retries       Int       @default(0)
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([workspaceId, leadId])
+  @@index([workspaceId, state])
+  @@index([nextActionAt])
+}

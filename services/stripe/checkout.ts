@@ -6,11 +6,12 @@ import { Plan } from '@/types'
 export async function createCheckoutSession(
   workspaceId: string,
   plan: Plan,
+  billingCycle: 'monthly' | 'yearly' = 'monthly',
   whatsappAddon: boolean = false,
   affiliateConversionId?: string
 ) {
   try {
-    logger.info({ workspaceId, plan, whatsappAddon }, 'Creating Stripe checkout session')
+    logger.info({ workspaceId, plan, billingCycle, whatsappAddon }, 'Creating Stripe checkout session')
 
     const workspace = await prisma.workspace.findUnique({
       where: { id: workspaceId },
@@ -27,10 +28,11 @@ export async function createCheckoutSession(
     }
 
     const planConfig = plan === 'BASIC' ? STRIPE_PLANS.BASIC : STRIPE_PLANS.PRO
+    const subscriptionPriceId = billingCycle === 'yearly' ? planConfig.yearlyPriceId : planConfig.priceId
 
     const lineItems: any[] = [
       {
-        price: planConfig.priceId,
+        price: subscriptionPriceId,
         quantity: 1,
       },
       {
@@ -51,6 +53,7 @@ export async function createCheckoutSession(
     const metadata: Record<string, string> = {
       workspaceId,
       plan,
+      billingCycle,
       whatsappAddon: whatsappAddon.toString(),
     }
     

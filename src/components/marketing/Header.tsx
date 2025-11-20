@@ -41,6 +41,9 @@ export function Header() {
             <Link href="/whatsapp-coach" className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors">
               WhatsApp Coach
             </Link>
+            <Link href="/affiliate" className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors">
+              Partnerprogramm
+            </Link>
             <Link href="/about" className="text-sm font-semibold leading-6 text-gray-300 hover:text-white transition-colors">
               About
             </Link>
@@ -107,6 +110,13 @@ export function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     WhatsApp Coach
+                  </Link>
+                  <Link
+                    href="/affiliate"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-300 hover:bg-gray-800"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Partnerprogramm
                   </Link>
                   <Link
                     href="/about"

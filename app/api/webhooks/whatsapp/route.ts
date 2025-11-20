@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { processWhatsAppMessage } from '@/services/ai/whatsapp-ai'
 import { logger } from '@/lib/logger'
 import { WhatsAppWebhookPayload } from '@/types'
+import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
+import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
+import { enqueueWebhook, checkRateLimit } from '@/lib/queue/webhook-queue'
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode')
@@ -27,12 +30,44 @@ export async function POST(request: NextRequest) {
       for (const change of entry.changes) {
         if (change.value.messages) {
           for (const message of change.value.messages) {
-            const workspaceId = 'placeholder-workspace-id'
+            const phoneNumberId = change.value.metadata.phone_number_id
+            const workspaceId = await resolveTenantFromWebhook('whatsapp', phoneNumberId)
 
-            await processWhatsAppMessage(
+            if (!workspaceId) {
+              logger.warn(
+                { phoneNumberId },
+                'No workspace found for WhatsApp phone number'
+              )
+              continue
+            }
+
+            const rateLimit = await checkRateLimit(workspaceId, 'whatsapp_inbound')
+            if (!rateLimit.success) {
+              logger.warn(
+                { workspaceId, remaining: rateLimit.remaining },
+                'WhatsApp rate limit exceeded'
+              )
+              continue
+            }
+
+            await enqueueWebhook(workspaceId, 'whatsapp', {
+              message,
+              phoneNumberId,
+              from: message.from
+            })
+
+            await processWebhookWithIdempotency(
+              'whatsapp',
+              message.id,
               workspaceId,
-              message.from,
-              message.text.body
+              message,
+              async () => {
+                await processWhatsAppMessage(
+                  workspaceId,
+                  message.from,
+                  message.text.body
+                )
+              }
             )
           }
         }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { getSupabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -47,7 +48,15 @@ export default function SignupPage() {
         },
       })
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('User already registered')) {
+          throw new Error('Diese E-Mail-Adresse ist bereits registriert')
+        }
+        if (error.message.includes('Password should be at least')) {
+          throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
+        }
+        throw error
+      }
 
       toast.success('Konto erstellt! Bitte prüfen Sie Ihre E-Mail zur Verifizierung.')
       
@@ -60,8 +69,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-black to-gray-900 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+        <Card className="w-full bg-gray-900 border-gray-800">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Konto erstellen</CardTitle>
           <CardDescription>
@@ -142,6 +157,7 @@ export default function SignupPage() {
           </CardFooter>
         </form>
       </Card>
+      </motion.div>
     </div>
   )
 }
