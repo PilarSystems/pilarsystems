@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { whatsappAutomationService } from '@/services/whatsapp/automation'
 import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { z } from 'zod'
 
 const provisionSchema = z.object({
@@ -20,6 +21,11 @@ const provisionSchema = z.object({
  */
 export async function POST(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('whatsapp')) {
+      logger.warn('WhatsApp provisioning requested but feature is disabled')
+      return NextResponse.json(disabledFeatureResponse('whatsapp'), { status: 200 })
+    }
+
     const body = await request.json()
     const data = provisionSchema.parse(body)
 

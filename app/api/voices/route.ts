@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getVoices } from '@/services/voice/elevenlabs'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { logger } from '@/lib/logger'
 
 /**
@@ -8,6 +9,11 @@ import { logger } from '@/lib/logger'
  */
 export async function GET(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('elevenlabs')) {
+      logger.warn('Voice list requested but ElevenLabs is disabled')
+      return NextResponse.json(disabledFeatureResponse('elevenlabs'), { status: 200 })
+    }
+
     const voices = await getVoices()
     
     const simplifiedVoices = voices.map(voice => ({

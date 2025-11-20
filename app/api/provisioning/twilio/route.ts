@@ -5,6 +5,7 @@ import { twilioNumberProvisioner } from '@/services/twilio/number-provisioner'
 import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
 import { getCachedConfig } from '@/lib/config/env'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { z } from 'zod'
 
 const provisionSchema = z.object({
@@ -17,6 +18,11 @@ const provisionSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('twilio')) {
+      logger.warn('Twilio provisioning requested but feature is disabled')
+      return NextResponse.json(disabledFeatureResponse('twilio'), { status: 200 })
+    }
+
     const config = getCachedConfig()
     if (!config.twilioEnabled) {
       logger.warn('Twilio auto-provisioning requested but master credentials not configured')

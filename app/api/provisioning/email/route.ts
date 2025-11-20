@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { emailAutomationService } from '@/services/email/automation'
 import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { z } from 'zod'
 
 const provisionSchema = z.object({
@@ -20,6 +21,11 @@ const provisionSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('google_email')) {
+      logger.warn('Email provisioning requested but feature is disabled')
+      return NextResponse.json(disabledFeatureResponse('google_email'), { status: 200 })
+    }
+
     const body = await request.json()
     const data = provisionSchema.parse(body)
 

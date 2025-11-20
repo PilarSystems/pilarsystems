@@ -1,10 +1,16 @@
 export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { calendarOAuthService } from '@/services/calendar/oauth'
+import { isFeatureEnabled, disabledFeatureResponse } from '@/lib/features'
 import { logger } from '@/lib/logger'
 
 export async function GET(request: NextRequest) {
   try {
+    if (!isFeatureEnabled('google_calendar')) {
+      logger.warn('Calendar provisioning requested but feature is disabled')
+      return NextResponse.json(disabledFeatureResponse('google_calendar'), { status: 200 })
+    }
+
     const { searchParams } = new URL(request.url)
     const workspaceId = searchParams.get('workspaceId')
     const action = searchParams.get('action')
