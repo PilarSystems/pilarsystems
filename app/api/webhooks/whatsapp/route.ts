@@ -3,8 +3,10 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { processWhatsAppMessage } from '@/services/ai/whatsapp-ai'
 import { logger } from '@/lib/logger'
-import { prisma } from '@/lib/prisma'
 import { WhatsAppWebhookPayload } from '@/types'
+import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
+import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
+import { enqueueWebhook, checkRateLimit } from '@/lib/queue/webhook-queue'
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode')
@@ -28,28 +30,44 @@ export async function POST(request: NextRequest) {
       for (const change of entry.changes) {
         if (change.value.messages) {
           for (const message of change.value.messages) {
-            const integration = await prisma.integration.findFirst({
-              where: {
-                type: 'whatsapp',
-                status: 'active',
-              },
-              include: {
-                workspace: true,
-              },
-            })
+            const phoneNumberId = change.value.metadata.phone_number_id
+            const workspaceId = await resolveTenantFromWebhook('whatsapp', phoneNumberId)
 
-            if (!integration) {
+            if (!workspaceId) {
               logger.warn(
-                { phoneNumberId: change.value.metadata.phone_number_id },
-                'No active WhatsApp integration found'
+                { phoneNumberId },
+                'No workspace found for WhatsApp phone number'
               )
               continue
             }
 
-            await processWhatsAppMessage(
-              integration.workspace.id,
-              message.from,
-              message.text.body
+            const rateLimit = await checkRateLimit(workspaceId, 'whatsapp_inbound')
+            if (!rateLimit.success) {
+              logger.warn(
+                { workspaceId, remaining: rateLimit.remaining },
+                'WhatsApp rate limit exceeded'
+              )
+              continue
+            }
+
+            await enqueueWebhook(workspaceId, 'whatsapp', {
+              message,
+              phoneNumberId,
+              from: message.from
+            })
+
+            await processWebhookWithIdempotency(
+              'whatsapp',
+              message.id,
+              workspaceId,
+              message,
+              async () => {
+                await processWhatsAppMessage(
+                  workspaceId,
+                  message.from,
+                  message.text.body
+                )
+              }
             )
           }
         }

@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getStripe } from '@/lib/stripe'
 import { handleStripeWebhook } from '@/services/stripe/webhooks'
 import { logger } from '@/lib/logger'
+import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
+import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
+import { enqueueWebhook } from '@/lib/queue/webhook-queue'
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +24,24 @@ export async function POST(request: NextRequest) {
       process.env.STRIPE_WEBHOOK_SECRET!
     )
 
-    await handleStripeWebhook(event)
+    logger.info({ eventType: event.type, eventId: event.id }, 'Received Stripe webhook')
+
+    const customerId = (event.data.object as any).customer || (event.data.object as any).id
+    const workspaceId = customerId ? await resolveTenantFromWebhook('stripe', customerId) : null
+
+    if (workspaceId) {
+      await enqueueWebhook(workspaceId, 'stripe', event)
+    }
+
+    await processWebhookWithIdempotency(
+      'stripe',
+      event.id,
+      workspaceId,
+      event,
+      async () => {
+        await handleStripeWebhook(event)
+      }
+    )
 
     return NextResponse.json({ received: true })
   } catch (error) {
