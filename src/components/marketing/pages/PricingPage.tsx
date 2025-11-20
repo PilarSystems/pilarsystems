@@ -1,18 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { 
   Container, 
   Section, 
   Heading, 
-  Copy, 
-  GlassCard, 
-  MotionInView 
+  Copy,
 } from '@/components/marketing/core'
+import { 
+  AnimatedGradient,
+  DepthCard,
+  MicroButton,
+  ScrollSection,
+} from '@/components/motion'
 import { CheckCircle2, ArrowRight, Zap, HelpCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { marketing } from '@/content/marketing.de'
 
 const plans = {
   basic: {
@@ -127,12 +131,14 @@ const faqs = [
 export function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
 
+  const basicPrice = billingCycle === 'yearly' ? '€85' : '€100'
+  const proPrice = billingCycle === 'yearly' ? '€127' : '€149'
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-background to-brand-cyan-dark/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(79,209,197,0.1),transparent_50%)]" />
+      <Section id="hero" noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <AnimatedGradient type="radial" className="absolute inset-0 opacity-30" />
         
         <Container className="relative z-10 py-32">
           <motion.div
@@ -152,11 +158,11 @@ export function PricingPage() {
             </motion.div>
 
             <Heading as="h1" size="3xl" className="mb-6">
-              Einfache, faire Preise
+              {marketing.pricing.hero.title}
             </Heading>
 
             <Copy size="xl" className="max-w-2xl mx-auto mb-10" muted>
-              Keine versteckten Kosten. Keine Überraschungen. Monatlich kündbar.
+              {marketing.pricing.hero.subtitle}
             </Copy>
 
             {/* Billing Toggle */}
@@ -174,7 +180,7 @@ export function PricingPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Monatlich
+                {marketing.pricing.billing.monthly}
               </button>
               <button
                 onClick={() => setBillingCycle('yearly')}
@@ -184,9 +190,9 @@ export function PricingPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Jährlich
+                {marketing.pricing.billing.yearly}
                 <span className="ml-2 text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">
-                  -15%
+                  {marketing.pricing.billing.save}
                 </span>
               </button>
             </motion.div>
@@ -195,38 +201,34 @@ export function PricingPage() {
       </Section>
 
       {/* Pricing Cards */}
-      <Section>
+      <Section id="plans">
         <Container>
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Basic Plan */}
-            <MotionInView>
-              <GlassCard className="h-full flex flex-col">
+          <ScrollSection stagger>
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {/* Basic Plan */}
+              <DepthCard className="h-full flex flex-col">
                 <div className="mb-8">
-                  <h3 className="text-3xl font-bold mb-2">{plans.basic.name}</h3>
-                  <Copy muted>{plans.basic.tagline}</Copy>
+                  <h3 className="text-3xl font-bold mb-2">{marketing.pricing.plans.basic.name}</h3>
+                  <Copy muted>{marketing.pricing.plans.basic.description}</Copy>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-6xl font-bold">
-                      {billingCycle === 'yearly' 
-                        ? Math.round(plans.basic.monthly * 0.85)
-                        : plans.basic.monthly}€
-                    </span>
+                    <span className="text-6xl font-bold">{basicPrice}</span>
                     <span className="text-xl text-muted-foreground">/Monat</span>
                   </div>
                   <Copy size="sm" muted>
-                    + {plans.basic.setup}€ Setup-Gebühr (einmalig)
+                    {marketing.pricing.plans.basic.setup}
                   </Copy>
                   {billingCycle === 'yearly' && (
                     <Copy size="sm" className="text-green-400 mt-1">
-                      Spare {(plans.basic.monthly * 12 * 0.15).toFixed(0)}€ pro Jahr
+                      Spare €180 pro Jahr
                     </Copy>
                   )}
                 </div>
 
                 <div className="space-y-3 mb-8 flex-1">
-                  {plans.basic.features.map((feature, i) => (
+                  {marketing.pricing.plans.basic.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-cyan flex-shrink-0 mt-0.5" />
                       <Copy size="md">{feature}</Copy>
@@ -235,49 +237,41 @@ export function PricingPage() {
                 </div>
 
                 <Link href="/signup" className="block">
-                  <Button className="w-full" variant="outline">
+                  <MicroButton variant="secondary" size="lg" className="w-full">
                     Jetzt starten
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  </MicroButton>
                 </Link>
-              </GlassCard>
-            </MotionInView>
+              </DepthCard>
 
-            {/* Pro Plan */}
-            <MotionInView delay={0.1}>
-              <GlassCard className="h-full flex flex-col border-brand-cyan/50 bg-brand-cyan/5 relative">
-                {plans.pro.recommended && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-sm font-semibold text-white shadow-lg">
-                    ⭐ Empfohlen
-                  </div>
-                )}
+              {/* Pro Plan */}
+              <DepthCard className="h-full flex flex-col border-brand-cyan/50 bg-brand-cyan/5 relative">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-gradient-to-r from-brand-cyan to-brand-cyan-dark text-sm font-semibold text-white shadow-lg">
+                  ⭐ Empfohlen
+                </div>
 
                 <div className="mb-8">
-                  <h3 className="text-3xl font-bold mb-2">{plans.pro.name}</h3>
-                  <Copy muted>{plans.pro.tagline}</Copy>
+                  <h3 className="text-3xl font-bold mb-2">{marketing.pricing.plans.pro.name}</h3>
+                  <Copy muted>{marketing.pricing.plans.pro.description}</Copy>
                 </div>
 
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-6xl font-bold">
-                      {billingCycle === 'yearly' 
-                        ? Math.round(plans.pro.monthly * 0.85)
-                        : plans.pro.monthly}€
-                    </span>
+                    <span className="text-6xl font-bold">{proPrice}</span>
                     <span className="text-xl text-muted-foreground">/Monat</span>
                   </div>
                   <Copy size="sm" muted>
-                    + {plans.pro.setup}€ Setup-Gebühr (einmalig)
+                    {marketing.pricing.plans.pro.setup}
                   </Copy>
                   {billingCycle === 'yearly' && (
                     <Copy size="sm" className="text-green-400 mt-1">
-                      Spare {(plans.pro.monthly * 12 * 0.15).toFixed(0)}€ pro Jahr
+                      Spare €264 pro Jahr
                     </Copy>
                   )}
                 </div>
 
                 <div className="space-y-3 mb-8 flex-1">
-                  {plans.pro.features.map((feature, i) => (
+                  {marketing.pricing.plans.pro.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-brand-cyan flex-shrink-0 mt-0.5" />
                       <Copy size="md">{feature}</Copy>
@@ -286,109 +280,88 @@ export function PricingPage() {
                 </div>
 
                 <Link href="/signup" className="block">
-                  <Button className="w-full bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
+                  <MicroButton variant="primary" size="lg" className="w-full">
                     Jetzt starten
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  </MicroButton>
                 </Link>
-              </GlassCard>
-            </MotionInView>
-          </div>
+              </DepthCard>
+            </div>
 
-          {/* WhatsApp Add-on */}
-          <MotionInView className="mt-12 max-w-3xl mx-auto">
-            <GlassCard>
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-2">WhatsApp Add-on</h3>
-                  <Copy muted>Für Basic-Kunden, die WhatsApp AI nutzen möchten</Copy>
+            {/* WhatsApp Add-on */}
+            <div className="mt-12 max-w-3xl mx-auto">
+              <DepthCard>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold mb-2">{marketing.pricing.addon.title}</h3>
+                    <Copy muted>{marketing.pricing.addon.description}</Copy>
+                  </div>
+                  <div className="text-center md:text-right">
+                    <div className="text-4xl font-bold mb-1">{marketing.pricing.addon.price}</div>
+                    <Copy muted>/Monat</Copy>
+                  </div>
                 </div>
-                <div className="text-center md:text-right">
-                  <div className="text-4xl font-bold mb-1">20€</div>
-                  <Copy muted>/Monat</Copy>
-                </div>
-              </div>
-            </GlassCard>
-          </MotionInView>
-        </Container>
-      </Section>
-
-      {/* What's Included in Setup */}
-      <Section background="muted">
-        <Container>
-          <div className="text-center mb-16">
-            <Heading size="xl" className="mb-4">
-              Was ist im Setup enthalten?
-            </Heading>
-            <Copy size="lg" muted className="max-w-2xl mx-auto">
-              Einmalige Setup-Gebühr für vollständige Konfiguration
-            </Copy>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {setupIncludes.map((item, i) => (
-              <MotionInView key={i} delay={i * 0.05}>
-                <GlassCard>
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <Copy size="sm" muted>{item.desc}</Copy>
-                </GlassCard>
-              </MotionInView>
-            ))}
-          </div>
+              </DepthCard>
+            </div>
+          </ScrollSection>
         </Container>
       </Section>
 
       {/* FAQ Section */}
-      <Section>
+      <Section id="faq" background="muted">
         <Container size="lg">
-          <div className="text-center mb-16">
-            <Heading size="xl" className="mb-4">
-              Häufige Fragen zu Preisen
-            </Heading>
-          </div>
+          <ScrollSection stagger>
+            <div className="text-center mb-16">
+              <Heading size="xl" className="mb-4">
+                {marketing.pricing.faq.title}
+              </Heading>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {faqs.map((faq, i) => (
-              <MotionInView key={i} delay={i * 0.05}>
-                <GlassCard>
+            <div className="grid md:grid-cols-2 gap-6">
+              {marketing.pricing.faq.items.map((faq, i) => (
+                <DepthCard key={i}>
                   <div className="flex items-start gap-3 mb-3">
                     <HelpCircle className="h-5 w-5 text-brand-cyan flex-shrink-0 mt-0.5" />
-                    <h3 className="text-lg font-semibold">{faq.q}</h3>
+                    <h3 className="text-lg font-semibold">{faq.question}</h3>
                   </div>
-                  <Copy size="md" muted>{faq.a}</Copy>
-                </GlassCard>
-              </MotionInView>
-            ))}
-          </div>
+                  <Copy size="md" muted>{faq.answer}</Copy>
+                </DepthCard>
+              ))}
+            </div>
+          </ScrollSection>
         </Container>
       </Section>
 
       {/* CTA Section */}
-      <Section background="gradient">
+      <Section id="cta">
         <Container>
-          <MotionInView>
-            <GlassCard className="text-center py-16 border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/10 to-brand-cyan-dark/10">
-              <Heading size="xl" className="mb-4">
-                Bereit zu starten?
-              </Heading>
-              <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
-                Buche jetzt deine Demo und erlebe PILAR in Aktion.
-              </Copy>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                    Jetzt Demo buchen
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/contact">
-                  <Button size="lg" variant="outline">
-                    Fragen? Kontakt aufnehmen
-                  </Button>
-                </Link>
+          <ScrollSection>
+            <DepthCard className="text-center py-16 border-brand-cyan/30 relative overflow-hidden">
+              <AnimatedGradient type="conic" className="absolute inset-0 opacity-20" />
+              
+              <div className="relative z-10">
+                <Heading size="xl" className="mb-4">
+                  Bereit zu starten?
+                </Heading>
+                <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
+                  Buche jetzt deine Demo und erlebe PILAR in Aktion.
+                </Copy>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/signup">
+                    <MicroButton variant="primary" size="lg">
+                      Jetzt Demo buchen
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </MicroButton>
+                  </Link>
+                  <Link href="/contact">
+                    <MicroButton variant="secondary" size="lg">
+                      Fragen? Kontakt aufnehmen
+                    </MicroButton>
+                  </Link>
+                </div>
               </div>
-            </GlassCard>
-          </MotionInView>
+            </DepthCard>
+          </ScrollSection>
         </Container>
       </Section>
     </div>
