@@ -306,12 +306,12 @@ export default function PricingPage() {
               Bereit zu starten?
             </h2>
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              Buche jetzt deine Demo und erlebe PILAR in Aktion.
+              Starte jetzt und erlebe PILAR in Aktion.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup">
                 <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                  Jetzt Demo buchen
+                  Jetzt starten
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>

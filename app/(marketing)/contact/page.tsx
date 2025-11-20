@@ -98,7 +98,7 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-bold text-white mb-6">Demo buchen</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">Jetzt starten</h2>
               <p className="text-gray-400 mb-8">
                 Fülle das Formular aus und wir melden uns innerhalb von 24 Stunden bei dir.
               </p>
@@ -220,7 +220,7 @@ export default function ContactPage() {
                     size="lg"
                     className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
                   >
-                    Demo buchen
+                    Jetzt starten
                     <Send className="ml-2 h-5 w-5" />
                   </Button>
 

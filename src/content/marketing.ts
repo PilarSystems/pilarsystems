@@ -318,7 +318,7 @@ export const faq = [
   {
     id: 7,
     question: 'Gibt es einen Testzeitraum?',
-    answer: 'Wir bieten aktuell keinen kostenlosen Testzeitraum an, aber du kannst jederzeit eine Demo buchen, um das System live zu sehen. Die Setup-Gebühr deckt das initiale Onboarding ab.',
+    answer: 'Wir bieten aktuell keinen kostenlosen Testzeitraum an, aber du kannst jederzeit starten und das System live erleben. Die Setup-Gebühr deckt das initiale Onboarding ab.',
   },
   {
     id: 8,

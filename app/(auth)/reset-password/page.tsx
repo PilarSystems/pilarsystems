@@ -26,9 +26,9 @@ export default function ResetPasswordPage() {
       if (error) throw error
 
       setSent(true)
-      toast.success('Password reset link sent to your email')
+      toast.success('Passwort-Reset-Link wurde an Ihre E-Mail gesendet')
     } catch (error: any) {
-      toast.error(error.message || 'Failed to send reset link')
+      toast.error(error.message || 'Reset-Link konnte nicht gesendet werden')
     } finally {
       setLoading(false)
     }
@@ -39,20 +39,20 @@ export default function ResetPasswordPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Check your email</CardTitle>
+            <CardTitle className="text-2xl font-bold">E-Mail prüfen</CardTitle>
             <CardDescription>
-              We've sent a password reset link to {email}
+              Wir haben einen Passwort-Reset-Link an {email} gesendet
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Click the link in the email to reset your password. The link will expire in 1 hour.
+              Klicken Sie auf den Link in der E-Mail, um Ihr Passwort zurückzusetzen. Der Link läuft in 1 Stunde ab.
             </p>
           </CardContent>
           <CardFooter>
             <Link href="/login" className="w-full">
               <Button variant="outline" className="w-full">
-                Back to login
+                Zurück zur Anmeldung
               </Button>
             </Link>
           </CardFooter>
@@ -65,19 +65,19 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Reset password</CardTitle>
+          <CardTitle className="text-2xl font-bold">Passwort zurücksetzen</CardTitle>
           <CardDescription>
-            Enter your email address and we'll send you a reset link
+            Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Reset-Link
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleResetPassword}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-Mail</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="ihre@email.de"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -86,11 +86,11 @@ export default function ResetPasswordPage() {
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Sending...' : 'Send reset link'}
+              {loading ? 'Wird gesendet...' : 'Reset-Link senden'}
             </Button>
             <Link href="/login" className="w-full">
               <Button variant="outline" className="w-full">
-                Back to login
+                Zurück zur Anmeldung
               </Button>
             </Link>
           </CardFooter>
