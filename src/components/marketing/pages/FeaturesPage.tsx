@@ -1,17 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { 
   Container, 
   Section, 
   Heading, 
-  Copy, 
-  GlassCard, 
-  MotionInView,
-  DeviceFrame,
-  CodeMockup
+  Copy,
 } from '@/components/marketing/core'
+import { 
+  AnimatedGradient,
+  DepthCard,
+  MicroButton,
+  ScrollSection,
+} from '@/components/motion'
 import { 
   Phone, 
   MessageSquare, 
@@ -29,6 +30,7 @@ import {
   CheckCircle2
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { marketing } from '@/content/marketing.de'
 
 const features = [
   {
@@ -183,9 +185,8 @@ export function FeaturesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-background to-brand-cyan-dark/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(79,209,197,0.1),transparent_50%)]" />
+      <Section id="hero" noPadding className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <AnimatedGradient type="radial" className="absolute inset-0 opacity-30" />
         
         <Container className="relative z-10 py-32">
           <motion.div
@@ -201,20 +202,15 @@ export function FeaturesPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 mb-8"
             >
               <Bot className="h-4 w-4 text-brand-cyan" />
-              <span className="text-sm font-medium text-brand-cyan">Vollautomatische AI Features</span>
+              <span className="text-sm font-medium text-brand-cyan">Vollautomatische KI Features</span>
             </motion.div>
 
             <Heading as="h1" size="3xl" className="mb-6">
-              Features, die dein Studio
-              <br />
-              <span className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark bg-clip-text text-transparent">
-                revolutionieren
-              </span>
+              {marketing.features.hero.title}
             </Heading>
 
             <Copy size="xl" className="max-w-3xl mx-auto mb-10" muted>
-              Jedes Feature ist darauf ausgelegt, dir Zeit zu sparen und mehr Leads zu konvertieren. 
-              Keine Spielerei – nur echte Automatisierung.
+              {marketing.features.hero.subtitle}
             </Copy>
 
             {/* Quick Stats */}
@@ -254,123 +250,126 @@ export function FeaturesPage() {
         return (
           <Section 
             key={index} 
+            id={`feature-${index}`}
             background={isEven ? 'default' : 'muted'}
           >
             <Container>
-              <div className={`grid md:grid-cols-2 gap-12 items-center ${!isEven && 'md:flex-row-reverse'}`}>
-                {/* Content */}
-                <MotionInView className={!isEven ? 'md:order-2' : ''}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-cyan/10">
-                      <Icon className="w-6 h-6 text-brand-cyan" />
-                    </div>
-                    <Heading size="lg">{feature.title}</Heading>
-                  </div>
-
-                  <Copy size="xl" className="mb-4 font-semibold text-brand-cyan">
-                    {feature.tagline}
-                  </Copy>
-
-                  <Copy size="lg" muted className="mb-8">
-                    {feature.description}
-                  </Copy>
-
-                  <div className="space-y-3 mb-8">
-                    {feature.benefits.map((benefit, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-brand-cyan flex-shrink-0 mt-0.5" />
-                        <Copy size="md">{benefit}</Copy>
+              <ScrollSection stagger>
+                <div className={`grid md:grid-cols-2 gap-12 items-center ${!isEven && 'md:flex-row-reverse'}`}>
+                  {/* Content */}
+                  <div className={!isEven ? 'md:order-2' : ''}>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-cyan/10">
+                        <Icon className="w-6 h-6 text-brand-cyan" />
                       </div>
-                    ))}
+                      <Heading size="lg">{feature.title}</Heading>
+                    </div>
+
+                    <Copy size="xl" className="mb-4 font-semibold text-brand-cyan">
+                      {feature.tagline}
+                    </Copy>
+
+                    <Copy size="lg" muted className="mb-8">
+                      {feature.description}
+                    </Copy>
+
+                    <div className="space-y-3 mb-8">
+                      {feature.benefits.map((benefit, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-brand-cyan flex-shrink-0 mt-0.5" />
+                          <Copy size="md">{benefit}</Copy>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Link href="/signup">
+                      <MicroButton variant="primary">
+                        Feature testen
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </MicroButton>
+                    </Link>
                   </div>
 
-                  <Link href="/signup">
-                    <Button className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                      Feature testen
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </MotionInView>
-
-                {/* Visual */}
-                <MotionInView delay={0.2} className={!isEven ? 'md:order-1' : ''}>
-                  {index < 3 ? (
-                    <DeviceFrame type="phone">
-                      <div className="w-full h-full bg-gradient-to-br from-brand-cyan/20 to-brand-cyan-dark/20 flex items-center justify-center p-6">
+                  {/* Visual */}
+                  <div className={!isEven ? 'md:order-1' : ''}>
+                    <DepthCard className="p-8">
+                      <div className="w-full h-64 bg-gradient-to-br from-brand-cyan/20 to-brand-cyan-dark/20 rounded-lg flex items-center justify-center">
                         <Icon className="w-24 h-24 text-brand-cyan opacity-50" />
                       </div>
-                    </DeviceFrame>
-                  ) : (
-                    <CodeMockup code={feature.codeExample} language="typescript" />
-                  )}
-                </MotionInView>
-              </div>
+                    </DepthCard>
+                  </div>
+                </div>
+              </ScrollSection>
             </Container>
           </Section>
         )
       })}
 
       {/* Integration Section */}
-      <Section background="gradient">
+      <Section id="integrations" background="muted">
         <Container>
-          <div className="text-center mb-16">
-            <Heading size="xl" className="mb-4">
-              Nahtlose Integrationen
-            </Heading>
-            <Copy size="lg" muted className="max-w-2xl mx-auto">
-              PILAR integriert sich mit deinen bestehenden Tools
-            </Copy>
-          </div>
+          <ScrollSection stagger>
+            <div className="text-center mb-16">
+              <Heading size="xl" className="mb-4">
+                Nahtlose Integrationen
+              </Heading>
+              <Copy size="lg" muted className="max-w-2xl mx-auto">
+                PILAR integriert sich mit deinen bestehenden Tools
+              </Copy>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { name: 'Google Calendar', desc: 'Automatische Terminverwaltung' },
-              { name: 'Stripe', desc: 'Zahlungsabwicklung & Abos' },
-              { name: 'Twilio', desc: 'Phone & WhatsApp Backend' },
-              { name: 'OpenAI', desc: 'GPT-4 AI Engine' },
-              { name: 'SendGrid', desc: 'Email Versand' },
-              { name: 'Zapier', desc: 'Custom Workflows' }
-            ].map((integration, i) => (
-              <MotionInView key={i} delay={i * 0.05}>
-                <GlassCard>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { name: 'Google Calendar', desc: 'Automatische Terminverwaltung' },
+                { name: 'Stripe', desc: 'Zahlungsabwicklung & Abos' },
+                { name: 'Twilio', desc: 'Phone & WhatsApp Backend' },
+                { name: 'OpenAI', desc: 'GPT-4 KI Engine' },
+                { name: 'SendGrid', desc: 'Email Versand' },
+                { name: 'Zapier', desc: 'Custom Workflows' }
+              ].map((integration, i) => (
+                <DepthCard key={i}>
                   <div className="flex items-center gap-3 mb-2">
                     <Globe className="h-5 w-5 text-brand-cyan" />
                     <h3 className="text-lg font-semibold">{integration.name}</h3>
                   </div>
                   <Copy size="sm" muted>{integration.desc}</Copy>
-                </GlassCard>
-              </MotionInView>
-            ))}
-          </div>
+                </DepthCard>
+              ))}
+            </div>
+          </ScrollSection>
         </Container>
       </Section>
 
       {/* CTA Section */}
-      <Section>
+      <Section id="cta">
         <Container>
-          <MotionInView>
-            <GlassCard className="text-center py-16 border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/10 to-brand-cyan-dark/10">
-              <Heading size="xl" className="mb-4">
-                Bereit, alle Features zu nutzen?
-              </Heading>
-              <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
-                Starte jetzt und automatisiere dein Fitnessstudio in wenigen Minuten
-              </Copy>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/signup">
-                  <Button size="lg" className="bg-gradient-to-r from-brand-cyan to-brand-cyan-dark hover:opacity-90">
-                    Jetzt starten
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/pricing">
-                  <Button size="lg" variant="outline">
-                    Preise ansehen
-                  </Button>
-                </Link>
+          <ScrollSection>
+            <DepthCard className="text-center py-16 border-brand-cyan/30 relative overflow-hidden">
+              <AnimatedGradient type="conic" className="absolute inset-0 opacity-20" />
+              
+              <div className="relative z-10">
+                <Heading size="xl" className="mb-4">
+                  Bereit, alle Features zu nutzen?
+                </Heading>
+                <Copy size="lg" muted className="max-w-2xl mx-auto mb-8">
+                  Starte jetzt und automatisiere dein Fitnessstudio in wenigen Minuten
+                </Copy>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/signup">
+                    <MicroButton variant="primary" size="lg">
+                      Jetzt starten
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </MicroButton>
+                  </Link>
+                  <Link href="/pricing">
+                    <MicroButton variant="secondary" size="lg">
+                      Preise ansehen
+                    </MicroButton>
+                  </Link>
+                </div>
               </div>
-            </GlassCard>
-          </MotionInView>
+            </DepthCard>
+          </ScrollSection>
         </Container>
       </Section>
     </div>
