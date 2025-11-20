@@ -57,7 +57,7 @@ export function Header() {
             </Link>
             <Link href="/signup">
               <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                Demo buchen
+                Jetzt starten
               </Button>
             </Link>
           </div>
@@ -136,7 +136,7 @@ export function Header() {
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-center bg-gradient-to-r from-cyan-500 to-blue-600 text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Demo buchen
+                    Jetzt starten
                   </Link>
                 </div>
               </div>
