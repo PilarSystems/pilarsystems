@@ -28,22 +28,26 @@ export async function POST(request: NextRequest) {
       for (const change of entry.changes) {
         if (change.value.messages) {
           for (const message of change.value.messages) {
-            const workspace = await prisma.workspace.findFirst({
+            const integration = await prisma.integration.findFirst({
               where: {
-                whatsappPhoneNumberId: change.value.metadata.phone_number_id,
+                type: 'whatsapp',
+                status: 'active',
+              },
+              include: {
+                workspace: true,
               },
             })
 
-            if (!workspace) {
+            if (!integration) {
               logger.warn(
                 { phoneNumberId: change.value.metadata.phone_number_id },
-                'No workspace found for WhatsApp phone number'
+                'No active WhatsApp integration found'
               )
               continue
             }
 
             await processWhatsAppMessage(
-              workspace.id,
+              integration.workspace.id,
               message.from,
               message.text.body
             )

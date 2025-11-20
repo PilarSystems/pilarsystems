@@ -22,16 +22,22 @@ export async function POST(request: NextRequest) {
 
     logger.info({ payload }, 'Received Twilio webhook')
 
-    const workspace = await prisma.workspace.findFirst({
+    const integration = await prisma.integration.findFirst({
       where: {
-        phoneNumber: payload.To,
+        type: 'phone',
+        status: 'active',
+      },
+      include: {
+        workspace: true,
       },
     })
 
-    if (!workspace) {
-      logger.warn({ phoneNumber: payload.To }, 'No workspace found for phone number')
-      return NextResponse.json({ success: true }) // Return success to avoid retries
+    if (!integration) {
+      logger.warn({ phoneNumber: payload.To }, 'No active phone integration found')
+      return NextResponse.json({ success: true })
     }
+
+    const workspace = integration.workspace
 
     if (payload.CallStatus === 'no-answer' || payload.CallStatus === 'busy') {
       await processMissedCall(
