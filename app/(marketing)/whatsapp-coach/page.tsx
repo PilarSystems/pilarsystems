@@ -73,7 +73,7 @@ export default function WhatsAppCoachPage() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="mt-12 text-sm text-gray-500"
             >
-              🚀 Beta startet Q1 2026 • Jetzt auf Warteliste eintragen
+              🚀 Jetzt verfügbar • Starte noch heute mit deinem AI Buddy
             </motion.div>
           </motion.div>
         </div>
@@ -230,7 +230,7 @@ export default function WhatsAppCoachPage() {
 
               <Link href="/signup">
                 <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700">
-                  Auf Warteliste
+                  Jetzt starten
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -342,8 +342,7 @@ export default function WhatsAppCoachPage() {
               Bereit für deinen AI Buddy?
             </h2>
             <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              Trag dich jetzt auf die Warteliste ein und sei einer der Ersten, 
-              die den WhatsApp Gym Buddy nutzen können.
+              Starte jetzt mit deinem persönlichen AI Fitness Coach und erreiche deine Ziele schneller.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup">

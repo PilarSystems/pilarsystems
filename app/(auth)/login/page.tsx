@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { getSupabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -26,7 +27,15 @@ export default function LoginPage() {
         password,
       })
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          throw new Error('E-Mail oder Passwort ist falsch')
+        }
+        if (error.message.includes('Email not confirmed')) {
+          throw new Error('Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse')
+        }
+        throw error
+      }
 
       toast.success('Erfolgreich angemeldet')
       router.push('/dashboard')
@@ -59,8 +68,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-black to-gray-900 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+        <Card className="w-full bg-gray-900 border-gray-800">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Willkommen zurück</CardTitle>
           <CardDescription>
@@ -122,6 +137,7 @@ export default function LoginPage() {
           </CardFooter>
         </form>
       </Card>
+      </motion.div>
     </div>
   )
 }

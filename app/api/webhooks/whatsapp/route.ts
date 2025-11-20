@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { processWhatsAppMessage } from '@/services/ai/whatsapp-ai'
 import { logger } from '@/lib/logger'
+import { prisma } from '@/lib/prisma'
 import { WhatsAppWebhookPayload } from '@/types'
 
 export async function GET(request: NextRequest) {
@@ -27,10 +28,22 @@ export async function POST(request: NextRequest) {
       for (const change of entry.changes) {
         if (change.value.messages) {
           for (const message of change.value.messages) {
-            const workspaceId = 'placeholder-workspace-id'
+            const workspace = await prisma.workspace.findFirst({
+              where: {
+                whatsappPhoneNumberId: change.value.metadata.phone_number_id,
+              },
+            })
+
+            if (!workspace) {
+              logger.warn(
+                { phoneNumberId: change.value.metadata.phone_number_id },
+                'No workspace found for WhatsApp phone number'
+              )
+              continue
+            }
 
             await processWhatsAppMessage(
-              workspaceId,
+              workspace.id,
               message.from,
               message.text.body
             )

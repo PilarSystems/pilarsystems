@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { NextRequest, NextResponse } from 'next/server'
 import { processMissedCall } from '@/services/ai/phone-ai'
 import { logger } from '@/lib/logger'
+import { prisma } from '@/lib/prisma'
 import { TwilioWebhookPayload } from '@/types'
 
 export async function POST(request: NextRequest) {
@@ -21,11 +22,20 @@ export async function POST(request: NextRequest) {
 
     logger.info({ payload }, 'Received Twilio webhook')
 
-    const workspaceId = 'placeholder-workspace-id'
+    const workspace = await prisma.workspace.findFirst({
+      where: {
+        phoneNumber: payload.To,
+      },
+    })
+
+    if (!workspace) {
+      logger.warn({ phoneNumber: payload.To }, 'No workspace found for phone number')
+      return NextResponse.json({ success: true }) // Return success to avoid retries
+    }
 
     if (payload.CallStatus === 'no-answer' || payload.CallStatus === 'busy') {
       await processMissedCall(
-        workspaceId,
+        workspace.id,
         payload.From,
         payload.CallSid,
         payload.RecordingUrl,

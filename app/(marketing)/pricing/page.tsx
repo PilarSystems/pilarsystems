@@ -2,11 +2,14 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { CheckCircle2, ArrowRight, Zap } from 'lucide-react'
 
 export default function PricingPage() {
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
+  
   const features = {
     basic: [
       'AI Phone Rezeption (24/7)',
@@ -28,6 +31,17 @@ export default function PricingPage() {
       'Dedicated Account Manager',
       'White-Label Option (auf Anfrage)'
     ]
+  }
+
+  const pricing = {
+    basic: {
+      monthly: { price: 100, setup: 500 },
+      yearly: { price: 85, setup: 500, savings: 180 } // 15% discount
+    },
+    pro: {
+      monthly: { price: 149, setup: 1000 },
+      yearly: { price: 127, setup: 1000, savings: 264 } // 15% discount
+    }
   }
 
   return (
@@ -54,9 +68,36 @@ export default function PricingPage() {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
               Einfache, faire Preise
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
               Keine versteckten Kosten. Keine Überraschungen. Monatlich kündbar.
             </p>
+            
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <button
+                onClick={() => setBillingCycle('monthly')}
+                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  billingCycle === 'monthly'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
+                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                Monatlich
+              </button>
+              <button
+                onClick={() => setBillingCycle('yearly')}
+                className={`px-6 py-3 rounded-lg font-semibold transition-all relative ${
+                  billingCycle === 'yearly'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
+                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                }`}
+              >
+                Jährlich
+                <span className="absolute -top-2 -right-2 px-2 py-0.5 text-xs bg-green-500 text-white rounded-full">
+                  -15%
+                </span>
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -79,10 +120,24 @@ export default function PricingPage() {
 
               <div className="mb-8">
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-6xl font-bold text-white">100€</span>
+                  <span className="text-6xl font-bold text-white">
+                    {pricing.basic[billingCycle].price}€
+                  </span>
                   <span className="text-xl text-gray-400">/Monat</span>
                 </div>
-                <p className="text-gray-500">+ 500€ Setup-Gebühr (einmalig)</p>
+                {billingCycle === 'yearly' && (
+                  <p className="text-green-400 text-sm mb-1">
+                    💰 Spare {pricing.basic.yearly.savings}€ pro Jahr
+                  </p>
+                )}
+                <p className="text-gray-500">
+                  + {pricing.basic[billingCycle].setup}€ Setup-Gebühr (einmalig)
+                </p>
+                {billingCycle === 'yearly' && (
+                  <p className="text-gray-600 text-sm mt-1">
+                    Jährliche Zahlung: {pricing.basic.yearly.price * 12}€/Jahr
+                  </p>
+                )}
               </div>
 
               <div className="space-y-4 mb-8">
@@ -94,7 +149,7 @@ export default function PricingPage() {
                 ))}
               </div>
 
-              <Link href="/signup" className="block">
+              <Link href={`/signup?plan=basic&billing=${billingCycle}`} className="block">
                 <Button className="w-full bg-white text-black hover:bg-gray-200">
                   Jetzt starten
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -121,10 +176,24 @@ export default function PricingPage() {
 
               <div className="mb-8">
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-6xl font-bold text-white">149€</span>
+                  <span className="text-6xl font-bold text-white">
+                    {pricing.pro[billingCycle].price}€
+                  </span>
                   <span className="text-xl text-gray-400">/Monat</span>
                 </div>
-                <p className="text-gray-500">+ 1.000€ Setup-Gebühr (einmalig)</p>
+                {billingCycle === 'yearly' && (
+                  <p className="text-green-400 text-sm mb-1">
+                    💰 Spare {pricing.pro.yearly.savings}€ pro Jahr
+                  </p>
+                )}
+                <p className="text-gray-500">
+                  + {pricing.pro[billingCycle].setup}€ Setup-Gebühr (einmalig)
+                </p>
+                {billingCycle === 'yearly' && (
+                  <p className="text-gray-600 text-sm mt-1">
+                    Jährliche Zahlung: {pricing.pro.yearly.price * 12}€/Jahr
+                  </p>
+                )}
               </div>
 
               <div className="space-y-4 mb-8">
@@ -136,7 +205,7 @@ export default function PricingPage() {
                 ))}
               </div>
 
-              <Link href="/signup" className="block">
+              <Link href={`/signup?plan=pro&billing=${billingCycle}`} className="block">
                 <Button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
                   Jetzt starten
                   <ArrowRight className="ml-2 h-5 w-5" />

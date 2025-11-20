@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 
 const checkoutSchema = z.object({
   plan: z.enum(['BASIC', 'PRO']),
+  billingCycle: z.enum(['monthly', 'yearly']).default('monthly'),
   whatsappAddon: z.boolean(),
   userId: z.string(),
   email: z.string().email(),
@@ -17,7 +18,7 @@ const checkoutSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { plan, whatsappAddon, userId, email, affiliateRef } = checkoutSchema.parse(body)
+    const { plan, billingCycle, whatsappAddon, userId, email, affiliateRef } = checkoutSchema.parse(body)
 
     let workspace = await prisma.workspace.findFirst({
       where: { ownerId: userId },
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const session = await createCheckoutSession(workspace.id, plan, whatsappAddon, affiliateConversionId)
+    const session = await createCheckoutSession(workspace.id, plan, billingCycle, whatsappAddon, affiliateConversionId)
 
     return NextResponse.json({ url: session.url })
   } catch (error) {

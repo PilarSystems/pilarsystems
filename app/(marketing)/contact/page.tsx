@@ -82,7 +82,7 @@ export default function ContactPage() {
               Lass uns sprechen
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Buche deine Demo oder kontaktiere uns für Fragen zu PILAR SYSTEMS
+              Kontaktiere uns für Fragen zu PILAR SYSTEMS oder vereinbare ein Beratungsgespräch
             </p>
           </motion.div>
         </div>
