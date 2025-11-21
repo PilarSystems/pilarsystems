@@ -8,6 +8,7 @@
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
+import { Prisma, RuleType } from '@prisma/client'
 
 export const WizardInputSchema = z.object({
   studioType: z.enum(['fitness', 'yoga', 'crossfit', 'martial_arts', 'dance', 'pilates', 'other']),
@@ -286,15 +287,29 @@ export async function saveWizardConfig(
     logger.info({ workspaceId }, 'Saving wizard config to workspace')
 
     for (const rule of config.aiRules) {
+      const conditions: Prisma.InputJsonValue = {
+        type: 'keyword_match',
+        raw: rule.condition,
+        metadata: {
+          name: rule.name,
+          description: rule.description,
+          priority: rule.priority,
+        },
+      }
+
+      const actions: Prisma.InputJsonValue = {
+        type: rule.action?.startsWith('send_template:') ? 'send_template' : 'send_text',
+        channel: 'whatsapp',
+        template: rule.action?.split(':')[1]?.trim() || '',
+        raw: rule.action,
+      }
+
       await prisma.aiRule.create({
         data: {
           workspaceId,
-          name: rule.name,
-          description: rule.description,
-          condition: rule.condition,
-          action: rule.action,
-          priority: rule.priority,
-          enabled: true,
+          ruleType: RuleType.classification,
+          conditions,
+          actions,
         },
       })
     }
