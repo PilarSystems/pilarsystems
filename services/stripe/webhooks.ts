@@ -94,6 +94,21 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 
     logger.info({ workspaceId, plan }, 'Subscription created successfully')
 
+    try {
+      const { enqueueProvisioning } = await import('@/lib/autopilot/provisioning-queue')
+      await enqueueProvisioning(workspaceId, {
+        source: 'stripe',
+        metadata: {
+          plan,
+          whatsappAddon,
+          sessionId: session.id,
+        },
+      })
+      logger.info({ workspaceId }, 'Autopilot provisioning enqueued from Stripe checkout')
+    } catch (error) {
+      logger.error({ error, workspaceId }, 'Failed to enqueue autopilot provisioning')
+    }
+
     const affiliateConversionId = session.metadata?.affiliateConversionId
     if (affiliateConversionId) {
       try {

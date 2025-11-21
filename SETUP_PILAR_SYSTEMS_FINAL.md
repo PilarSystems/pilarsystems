@@ -1586,3 +1586,87 @@ Für eine detaillierte Übersicht aller Aufgaben, die du als Founder nach dem La
 
 Alles andere läuft vollautomatisch! 🚀
 
+
+---
+
+## 🤖 PILAR AUTOPILOT (v4.0)
+
+### Overview
+
+PILAR AUTOPILOT transforms the platform into a fully automatic, 0-touch system where 1,000+ studios can independently onboard, operate, and scale without manual founder intervention.
+
+**After launch, the founder only handles:** Marketing, Sales, and Support emails.
+
+### Key Features
+
+- **🤖 Automatic Provisioning**: Stripe checkout → Full setup (Twilio, WhatsApp, Email) without manual intervention
+- **💬 WhatsApp Coach Autopilot**: AI-generated personalized messages sent automatically on schedule
+- **🔄 Self-Healing**: Automatic retry with exponential backoff, circuit breakers, error recovery
+- **📊 Health Monitoring**: Real-time integration status, proactive issue detection
+- **🔒 Distributed Locking**: Prevents concurrent operations, ensures data consistency
+- **⚡ Event-Driven**: Triggered by Stripe webhooks, onboarding completion, or manual action
+
+### Vercel Cron Configuration
+
+The autopilot system uses Vercel Cron (configured in `vercel.json`):
+
+1. **WhatsApp Coach Scheduler**: Every 15 minutes
+   - Path: `/api/autopilot/scheduler`
+   - Processes due followups and sends AI messages
+
+2. **Provisioning Runner**: Every 10 minutes
+   - Path: `/api/autopilot/run`
+   - Processes pending provisioning jobs
+
+### Manual Provisioning
+
+Studios can manually trigger provisioning:
+1. Navigate to **Settings → Autopilot**
+2. Click **"Setup neu ausführen"**
+3. Monitor progress (0-100%)
+
+### WhatsApp Coach Configuration
+
+Configure via `/dashboard/whatsapp-coach`:
+- Target audience
+- Goal (e.g., "Regelmäßiges Training")
+- Frequency (daily, 3x/week, weekly)
+- Time window (e.g., 09:00-18:00)
+- Tone and language
+
+### Health Monitoring
+
+Monitor at `/dashboard` (Health Widget):
+- Integration status (Twilio, WhatsApp, Email)
+- Provisioning status
+- Scheduler status
+- Actionable issues with recommendations
+
+### Troubleshooting
+
+**Provisioning Stuck?**
+- Check `ProvisioningJob` table for errors
+- Verify ENV variables
+- Review `ActivityLog` for details
+
+**Scheduler Not Running?**
+- Verify Vercel Cron is configured
+- Check `Followup` table for pending records
+- Verify WhatsApp Coach is enabled
+
+**Health Degraded?**
+- Review issues in health dashboard
+- Check integration credentials
+- Verify external services are operational
+
+### Documentation
+
+- **Architecture**: See `AUTOPILOT_OVERVIEW.md`
+- **Setup Guide**: This document
+- **API Reference**: See `/app/api/autopilot/` endpoints
+
+---
+
+**Version:** 4.0.0 (AUTOPILOT)  
+**Last Updated:** November 2025  
+**Status:** 🚀 Launch-Ready with Full Automation 🤖

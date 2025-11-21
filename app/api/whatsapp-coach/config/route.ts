@@ -42,6 +42,66 @@ export async function POST(request: NextRequest) {
 
     logger.info({ workspaceId: data.workspaceId }, 'WhatsApp coach config saved')
 
+    const workspace = await prisma.workspace.findUnique({
+      where: { id: data.workspaceId },
+      select: { studioInfo: true },
+    })
+
+    const coachEnabled = (workspace?.studioInfo as any)?.whatsappCoach?.enabled
+
+    if (coachEnabled) {
+      try {
+        const leads = await prisma.lead.findMany({
+          where: {
+            workspaceId: data.workspaceId,
+            status: 'active',
+          },
+          take: 100,
+        })
+
+        const timeWindow = data.timeWindow || { start: '09:00', end: '18:00' }
+        const [startHour, startMinute] = timeWindow.start.split(':').map(Number)
+        
+        const nextScheduledAt = new Date()
+        nextScheduledAt.setHours(startHour, startMinute, 0, 0)
+        
+        if (nextScheduledAt < new Date()) {
+          nextScheduledAt.setDate(nextScheduledAt.getDate() + 1)
+        }
+
+        for (const lead of leads) {
+          const existingFollowup = await prisma.followup.findFirst({
+            where: {
+              workspaceId: data.workspaceId,
+              leadId: lead.id,
+              type: 'whatsapp',
+              status: 'pending',
+            },
+          })
+
+          if (!existingFollowup && lead.phone) {
+            await prisma.followup.create({
+              data: {
+                workspaceId: data.workspaceId,
+                leadId: lead.id,
+                type: 'whatsapp',
+                status: 'pending',
+                scheduledAt: nextScheduledAt,
+                content: 'WhatsApp Coach message (AI-generated)',
+              },
+            })
+          }
+        }
+
+        logger.info(
+          { workspaceId: data.workspaceId, leadsCount: leads.length },
+          'Initial followups created for WhatsApp Coach'
+        )
+      } catch (error) {
+        logger.error({ error, workspaceId: data.workspaceId }, 'Failed to create initial followups')
+      }
+    }
+
     return NextResponse.json({ success: true })
   } catch (error) {
     logger.error({ error }, 'Failed to save WhatsApp coach config')

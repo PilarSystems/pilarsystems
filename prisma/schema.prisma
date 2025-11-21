@@ -681,3 +681,17 @@ model ConversationState {
   @@index([workspaceId, state])
   @@index([nextActionAt])
 }
+
+// Distributed locks for autopilot (DB fallback when Redis unavailable)
+model DistributedLock {
+  id          String   @id @default(uuid())
+  lockKey     String   @unique
+  workspaceId String
+  scope       String
+  expiresAt   DateTime
+  acquiredAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([workspaceId, scope])
+  @@index([expiresAt])
+}
