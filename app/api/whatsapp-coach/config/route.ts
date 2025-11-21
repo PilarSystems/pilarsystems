@@ -16,6 +16,7 @@ const configSchema = z.object({
   }),
   tone: z.string(),
   language: z.string(),
+  enabled: z.boolean().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
             timeWindow: data.timeWindow,
             tone: data.tone,
             language: data.language,
+            enabled: data.enabled ?? false,
             updatedAt: new Date().toISOString(),
           },
         },

@@ -145,8 +145,7 @@ export async function processWorkspaceFollowups(
               direction: 'outbound',
               channel: 'whatsapp',
               content: aiResult.data.text,
-              status: 'sent',
-              externalId: sendResult.data?.messageId,
+              aiGenerated: true,
             },
           })
 
