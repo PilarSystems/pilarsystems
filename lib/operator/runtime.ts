@@ -9,7 +9,7 @@ import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { acquireLock } from '@/lib/autopilot/locks'
 import { getWorkspaceHealth } from '@/lib/autopilot/health'
-import { runProvisioning } from '@/lib/autopilot/provisioning-orchestrator'
+import { queueProvisioning } from '@/lib/autopilot/provisioning-queue'
 import { processWorkspaceFollowups } from '@/lib/autopilot/scheduler'
 
 export interface OperatorSignal {
@@ -216,11 +216,7 @@ async function executeAction(action: OperatorAction): Promise<void> {
 
   switch (action.type) {
     case 'run_provisioning':
-      await runProvisioning({
-        workspaceId: action.workspaceId,
-        source: 'operator',
-        metadata: action.params,
-      })
+      await queueProvisioning(action.workspaceId, 'operator')
       break
 
     case 'send_followup':
