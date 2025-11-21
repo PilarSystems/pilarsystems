@@ -172,7 +172,7 @@ export class AutomatedOperatorRuntime {
         issues.push({
           type: 'integration_error',
           severity: 'high',
-          description: `Integration ${integration.provider} is in error state`,
+          description: `Integration ${integration.type} is in error state`,
           autoRemediable: true,
           remediationAction: 'retry_integration'
         })
@@ -286,7 +286,7 @@ export class AutomatedOperatorRuntime {
     for (const integration of integrations) {
       await prisma.integration.update({
         where: { id: integration.id },
-        data: { status: 'pending' }
+        data: { status: 'inactive' }
       })
     }
   }
@@ -359,12 +359,12 @@ export class AutomatedOperatorRuntime {
     const hoursSinceLastCheck = (Date.now() - lastHealthCheck.getTime()) / (1000 * 60 * 60)
 
     if (hoursSinceLastCheck >= 24) {
-      await jobQueue.enqueue(
+      await jobQueue.enqueue({
         workspaceId,
-        'health_check',
-        {},
-        { priority: 5 }
-      )
+        type: 'health_check',
+        payload: {},
+        priority: 5
+      })
     }
   }
 
@@ -372,27 +372,10 @@ export class AutomatedOperatorRuntime {
    * Process pending jobs for workspace
    */
   private async processPendingJobs(workspaceId: string): Promise<void> {
-    const pendingJobs = await prisma.autopilotJob.findMany({
-      where: {
-        workspaceId,
-        status: 'pending',
-        scheduledAt: {
-          lte: new Date()
-        }
-      },
-      orderBy: [
-        { priority: 'desc' },
-        { scheduledAt: 'asc' }
-      ],
-      take: 5 // Process up to 5 jobs per cycle
-    })
-
-    for (const job of pendingJobs) {
-      try {
-        await jobQueue.process(job.id)
-      } catch (error) {
-        console.error(`Error processing job ${job.id}:`, error)
-      }
+    try {
+      await jobQueue.processPendingJobs(5, `operator-${workspaceId}`)
+    } catch (error) {
+      console.error(`Error processing jobs for workspace ${workspaceId}:`, error)
     }
   }
 

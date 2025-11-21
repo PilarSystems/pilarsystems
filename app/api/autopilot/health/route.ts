@@ -7,6 +7,8 @@
 export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
+
+export const runtime = 'nodejs'
 import { getWorkspaceHealth, getAllWorkspacesHealth } from '@/lib/autopilot/health'
 import { logger } from '@/lib/logger'
 

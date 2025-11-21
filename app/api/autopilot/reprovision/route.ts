@@ -7,6 +7,8 @@
 export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
+
+export const runtime = 'nodejs'
 import { logger } from '@/lib/logger'
 import { enqueueProvisioning } from '@/lib/autopilot/provisioning-queue'
 import { prisma } from '@/lib/prisma'

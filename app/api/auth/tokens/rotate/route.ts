@@ -5,6 +5,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { identityEngine } from '@/lib/auth/identity-engine'
 
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization')

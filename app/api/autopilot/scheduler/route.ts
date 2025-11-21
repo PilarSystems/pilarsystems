@@ -9,6 +9,8 @@ export const dynamic = 'force-dynamic'
 export const maxDuration = 300 // 5 minutes
 
 import { NextRequest, NextResponse } from 'next/server'
+
+export const runtime = 'nodejs'
 import { logger } from '@/lib/logger'
 import { processAllWorkspaces } from '@/lib/autopilot/scheduler'
 

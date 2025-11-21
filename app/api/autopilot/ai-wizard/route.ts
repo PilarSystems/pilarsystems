@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { aiWizardAutopilot } from '@/lib/autopilot/ai-wizard-autopilot'
 import { identityEngine } from '@/lib/auth/identity-engine'
 
+export const runtime = 'nodejs'
+
 /**
  * POST /api/autopilot/ai-wizard - Auto-generate AI configuration
  */
