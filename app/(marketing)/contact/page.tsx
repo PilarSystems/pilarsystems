@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ export default function ContactPage() {
         alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
       }
     } catch (error) {
-      console.error('Form submission error:', error)
+      toast.error('Nachricht konnte nicht gesendet werden')
       alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
     }
   }

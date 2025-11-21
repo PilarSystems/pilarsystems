@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { tenantContext, TenantContext } from './context'
 import { getSupabase } from '@/lib/supabase'
 import { prisma } from '@/lib/prisma'
+import { logger } from '@/lib/logger'
 
 export type TenantHandler = (
   request: NextRequest,
@@ -22,7 +23,7 @@ export function withTenant(handler: TenantHandler): TenantHandler {
 
       return await tenantContext.run(tenantCtx, () => handler(request, context))
     } catch (error: any) {
-      console.error('withTenant error:', error)
+      logger.error({ error }, 'withTenant error')
       return NextResponse.json(
         { error: error.message || 'Internal server error' },
         { status: 500 }
@@ -99,7 +100,7 @@ export async function resolveTenantFromWebhook(
         return null
     }
   } catch (error) {
-    console.error(`Failed to resolve tenant from ${source}:`, error)
+    logger.error({ error, source }, 'Failed to resolve tenant from webhook')
     return null
   }
 }

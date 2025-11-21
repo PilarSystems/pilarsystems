@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,7 +24,7 @@ export default function MessagesPage() {
           setConversations(data)
         }
       } catch (error) {
-        console.error('Failed to fetch conversations:', error)
+        toast.error('Nachrichten konnten nicht geladen werden')
       }
     }
     fetchConversations()

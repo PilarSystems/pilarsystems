@@ -68,7 +68,6 @@ export default function OnboardingStep5() {
         })
       }
     } catch (error) {
-      console.error('Failed to check system status:', error)
     } finally {
       setChecking(false)
     }
@@ -86,7 +85,7 @@ export default function OnboardingStep5() {
         body: JSON.stringify({
           workspaceId,
           name: 'Test Lead',
-          email: 'test@example.com',
+          email: `test-${Date.now()}@pilarsystems.com`,
           phone: '+49123456789',
           source: 'manual',
           classification: 'B',

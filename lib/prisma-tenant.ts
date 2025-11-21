@@ -39,15 +39,27 @@ export function createTenantAwarePrismaClient(prismaClient: PrismaClient) {
             return query(args)
           }
 
-          const readOps = ['findFirst', 'findMany', 'findUnique', 'count', 'aggregate', 'groupBy']
-          const writeOps = ['update', 'updateMany', 'delete', 'deleteMany', 'upsert']
-
-          if (readOps.includes(operation)) {
+          if (operation === 'findUnique') {
             const newArgs = {
               ...args,
               where: {
-                ...(args.where || {}),
-                workspaceId: context.workspaceId
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            }
+            return (prismaClient as any)[model].findFirst(newArgs)
+          }
+
+          if (['findFirst', 'findMany', 'count', 'aggregate', 'groupBy'].includes(operation)) {
+            const newArgs = {
+              ...args,
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
               }
             }
             return query(newArgs)
@@ -81,15 +93,110 @@ export function createTenantAwarePrismaClient(prismaClient: PrismaClient) {
             return query(newArgs)
           }
 
-          if (writeOps.includes(operation)) {
+          if (operation === 'update') {
             const newArgs = {
               ...args,
               where: {
-                ...(args.where || {}),
-                workspaceId: context.workspaceId
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            }
+            const result = await (prismaClient as any)[model].updateMany(newArgs)
+            if (result.count === 0) {
+              return null
+            }
+            return (prismaClient as any)[model].findFirst({
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            })
+          }
+
+          if (operation === 'updateMany') {
+            const newArgs = {
+              ...args,
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
               }
             }
             return query(newArgs)
+          }
+
+          if (operation === 'delete') {
+            const newArgs = {
+              ...args,
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            }
+            const result = await (prismaClient as any)[model].deleteMany(newArgs)
+            if (result.count === 0) {
+              return null
+            }
+            return { ...args.where, workspaceId: context.workspaceId }
+          }
+
+          if (operation === 'deleteMany') {
+            const newArgs = {
+              ...args,
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            }
+            return query(newArgs)
+          }
+
+          if (operation === 'upsert') {
+            const existing = await (prismaClient as any)[model].findFirst({
+              where: {
+                AND: [
+                  args.where || {},
+                  { workspaceId: context.workspaceId }
+                ]
+              }
+            })
+
+            if (existing) {
+              return (prismaClient as any)[model].updateMany({
+                where: {
+                  AND: [
+                    args.where || {},
+                    { workspaceId: context.workspaceId }
+                  ]
+                },
+                data: args.update
+              }).then(() => (prismaClient as any)[model].findFirst({
+                where: {
+                  AND: [
+                    args.where || {},
+                    { workspaceId: context.workspaceId }
+                  ]
+                }
+              }))
+            } else {
+              // Create new record with workspaceId
+              const createData = args.create || {}
+              return (prismaClient as any)[model].create({
+                data: {
+                  ...createData,
+                  workspaceId: createData.workspaceId || context.workspaceId
+                }
+              })
+            }
           }
 
           return query(args)

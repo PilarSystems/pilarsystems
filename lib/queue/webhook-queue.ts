@@ -1,5 +1,6 @@
 import { Redis } from '@upstash/redis'
 import { Ratelimit } from '@upstash/ratelimit'
+import { logger } from '@/lib/logger'
 
 const redis = process.env.RATE_LIMIT_REDIS_URL && process.env.RATE_LIMIT_REDIS_TOKEN
   ? new Redis({
@@ -14,7 +15,7 @@ export async function enqueueWebhook(
   payload: any
 ): Promise<void> {
   if (!redis) {
-    console.warn('Redis not configured, processing webhook synchronously')
+    logger.info('Redis not configured, processing webhook synchronously')
     return
   }
 

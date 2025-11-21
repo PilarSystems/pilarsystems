@@ -38,7 +38,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setState(JSON.parse(stored));
       }
     } catch (error) {
-      console.warn('Failed to load app state from localStorage:', error);
+      
     } finally {
       setIsLoaded(true);
     }
@@ -50,7 +50,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       try {
         localStorage.setItem('app-state', JSON.stringify(state));
       } catch (error) {
-        console.warn('Failed to save app state to localStorage:', error);
+        
       }
     }
   }, [state, isLoaded]);

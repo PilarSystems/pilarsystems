@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { logger } from '@/lib/logger'
 
 /**
  * Affiliate redirect route: /r/[code]
@@ -42,7 +43,7 @@ export async function GET(
 
     return response
   } catch (error) {
-    console.error('Error tracking affiliate click:', error)
+    logger.error({ error, code }, 'Error tracking affiliate click')
     return NextResponse.redirect(new URL('/', request.url))
   }
 }

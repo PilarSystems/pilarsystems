@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
@@ -50,7 +51,7 @@ export default function AffiliateDashboardPage() {
       const data = await response.json()
       setStats(data)
     } catch (error) {
-      console.error('Error fetching affiliate stats:', error)
+      toast.error('Affiliate-Statistiken konnten nicht geladen werden')
     } finally {
       setLoading(false)
     }

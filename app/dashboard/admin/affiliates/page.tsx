@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
@@ -66,7 +67,7 @@ export default function AdminAffiliatesPage() {
       })
       setAffiliates([])
     } catch (error) {
-      console.error('Error fetching admin data:', error)
+      toast.error('Admin-Daten konnten nicht geladen werden')
     } finally {
       setLoading(false)
     }

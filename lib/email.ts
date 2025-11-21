@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer'
 import Imap from 'imap'
 import { simpleParser } from 'mailparser'
+import { logger } from '@/lib/logger'
 
 export const emailTransporter = nodemailer.createTransport({
   host: process.env.EMAIL_SMTP_HOST!,
@@ -33,7 +34,7 @@ export async function sendEmail(to: string, subject: string, html: string) {
     })
     return info
   } catch (error) {
-    console.error('Error sending email:', error)
+    logger.error({ error }, 'Error sending email')
     throw error
   }
 }

@@ -1,10 +1,11 @@
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { createCheckoutSession } from '@/services/stripe/checkout'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
-
-export const dynamic = 'force-dynamic'
 
 const checkoutSchema = z.object({
   plan: z.enum(['BASIC', 'PRO']),

@@ -78,7 +78,8 @@ function getAppUrl(): string {
     return 'http://localhost:3000'
   }
   
-  console.warn('NEXT_PUBLIC_APP_URL not set in production - using placeholder')
+  if (process.env.NODE_ENV === 'production') {
+  }
   return 'https://app.pilarsystems.com'
 }
 

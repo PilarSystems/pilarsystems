@@ -34,7 +34,7 @@ const DashboardGuard = ({ children }: DashboardGuardProps) => {
           return;
         }
       } catch (err) {
-        console.error('DashboardGuard – Fehler beim Session-Check:', err);
+        
         router.replace('/login-01');
         return;
       } finally {

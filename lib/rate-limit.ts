@@ -1,5 +1,6 @@
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
+import { logger } from '@/lib/logger'
 
 const createNoOpRateLimiter = (): Ratelimit => ({
   limit: async () => ({ 
@@ -18,7 +19,7 @@ if (process.env.RATE_LIMIT_REDIS_URL && process.env.RATE_LIMIT_REDIS_TOKEN) {
     token: process.env.RATE_LIMIT_REDIS_TOKEN,
   })
 } else {
-  console.warn('Rate limiting disabled: RATE_LIMIT_REDIS_URL or RATE_LIMIT_REDIS_TOKEN not set')
+  logger.info('Rate limiting disabled: RATE_LIMIT_REDIS_URL or RATE_LIMIT_REDIS_TOKEN not set')
 }
 
 export const ratelimit = redis 

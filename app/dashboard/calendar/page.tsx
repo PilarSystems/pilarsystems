@@ -5,6 +5,7 @@ import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 import { Calendar } from '@/components/ui/calendar'
 
 export default function CalendarPage() {
@@ -20,7 +21,7 @@ export default function CalendarPage() {
           setEvents(data)
         }
       } catch (error) {
-        console.error('Failed to fetch events:', error)
+        toast.error('Termine konnten nicht geladen werden')
       }
     }
     fetchEvents()
