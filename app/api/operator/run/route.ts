@@ -7,8 +7,9 @@
  * - Opportunistic trigger (rate-limited)
  */
 
+export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-export const maxDuration = 300 // 5 minutes
+export const maxDuration = 60
 
 import { NextRequest, NextResponse } from 'next/server'
 import { runOperator } from '@/lib/operator/runtime'

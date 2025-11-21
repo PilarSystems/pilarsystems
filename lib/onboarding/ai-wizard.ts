@@ -8,7 +8,6 @@
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
-import { openaiAdapter } from '@/lib/integrations/openai-adapter'
 
 export const WizardInputSchema = z.object({
   studioType: z.enum(['fitness', 'yoga', 'crossfit', 'martial_arts', 'dance', 'pilates', 'other']),
