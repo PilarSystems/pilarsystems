@@ -9,7 +9,6 @@ export function getStripe(): Stripe {
       throw new Error('STRIPE_SECRET_KEY environment variable is required')
     }
     stripeInstance = new Stripe(apiKey, {
-      apiVersion: '2023-10-16',
       typescript: true,
     })
   }
