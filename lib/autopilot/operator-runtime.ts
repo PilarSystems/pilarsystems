@@ -9,7 +9,9 @@ import { PrismaClient } from '@prisma/client'
 import { PolicyEngine } from '../operator/policy-engine'
 import { eventBus } from './event-bus'
 import { jobQueue } from './job-queue'
-import { distributedLockManager } from './distributed-lock-manager'
+import { DistributedLockManager } from './distributed-lock-manager'
+
+const distributedLockManager = new DistributedLockManager()
 
 const prisma = new PrismaClient()
 const policyEngine = new PolicyEngine()
@@ -139,15 +141,15 @@ export class AutomatedOperatorRuntime {
 
       await this.processPendingJobs(workspaceId)
 
-      await eventBus.emit(
+      await eventBus.createEvent({
         workspaceId,
-        'health.workspace_check',
-        {
+        type: 'health.webhook_check',
+        payload: {
           healthScore: health.healthScore,
           status: health.status,
           issuesCount: health.issues.length
         }
-      )
+      })
     } finally {
       await lock.release()
     }
@@ -256,14 +258,14 @@ export class AutomatedOperatorRuntime {
             console.log(`Unknown remediation action: ${issue.remediationAction}`)
         }
 
-        await eventBus.emit(
+        await eventBus.createEvent({
           workspaceId,
-          'health.issue_remediated',
-          {
+          type: 'health.integration_check',
+          payload: {
             issueType: issue.type,
             action: issue.remediationAction
           }
-        )
+        })
       } catch (error) {
         console.error(`Error remediating issue ${issue.type}:`, error)
       }

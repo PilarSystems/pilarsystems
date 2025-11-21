@@ -66,9 +66,9 @@ export class AIWizardAutopilot {
         })
       }
 
-      await eventBus.emit({
+      await eventBus.createEvent({
         workspaceId,
-        type: 'ai_wizard.config_generated',
+        type: 'provisioning.workspace_setup',
         payload: {
           rulesCount: rules.length,
           systemPrompt: systemPrompt.substring(0, 100)
@@ -128,9 +128,9 @@ export class AIWizardAutopilot {
         }
       }
 
-      await eventBus.emit({
+      await eventBus.createEvent({
         workspaceId,
-        type: 'ai_wizard.config_optimized',
+        type: 'provisioning.workspace_setup',
         payload: {
           disabledRules: underperforming.length,
           newRules: underperforming.length,
