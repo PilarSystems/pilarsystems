@@ -290,7 +290,7 @@ export async function saveWizardConfig(
       await prisma.aiRule.create({
         data: {
           workspaceId,
-          name: rule.name,
+          ruleName: rule.name,
           description: rule.description,
           condition: rule.condition,
           action: rule.action,
