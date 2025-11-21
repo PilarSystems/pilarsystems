@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
