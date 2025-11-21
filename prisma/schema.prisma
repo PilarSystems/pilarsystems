@@ -768,16 +768,3 @@ model ApiToken {
   @@index([workspaceId, type])
   @@index([token])
 }
-
-// Autopilot Identity - Distributed Locks
-model DistributedLock {
-  id          String   @id @default(uuid())
-  lockKey     String   @unique @db.VarChar(255)
-  workspaceId String
-  scope       String   @default("autopilot") @db.VarChar(50)
-  expiresAt   DateTime
-  createdAt   DateTime @default(now())
-
-  @@index([lockKey, expiresAt])
-  @@index([workspaceId])
-}
