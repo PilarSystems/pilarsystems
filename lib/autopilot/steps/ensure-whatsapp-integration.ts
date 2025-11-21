@@ -46,9 +46,9 @@ export async function ensureWhatsAppIntegration(
           workspaceId,
           type: 'whatsapp',
           status: 'active',
-          config: {
+          config: JSON.stringify({
             phoneNumberId: existing.phoneNumberId,
-          },
+          }),
         },
         update: {
           status: 'active',
@@ -90,15 +90,15 @@ export async function ensureWhatsAppIntegration(
         workspaceId,
         type: 'whatsapp',
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
-        },
+        }),
       },
       update: {
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
-        },
+        }),
       },
     })
 
