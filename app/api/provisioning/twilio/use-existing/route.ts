@@ -1,5 +1,7 @@
 export const dynamic = 'force-dynamic'
 
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
 import { getCachedConfig } from '@/lib/config/env'
