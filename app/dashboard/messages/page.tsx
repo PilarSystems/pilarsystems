@@ -23,7 +23,7 @@ export default function MessagesPage() {
           setConversations(data)
         }
       } catch (error) {
-        console.error('Failed to fetch conversations:', error)
+        // console.error('Failed to fetch conversations:', error)
       }
     }
     fetchConversations()

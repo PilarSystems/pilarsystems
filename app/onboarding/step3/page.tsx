@@ -50,7 +50,7 @@ export default function OnboardingStep3() {
           setVoices(data.voices || [])
         }
       } catch (error) {
-        console.error('Failed to load voices:', error)
+        // console.error('Failed to load voices:', error)
       } finally {
         setLoadingVoices(false)
       }

@@ -42,7 +42,6 @@ export async function GET(
 
     return response
   } catch (error) {
-    console.error('Error tracking affiliate click:', error)
     return NextResponse.redirect(new URL('/', request.url))
   }
 }

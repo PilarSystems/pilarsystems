@@ -66,7 +66,7 @@ export default function AdminAffiliatesPage() {
       })
       setAffiliates([])
     } catch (error) {
-      console.error('Error fetching admin data:', error)
+      // console.error('Error fetching admin data:', error)
     } finally {
       setLoading(false)
     }

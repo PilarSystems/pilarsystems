@@ -68,7 +68,7 @@ export default function OnboardingStep5() {
         })
       }
     } catch (error) {
-      console.error('Failed to check system status:', error)
+      toast.error('Systemstatus konnte nicht geladen werden')
     } finally {
       setChecking(false)
     }

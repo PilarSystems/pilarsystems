@@ -52,7 +52,6 @@ export default function AffiliateSignupPage() {
       setAffiliateData(data)
       setSubmitted(true)
     } catch (error) {
-      console.error('Error registering affiliate:', error)
       alert('Fehler bei der Registrierung. Bitte versuche es erneut.')
     }
   }

@@ -5,16 +5,16 @@ import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
 const completeSchema = z.object({
-  userId: z.string(),
+  workspaceId: z.string(),
 })
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { userId } = completeSchema.parse(body)
+    const { workspaceId } = completeSchema.parse(body)
 
-    const workspace = await prisma.workspace.findFirst({
-      where: { ownerId: userId },
+    const workspace = await prisma.workspace.findUnique({
+      where: { id: workspaceId },
     })
 
     if (!workspace) {
@@ -88,13 +88,13 @@ export async function POST(request: NextRequest) {
         actionType: 'onboarding_completed',
         description: 'User completed onboarding wizard',
         metadata: {
-          userId,
+          workspaceId: workspace.id,
           completedAt: new Date().toISOString(),
         },
       },
     })
 
-    logger.info({ workspaceId: workspace.id, userId }, 'Onboarding completed')
+    logger.info({ workspaceId: workspace.id }, 'Onboarding completed')
 
     return NextResponse.json({ success: true, workspaceId: workspace.id })
   } catch (error) {

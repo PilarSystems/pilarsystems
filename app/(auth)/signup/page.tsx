@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
+import { getAuthErrorMessage, validatePassword, validateEmail } from '@/lib/auth-errors'
+import { AlertCircle, CheckCircle2 } from 'lucide-react'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -19,17 +21,28 @@ export default function SignupPage() {
   const [fullName, setFullName] = useState('')
   const [studioName, setStudioName] = useState('')
   const [loading, setLoading] = useState(false)
+  const [passwordTouched, setPasswordTouched] = useState(false)
+  const [confirmTouched, setConfirmTouched] = useState(false)
+
+  const passwordValidation = validatePassword(password)
+  const emailValid = validateEmail(email)
+  const passwordsMatch = password === confirmPassword
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
-      toast.error('Passwörter stimmen nicht überein')
+    if (!emailValid) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
       return
     }
 
-    if (password.length < 8) {
-      toast.error('Passwort muss mindestens 8 Zeichen lang sein')
+    if (!passwordValidation.valid) {
+      toast.error(passwordValidation.message || 'Passwort erfüllt nicht die Anforderungen')
+      return
+    }
+
+    if (!passwordsMatch) {
+      toast.error('Passwörter stimmen nicht überein')
       return
     }
 
@@ -49,18 +62,12 @@ export default function SignupPage() {
       })
 
       if (error) {
-        if (error.message.includes('User already registered')) {
-          throw new Error('Diese E-Mail-Adresse ist bereits registriert')
-        }
-        if (error.message.includes('Password should be at least')) {
-          throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
-        }
-        throw error
+        throw new Error(getAuthErrorMessage(error))
       }
 
-      toast.success('Konto erstellt! Bitte prüfen Sie Ihre E-Mail zur Verifizierung.')
+      toast.success('Konto erfolgreich erstellt! Bitte prüfen Sie Ihre E-Mail.')
       
-      router.push('/checkout')
+      router.push('/verify-email')
     } catch (error: any) {
       toast.error(error.message || 'Konto konnte nicht erstellt werden')
     } finally {
@@ -126,8 +133,25 @@ export default function SignupPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onBlur={() => setPasswordTouched(true)}
                 required
+                className={passwordTouched && !passwordValidation.valid ? 'border-red-500' : ''}
               />
+              {passwordTouched && password && !passwordValidation.valid && (
+                <div className="flex items-center gap-2 text-sm text-red-500">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{passwordValidation.message}</span>
+                </div>
+              )}
+              {passwordTouched && passwordValidation.valid && (
+                <div className="flex items-center gap-2 text-sm text-green-500">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Passwort erfüllt alle Anforderungen</span>
+                </div>
+              )}
+              <p className="text-xs text-gray-500">
+                Min. 8 Zeichen, Groß- und Kleinbuchstaben, eine Zahl
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Passwort bestätigen</Label>
@@ -137,8 +161,22 @@ export default function SignupPage() {
                 placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                onBlur={() => setConfirmTouched(true)}
                 required
+                className={confirmTouched && confirmPassword && !passwordsMatch ? 'border-red-500' : ''}
               />
+              {confirmTouched && confirmPassword && !passwordsMatch && (
+                <div className="flex items-center gap-2 text-sm text-red-500">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>Passwörter stimmen nicht überein</span>
+                </div>
+              )}
+              {confirmTouched && confirmPassword && passwordsMatch && (
+                <div className="flex items-center gap-2 text-sm text-green-500">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Passwörter stimmen überein</span>
+                </div>
+              )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">

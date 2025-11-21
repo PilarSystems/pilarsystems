@@ -22,7 +22,7 @@ export default function LeadsPage() {
           setLeads(data)
         }
       } catch (error) {
-        console.error('Failed to fetch leads:', error)
+        // console.error('Failed to fetch leads:', error)
       }
     }
     fetchLeads()
