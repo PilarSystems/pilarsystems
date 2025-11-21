@@ -19,7 +19,7 @@ export default function PhoneAIPage() {
           setCallLogs(data)
         }
       } catch (error) {
-        console.error('Failed to fetch call logs:', error)
+        toast.error('Anrufliste konnte nicht geladen werden')
       }
     }
     fetchCallLogs()

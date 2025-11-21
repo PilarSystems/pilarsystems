@@ -49,7 +49,7 @@ export default function ContactPage() {
         alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
       }
     } catch (error) {
-      console.error('Form submission error:', error)
+      toast.error('Nachricht konnte nicht gesendet werden')
       alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.')
     }
   }

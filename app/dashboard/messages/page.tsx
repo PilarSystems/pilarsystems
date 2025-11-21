@@ -23,7 +23,7 @@ export default function MessagesPage() {
           setConversations(data)
         }
       } catch (error) {
-        console.error('Failed to fetch conversations:', error)
+        toast.error('Nachrichten konnten nicht geladen werden')
       }
     }
     fetchConversations()

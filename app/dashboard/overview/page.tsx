@@ -33,7 +33,7 @@ export default function DashboardOverviewPage() {
           setStats(data)
         }
       } catch (error) {
-        console.error('Failed to fetch stats:', error)
+        toast.error('Dashboard-Statistiken konnten nicht geladen werden')
       } finally {
         setLoading(false)
       }

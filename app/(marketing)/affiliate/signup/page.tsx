@@ -52,7 +52,7 @@ export default function AffiliateSignupPage() {
       setAffiliateData(data)
       setSubmitted(true)
     } catch (error) {
-      console.error('Error registering affiliate:', error)
+      toast.error('Affiliate-Registrierung fehlgeschlagen')
       alert('Fehler bei der Registrierung. Bitte versuche es erneut.')
     }
   }

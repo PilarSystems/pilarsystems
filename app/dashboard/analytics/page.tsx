@@ -35,7 +35,7 @@ export default function AnalyticsPage() {
           setAnalytics(data)
         }
       } catch (error) {
-        console.error('Failed to fetch analytics:', error)
+        toast.error('Analytics konnten nicht geladen werden')
       }
     }
     fetchAnalytics()
