@@ -81,8 +81,8 @@ export class MultiTenantAIRouter {
     
     const canProceed = await policyEngine.checkAction(
       request.workspaceId,
-      'ai_request',
-      { tokensEstimate: request.maxTokens || 1000 }
+      'call_api',
+      { tokens: request.maxTokens || 1000 }
     )
 
     if (!canProceed.allowed) {
@@ -200,13 +200,9 @@ export class MultiTenantAIRouter {
   private async trackUsage(workspaceId: string, response: AIResponse): Promise<void> {
     await policyEngine.enforceAction(
       workspaceId,
-      'ai_request',
+      'call_api',
       {
-        tokensUsed: response.tokensUsed,
-        cost: response.cost,
-        provider: response.provider,
-        model: response.model,
-        latencyMs: response.latencyMs
+        tokens: response.tokensUsed
       }
     )
   }
