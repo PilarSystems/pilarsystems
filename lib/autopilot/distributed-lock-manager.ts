@@ -5,8 +5,10 @@
  * Prevents concurrent operations across multiple processes
  */
 
-import { prisma } from '@/lib/db'
+import { PrismaClient } from '@prisma/client'
 import { Redis } from '@upstash/redis'
+
+const prisma = new PrismaClient()
 
 const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
   ? new Redis({

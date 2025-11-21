@@ -4,8 +4,10 @@
  * Job processing system with priority, idempotency, and distributed locking
  */
 
-import { prisma } from '@/lib/db'
+import { PrismaClient } from '@prisma/client'
 import crypto from 'crypto'
+
+const prisma = new PrismaClient()
 
 export type JobType = string
 
