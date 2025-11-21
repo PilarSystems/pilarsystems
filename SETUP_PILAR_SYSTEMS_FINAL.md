@@ -1539,3 +1539,50 @@ Vor dem Launch mit 1000+ Studios:
 
 ---
 
+
+---
+
+## 13. Self-Service Features für Studios
+
+Nach dem Setup können Studios folgende Features **komplett selbstständig** nutzen:
+
+### Integrations-Center (`/dashboard/integrations`)
+- Zentrale Übersicht aller Integrationen
+- Status-Anzeige und Setup-Links
+- Test-Funktionen
+
+### Self-Service Telefonie (`/dashboard/phone/setup`)
+- Automatischer Telefonnummer-Kauf
+- Land- und Nummerntyp-Auswahl
+- Sofortige Aktivierung
+
+### WhatsApp-Coach (`/dashboard/whatsapp-coach`)
+- WhatsApp Cloud API Verbindung
+- Coach-Persönlichkeit konfigurieren
+- Test-Nachrichten senden
+
+### Affiliate-Programm (`/affiliate`)
+- Registrierung ohne Freigabe (wenn `AFFILIATE_AUTO_APPROVE=true`)
+- Sofortiger Referral-Link + QR-Code
+- Dashboard mit Tracking
+
+**Wichtig:** Alle diese Features funktionieren ohne deine Intervention als Founder!
+
+---
+
+## 14. Founder Runbook
+
+Für eine detaillierte Übersicht aller Aufgaben, die du als Founder nach dem Launch manuell erledigen musst, siehe:
+
+📖 **[FOUNDER_RUNBOOK.md](./FOUNDER_RUNBOOK.md)**
+
+**Zusammenfassung:**
+- Marketing & Sales
+- Support-Mails beantworten
+- Provider-Accounts & ENV-Variablen verwalten
+- Logs & KPIs monitoren
+- Stripe Payouts & Disputes managen
+- Affiliate-Provisionen auszahlen (monatlich)
+
+Alles andere läuft vollautomatisch! 🚀
+
