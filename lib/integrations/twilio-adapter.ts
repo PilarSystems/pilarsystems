@@ -21,10 +21,10 @@ export async function createTwilioSubaccount(workspaceId: string, workspaceName:
   try {
     // Dynamic import to avoid loading SDK when not needed
     const twilio = await import('twilio')
-    const envModule = await import('@/lib/config/env')
-    const env = envModule.env
+    const { getCachedConfig } = await import('@/lib/config/env')
+    const config = getCachedConfig()
     
-    const client = twilio.default(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN)
+    const client = twilio.default(config.twilioAccountSid!, config.twilioAuthToken!)
     
     // Create subaccount
     const subaccount = await client.api.accounts.create({
@@ -64,10 +64,10 @@ export async function provisionPhoneNumber(subaccountSid: string, areaCode?: str
   
   try {
     const twilio = await import('twilio')
-    const envModule = await import('@/lib/config/env')
-    const env = envModule.env
+    const { getCachedConfig } = await import('@/lib/config/env')
+    const config = getCachedConfig()
     
-    const client = twilio.default(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN)
+    const client = twilio.default(config.twilioAccountSid!, config.twilioAuthToken!)
     
     // Search for available phone numbers
     const numbers = await client.availablePhoneNumbers('DE')

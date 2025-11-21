@@ -18,12 +18,12 @@ export async function getAvailableVoices() {
   }
   
   try {
-    const envModule = await import('@/lib/config/env')
-    const env = envModule.env
+    const { getCachedConfig } = await import('@/lib/config/env')
+    const config = getCachedConfig()
     
     const response = await fetch('https://api.elevenlabs.io/v1/voices', {
       headers: {
-        'xi-api-key': env.ELEVENLABS_API_KEY!
+        'xi-api-key': config.elevenlabsApiKey!
       }
     })
     
@@ -59,15 +59,15 @@ export async function previewVoice(voiceId: string, text: string) {
   }
   
   try {
-    const envModule = await import('@/lib/config/env')
-    const env = envModule.env
+    const { getCachedConfig } = await import('@/lib/config/env')
+    const config = getCachedConfig()
     
     const response = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
       {
         method: 'POST',
         headers: {
-          'xi-api-key': env.ELEVENLABS_API_KEY!,
+          'xi-api-key': config.elevenlabsApiKey!,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({

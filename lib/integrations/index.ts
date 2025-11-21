@@ -6,7 +6,7 @@
  * when environment variables are not configured.
  */
 
-import { env } from '@/lib/config/env'
+import { getCachedConfig } from '@/lib/config/env'
 
 export interface IntegrationStatus {
   available: boolean
@@ -17,10 +17,10 @@ export interface IntegrationStatus {
  * Check if Twilio integration is available
  */
 export function isTwilioAvailable(): IntegrationStatus {
+  const config = getCachedConfig()
   const hasCredentials = !!(
-    env.TWILIO_ACCOUNT_SID &&
-    env.TWILIO_AUTH_TOKEN &&
-    env.TWILIO_PHONE_NUMBER
+    config.twilioAccountSid &&
+    config.twilioAuthToken
   )
   
   return {
@@ -33,10 +33,8 @@ export function isTwilioAvailable(): IntegrationStatus {
  * Check if WhatsApp integration is available
  */
 export function isWhatsAppAvailable(): IntegrationStatus {
-  const hasCredentials = !!(
-    env.WHATSAPP_PHONE_NUMBER_ID &&
-    env.WHATSAPP_ACCESS_TOKEN
-  )
+  const config = getCachedConfig()
+  const hasCredentials = config.whatsappEnabled
   
   return {
     available: hasCredentials,
@@ -48,7 +46,8 @@ export function isWhatsAppAvailable(): IntegrationStatus {
  * Check if ElevenLabs integration is available
  */
 export function isElevenLabsAvailable(): IntegrationStatus {
-  const hasCredentials = !!env.ELEVENLABS_API_KEY
+  const config = getCachedConfig()
+  const hasCredentials = config.elevenlabsEnabled
   
   return {
     available: hasCredentials,
@@ -60,10 +59,8 @@ export function isElevenLabsAvailable(): IntegrationStatus {
  * Check if n8n integration is available
  */
 export function isN8nAvailable(): IntegrationStatus {
-  const hasCredentials = !!(
-    env.N8N_WEBHOOK_URL &&
-    env.N8N_API_KEY
-  )
+  const config = getCachedConfig()
+  const hasCredentials = config.n8nEnabled
   
   return {
     available: hasCredentials,
@@ -75,10 +72,8 @@ export function isN8nAvailable(): IntegrationStatus {
  * Check if Google Calendar integration is available
  */
 export function isGoogleCalendarAvailable(): IntegrationStatus {
-  const hasCredentials = !!(
-    env.GOOGLE_CLIENT_ID &&
-    env.GOOGLE_CLIENT_SECRET
-  )
+  const config = getCachedConfig()
+  const hasCredentials = config.googleEnabled
   
   return {
     available: hasCredentials,
@@ -90,11 +85,8 @@ export function isGoogleCalendarAvailable(): IntegrationStatus {
  * Check if email/SMTP integration is available
  */
 export function isEmailAvailable(): IntegrationStatus {
-  const hasCredentials = !!(
-    env.SMTP_HOST &&
-    env.SMTP_USER &&
-    env.SMTP_PASS
-  )
+  const config = getCachedConfig()
+  const hasCredentials = config.contactEmailEnabled
   
   return {
     available: hasCredentials,

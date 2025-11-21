@@ -18,15 +18,15 @@ export async function sendWhatsAppMessage(to: string, message: string, workspace
   }
   
   try {
-    const envModule = await import('@/lib/config/env')
-    const env = envModule.env
+    const whatsappPhoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID
+    const whatsappAccessToken = process.env.WHATSAPP_ACCESS_TOKEN
     
     const response = await fetch(
-      `https://graph.facebook.com/v18.0/${env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      `https://graph.facebook.com/v18.0/${whatsappPhoneNumberId}/messages`,
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${env.WHATSAPP_ACCESS_TOKEN}`,
+          'Authorization': `Bearer ${whatsappAccessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
