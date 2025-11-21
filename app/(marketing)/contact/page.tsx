@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({

@@ -7,6 +7,7 @@ import { Section } from '@/components/marketing/Section'
 import { CheckCircle2, Copy, QrCode, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 export default function AffiliateSignupPage() {
   const [formData, setFormData] = useState({
