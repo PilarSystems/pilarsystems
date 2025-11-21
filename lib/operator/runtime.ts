@@ -8,7 +8,7 @@
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { acquireLock } from '@/lib/autopilot/locks'
-import { aggregateWorkspaceHealth } from '@/lib/autopilot/health'
+import { getWorkspaceHealth } from '@/lib/autopilot/health'
 import { runProvisioning } from '@/lib/autopilot/provisioning-orchestrator'
 import { processWorkspaceFollowups } from '@/lib/autopilot/scheduler'
 
@@ -56,7 +56,7 @@ export async function scanSignals(limit: number = 100): Promise<OperatorSignal[]
     })
 
     for (const workspace of workspaces) {
-      const health = await aggregateWorkspaceHealth(workspace.id)
+      const health = await getWorkspaceHealth(workspace.id)
       
       if (health.status === 'degraded' || health.status === 'offline') {
         signals.push({
