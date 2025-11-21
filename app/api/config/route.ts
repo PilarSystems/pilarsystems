@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { NextResponse } from 'next/server'
 import { getPublicFeatureFlags } from '@/lib/config/env'
+import { logger } from '@/lib/logger'
 
 /**
  * Public feature flags endpoint
@@ -17,7 +18,7 @@ export async function GET() {
       flags,
     })
   } catch (error) {
-    console.error('Failed to get feature flags:', error)
+    logger.error({ error }, 'Failed to get feature flags')
     
     return NextResponse.json({
       success: true,

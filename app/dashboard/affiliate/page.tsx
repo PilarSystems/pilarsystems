@@ -50,7 +50,7 @@ export default function AffiliateDashboardPage() {
       const data = await response.json()
       setStats(data)
     } catch (error) {
-      console.error('Error fetching affiliate stats:', error)
+      // console.error('Error fetching affiliate stats:', error)
     } finally {
       setLoading(false)
     }

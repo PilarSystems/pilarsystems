@@ -20,7 +20,7 @@ export default function CalendarPage() {
           setEvents(data)
         }
       } catch (error) {
-        console.error('Failed to fetch events:', error)
+        // console.error('Failed to fetch events:', error)
       }
     }
     fetchEvents()
