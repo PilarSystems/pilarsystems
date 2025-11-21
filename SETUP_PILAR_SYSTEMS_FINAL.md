@@ -102,7 +102,7 @@ cp .env.example .env.local
 
 ```env
 # PostgreSQL Database (Supabase empfohlen)
-DATABASE_URL="postgresql://user:password@host:5432/pilarsystems"
+DATABASE_URL=postgresql://postgres.cnsulhvawngxjqgzndzg:OpaDieter150508@aws-1-eu-west-3.pooler.supabase.com:5432/postgres
 
 # App URL
 NEXT_PUBLIC_APP_URL="http://localhost:3000"  # Lokal
