@@ -82,10 +82,10 @@ export async function provisionPhoneNumber(subaccountSid: string) {
       }
     }
     
-    // Purchase the number for the subaccount
-    const purchasedNumber = await client.incomingPhoneNumbers.create({
-      phoneNumber: numbers[0].phoneNumber,
-      accountSid: subaccountSid
+    // Purchase the number
+    const subaccountClient = twilio.default(subaccountSid, config.twilioAuthToken!)
+    const purchasedNumber = await subaccountClient.incomingPhoneNumbers.create({
+      phoneNumber: numbers[0].phoneNumber
     })
     
     logger.info({ subaccountSid, phoneNumber: purchasedNumber.phoneNumber }, 'Phone number provisioned')
