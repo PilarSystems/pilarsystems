@@ -223,13 +223,17 @@ export class IdentityEngine {
       ? Math.ceil((oldToken.expiresAt.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
       : undefined
 
-    const newToken = oldToken.type === 'service_token'
-      ? await this.generateServiceToken(workspaceId, oldToken.name, scopes)
-      : await this.generateApiKey(workspaceId, oldToken.name, scopes, expiresInDays)
+    let result: { token: string; apiKey: ApiToken }
+    if (oldToken.type === 'service_token') {
+      const serviceResult = await this.generateServiceToken(workspaceId, oldToken.name, scopes)
+      result = { token: serviceResult.token, apiKey: serviceResult.serviceToken }
+    } else {
+      result = await this.generateApiKey(workspaceId, oldToken.name, scopes, expiresInDays)
+    }
 
     await this.revokeToken(tokenId, workspaceId)
 
-    return newToken
+    return result
   }
 
   /**
