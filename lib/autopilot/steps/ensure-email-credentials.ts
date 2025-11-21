@@ -44,11 +44,14 @@ export async function ensureEmailCredentials(
     await prisma.emailCredential.create({
       data: {
         workspaceId,
-        provider: 'smtp',
+        provider: 'custom',
         email: SMTP_USER,
         smtpHost: SMTP_HOST,
         smtpPort: parseInt(SMTP_PORT || '587'),
+        username: SMTP_USER,
         password: encrypt(SMTP_PASSWORD),
+        imapHost: SMTP_HOST,
+        imapPort: 993,
       },
     })
 
@@ -63,10 +66,10 @@ export async function ensureEmailCredentials(
         workspaceId,
         type: 'email',
         status: 'active',
-        config: {
-          provider: 'smtp',
+        config: JSON.stringify({
+          provider: 'custom',
           email: SMTP_USER,
-        },
+        }),
       },
       update: {
         status: 'active',
