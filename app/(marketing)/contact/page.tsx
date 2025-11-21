@@ -296,9 +296,9 @@ export default function ContactPage() {
                 <p className="text-gray-400 mb-4">
                   Schau dir unsere FAQ-Sektion auf der Homepage an. Viele Fragen werden dort bereits beantwortet.
                 </p>
-                <a href="/#faq" className="text-cyan-400 hover:underline">
+                <Link href="/#faq" className="text-cyan-400 hover:underline">
                   Zu den FAQs →
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>
