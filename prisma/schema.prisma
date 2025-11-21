@@ -50,6 +50,8 @@ model Workspace {
   emailCredential     EmailCredential?
   n8nWorkflows        N8nWorkflow[]
   auditLogs           AuditLog[]
+  autopilotEvents     AutopilotEvent[]
+  autopilotJobs       AutopilotJob[]
 }
 
 model Subscription {
@@ -643,19 +645,19 @@ model AffiliatePayout {
 
 // Webhook idempotency and queueing
 model WebhookEvent {
-  id            String   @id @default(uuid())
-  source        String   // stripe, twilio, whatsapp
-  externalId    String   // event.id, CallSid, message.id
-  workspaceId   String?
-  status        String   @default("pending") // pending, processing, completed, failed
-  attempts      Int      @default(0)
-  maxAttempts   Int      @default(3)
-  payload       Json
-  payloadHash   String
-  error         String?  @db.Text
-  processedAt   DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String    @id @default(uuid())
+  source      String // stripe, twilio, whatsapp
+  externalId  String // event.id, CallSid, message.id
+  workspaceId String?
+  status      String    @default("pending") // pending, processing, completed, failed
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  payload     Json
+  payloadHash String
+  error       String?   @db.Text
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@unique([source, externalId])
   @@index([workspaceId, status])
@@ -671,7 +673,7 @@ model ConversationState {
   lastMessageAt DateTime?
   nextActionAt  DateTime?
   lockedAt      DateTime?
-  lockedBy      String?   // process/worker ID
+  lockedBy      String? // process/worker ID
   retries       Int       @default(0)
   metadata      Json?
   createdAt     DateTime  @default(now())
@@ -694,4 +696,55 @@ model DistributedLock {
 
   @@index([workspaceId, scope])
   @@index([expiresAt])
+}
+
+// Autopilot Backplane - Event Queue
+model AutopilotEvent {
+  id             String    @id @default(uuid())
+  workspaceId    String
+  workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type           String    @db.VarChar(100)
+  payload        Json
+  status         String    @default("pending") @db.VarChar(20)
+  scheduledAt    DateTime  @default(now())
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(3)
+  idempotencyKey String    @unique @db.VarChar(255)
+  lockedAt       DateTime?
+  lockedBy       String?   @db.VarChar(100)
+  error          String?   @db.Text
+  processedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([scheduledAt])
+  @@index([type, status])
+}
+
+// Autopilot Backplane - Job Queue
+model AutopilotJob {
+  id             String    @id @default(uuid())
+  workspaceId    String
+  workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type           String    @db.VarChar(100)
+  payload        Json
+  status         String    @default("pending") @db.VarChar(20)
+  priority       Int       @default(5)
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(3)
+  scheduledAt    DateTime  @default(now())
+  startedAt      DateTime?
+  completedAt    DateTime?
+  idempotencyKey String    @unique @db.VarChar(255)
+  lockedAt       DateTime?
+  lockedBy       String?   @db.VarChar(100)
+  result         Json?
+  error          String?   @db.Text
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([scheduledAt, priority])
+  @@index([type, status])
 }
