@@ -50,7 +50,7 @@ export async function createTwilioSubaccount(workspaceId: string, workspaceName:
   }
 }
 
-export async function provisionPhoneNumber(subaccountSid: string, areaCode?: string) {
+export async function provisionPhoneNumber(subaccountSid: string) {
   const status = isTwilioAvailable()
   
   if (!status.available) {
@@ -72,7 +72,7 @@ export async function provisionPhoneNumber(subaccountSid: string, areaCode?: str
     // Search for available phone numbers
     const numbers = await client.availablePhoneNumbers('DE')
       .local
-      .list({ areaCode, limit: 1 })
+      .list({ limit: 1 })
     
     if (numbers.length === 0) {
       return {
