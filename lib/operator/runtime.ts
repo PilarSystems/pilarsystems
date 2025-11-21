@@ -58,11 +58,11 @@ export async function scanSignals(limit: number = 100): Promise<OperatorSignal[]
     for (const workspace of workspaces) {
       const health = await getWorkspaceHealth(workspace.id)
       
-      if (health.status === 'degraded' || health.status === 'offline') {
+      if (health.overall === 'degraded' || health.overall === 'unhealthy') {
         signals.push({
           type: 'health_degraded',
           workspaceId: workspace.id,
-          severity: health.status === 'offline' ? 'critical' : 'high',
+          severity: health.overall === 'unhealthy' ? 'critical' : 'high',
           metadata: { health },
           timestamp: new Date(),
         })
