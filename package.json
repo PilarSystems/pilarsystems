@@ -4,13 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node -e \"console.log('Node',process.version)\" && npx prisma --version",
-    "build:prisma": "npx prisma generate",
+    "build:prisma": "prisma generate",
     "build:next": "next build",
     "build": "DATABASE_URL=${DATABASE_URL:-postgresql://user:pass@localhost:5432/db} yarn build:prisma && yarn build:next",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "echo 'Skipping prisma generate on Vercel - will run during build'"
+    "postinstall": "prisma generate || echo 'Prisma generate failed - will retry during build'"
   },
   "engines": {
     "node": ">=18.18.0"
@@ -20,6 +19,7 @@
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.0",
+    "prisma": "^6.19.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-dialog": "^1.1.15",
