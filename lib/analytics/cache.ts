@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis'
+import { logger } from '@/lib/logger'
 
 const redis = process.env.RATE_LIMIT_REDIS_URL && process.env.RATE_LIMIT_REDIS_TOKEN
   ? new Redis({
@@ -34,7 +35,7 @@ export async function getCachedAnalytics(workspaceId: string): Promise<Analytics
     const data = typeof cached === 'string' ? JSON.parse(cached) : cached
     return data as AnalyticsCache
   } catch (error) {
-    console.error('Failed to get cached analytics:', error)
+    logger.error({ error }, 'Failed to get cached analytics')
     return null
   }
 }
@@ -57,7 +58,7 @@ export async function setCachedAnalytics(
     
     await redis.setex(key, ttlSeconds, JSON.stringify(cacheData))
   } catch (error) {
-    console.error('Failed to cache analytics:', error)
+    logger.error({ error }, 'Failed to cache analytics')
   }
 }
 
@@ -70,6 +71,6 @@ export async function invalidateAnalyticsCache(workspaceId: string): Promise<voi
     const key = `analytics:${workspaceId}:dashboard`
     await redis.del(key)
   } catch (error) {
-    console.error('Failed to invalidate analytics cache:', error)
+    logger.error({ error }, 'Failed to invalidate analytics cache')
   }
 }

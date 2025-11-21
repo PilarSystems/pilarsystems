@@ -8,14 +8,51 @@ import { TwilioWebhookPayload } from '@/types'
 import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
 import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
 import { enqueueWebhook } from '@/lib/queue/webhook-queue'
+import twilio from 'twilio'
 
 function normalizePhoneNumber(phone: string): string {
   return phone.replace(/[^\d+]/g, '')
 }
 
+async function validateTwilioSignature(
+  request: NextRequest,
+  body: Record<string, string>
+): Promise<boolean> {
+  const signature = request.headers.get('x-twilio-signature')
+  if (!signature) {
+    return false
+  }
+
+  const url = request.url
+  const authToken = process.env.TWILIO_AUTH_TOKEN
+
+  if (!authToken) {
+    logger.warn('TWILIO_AUTH_TOKEN not configured, skipping signature validation')
+    return true
+  }
+
+  try {
+    return twilio.validateRequest(authToken, signature, url, body)
+  } catch (error) {
+    logger.error({ error }, 'Twilio signature validation error')
+    return false
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
+    
+    const body: Record<string, string> = {}
+    formData.forEach((value, key) => {
+      body[key] = value.toString()
+    })
+
+    const isValid = await validateTwilioSignature(request, body)
+    if (!isValid) {
+      logger.warn('Invalid Twilio signature')
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 403 })
+    }
     
     const payload: TwilioWebhookPayload = {
       CallSid: formData.get('CallSid') as string,

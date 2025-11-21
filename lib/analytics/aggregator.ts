@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { setCachedAnalytics, invalidateAnalyticsCache } from './cache'
+import { logger } from '@/lib/logger'
 
 export async function aggregateWorkspaceAnalytics(workspaceId: string): Promise<void> {
   try {
@@ -58,7 +59,7 @@ export async function aggregateWorkspaceAnalytics(workspaceId: string): Promise<
     }, 300)
 
   } catch (error) {
-    console.error('Failed to aggregate analytics:', error)
+    logger.error({ error }, 'Failed to aggregate analytics')
     throw error
   }
 }

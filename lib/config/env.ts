@@ -3,6 +3,8 @@
  * All environment variable access should go through this module
  */
 
+import { logger } from '@/lib/logger'
+
 export interface AppConfig {
   nodeEnv: 'development' | 'production' | 'test'
   appUrl: string
@@ -78,7 +80,7 @@ function getAppUrl(): string {
     return 'http://localhost:3000'
   }
   
-  console.warn('NEXT_PUBLIC_APP_URL not set in production - using placeholder')
+  logger.warn('NEXT_PUBLIC_APP_URL not set in production - using placeholder')
   return 'https://app.pilarsystems.com'
 }
 

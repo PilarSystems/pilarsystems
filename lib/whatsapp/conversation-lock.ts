@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { Redis } from '@upstash/redis'
+import { logger } from '@/lib/logger'
 
 const redis = process.env.RATE_LIMIT_REDIS_URL && process.env.RATE_LIMIT_REDIS_TOKEN
   ? new Redis({
@@ -53,7 +54,7 @@ export async function acquireConversationLock(
 
     return true
   } catch (error) {
-    console.error('Failed to acquire conversation lock:', error)
+    logger.error({ error }, 'Failed to acquire conversation lock')
     return false
   }
 }
@@ -87,6 +88,6 @@ export async function releaseConversationLock(
       }
     })
   } catch (error) {
-    console.error('Failed to release conversation lock:', error)
+    logger.error({ error }, 'Failed to release conversation lock')
   }
 }

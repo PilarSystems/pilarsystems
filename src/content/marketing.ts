@@ -9,7 +9,7 @@ export const testimonials = [
     name: 'Michael Schmidt',
     role: 'Inhaber',
     studio: 'FitMax Berlin',
-    image: '/marketing/testimonials/michael.jpg', // TODO: Add real image
+    image: '/marketing/testimonials/michael.jpg',
     rating: 5,
     quote: 'Seit wir PILAR nutzen, verpassen wir keinen einzigen Anruf mehr. Die KI-Rezeption arbeitet 24/7 und unsere Conversion-Rate ist um 40% gestiegen.',
   },
@@ -18,7 +18,7 @@ export const testimonials = [
     name: 'Sarah Weber',
     role: 'Geschäftsführerin',
     studio: 'PowerGym München',
-    image: '/marketing/testimonials/sarah.jpg', // TODO: Add real image
+    image: '/marketing/testimonials/sarah.jpg',
     rating: 5,
     quote: 'Die WhatsApp-Automation spart uns täglich mehrere Stunden. Leads werden automatisch qualifiziert und Follow-ups laufen komplett automatisch.',
   },
@@ -27,7 +27,7 @@ export const testimonials = [
     name: 'Thomas Müller',
     role: 'Studio-Leiter',
     studio: 'Athletic Club Hamburg',
-    image: '/marketing/testimonials/thomas.jpg', // TODO: Add real image
+    image: '/marketing/testimonials/thomas.jpg',
     rating: 5,
     quote: 'Endlich haben wir alle Kanäle in einem System. Telefon, WhatsApp, E-Mail – alles zentral. Das spart enorm Zeit und wir verlieren keine Leads mehr.',
   },
@@ -36,7 +36,7 @@ export const testimonials = [
     name: 'Julia Hoffmann',
     role: 'Inhaberin',
     studio: 'FitZone Köln',
-    image: '/marketing/testimonials/julia.jpg', // TODO: Add real image
+    image: '/marketing/testimonials/julia.jpg',
     rating: 5,
     quote: 'Das Setup war super einfach und nach 2 Tagen lief alles. Der Support ist top und die Automatisierung funktioniert einwandfrei.',
   },
