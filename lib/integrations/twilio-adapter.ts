@@ -21,7 +21,8 @@ export async function createTwilioSubaccount(workspaceId: string, workspaceName:
   try {
     // Dynamic import to avoid loading SDK when not needed
     const twilio = await import('twilio')
-    const { env } = await import('@/lib/config/env')
+    const envModule = await import('@/lib/config/env')
+    const env = envModule.env
     
     const client = twilio.default(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN)
     
@@ -63,7 +64,8 @@ export async function provisionPhoneNumber(subaccountSid: string, areaCode?: str
   
   try {
     const twilio = await import('twilio')
-    const { env } = await import('@/lib/config/env')
+    const envModule = await import('@/lib/config/env')
+    const env = envModule.env
     
     const client = twilio.default(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN)
     

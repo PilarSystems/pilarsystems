@@ -18,7 +18,8 @@ export async function getAvailableVoices() {
   }
   
   try {
-    const { env } = await import('@/lib/config/env')
+    const envModule = await import('@/lib/config/env')
+    const env = envModule.env
     
     const response = await fetch('https://api.elevenlabs.io/v1/voices', {
       headers: {
@@ -58,7 +59,8 @@ export async function previewVoice(voiceId: string, text: string) {
   }
   
   try {
-    const { env } = await import('@/lib/config/env')
+    const envModule = await import('@/lib/config/env')
+    const env = envModule.env
     
     const response = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,

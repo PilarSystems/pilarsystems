@@ -18,7 +18,8 @@ export async function sendWhatsAppMessage(to: string, message: string, workspace
   }
   
   try {
-    const { env } = await import('@/lib/config/env')
+    const envModule = await import('@/lib/config/env')
+    const env = envModule.env
     
     const response = await fetch(
       `https://graph.facebook.com/v18.0/${env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
