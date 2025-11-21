@@ -134,18 +134,32 @@ export async function generateWizardConfig(
     const template = STUDIO_TEMPLATES[input.studioType] || STUDIO_TEMPLATES.fitness
 
     const prompt = buildCustomizationPrompt(input, template)
-    const aiResponse = await generateText({
-      prompt,
-      maxTokens: 2000,
-      temperature: 0.7,
-    })
+    
+    let aiText = ''
+    try {
+      if (process.env.OPENAI_API_KEY) {
+        const OpenAI = (await import('openai')).default
+        const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+        
+        const completion = await client.chat.completions.create({
+          model: 'gpt-4o-mini',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 2000,
+        })
+        
+        aiText = completion.choices[0]?.message?.content?.trim() || ''
+      }
+    } catch (error: any) {
+      logger.warn({ error, workspaceId }, 'AI generation failed, using template defaults')
+    }
 
-    if (!aiResponse.ok || !aiResponse.data) {
-      logger.warn({ workspaceId }, 'AI generation failed, using template defaults')
+    if (!aiText) {
+      logger.warn({ workspaceId }, 'No AI response, using template defaults')
       return buildDefaultOutput(template, input)
     }
 
-    const customized = parseAIResponse(aiResponse.data, template, input)
+    const customized = parseAIResponse(aiText, template, input)
 
     logger.info({ workspaceId }, 'AI wizard config generated successfully')
     return customized
