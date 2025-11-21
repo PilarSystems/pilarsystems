@@ -9,7 +9,7 @@ import { logger } from '@/lib/logger'
 import type { ProvisioningJobType, JobStatus } from '@prisma/client'
 
 export interface EnqueueOptions {
-  source: 'stripe' | 'onboarding' | 'manual'
+  source: 'stripe' | 'onboarding' | 'manual' | 'operator'
   metadata?: Record<string, any>
 }
 
