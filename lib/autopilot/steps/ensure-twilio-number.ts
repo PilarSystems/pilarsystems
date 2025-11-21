@@ -67,24 +67,24 @@ export async function ensureTwilioNumber(
       where: {
         workspaceId_type: {
           workspaceId,
-          type: 'twilio',
+          type: 'phone',
         },
       },
       create: {
         workspaceId,
-        type: 'twilio',
+        type: 'phone',
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumber: numberResult.data?.phoneNumber,
           phoneNumberSid: numberResult.data?.phoneNumberSid,
-        },
+        }),
       },
       update: {
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumber: numberResult.data?.phoneNumber,
           phoneNumberSid: numberResult.data?.phoneNumberSid,
-        },
+        }),
       },
     })
 
