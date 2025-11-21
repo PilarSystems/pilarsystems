@@ -54,7 +54,9 @@ export async function POST(request: NextRequest) {
         const leads = await prisma.lead.findMany({
           where: {
             workspaceId: data.workspaceId,
-            status: 'active',
+            status: {
+              in: ['new', 'contacted', 'qualified'],
+            },
           },
           take: 100,
         })
