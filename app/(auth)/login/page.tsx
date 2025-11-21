@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
+import { getAuthErrorMessage, validateEmail } from '@/lib/auth-errors'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -17,8 +18,21 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const emailValid = validateEmail(email)
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!emailValid) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
+    if (!password) {
+      toast.error('Bitte geben Sie Ihr Passwort ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -28,16 +42,10 @@ export default function LoginPage() {
       })
 
       if (error) {
-        if (error.message.includes('Invalid login credentials')) {
-          throw new Error('E-Mail oder Passwort ist falsch')
-        }
-        if (error.message.includes('Email not confirmed')) {
-          throw new Error('Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse')
-        }
-        throw error
+        throw new Error(getAuthErrorMessage(error))
       }
 
-      toast.success('Erfolgreich angemeldet')
+      toast.success('Erfolgreich angemeldet! Willkommen zurück.')
       router.push('/dashboard')
     } catch (error: any) {
       toast.error(error.message || 'Anmeldung fehlgeschlagen')
@@ -47,6 +55,11 @@ export default function LoginPage() {
   }
 
   const handleMagicLink = async () => {
+    if (!emailValid) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -57,9 +70,11 @@ export default function LoginPage() {
         },
       })
 
-      if (error) throw error
+      if (error) {
+        throw new Error(getAuthErrorMessage(error))
+      }
 
-      toast.success('Magic Link wurde an Ihre E-Mail gesendet')
+      toast.success('Magic Link wurde an Ihre E-Mail gesendet. Bitte prüfen Sie Ihr Postfach.')
     } catch (error: any) {
       toast.error(error.message || 'Magic Link konnte nicht gesendet werden')
     } finally {
