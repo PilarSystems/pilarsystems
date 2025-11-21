@@ -3,5 +3,15 @@
   "devCommand": "yarn dev",
   "installCommand": "yarn install --ignore-scripts",
   "framework": "nextjs",
-  "regions": ["fra1"]
+  "regions": ["fra1"],
+  "crons": [
+    {
+      "path": "/api/autopilot/scheduler",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/autopilot/run",
+      "schedule": "*/10 * * * *"
+    }
+  ]
 }

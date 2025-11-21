@@ -96,6 +96,19 @@ export async function POST(request: NextRequest) {
 
     logger.info({ workspaceId: workspace.id, userId }, 'Onboarding completed')
 
+    try {
+      const { enqueueProvisioning } = await import('@/lib/autopilot/provisioning-queue')
+      await enqueueProvisioning(workspace.id, {
+        source: 'onboarding',
+        metadata: {
+          userId,
+        },
+      })
+      logger.info({ workspaceId: workspace.id }, 'Autopilot provisioning enqueued from onboarding')
+    } catch (error) {
+      logger.error({ error, workspaceId: workspace.id }, 'Failed to enqueue autopilot provisioning')
+    }
+
     return NextResponse.json({ success: true, workspaceId: workspace.id })
   } catch (error) {
     logger.error({ error }, 'Failed to complete onboarding')
