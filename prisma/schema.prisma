@@ -52,6 +52,7 @@ model Workspace {
   auditLogs           AuditLog[]
   autopilotEvents     AutopilotEvent[]
   autopilotJobs       AutopilotJob[]
+  apiTokens           ApiToken[]
 }
 
 model Subscription {
@@ -747,4 +748,36 @@ model AutopilotJob {
   @@index([workspaceId, status])
   @@index([scheduledAt, priority])
   @@index([type, status])
+}
+
+// Autopilot Identity - API Tokens
+model ApiToken {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type        String    @db.VarChar(50)
+  token       String    @unique @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  scopes      String    @db.Text
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId, type])
+  @@index([token])
+}
+
+// Autopilot Identity - Distributed Locks
+model DistributedLock {
+  id          String   @id @default(uuid())
+  lockKey     String   @unique @db.VarChar(255)
+  workspaceId String
+  scope       String   @default("autopilot") @db.VarChar(50)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([lockKey, expiresAt])
+  @@index([workspaceId])
 }
