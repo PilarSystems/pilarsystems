@@ -9,7 +9,7 @@
     "build": "DATABASE_URL=${DATABASE_URL:-postgresql://user:pass@localhost:5432/db} yarn build:prisma && yarn build:next",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate || echo 'Prisma generate failed - will retry during build'"
+    "postinstall": "DATABASE_URL=postgresql://user:pass@localhost:5432/db prisma generate || echo 'skip generate on postinstall'"
   },
   "engines": {
     "node": ">=18.18.0"

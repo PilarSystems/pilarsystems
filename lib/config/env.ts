@@ -79,7 +79,6 @@ function getAppUrl(): string {
   }
   
   if (process.env.NODE_ENV === 'production') {
-    console.warn('NEXT_PUBLIC_APP_URL not set in production - using placeholder')
   }
   return 'https://app.pilarsystems.com'
 }
