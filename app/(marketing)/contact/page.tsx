@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react'
@@ -296,9 +297,9 @@ export default function ContactPage() {
                 <p className="text-gray-400 mb-4">
                   Schau dir unsere FAQ-Sektion auf der Homepage an. Viele Fragen werden dort bereits beantwortet.
                 </p>
-                <a href="/#faq" className="text-cyan-400 hover:underline">
+                <Link href="/#faq" className="text-cyan-400 hover:underline">
                   Zu den FAQs →
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>

@@ -1,0 +1,88 @@
+export const dynamic = 'force-dynamic'
+
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { logger } from '@/lib/logger'
+import { z } from 'zod'
+
+const configSchema = z.object({
+  workspaceId: z.string().uuid(),
+  targetAudience: z.string(),
+  goal: z.string(),
+  frequency: z.string(),
+  timeWindow: z.object({
+    start: z.string(),
+    end: z.string(),
+  }),
+  tone: z.string(),
+  language: z.string(),
+})
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const data = configSchema.parse(body)
+
+    await prisma.workspace.update({
+      where: { id: data.workspaceId },
+      data: {
+        studioInfo: {
+          whatsappCoach: {
+            targetAudience: data.targetAudience,
+            goal: data.goal,
+            frequency: data.frequency,
+            timeWindow: data.timeWindow,
+            tone: data.tone,
+            language: data.language,
+            updatedAt: new Date().toISOString(),
+          },
+        },
+      },
+    })
+
+    logger.info({ workspaceId: data.workspaceId }, 'WhatsApp coach config saved')
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    logger.error({ error }, 'Failed to save WhatsApp coach config')
+
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Invalid request data', details: error.issues },
+        { status: 400 }
+      )
+    }
+
+    return NextResponse.json(
+      { error: 'Failed to save configuration' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const workspaceId = searchParams.get('workspaceId')
+
+    if (!workspaceId) {
+      return NextResponse.json({ error: 'workspaceId required' }, { status: 400 })
+    }
+
+    const workspace = await prisma.workspace.findUnique({
+      where: { id: workspaceId },
+      select: { studioInfo: true },
+    })
+
+    if (!workspace) {
+      return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
+    }
+
+    const config = (workspace.studioInfo as any)?.whatsappCoach || null
+
+    return NextResponse.json({ config })
+  } catch (error) {
+    logger.error({ error }, 'Failed to get WhatsApp coach config')
+    return NextResponse.json({ error: 'Failed to get configuration' }, { status: 500 })
+  }
+}
