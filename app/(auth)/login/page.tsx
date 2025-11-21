@@ -47,6 +47,11 @@ export default function LoginPage() {
   }
 
   const handleMagicLink = async () => {
+    if (!email) {
+      toast.error('Bitte geben Sie Ihre E-Mail-Adresse ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -75,17 +80,17 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <Card className="w-full bg-gray-900 border-gray-800">
+        <Card className="w-full bg-gray-900/80 backdrop-blur-sm border-gray-800">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Willkommen zurück</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold text-white">Willkommen zurück</CardTitle>
+          <CardDescription className="text-gray-400">
             Melden Sie sich bei Ihrem PILAR SYSTEMS Konto an
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">E-Mail</Label>
+              <Label htmlFor="email" className="text-gray-200">E-Mail</Label>
               <Input
                 id="email"
                 type="email"
@@ -93,10 +98,11 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Passwort</Label>
+              <Label htmlFor="password" className="text-gray-200">Passwort</Label>
               <Input
                 id="password"
                 type="password"
@@ -104,33 +110,38 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             <div className="flex items-center justify-between">
               <Link
                 href="/reset-password"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-400 hover:text-blue-300 hover:underline transition-colors"
               >
                 Passwort vergessen?
               </Link>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors" 
+              disabled={loading}
+            >
               {loading ? 'Anmeldung läuft...' : 'Anmelden'}
             </Button>
             <Button
               type="button"
               variant="outline"
-              className="w-full"
+              className="w-full bg-gray-800 border-gray-700 text-gray-200 hover:bg-gray-700 hover:text-white transition-colors"
               onClick={handleMagicLink}
               disabled={loading || !email}
             >
               Magic Link senden
             </Button>
-            <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-center text-gray-400">
               Noch kein Konto?{' '}
-              <Link href="/signup" className="text-blue-600 hover:underline">
+              <Link href="/signup" className="text-blue-400 hover:text-blue-300 hover:underline transition-colors">
                 Jetzt registrieren
               </Link>
             </p>
