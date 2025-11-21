@@ -46,9 +46,9 @@ export async function ensureWhatsAppIntegration(
           workspaceId,
           type: 'whatsapp',
           status: 'active',
-          config: {
+          config: JSON.stringify({
             phoneNumberId: existing.phoneNumberId,
-          },
+          }),
         },
         update: {
           status: 'active',
@@ -68,12 +68,14 @@ export async function ensureWhatsAppIntegration(
         workspaceId,
         wabaId: WHATSAPP_BUSINESS_ACCOUNT_ID || '',
         phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
+        phoneNumber: '', // Will be populated when number is purchased
         accessToken: encrypt(WHATSAPP_API_TOKEN),
         webhookVerifyToken: WHATSAPP_VERIFY_TOKEN || '',
       },
       update: {
         wabaId: WHATSAPP_BUSINESS_ACCOUNT_ID || '',
         phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
+        phoneNumber: '', // Will be populated when number is purchased
         accessToken: encrypt(WHATSAPP_API_TOKEN),
         webhookVerifyToken: WHATSAPP_VERIFY_TOKEN || '',
       },
@@ -90,15 +92,15 @@ export async function ensureWhatsAppIntegration(
         workspaceId,
         type: 'whatsapp',
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
-        },
+        }),
       },
       update: {
         status: 'active',
-        config: {
+        config: JSON.stringify({
           phoneNumberId: WHATSAPP_PHONE_NUMBER_ID,
-        },
+        }),
       },
     })
 
