@@ -115,7 +115,7 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
         isAnimating.current = false;
       }
     } catch (error) {
-      console.error('Error closing modal:', error);
+      
       modal.classList.remove('modal-open');
       modal.classList.add('modal-close');
       setIsOpen(false);

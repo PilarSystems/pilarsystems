@@ -118,7 +118,7 @@ const OnboardingWizard = () => {
       const audio = new Audio(previewUrl);
       audio.play();
     } catch (err) {
-      console.error('Audio playback error:', err);
+      
     }
   };
 
@@ -156,7 +156,7 @@ const OnboardingWizard = () => {
       // Wenn alles ok → ins Dashboard
       router.push('/dashboard');
     } catch (err: any) {
-      console.error(err);
+      
       setSubmitError(
         err?.message ?? 'Es ist ein Fehler beim Speichern aufgetreten.'
       );

@@ -104,7 +104,7 @@ const SignupHero = ({ initialStatus, initialEmail }: SignupHeroProps) => {
       });
 
       if (signUpError) {
-        console.error('Supabase signUp error:', signUpError.message);
+        
         setError('signup_failed');
         setStatus('idle');
         return;
@@ -115,7 +115,7 @@ const SignupHero = ({ initialStatus, initialEmail }: SignupHeroProps) => {
       setStatus('signup_success');
       setError(null);
     } catch (err) {
-      console.error('Signup client error:', err);
+      
       setError('signup_failed');
       setStatus('idle');
     } finally {

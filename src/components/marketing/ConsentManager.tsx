@@ -41,11 +41,11 @@ export function ConsentManager() {
 
   const loadScripts = (prefs: ConsentPreferences) => {
     if (prefs.analytics && typeof window !== 'undefined') {
-      console.log('Analytics consent granted, loading scripts...')
+      
     }
 
     if (prefs.marketing && typeof window !== 'undefined') {
-      console.log('Marketing consent granted, loading scripts...')
+      
     }
   }
 
