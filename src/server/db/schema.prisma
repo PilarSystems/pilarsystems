@@ -1,0 +1,909 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core user and workspace models
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  workspaceId   String?
+  workspace     Workspace?    @relation(fields: [workspaceId], references: [id])
+  assignedLeads Lead[]        @relation("AssignedLeads")
+  activityLogs  ActivityLog[]
+  assignedTasks Task[]        @relation("AssignedTasks")
+}
+
+model Workspace {
+  id                  String               @id @default(uuid())
+  name                String
+  ownerId             String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  subscriptionId      String?              @unique
+  subscription        Subscription?        @relation(fields: [subscriptionId], references: [id])
+  users               User[]
+  wizardProgress      WizardProgress[]
+  integrations        Integration[]
+  leads               Lead[]
+  messages            Message[]
+  callLogs            CallLog[]
+  followups           Followup[]
+  calendarEvents      CalendarEvent[]
+  aiRules             AiRule[]
+  activityLogs        ActivityLog[]
+  tasks               Task[]
+  studioInfo          Json?
+  provisioningJobs    ProvisioningJob[]
+  twilioSubaccount    TwilioSubaccount?
+  whatsappIntegration WhatsAppIntegration?
+  oauthTokens         OAuthToken[]
+  emailCredential     EmailCredential?
+  n8nWorkflows        N8nWorkflow[]
+  auditLogs           AuditLog[]
+  autopilotEvents     AutopilotEvent[]
+  autopilotJobs       AutopilotJob[]
+  apiTokens           ApiToken[]
+}
+
+model Subscription {
+  id                   String             @id @default(uuid())
+  workspaceId          String?            @unique
+  workspace            Workspace?
+  stripeCustomerId     String             @unique
+  stripeSubscriptionId String             @unique
+  plan                 Plan
+  status               SubscriptionStatus
+  whatsappAddon        Boolean            @default(false)
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+enum Plan {
+  BASIC
+  PRO
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  past_due
+  incomplete
+  trialing
+}
+
+model WizardProgress {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  step        Int
+  completed   Boolean   @default(false)
+  data        Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([workspaceId, step])
+}
+
+model Integration {
+  id          String            @id @default(uuid())
+  workspaceId String
+  workspace   Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type        IntegrationType
+  config      String // Encrypted JSON
+  status      IntegrationStatus
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([workspaceId, type])
+}
+
+enum IntegrationType {
+  whatsapp
+  phone
+  email
+  calendar
+}
+
+enum IntegrationStatus {
+  active
+  inactive
+  error
+}
+
+model Lead {
+  id             String              @id @default(uuid())
+  workspaceId    String
+  workspace      Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name           String
+  email          String?
+  phone          String?
+  classification LeadClassification?
+  status         LeadStatus          @default(new)
+  source         LeadSource
+  priority       Priority            @default(medium)
+  assignedToId   String?
+  assignedTo     User?               @relation("AssignedLeads", fields: [assignedToId], references: [id])
+  metadata       Json?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  messages       Message[]
+  callLogs       CallLog[]
+  followups      Followup[]
+  calendarEvents CalendarEvent[]
+  activityLogs   ActivityLog[]
+  tasks          Task[]
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, classification])
+}
+
+enum LeadClassification {
+  A
+  B
+  C
+}
+
+enum LeadStatus {
+  new
+  contacted
+  qualified
+  converted
+  lost
+}
+
+enum LeadSource {
+  whatsapp
+  phone
+  email
+  manual
+  web
+}
+
+enum Priority {
+  high
+  medium
+  low
+}
+
+model Message {
+  id          String           @id @default(uuid())
+  workspaceId String
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId      String?
+  lead        Lead?            @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  channel     MessageChannel
+  direction   MessageDirection
+  content     String           @db.Text
+  metadata    Json?
+  aiGenerated Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+
+  @@index([workspaceId, leadId])
+  @@index([workspaceId, createdAt])
+}
+
+enum MessageChannel {
+  whatsapp
+  email
+  sms
+}
+
+enum MessageDirection {
+  inbound
+  outbound
+}
+
+model CallLog {
+  id           String        @id @default(uuid())
+  workspaceId  String
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId       String?
+  lead         Lead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  phoneNumber  String
+  direction    CallDirection
+  duration     Int? // in seconds
+  recordingUrl String?
+  transcript   String?       @db.Text
+  aiSummary    String?       @db.Text
+  aiActions    Json?
+  status       CallStatus
+  createdAt    DateTime      @default(now())
+
+  @@index([workspaceId, leadId])
+  @@index([workspaceId, createdAt])
+}
+
+enum CallDirection {
+  inbound
+  outbound
+}
+
+enum CallStatus {
+  answered
+  missed
+  voicemail
+  busy
+  failed
+}
+
+model Followup {
+  id          String         @id @default(uuid())
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId      String
+  lead        Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type        MessageChannel
+  scheduledAt DateTime
+  completedAt DateTime?
+  status      FollowupStatus @default(pending)
+  content     String         @db.Text
+  createdAt   DateTime       @default(now())
+
+  @@index([workspaceId, scheduledAt])
+  @@index([workspaceId, status])
+}
+
+enum FollowupStatus {
+  pending
+  sent
+  failed
+  cancelled
+}
+
+model CalendarEvent {
+  id            String            @id @default(uuid())
+  workspaceId   String
+  workspace     Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId        String?
+  lead          Lead?             @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  type          CalendarEventType
+  title         String
+  startTime     DateTime
+  endTime       DateTime
+  location      String?
+  googleEventId String?
+  status        EventStatus       @default(scheduled)
+  reminderSent  Boolean           @default(false)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([workspaceId, startTime])
+  @@index([workspaceId, status])
+}
+
+enum CalendarEventType {
+  probetraining
+  pt_session
+  vertragsgespraech
+  other
+}
+
+enum EventStatus {
+  scheduled
+  completed
+  cancelled
+  no_show
+}
+
+model AiRule {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  ruleType    RuleType
+  conditions  Json
+  actions     Json
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId, ruleType, active])
+}
+
+enum RuleType {
+  classification
+  followup
+  priority
+  auto_reply
+}
+
+model ActivityLog {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  leadId      String?
+  lead        Lead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  actionType  String
+  description String
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, leadId])
+}
+
+model Task {
+  id           String     @id @default(uuid())
+  workspaceId  String
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  leadId       String?
+  lead         Lead?      @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  assignedToId String?
+  assignedTo   User?      @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
+  title        String
+  description  String?    @db.Text
+  dueDate      DateTime?
+  status       TaskStatus @default(pending)
+  priority     Priority   @default(medium)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, assignedToId])
+}
+
+enum TaskStatus {
+  pending
+  completed
+  cancelled
+}
+
+// Automation and provisioning models
+model ProvisioningJob {
+  id          String              @id @default(uuid())
+  workspaceId String
+  workspace   Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  jobType     ProvisioningJobType
+  status      JobStatus           @default(pending)
+  progress    Int                 @default(0) // 0-100
+  result      Json?
+  error       String?             @db.Text
+  retryCount  Int                 @default(0)
+  maxRetries  Int                 @default(3)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  completedAt DateTime?
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, jobType])
+}
+
+enum ProvisioningJobType {
+  twilio_subaccount
+  twilio_number
+  whatsapp_setup
+  calendar_oauth
+  email_setup
+  n8n_workflow
+}
+
+enum JobStatus {
+  pending
+  in_progress
+  completed
+  failed
+  cancelled
+}
+
+model TwilioSubaccount {
+  id                 String    @id @default(uuid())
+  workspaceId        String    @unique
+  workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  subaccountSid      String    @unique
+  apiKeySid          String
+  apiKeySecret       String // Encrypted
+  phoneNumberSid     String?
+  phoneNumber        String?
+  webhooksConfigured Boolean   @default(false)
+  status             String    @default("active")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model WhatsAppIntegration {
+  id                 String    @id @default(uuid())
+  workspaceId        String    @unique
+  workspace          Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  wabaId             String
+  phoneNumberId      String    @unique
+  phoneNumber        String
+  accessToken        String // Encrypted
+  systemUserId       String?
+  webhookVerifyToken String // Encrypted
+  status             String    @default("active")
+  tokenExpiresAt     DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model OAuthToken {
+  id           String        @id @default(uuid())
+  workspaceId  String
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  provider     OAuthProvider
+  accessToken  String        @db.Text // Encrypted
+  refreshToken String?       @db.Text // Encrypted
+  expiresAt    DateTime?
+  scope        String?
+  metadata     Json?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([workspaceId, provider])
+  @@index([workspaceId, provider])
+}
+
+enum OAuthProvider {
+  google_calendar
+  microsoft_calendar
+  gmail
+  outlook
+}
+
+model EmailCredential {
+  id          String        @id @default(uuid())
+  workspaceId String        @unique
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  provider    EmailProvider
+  email       String
+  imapHost    String
+  imapPort    Int
+  smtpHost    String
+  smtpPort    Int
+  username    String
+  password    String // Encrypted
+  useTLS      Boolean       @default(true)
+  lastSyncAt  DateTime?
+  status      String        @default("active")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum EmailProvider {
+  gmail
+  outlook
+  custom
+}
+
+model N8nWorkflow {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workflowId  String    @unique
+  name        String
+  webhookUrl  String?
+  active      Boolean   @default(true)
+  config      Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId, active])
+}
+
+model AuditLog {
+  id           String     @id @default(uuid())
+  workspaceId  String?
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId       String?
+  action       String
+  resource     String
+  resourceId   String?
+  changes      Json?
+  ipAddress    String?
+  userAgent    String?
+  success      Boolean    @default(true)
+  errorMessage String?    @db.Text
+  createdAt    DateTime   @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([action, createdAt])
+  @@index([userId, createdAt])
+}
+
+// Marketing and affiliate models
+model ContactRequest {
+  id         String   @id @default(uuid())
+  name       String
+  email      String
+  phone      String?
+  studioName String
+  studioSize String
+  location   String?
+  message    String?  @db.Text
+  status     String   @default("new") // new, contacted, qualified, converted, lost
+  source     String? // landing page, pricing, features, etc.
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+model Affiliate {
+  id                  String                @id @default(uuid())
+  email               String                @unique
+  name                String
+  company             String?
+  phone               String?
+  status              AffiliateStatus       @default(pending)
+  commissionSetup     Float                 @default(10) // percentage
+  commissionRecurring Float                 @default(10) // percentage
+  payoutMethod        String? // IBAN, PayPal, etc.
+  payoutDetails       String?               @db.Text // Encrypted
+  notes               String?               @db.Text
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  links               AffiliateLink[]
+  conversions         AffiliateConversion[]
+  payouts             AffiliatePayout[]
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+enum AffiliateStatus {
+  pending
+  active
+  suspended
+  rejected
+}
+
+model AffiliateLink {
+  id          String                @id @default(uuid())
+  affiliateId String
+  affiliate   Affiliate             @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  code        String                @unique
+  name        String
+  url         String?
+  active      Boolean               @default(true)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  clicks      AffiliateClick[]
+  conversions AffiliateConversion[]
+
+  @@index([affiliateId, active])
+  @@index([code])
+}
+
+model AffiliateClick {
+  id              String        @id @default(uuid())
+  affiliateLinkId String
+  affiliateLink   AffiliateLink @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+  ipHash          String // HMAC hash of IP for GDPR compliance
+  userAgent       String?
+  referer         String?
+  landingPage     String?
+  createdAt       DateTime      @default(now())
+
+  @@index([affiliateLinkId, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+model AffiliateConversion {
+  id                      String                    @id @default(uuid())
+  affiliateId             String
+  affiliate               Affiliate                 @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  affiliateLinkId         String
+  affiliateLink           AffiliateLink             @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+  stripeCheckoutSessionId String?                   @unique
+  stripeCustomerId        String?
+  stripeSubscriptionId    String?
+  status                  AffiliateConversionStatus @default(pending)
+  setupFeeAmount          Float?
+  recurringAmount         Float?
+  commissionSetup         Float?
+  commissionRecurring     Float?
+  totalCommission         Float?
+  paidOut                 Boolean                   @default(false)
+  paidOutAt               DateTime?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+
+  @@index([affiliateId, status])
+  @@index([affiliateLinkId, status])
+  @@index([stripeCheckoutSessionId])
+  @@index([paidOut, createdAt])
+}
+
+enum AffiliateConversionStatus {
+  pending
+  approved
+  reversed
+  cancelled
+}
+
+model AffiliatePayout {
+  id          String    @id @default(uuid())
+  affiliateId String
+  affiliate   Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  amount      Float
+  method      String
+  reference   String?
+  status      String    @default("pending") // pending, processing, completed, failed
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+
+  @@index([affiliateId, status])
+  @@index([status, createdAt])
+}
+
+// Webhook idempotency and queueing
+model WebhookEvent {
+  id          String    @id @default(uuid())
+  source      String // stripe, twilio, whatsapp
+  externalId  String // event.id, CallSid, message.id
+  workspaceId String?
+  status      String    @default("pending") // pending, processing, completed, failed
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3)
+  payload     Json
+  payloadHash String
+  error       String?   @db.Text
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([source, externalId])
+  @@index([workspaceId, status])
+  @@index([status, createdAt])
+}
+
+// WhatsApp conversation state for sequential processing
+model ConversationState {
+  id            String    @id @default(uuid())
+  workspaceId   String
+  leadId        String
+  state         String    @default("idle") // idle, waiting_response, processing
+  lastMessageAt DateTime?
+  nextActionAt  DateTime?
+  lockedAt      DateTime?
+  lockedBy      String? // process/worker ID
+  retries       Int       @default(0)
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([workspaceId, leadId])
+  @@index([workspaceId, state])
+  @@index([nextActionAt])
+}
+
+// Distributed locks for autopilot (DB fallback when Redis unavailable)
+model DistributedLock {
+  id          String   @id @default(uuid())
+  lockKey     String   @unique
+  workspaceId String
+  scope       String
+  expiresAt   DateTime
+  acquiredAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([workspaceId, scope])
+  @@index([expiresAt])
+}
+
+// Autopilot Backplane - Event Queue
+model AutopilotEvent {
+  id             String    @id @default(uuid())
+  workspaceId    String
+  workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type           String    @db.VarChar(100)
+  payload        Json
+  status         String    @default("pending") @db.VarChar(20)
+  scheduledAt    DateTime  @default(now())
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(3)
+  idempotencyKey String    @unique @db.VarChar(255)
+  lockedAt       DateTime?
+  lockedBy       String?   @db.VarChar(100)
+  error          String?   @db.Text
+  processedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([scheduledAt])
+  @@index([type, status])
+}
+
+// Autopilot Backplane - Job Queue
+model AutopilotJob {
+  id             String    @id @default(uuid())
+  workspaceId    String
+  workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type           String    @db.VarChar(100)
+  payload        Json
+  status         String    @default("pending") @db.VarChar(20)
+  priority       Int       @default(5)
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(3)
+  scheduledAt    DateTime  @default(now())
+  startedAt      DateTime?
+  completedAt    DateTime?
+  idempotencyKey String    @unique @db.VarChar(255)
+  lockedAt       DateTime?
+  lockedBy       String?   @db.VarChar(100)
+  result         Json?
+  error          String?   @db.Text
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([scheduledAt, priority])
+  @@index([type, status])
+}
+
+// Autopilot Identity - API Tokens
+model ApiToken {
+  id          String    @id @default(uuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  type        String    @db.VarChar(50)
+  token       String    @unique @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  scopes      String    @db.Text
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId, type])
+  @@index([token])
+}
+
+// ============================================================================
+// NEW BACKEND MODELS - Multi-Tenant Architecture (Phase 1, Task 2)
+// ============================================================================
+// These models are added for the new /src/server backend architecture.
+// They coexist with the existing Workspace-based models above.
+// Future task: Migrate existing code to use Tenant instead of Workspace.
+
+// Tenant (Fitnessstudio) - New multi-tenant root entity
+model Tenant {
+  id                 String              @id @default(uuid())
+  name               String
+  domain             String?             @unique
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  phoneNumbers       PhoneNumber[]
+  whatsappChannels   WhatsAppChannel[]
+  conversations      Conversation[]
+  workoutPlans       WorkoutPlan[]
+  tenantIntegrations TenantIntegration[]
+  tenantUsers        TenantUser[]
+}
+
+// TenantUser (Studio Admin) - Users for new Tenant system
+model TenantUser {
+  id           String        @id @default(uuid())
+  tenantId     String
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  email        String
+  passwordHash String
+  role         String        @default("admin")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  workoutPlans WorkoutPlan[]
+
+  @@unique([tenantId, email])
+  @@index([tenantId])
+  @@index([email])
+}
+
+// TenantIntegration (Magicline, Fitogram, Google Calendar, CSV)
+model TenantIntegration {
+  id        String                @id @default(uuid())
+  tenantId  String
+  tenant    Tenant                @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  type      TenantIntegrationType
+  config    Json
+  active    Boolean               @default(true)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+
+  @@unique([tenantId, type])
+  @@index([tenantId, active])
+}
+
+enum TenantIntegrationType {
+  MAGICLINE
+  FITOGRAM
+  GOOGLE_CALENDAR
+  CSV
+}
+
+// PhoneNumber (Studio phone for AI calls)
+model PhoneNumber {
+  id             String      @id @default(uuid())
+  tenantId       String
+  tenant         Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  sipCredentials Json
+  number         String      @unique
+  status         PhoneStatus @default(PENDING)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([tenantId])
+  @@index([status])
+}
+
+enum PhoneStatus {
+  PENDING
+  ACTIVE
+  DISCONNECTED
+}
+
+// WhatsAppChannel (WhatsApp integration per tenant)
+model WhatsAppChannel {
+  id               String         @id @default(uuid())
+  tenantId         String
+  tenant           Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  waNumber         String         @unique
+  waCloudApiConfig Json
+  status           WhatsAppStatus @default(PENDING)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([tenantId])
+  @@index([status])
+}
+
+enum WhatsAppStatus {
+  PENDING
+  ACTIVE
+  DISCONNECTED
+}
+
+// Conversation (Voice, WhatsApp, Email)
+model Conversation {
+  id         String   @id @default(uuid())
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  channel    Channel
+  transcript Json
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([tenantId, channel])
+  @@index([tenantId, createdAt])
+}
+
+enum Channel {
+  VOICE
+  WHATSAPP
+  EMAIL
+}
+
+// WorkoutPlan (for Gym Buddy & Studios)
+model WorkoutPlan {
+  id        String      @id @default(uuid())
+  tenantId  String
+  tenant    Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      TenantUser? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  plan      Json
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([tenantId])
+  @@index([userId])
+}
