@@ -37,35 +37,35 @@ class CoachMessageReceivedProcessor implements EventProcessor {
         `conversation:${workspaceId}:${leadId}`,
         workspaceId,
         async () => {
-          const conversationState = await prisma.conversationState.upsert({
-            where: {
-              workspaceId_leadId: { workspaceId, leadId }
-            },
-            create: {
-              workspaceId,
-              leadId,
-              state: 'processing',
-              lastMessageAt: new Date(),
-              metadata: { messageCount: 1 }
-            },
-            update: {
-              state: 'processing',
-              lastMessageAt: new Date(),
+          const lead = await prisma.lead.findUnique({
+            where: { id: leadId }
+          })
+
+          if (!lead || !lead.phone) {
+            return { success: false, error: 'Lead not found or missing phone' }
+          }
+
+          const currentMetadata = (lead.metadata as any) || {}
+          const conversationState = currentMetadata.conversationState || {
+            state: 'idle',
+            lastMessageAt: null,
+            messageCount: 0,
+            nextActionAt: null
+          }
+
+          conversationState.state = 'processing'
+          conversationState.lastMessageAt = new Date().toISOString()
+          conversationState.messageCount = (conversationState.messageCount || 0) + 1
+
+          await prisma.lead.update({
+            where: { id: leadId },
+            data: {
               metadata: {
-                messageCount: ((await prisma.conversationState.findUnique({
-                  where: { workspaceId_leadId: { workspaceId, leadId } }
-                }))?.metadata as any)?.messageCount + 1 || 1
+                ...currentMetadata,
+                conversationState
               }
             }
           })
-
-          const lead = await prisma.lead.findFirst({
-            where: { workspaceId, phone: from }
-          })
-
-          if (!lead) {
-            return { success: false, error: 'Lead not found' }
-          }
 
           const hasTokenBudget = await rateLimiter.checkBudget(
             workspaceId,
@@ -114,11 +114,16 @@ class CoachMessageReceivedProcessor implements EventProcessor {
             }
           }
 
-          await prisma.conversationState.update({
-            where: { id: conversationState.id },
+          conversationState.state = 'idle'
+          conversationState.nextActionAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+
+          await prisma.lead.update({
+            where: { id: leadId },
             data: {
-              state: 'idle',
-              nextActionAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
+              metadata: {
+                ...currentMetadata,
+                conversationState
+              }
             }
           })
 
