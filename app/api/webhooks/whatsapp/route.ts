@@ -7,6 +7,9 @@ import { WhatsAppWebhookPayload } from '@/types'
 import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
 import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
 import { enqueueWebhook, checkRateLimit } from '@/lib/queue/webhook-queue'
+import { eventBus } from '@/lib/autopilot/event-bus'
+import { prisma } from '@/lib/prisma'
+import '@/lib/autopilot/registry'
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode')
@@ -54,6 +57,36 @@ export async function POST(request: NextRequest) {
               message,
               phoneNumberId,
               from: message.from
+            })
+
+            let lead = await prisma.lead.findFirst({
+              where: {
+                workspaceId,
+                phone: message.from,
+              },
+            })
+
+            if (!lead) {
+              lead = await prisma.lead.create({
+                data: {
+                  workspaceId,
+                  phone: message.from,
+                  name: message.from,
+                  status: 'new',
+                  source: 'whatsapp',
+                },
+              })
+            }
+
+            await eventBus.createEvent({
+              workspaceId,
+              type: 'coach.message_received',
+              payload: {
+                leadId: lead.id,
+                message: message.text.body,
+                from: message.from,
+                messageId: message.id,
+              },
             })
 
             await processWebhookWithIdempotency(

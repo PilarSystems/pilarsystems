@@ -1,6 +1,8 @@
 import { getStripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
+import { eventBus } from '@/lib/autopilot/event-bus'
+import '@/lib/autopilot/registry'
 import Stripe from 'stripe'
 
 export async function handleStripeWebhook(
@@ -256,6 +258,17 @@ async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
           },
         },
       })
+
+      await eventBus.createEvent({
+        workspaceId: subscription.workspaceId,
+        type: 'billing.invoice_paid',
+        payload: {
+          invoiceId: invoice.id,
+          customerId: invoice.customer as string,
+          amount: invoice.amount_paid,
+          paidAt: new Date().toISOString(),
+        },
+      })
     }
 
     logger.info({ invoiceId: invoice.id }, 'Invoice payment logged')
@@ -288,6 +301,18 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
               invoiceId: invoice.id,
               amount: invoice.amount_due,
             },
+          },
+        })
+
+        await eventBus.createEvent({
+          workspaceId: subscription.workspaceId,
+          type: 'billing.payment_failed',
+          payload: {
+            invoiceId: invoice.id,
+            customerId: invoice.customer as string,
+            amount: invoice.amount_due,
+            attemptCount: (invoice as any).attempt_count || 1,
+            nextRetryAt: (invoice as any).next_payment_attempt ? new Date((invoice as any).next_payment_attempt * 1000).toISOString() : null,
           },
         })
       }
