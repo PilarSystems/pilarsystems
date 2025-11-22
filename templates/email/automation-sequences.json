@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "description": "Email automation sequences for PILAR SYSTEMS - Transactional & Marketing",
+  "provider": "Resend (recommended) or manual export",
+  "sequences": [
+    {
+      "id": "welcome_series",
+      "name": "Welcome Series - New Signups",
+      "trigger": "User signs up",
+      "emails": [
+        {
+          "delay_hours": 0,
+          "subject": "Willkommen bei PILAR SYSTEMS! 🎉 Dein Setup-Guide",
+          "preview_text": "In 5 Minuten startklar: Dein WhatsApp-Coach wartet auf dich",
+          "content": {
+            "headline": "Willkommen bei PILAR SYSTEMS!",
+            "body": "Hi {{first_name}},\n\nwillkommen an Bord! Du hast gerade den ersten Schritt gemacht, um dein Studio auf Autopilot zu stellen.\n\n**Was jetzt passiert:**\n\n1️⃣ **Onboarding abschließen** (5 Minuten)\n   → WhatsApp-Nummer verbinden\n   → KI-Coach personalisieren\n   → Erste Test-Nachricht senden\n\n2️⃣ **Erste Leads empfangen** (sofort)\n   → Dein Coach antwortet automatisch\n   → Termine werden gebucht\n   → Du siehst alles im Dashboard\n\n3️⃣ **Ergebnisse sehen** (7 Tage)\n   → 3x höhere Conversion\n   → 20h/Woche Zeit gespart\n   → Mehr Mitglieder, weniger Stress\n\n**Deine nächsten Schritte:**\n\n[Button: Onboarding starten]\n\nFalls du Fragen hast: Antworte einfach auf diese E-Mail oder schreib uns auf WhatsApp: +49 XXX XXXXXXX\n\nViel Erfolg!\nDein PILAR Team",
+            "cta": "Onboarding jetzt starten",
+            "cta_url": "{{app_url}}/onboarding"
+          }
+        },
+        {
+          "delay_hours": 24,
+          "subject": "{{first_name}}, brauchst du Hilfe beim Setup?",
+          "preview_text": "Wir helfen dir gerne beim Onboarding",
+          "condition": "onboarding_not_completed",
+          "content": {
+            "headline": "Brauchst du Hilfe?",
+            "body": "Hi {{first_name}},\n\nich sehe, dass du dein Onboarding noch nicht abgeschlossen hast. Keine Sorge - das passiert!\n\n**Häufige Fragen:**\n\n❓ **\"Wie verbinde ich WhatsApp?\"**\n→ Einfach QR-Code scannen - dauert 30 Sekunden\n\n❓ **\"Muss ich technisch versiert sein?\"**\n→ Nein! Wenn du WhatsApp nutzen kannst, kannst du PILAR nutzen\n\n❓ **\"Was kostet die Einrichtung?\"**\n→ Nichts! Setup ist kostenlos und dauert 5 Minuten\n\n**Persönliche Hilfe gewünscht?**\n\nBuche einen kostenlosen 15-Minuten-Call mit unserem Team:\n[Button: Call buchen]\n\nOder schreib uns einfach zurück - wir helfen gerne!\n\nBeste Grüße,\n{{sender_name}}\nPILAR SYSTEMS",
+            "cta": "Onboarding fortsetzen",
+            "cta_url": "{{app_url}}/onboarding"
+          }
+        },
+        {
+          "delay_hours": 72,
+          "subject": "Letzte Chance: 50€ Bonus für dein Setup",
+          "preview_text": "Exklusiv für dich: 50€ Rabatt + persönliches Onboarding",
+          "condition": "onboarding_not_completed",
+          "content": {
+            "headline": "Exklusives Angebot für dich",
+            "body": "Hi {{first_name}},\n\nich möchte dir ein exklusives Angebot machen:\n\n🎁 **50€ Rabatt** auf die ersten 3 Monate\n🎁 **Persönlicher Onboarding-Call** (Wert: 200€)\n🎁 **Individuelle Studio-Anpassung**\n\nWarum? Weil wir wissen, dass PILAR dein Studio transformieren wird - und wir möchten, dass du es erlebst.\n\n**Das sagen andere Studio-Inhaber:**\n\n\"Ich spare 20 Stunden pro Woche und habe 40% mehr Mitglieder\" - Marcus, München\n\n\"Beste Investition für mein Studio. ROI nach 2 Wochen\" - Sarah, Hamburg\n\n**Dein Bonus-Code:** WELCOME50\n\n[Button: Jetzt Setup abschließen]\n\nAngebot gültig 48h.\n\nBis gleich im Dashboard!\n{{sender_name}}",
+            "cta": "Setup abschließen & Bonus sichern",
+            "cta_url": "{{app_url}}/onboarding?promo=WELCOME50"
+          }
+        }
+      ]
+    },
+    {
+      "id": "trial_sequence",
+      "name": "Trial Engagement & Conversion",
+      "trigger": "Trial started",
+      "emails": [
+        {
+          "delay_hours": 0,
+          "subject": "Deine 14-Tage-Testphase hat begonnen! 🚀",
+          "preview_text": "So holst du das Maximum aus deinem Trial raus",
+          "content": {
+            "headline": "Trial gestartet - So geht's weiter",
+            "body": "Hi {{first_name}},\n\nglückwunsch! Dein WhatsApp-Coach ist jetzt live und bereit, Leads zu bearbeiten.\n\n**Deine Trial-Checkliste:**\n\n✅ Tag 1-3: Erste Leads empfangen & bearbeiten\n✅ Tag 4-7: Conversion-Rate analysieren\n✅ Tag 8-14: ROI berechnen & skalieren\n\n**Quick Wins für die ersten 3 Tage:**\n\n1. Teile deinen WhatsApp-Link auf Instagram/Facebook\n2. Füge ihn zu deiner Website hinzu\n3. Sende ihn an 10 warme Leads\n\n→ Ergebnis: 5-10 automatisch bearbeitete Leads\n\n**Dein persönlicher Success Manager:**\n\nIch bin {{success_manager_name}} und begleite dich durch dein Trial.\n\nFragen? Schreib mir direkt: {{success_manager_email}}\n\n[Button: Dashboard öffnen]\n\nViel Erfolg!\n{{success_manager_name}}",
+            "cta": "Zum Dashboard",
+            "cta_url": "{{app_url}}/dashboard"
+          }
+        },
+        {
+          "delay_hours": 168,
+          "subject": "{{first_name}}, dein Trial endet in 7 Tagen",
+          "preview_text": "Deine Ergebnisse + nächste Schritte",
+          "content": {
+            "headline": "Trial-Halbzeit: Deine Ergebnisse",
+            "body": "Hi {{first_name}},\n\ndu bist jetzt 7 Tage mit PILAR unterwegs. Hier sind deine Ergebnisse:\n\n📊 **Deine Stats:**\n→ {{leads_count}} Leads bearbeitet\n→ {{conversion_rate}}% Conversion-Rate\n→ {{time_saved}}h Zeit gespart\n→ {{revenue_generated}}€ Umsatz generiert\n\n**Vergleich mit anderen Studios:**\n\nDurchschnitt nach 7 Tagen:\n→ 25 Leads bearbeitet\n→ 35% Conversion-Rate\n→ 10h Zeit gespart\n→ 2.500€ Umsatz\n\n**So holst du noch mehr raus:**\n\n1. Aktiviere automatische Follow-ups\n2. Personalisiere deine Coach-Antworten\n3. Integriere dein Buchungssystem\n\n[Button: Optimierungen vornehmen]\n\n**Fragen vor dem Upgrade?**\n\nBuche einen Call mit mir:\n[Button: Call buchen]\n\nBis bald!\n{{success_manager_name}}",
+            "cta": "Dashboard öffnen",
+            "cta_url": "{{app_url}}/dashboard"
+          }
+        },
+        {
+          "delay_hours": 312,
+          "subject": "⏰ Nur noch 24h: Dein Trial endet morgen",
+          "preview_text": "Upgrade jetzt & spare 20% - Angebot endet in 24h",
+          "content": {
+            "headline": "Dein Trial endet in 24 Stunden",
+            "body": "Hi {{first_name}},\n\nmorgen endet dein Trial. Hier ist, was du erreicht hast:\n\n🎯 **Deine Erfolge:**\n→ {{leads_count}} Leads automatisch bearbeitet\n→ {{customers_count}} neue Mitglieder gewonnen\n→ {{revenue_generated}}€ Umsatz generiert\n→ {{time_saved}}h Zeit gespart\n\n**Dein ROI:**\nInvestition: 149€/Monat\nUmsatz: {{revenue_generated}}€\nROI: {{roi_percentage}}%\n\n**Exklusives Upgrade-Angebot:**\n\n🎁 20% Rabatt für 6 Monate (spare 179€)\n🎁 Kostenlose Premium-Features\n🎁 Prioritäts-Support\n\nCode: TRIAL20\n\n[Button: Jetzt upgraden & sparen]\n\n**Was passiert ohne Upgrade?**\n\n❌ Dein WhatsApp-Coach wird deaktiviert\n❌ Leads werden nicht mehr bearbeitet\n❌ Du verlierst deine Daten nach 30 Tagen\n\n**Noch unsicher?**\n\n30-Tage-Geld-zurück-Garantie.\nKein Risiko. Jederzeit kündbar.\n\nLass uns sprechen:\n[Button: Call buchen]\n\nBis gleich!\n{{success_manager_name}}",
+            "cta": "Jetzt upgraden",
+            "cta_url": "{{app_url}}/pricing?promo=TRIAL20"
+          }
+        }
+      ]
+    },
+    {
+      "id": "abandoned_checkout",
+      "name": "Abandoned Checkout Recovery",
+      "trigger": "Checkout started but not completed",
+      "emails": [
+        {
+          "delay_hours": 1,
+          "subject": "{{first_name}}, du hast etwas vergessen...",
+          "preview_text": "Dein PILAR Setup wartet auf dich + 10% Rabatt",
+          "content": {
+            "headline": "Fast geschafft!",
+            "body": "Hi {{first_name}},\n\ndu warst gerade dabei, PILAR SYSTEMS einzurichten - aber hast den letzten Schritt nicht abgeschlossen.\n\n**Exklusiv für dich:**\n\n🎁 10% Rabatt auf die ersten 3 Monate\n🎁 Prioritäts-Onboarding\n\nCode: COMEBACK10\n\n**Warum PILAR?**\n\n✅ Setup in 5 Minuten\n✅ 14 Tage kostenlos testen\n✅ 3x höhere Conversion\n✅ 20h/Woche Zeit sparen\n\n[Button: Anmeldung abschließen]\n\nAngebot gültig 24h.\n\nFragen? Schreib mir einfach zurück!\n\nBeste Grüße,\n{{sender_name}}",
+            "cta": "Jetzt abschließen & sparen",
+            "cta_url": "{{checkout_url}}?promo=COMEBACK10"
+          }
+        },
+        {
+          "delay_hours": 24,
+          "subject": "Letzte Chance: 50€ Bonus läuft ab",
+          "preview_text": "Nur noch 24h - dann ist dein Rabatt weg",
+          "content": {
+            "headline": "Dein 50€-Bonus läuft ab",
+            "body": "Hi {{first_name}},\n\nin 24 Stunden läuft dein exklusiver Rabatt ab.\n\n**Was du verpasst:**\n\n❌ 50€ Rabatt\n❌ Prioritäts-Onboarding\n❌ Individuelle Anpassung\n\n**Was andere sagen:**\n\n\"Ich habe 3 Tage gezögert und dann zugeschlagen. Beste Entscheidung für mein Studio!\" - Marcus\n\n\"Der ROI war nach 2 Wochen erreicht. Hätte ich früher starten sollen.\" - Sarah\n\n[Button: Jetzt starten]\n\nCode: COMEBACK50\nGültig bis: {{expiry_date}}\n\nBis gleich!\n{{sender_name}}",
+            "cta": "Anmeldung abschließen",
+            "cta_url": "{{checkout_url}}?promo=COMEBACK50"
+          }
+        }
+      ]
+    },
+    {
+      "id": "feature_drops",
+      "name": "Feature Announcements & Updates",
+      "trigger": "Manual / New feature launch",
+      "emails": [
+        {
+          "delay_hours": 0,
+          "subject": "🚀 Neu: KI-gestützte Lead-Priorisierung",
+          "preview_text": "Dein Coach weiß jetzt, welche Leads am wertvollsten sind",
+          "content": {
+            "headline": "Neue Feature: Smart Lead Scoring",
+            "body": "Hi {{first_name}},\n\nwir haben ein Game-Changer-Feature für dich:\n\n**🎯 KI-gestützte Lead-Priorisierung**\n\nDein WhatsApp-Coach analysiert jetzt automatisch:\n→ Kaufbereitschaft\n→ Budget-Indikationen\n→ Engagement-Level\n→ Conversion-Wahrscheinlichkeit\n\n**Ergebnis:**\n✅ Fokus auf die besten Leads\n✅ 50% höhere Conversion\n✅ Weniger Zeit verschwendet\n\n**So aktivierst du es:**\n\n1. Dashboard öffnen\n2. Einstellungen → Lead Scoring\n3. \"Smart Scoring\" aktivieren\n\n[Button: Jetzt aktivieren]\n\n**Bonus:**\n\nDie ersten 100 Studios bekommen Premium-Features kostenlos für 3 Monate.\n\nViel Erfolg!\nDein PILAR Team",
+            "cta": "Feature aktivieren",
+            "cta_url": "{{app_url}}/dashboard/settings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "churn_prevention",
+      "name": "Churn Prevention & Re-engagement",
+      "trigger": "Low usage or cancellation intent",
+      "emails": [
+        {
+          "delay_hours": 0,
+          "subject": "{{first_name}}, vermissen wir dich?",
+          "preview_text": "Lass uns helfen, PILAR optimal für dich einzurichten",
+          "content": {
+            "headline": "Wir vermissen dich!",
+            "body": "Hi {{first_name}},\n\nich sehe, dass du PILAR in letzter Zeit nicht mehr nutzt.\n\n**Gibt es ein Problem?**\n\nHäufige Gründe:\n→ \"Ich weiß nicht, wie ich anfangen soll\"\n→ \"Die Ergebnisse sind nicht wie erwartet\"\n→ \"Ich brauche mehr Unterstützung\"\n\n**Lass uns helfen:**\n\n🎁 Kostenloser 30-Minuten-Call\n🎁 Individuelle Optimierung\n🎁 Persönlicher Success Manager\n\n[Button: Call buchen]\n\n**Oder möchtest du kündigen?**\n\nKein Problem - aber lass uns vorher kurz sprechen.\nVielleicht können wir dir helfen.\n\nSchreib mir einfach zurück.\n\nBeste Grüße,\n{{success_manager_name}}",
+            "cta": "Hilfe anfordern",
+            "cta_url": "{{app_url}}/support"
+          }
+        }
+      ]
+    }
+  ],
+  "transactional_emails": [
+    {
+      "id": "email_confirmation",
+      "subject": "Bestätige deine E-Mail-Adresse",
+      "trigger": "User signup",
+      "content": "Standard Supabase confirmation email"
+    },
+    {
+      "id": "password_reset",
+      "subject": "Passwort zurücksetzen",
+      "trigger": "Password reset requested",
+      "content": "Standard Supabase password reset email"
+    },
+    {
+      "id": "payment_success",
+      "subject": "Zahlung erfolgreich - Willkommen bei PILAR!",
+      "trigger": "Successful payment",
+      "content": {
+        "headline": "Zahlung erfolgreich!",
+        "body": "Deine Zahlung wurde erfolgreich verarbeitet.\n\nRechnung: {{invoice_url}}\nBetrag: {{amount}}€\nNächste Zahlung: {{next_payment_date}}\n\n[Button: Zum Dashboard]"
+      }
+    },
+    {
+      "id": "payment_failed",
+      "subject": "Zahlungsproblem - Bitte aktualisiere deine Zahlungsmethode",
+      "trigger": "Payment failed",
+      "content": {
+        "headline": "Zahlungsproblem",
+        "body": "Deine letzte Zahlung konnte nicht verarbeitet werden.\n\nBitte aktualisiere deine Zahlungsmethode:\n[Button: Zahlungsmethode aktualisieren]\n\nBei Fragen: support@pilarsystems.com"
+      }
+    },
+    {
+      "id": "subscription_cancelled",
+      "subject": "Schade, dass du gehst - Feedback?",
+      "trigger": "Subscription cancelled",
+      "content": {
+        "headline": "Kündigung bestätigt",
+        "body": "Dein Abo wurde gekündigt.\n\nZugriff bis: {{access_until}}\nDaten-Export: {{export_url}}\n\nWarum hast du gekündigt? Dein Feedback hilft uns:\n[Button: Feedback geben]\n\nDanke für deine Zeit mit PILAR!"
+      }
+    }
+  ],
+  "implementation_notes": {
+    "provider": "Resend (recommended) or export templates for manual sending",
+    "variables": "All {{variables}} must be replaced with actual data",
+    "testing": "Test all sequences in staging before production",
+    "compliance": "GDPR-compliant, unsubscribe link in footer",
+    "tracking": "UTM parameters for all links, open/click tracking enabled"
+  }
+}
