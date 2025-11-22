@@ -23,13 +23,28 @@ export default function SignupPage() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
-      toast.error('Passwörter stimmen nicht überein')
+    if (!fullName.trim()) {
+      toast.error('Bitte geben Sie Ihren vollständigen Namen ein')
+      return
+    }
+
+    if (!studioName.trim()) {
+      toast.error('Bitte geben Sie Ihren Studio-Namen ein')
+      return
+    }
+
+    if (!email.trim() || !email.includes('@')) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
       return
     }
 
     if (password.length < 8) {
       toast.error('Passwort muss mindestens 8 Zeichen lang sein')
+      return
+    }
+
+    if (password !== confirmPassword) {
+      toast.error('Passwörter stimmen nicht überein')
       return
     }
 
@@ -44,7 +59,7 @@ export default function SignupPage() {
             full_name: fullName,
             studio_name: studioName,
           },
-          emailRedirectTo: `${window.location.origin}/verify-email`,
+          emailRedirectTo: `${window.location.origin}/dashboard`,
         },
       })
 
@@ -55,10 +70,16 @@ export default function SignupPage() {
         if (error.message.includes('Password should be at least')) {
           throw new Error('Passwort muss mindestens 8 Zeichen lang sein')
         }
-        throw error
+        if (error.message.includes('Unable to validate email')) {
+          throw new Error('Ungültige E-Mail-Adresse')
+        }
+        throw new Error(error.message)
       }
 
-      toast.success('Konto erstellt! Bitte prüfen Sie Ihre E-Mail zur Verifizierung.')
+      toast.success('Konto erfolgreich erstellt! 🎉', {
+        description: 'Bitte prüfen Sie Ihr E-Mail-Postfach und bestätigen Sie Ihre E-Mail-Adresse.',
+        duration: 8000,
+      })
       
       router.push('/checkout')
     } catch (error: any) {

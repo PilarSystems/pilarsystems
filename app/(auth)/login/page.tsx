@@ -19,6 +19,17 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!email.trim() || !email.includes('@')) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
+    if (!password.trim()) {
+      toast.error('Bitte geben Sie Ihr Passwort ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -32,12 +43,20 @@ export default function LoginPage() {
           throw new Error('E-Mail oder Passwort ist falsch')
         }
         if (error.message.includes('Email not confirmed')) {
-          throw new Error('Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse')
+          toast.error('E-Mail noch nicht bestätigt', {
+            description: 'Bitte prüfen Sie Ihr E-Mail-Postfach und bestätigen Sie Ihre E-Mail-Adresse.',
+            duration: 8000,
+          })
+          return
         }
-        throw error
+        throw new Error(error.message)
       }
 
-      toast.success('Erfolgreich angemeldet')
+      toast.success('Erfolgreich angemeldet! 🎉', {
+        description: 'Willkommen zurück bei PILAR SYSTEMS',
+        duration: 3000,
+      })
+      
       router.push('/dashboard')
     } catch (error: any) {
       toast.error(error.message || 'Anmeldung fehlgeschlagen')
@@ -47,6 +66,11 @@ export default function LoginPage() {
   }
 
   const handleMagicLink = async () => {
+    if (!email.trim() || !email.includes('@')) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -57,9 +81,17 @@ export default function LoginPage() {
         },
       })
 
-      if (error) throw error
+      if (error) {
+        if (error.message.includes('rate limit')) {
+          throw new Error('Zu viele Anfragen. Bitte warten Sie einen Moment.')
+        }
+        throw new Error(error.message)
+      }
 
-      toast.success('Magic Link wurde an Ihre E-Mail gesendet')
+      toast.success('Magic Link versendet! 📧', {
+        description: 'Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Link.',
+        duration: 8000,
+      })
     } catch (error: any) {
       toast.error(error.message || 'Magic Link konnte nicht gesendet werden')
     } finally {
