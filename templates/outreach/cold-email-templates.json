@@ -1,0 +1,127 @@
+{
+  "version": "1.0.0",
+  "description": "Cold outreach email templates for PILAR SYSTEMS - GDPR-compliant, AI-enhanced",
+  "compliance": {
+    "gdpr": true,
+    "data_source": "CSV import with explicit consent or public business data",
+    "unsubscribe": "Required in all emails",
+    "opt_in": "Double opt-in recommended for marketing"
+  },
+  "sequences": [
+    {
+      "id": "fitness_studio_owners_cold",
+      "name": "Fitness Studio Owners - Cold Outreach",
+      "target": "Studio owners who don't know PILAR yet",
+      "emails": [
+        {
+          "step": 1,
+          "delay_days": 0,
+          "subject_lines": [
+            "{{first_name}}, verlierst du Leads über Nacht?",
+            "Wie {{studio_name}} 20h/Woche spart",
+            "{{first_name}}, dein Konkurrent nutzt schon KI"
+          ],
+          "body": "Hi {{first_name}},\n\nich bin {{sender_name}} von PILAR SYSTEMS.\n\nKurze Frage: Wie viele WhatsApp-Anfragen bekommst du nach 20 Uhr?\n\nDurchschnittliches Studio:\n→ 15 Anfragen/Woche nach Feierabend\n→ 8 werden nicht rechtzeitig beantwortet\n→ 4 potenzielle Mitglieder verloren\n→ 2.000€ Umsatzverlust/Monat\n\n**Was wäre, wenn ein KI-Coach diese Anfragen automatisch beantwortet?**\n\n24/7. Sofort. Personalisiert.\n\nGenau das machen wir für über 500 Studios in DACH.\n\n**Ergebnisse:**\n✅ 3x höhere Conversion\n✅ 20h/Woche Zeit gespart\n✅ +15.000€ Mehrumsatz/Monat\n\nInteressiert an einem 15-Minuten-Demo-Call?\n\nEinfach mit \"Ja\" antworten.\n\nBeste Grüße,\n{{sender_name}}\nPILAR SYSTEMS\n\nP.S. Setup dauert 5 Minuten. Keine Vorkenntnisse nötig.",
+          "personalization_fields": ["first_name", "studio_name", "city"],
+          "ai_enhancement": "Use GPT to personalize based on studio type, location, and public social media data"
+        },
+        {
+          "step": 2,
+          "delay_days": 3,
+          "condition": "no_response",
+          "subject_lines": [
+            "Re: {{first_name}}, verlierst du Leads über Nacht?",
+            "{{first_name}}, noch Interesse?",
+            "Kurze Frage zu {{studio_name}}"
+          ],
+          "body": "Hi {{first_name}},\n\nich hatte dir vor ein paar Tagen geschrieben wegen automatischer Lead-Betreuung.\n\nKeine Antwort = kein Interesse?\n\nOder einfach zu beschäftigt? (Kenne ich! 😅)\n\n**Falls Letzteres:**\n\nHier ist ein 2-Minuten-Video, das zeigt, wie PILAR funktioniert:\n[Video-Link]\n\n**Oder direkt Call buchen:**\n[Calendly-Link]\n\nFalls nicht interessant: Einfach \"Nein danke\" antworten, dann höre ich auf zu nerven. 😊\n\nBeste Grüße,\n{{sender_name}}",
+          "personalization_fields": ["first_name", "studio_name"],
+          "ai_enhancement": "Adjust tone based on previous email open/click behavior"
+        },
+        {
+          "step": 3,
+          "delay_days": 7,
+          "condition": "no_response",
+          "subject_lines": [
+            "Letzte Nachricht, {{first_name}}",
+            "{{first_name}}, ich gebe auf 😅",
+            "Break-up Email"
+          ],
+          "body": "Hi {{first_name}},\n\nok, ich gebe auf. 😅\n\nDas ist meine letzte Nachricht.\n\n**Aber bevor ich gehe:**\n\nHier sind 3 kostenlose Ressourcen für dich:\n\n1. [Guide] \"10 Wege, mehr Leads zu konvertieren\"\n2. [Template] WhatsApp-Antworten für häufige Fragen\n3. [Checklist] Lead-Management-Optimierung\n\nKein Catch. Einfach nützlich.\n\n[Download-Link]\n\n**Falls du doch noch Interesse hast:**\n\nMeine Tür steht offen.\nEinfach antworten oder Call buchen: [Calendly-Link]\n\nViel Erfolg mit {{studio_name}}!\n\n{{sender_name}}\nPILAR SYSTEMS\n\nP.S. Wenn du jemanden kennst, der PILAR braucht: Weiterleiten erlaubt! 😊",
+          "personalization_fields": ["first_name", "studio_name"],
+          "ai_enhancement": "Include relevant free resource based on studio type"
+        }
+      ]
+    },
+    {
+      "id": "warm_leads_followup",
+      "name": "Warm Leads - Follow-up Sequence",
+      "target": "Leads who showed interest but didn't convert",
+      "emails": [
+        {
+          "step": 1,
+          "delay_days": 0,
+          "subject_lines": [
+            "{{first_name}}, danke für dein Interesse!",
+            "Deine PILAR-Demo ist bereit",
+            "Nächste Schritte für {{studio_name}}"
+          ],
+          "body": "Hi {{first_name}},\n\nsuper, dass du dich für PILAR interessierst!\n\n**Deine nächsten Schritte:**\n\n1️⃣ **Demo ansehen** (2 Minuten)\n   → Sieh, wie PILAR für {{studio_name}} funktioniert\n   [Demo-Link]\n\n2️⃣ **Fragen klären** (15 Minuten)\n   → Kostenloser Call mit mir\n   [Calendly-Link]\n\n3️⃣ **Kostenlos testen** (14 Tage)\n   → Setup in 5 Minuten\n   [Signup-Link]\n\n**Häufige Fragen:**\n\n❓ \"Wie lange dauert das Setup?\"\n→ 5 Minuten. Wirklich.\n\n❓ \"Brauche ich technische Kenntnisse?\"\n→ Nein. Wenn du WhatsApp nutzen kannst, kannst du PILAR nutzen.\n\n❓ \"Was kostet es?\"\n→ 149€/Monat. ROI nach durchschnittlich 2 Wochen.\n\n**Noch Fragen?**\n\nEinfach antworten oder Call buchen.\n\nBis gleich!\n{{sender_name}}",
+          "personalization_fields": ["first_name", "studio_name"],
+          "ai_enhancement": "Customize demo link based on studio type and pain points"
+        }
+      ]
+    },
+    {
+      "id": "referral_request",
+      "name": "Customer Referral Request",
+      "target": "Happy customers",
+      "emails": [
+        {
+          "step": 1,
+          "delay_days": 30,
+          "condition": "customer_active_30_days",
+          "subject_lines": [
+            "{{first_name}}, kennst du jemanden, der PILAR braucht?",
+            "Hilf anderen Studios wie {{studio_name}}",
+            "500€ für dich + deinen Freund"
+          ],
+          "body": "Hi {{first_name}},\n\ndu nutzt PILAR jetzt seit einem Monat.\n\n**Deine Ergebnisse:**\n→ {{leads_count}} Leads bearbeitet\n→ {{conversion_rate}}% Conversion-Rate\n→ {{revenue_generated}}€ Umsatz generiert\n\nKrass, oder? 🚀\n\n**Kennst du andere Studio-Inhaber, die das auch brauchen?**\n\nFür jede erfolgreiche Empfehlung:\n→ 500€ für dich\n→ 500€ Rabatt für deinen Freund\n\nWin-Win!\n\n**So funktioniert's:**\n\n1. Teile deinen Referral-Link: {{referral_link}}\n2. Dein Freund meldet sich an\n3. Ihr bekommt beide 500€\n\n**Oder einfach:**\n\nSchick mir die E-Mail-Adresse deines Freundes, ich kümmere mich um den Rest.\n\nDanke fürs Vertrauen!\n{{sender_name}}",
+          "personalization_fields": ["first_name", "studio_name", "leads_count", "conversion_rate", "revenue_generated", "referral_link"],
+          "ai_enhancement": "Personalize based on actual customer results"
+        }
+      ]
+    }
+  ],
+  "ai_email_writer": {
+    "description": "AI-powered email generation based on lead data",
+    "implementation": {
+      "provider": "OpenAI GPT-4",
+      "prompt_template": "You are a sales expert writing cold emails for PILAR SYSTEMS, a WhatsApp automation platform for fitness studios.\n\nLead data:\n- Name: {{first_name}} {{last_name}}\n- Studio: {{studio_name}}\n- Location: {{city}}\n- Studio type: {{studio_type}}\n- Social media: {{social_media_data}}\n\nWrite a personalized cold email that:\n1. Addresses a specific pain point relevant to their studio type\n2. Uses their name and studio name naturally\n3. Includes a clear CTA\n4. Is under 150 words\n5. Sounds human and conversational\n6. Follows German business email etiquette\n\nTone: Professional but friendly, direct, value-focused",
+      "fallback": "Use template if AI fails"
+    }
+  },
+  "csv_import_format": {
+    "required_fields": ["email", "first_name"],
+    "optional_fields": ["last_name", "studio_name", "city", "phone", "website", "social_media", "studio_type", "notes"],
+    "example": "email,first_name,last_name,studio_name,city,phone,website,studio_type\nmax@example.com,Max,Mustermann,FitMax Studio,München,+49123456789,https://fitmax.de,CrossFit"
+  },
+  "compliance_checklist": {
+    "gdpr": [
+      "✅ Data source documented",
+      "✅ Legitimate interest or consent basis",
+      "✅ Unsubscribe link in every email",
+      "✅ Data retention policy (delete after 90 days if no response)",
+      "✅ Right to deletion honored within 30 days"
+    ],
+    "best_practices": [
+      "✅ Personalization beyond {{first_name}}",
+      "✅ Value-first approach",
+      "✅ Clear CTA",
+      "✅ Mobile-optimized",
+      "✅ A/B test subject lines",
+      "✅ Track opens, clicks, replies",
+      "✅ Auto-pause on bounce/complaint"
+    ]
+  }
+}
