@@ -12,7 +12,7 @@ const getMarkDownData = (folder: string, reversedSort?: boolean, sortBy?: string
   const postsData = markdownPosts.map((file) => {
     const filePath = path.join(folder, file);
     const content = fs.readFileSync(filePath, 'utf8');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const data: any = matter(content);
     return {
       ...data.data,

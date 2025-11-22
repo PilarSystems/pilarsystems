@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { ITeamMember } from '@/interface';
 import Link from 'next/link';
 import SocialIcon, { Platform } from './SocialIcon';

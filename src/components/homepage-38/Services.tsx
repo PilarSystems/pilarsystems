@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import RevealAnimation from '@/components/animation/RevealAnimation';
 import Link from 'next/link';
 import ServiceCard from './ServiceCard';
