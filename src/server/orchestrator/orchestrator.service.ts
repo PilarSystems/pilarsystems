@@ -108,7 +108,10 @@ export async function buildAIContext(
       })
 
       if (tenant) {
-        context.tenant = tenant
+        context.tenant = {
+          name: tenant.name,
+          domain: tenant.domain || undefined,
+        }
       }
     } catch (error) {
       console.error('Error fetching tenant:', error)
