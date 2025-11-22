@@ -478,3 +478,224 @@ Nach Abschluss aller Schritte hast du:
 
 **Version History:**
 - v1.0.0 (November 2024): Initial launch-ready version
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+
+# Stripe
+STRIPE_SECRET_KEY=sk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC=price_...
+NEXT_PUBLIC_STRIPE_PRICE_ID_PRO=price_...
+
+# Twilio
+TWILIO_ACCOUNT_SID=AC...
+TWILIO_AUTH_TOKEN=...
+TWILIO_WHATSAPP_NUMBER=+14155238886
+
+# WhatsApp
+WHATSAPP_VERIFY_TOKEN=pilar-whatsapp-2024
+WHATSAPP_APP_SECRET=dein-geheimer-string
+
+# OpenAI
+OPENAI_API_KEY=sk-...
+
+# ElevenLabs (Optional)
+ELEVENLABS_API_KEY=...
+
+# Upstash (Optional)
+UPSTASH_REDIS_REST_URL=https://...
+UPSTASH_REDIS_REST_TOKEN=...
+
+# App
+NEXT_PUBLIC_APP_URL=https://deine-domain.vercel.app
+```
+
+### Schritt 9: Datenbank Migrations ausführen
+
+Nach dem ersten Vercel Deployment:
+
+1. Gehe zu Vercel Dashboard → dein Projekt → "Settings" → "Functions"
+2. Öffne ein Terminal (oder nutze Vercel CLI lokal)
+3. Führe aus:
+
+```bash
+npx prisma migrate deploy
+```
+
+**Oder lokal mit Vercel CLI:**
+
+```bash
+vercel env pull .env.local
+npx prisma migrate deploy
+```
+
+### Schritt 10: Stripe Webhook URL aktualisieren
+
+1. Gehe zurück zu Stripe Dashboard → "Developers" → "Webhooks"
+2. Bearbeite deinen Webhook
+3. Aktualisiere die URL auf deine echte Vercel URL:
+   - `https://deine-domain.vercel.app/api/stripe/webhooks`
+4. Speichern
+
+### Schritt 11: Twilio Webhook URL aktualisieren
+
+1. Gehe zurück zu Twilio Console
+2. Aktualisiere die WhatsApp Webhook URL:
+   - `https://deine-domain.vercel.app/api/webhooks/whatsapp`
+3. Speichern
+
+---
+
+## Teil D: Pre-Launch Checklist
+
+Bevor du live gehst, teste folgende Flows:
+
+### ✅ 1. Signup Flow
+
+1. Öffne `https://deine-domain.vercel.app/signup` in Incognito
+2. Registriere dich mit einer Test-E-Mail
+3. Prüfe, ob Bestätigungs-E-Mail ankommt (auch Spam-Ordner!)
+4. Klicke auf Bestätigungs-Link
+5. Du solltest auf `/dashboard` weitergeleitet werden
+
+### ✅ 2. Login Flow
+
+1. Öffne `https://deine-domain.vercel.app/login`
+2. Melde dich mit deinem Test-Account an
+3. Du solltest auf `/dashboard` weitergeleitet werden
+
+### ✅ 3. Stripe Checkout Flow
+
+1. Gehe zu `https://deine-domain.vercel.app/pricing`
+2. Wähle einen Plan (BASIC oder PRO)
+3. Nutze Stripe Test Card: `4242 4242 4242 4242`
+4. Schließe Checkout ab
+5. Du solltest auf `/onboarding` weitergeleitet werden
+6. Prüfe in Stripe Dashboard, ob Subscription erstellt wurde
+
+### ✅ 4. Onboarding Flow
+
+1. Nach Checkout solltest du auf `/onboarding` sein
+2. Durchlaufe alle 5 Schritte
+3. Am Ende solltest du auf `/dashboard` weitergeleitet werden
+
+### ✅ 5. WhatsApp Coach (Optional)
+
+1. Sende eine WhatsApp an deine Twilio Nummer
+2. Prüfe in Twilio Logs, ob Webhook empfangen wurde
+3. Prüfe in Vercel Logs, ob Event verarbeitet wurde
+4. Du solltest eine KI-Antwort erhalten
+
+### ✅ 6. Affiliate System (Optional)
+
+1. Gehe zu `https://deine-domain.vercel.app/affiliate`
+2. Registriere dich als Affiliate
+3. Kopiere deinen Referral-Link
+4. Öffne den Link in Incognito
+5. Schließe einen Kauf ab
+6. Prüfe im Dashboard, ob Conversion getrackt wurde
+
+---
+
+## Teil E: Troubleshooting
+
+### Problem: Bestätigungs-E-Mail kommt nicht an
+
+**Lösung:**
+1. Prüfe Spam-Ordner
+2. Prüfe Supabase Dashboard → "Authentication" → "Logs"
+3. Prüfe, ob E-Mail-Adresse korrekt ist
+4. Prüfe, ob Supabase SMTP konfiguriert ist (Standard sollte funktionieren)
+
+### Problem: Stripe Checkout funktioniert nicht
+
+**Lösung:**
+1. Prüfe Vercel Logs für Fehler
+2. Prüfe Stripe Dashboard → "Developers" → "Logs"
+3. Prüfe, ob `STRIPE_WEBHOOK_SECRET` korrekt ist
+4. Prüfe, ob Webhook URL korrekt ist
+5. Teste Webhook mit Stripe CLI: `stripe trigger checkout.session.completed`
+
+### Problem: WhatsApp Coach antwortet nicht
+
+**Lösung:**
+1. Prüfe Twilio Logs für Webhook-Fehler
+2. Prüfe Vercel Logs für Fehler
+3. Prüfe, ob `OPENAI_API_KEY` korrekt ist
+4. Prüfe, ob `WHATSAPP_VERIFY_TOKEN` korrekt ist
+5. Teste Webhook manuell mit Postman
+
+### Problem: Build schlägt fehl
+
+**Lösung:**
+1. Prüfe Vercel Build Logs
+2. Häufigster Fehler: `DATABASE_URL` fehlt
+3. Lösung: Füge `DATABASE_URL` in Vercel Environment Variables hinzu
+4. Redeploy
+
+### Problem: Datenbank Migrations schlagen fehl
+
+**Lösung:**
+1. Prüfe, ob `DATABASE_URL` korrekt ist
+2. Prüfe, ob Supabase Datenbank erreichbar ist
+3. Führe Migrations manuell aus: `npx prisma migrate deploy`
+4. Falls Fehler: `npx prisma migrate reset` (⚠️ löscht alle Daten!)
+
+### Problem: Redis/Upstash Fehler
+
+**Lösung:**
+Das System funktioniert auch ohne Redis (Graceful Degradation). Falls Fehler auftreten:
+1. Entferne `UPSTASH_REDIS_REST_URL` und `UPSTASH_REDIS_REST_TOKEN`
+2. System nutzt automatisch Datenbank als Fallback
+3. Redeploy
+
+---
+
+## Teil F: Nach dem Launch
+
+### Monitoring
+
+- **Vercel Dashboard:** Prüfe Logs und Analytics
+- **Stripe Dashboard:** Prüfe Subscriptions und Payments
+- **Supabase Dashboard:** Prüfe Auth Logs und Database
+- **Autopilot Stats:** `https://deine-domain.vercel.app/api/autopilot/stats`
+
+### Skalierung
+
+Das System ist für 10.000+ Studios ausgelegt:
+- Multi-Tenant Architektur mit Workspace-Isolation
+- Rate Limiting pro Workspace
+- Job Queue mit Priority
+- Distributed Locking
+- Graceful Degradation
+
+### Support
+
+Falls du Hilfe brauchst:
+- **Dokumentation:** Siehe `AUTOPILOT_V6_ARCHITECTURE.md` für technische Details
+- **GitHub Issues:** https://github.com/PilarSystems/pilarsystems/issues
+- **E-Mail:** support@pilarsystems.com
+
+---
+
+## Zusammenfassung
+
+Nach Abschluss aller Schritte hast du:
+
+✅ Ein vollständig funktionierendes SaaS-System  
+✅ Authentifizierung mit E-Mail-Bestätigung  
+✅ Stripe Checkout mit automatischer Subscription-Verwaltung  
+✅ Automatisches Onboarding für neue Kunden  
+✅ WhatsApp Coach mit KI-Automation  
+✅ Affiliate System mit Tracking & Payouts  
+✅ PILAR AUTOPILOT v6 für vollautomatische Provisioning  
+✅ Production-ready Deployment auf Vercel  
+
+**Du bist jetzt bereit für echte Kunden! 🚀**
+
+---
+
+**Version History:**
+- v1.0.0 (November 2024): Initial launch-ready version
+>>>>>>> origin/autopilot-v6-full

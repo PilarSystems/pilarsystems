@@ -8,10 +8,11 @@ export async function createCheckoutSession(
   plan: Plan,
   billingCycle: 'monthly' | 'yearly' = 'monthly',
   whatsappAddon: boolean = false,
-  affiliateConversionId?: string
+  affiliateConversionId?: string,
+  trialDays: number = 14
 ) {
   try {
-    logger.info({ workspaceId, plan, billingCycle, whatsappAddon }, 'Creating Stripe checkout session')
+    logger.info({ workspaceId, plan, billingCycle, whatsappAddon, trialDays }, 'Creating Stripe checkout session')
 
     const workspace = await prisma.workspace.findUnique({
       where: { id: workspaceId },
@@ -30,18 +31,25 @@ export async function createCheckoutSession(
     const planConfig = plan === 'BASIC' ? STRIPE_PLANS.BASIC : STRIPE_PLANS.PRO
     const subscriptionPriceId = billingCycle === 'yearly' ? planConfig.yearlyPriceId : planConfig.priceId
 
+    if (!subscriptionPriceId) {
+      throw new Error(`Price ID not configured for ${plan} ${billingCycle}`)
+    }
+
     const lineItems: any[] = [
       {
         price: subscriptionPriceId,
         quantity: 1,
       },
-      {
-        price: planConfig.setupFeeId,
-        quantity: 1,
-      },
     ]
 
-    if (whatsappAddon) {
+    if (planConfig.setupFeeId) {
+      lineItems.push({
+        price: planConfig.setupFeeId,
+        quantity: 1,
+      })
+    }
+
+    if (whatsappAddon && STRIPE_PLANS.WHATSAPP_ADDON?.priceId) {
       lineItems.push({
         price: STRIPE_PLANS.WHATSAPP_ADDON.priceId,
         quantity: 1,
@@ -55,15 +63,16 @@ export async function createCheckoutSession(
       plan,
       billingCycle,
       whatsappAddon: whatsappAddon.toString(),
+      trialDays: trialDays.toString(),
     }
     
     if (affiliateConversionId) {
       metadata.affiliateConversionId = affiliateConversionId
     }
     
-    const session = await stripe.checkout.sessions.create({
+    const sessionConfig: any = {
       mode: 'subscription',
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'sepa_debit'],
       line_items: lineItems,
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/onboarding?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
@@ -72,10 +81,18 @@ export async function createCheckoutSession(
       metadata,
       subscription_data: {
         metadata,
+        trial_period_days: trialDays > 0 ? trialDays : undefined,
       },
-    })
+      allow_promotion_codes: true,
+      billing_address_collection: 'required',
+      tax_id_collection: {
+        enabled: true,
+      },
+    }
 
-    logger.info({ sessionId: session.id, workspaceId }, 'Checkout session created')
+    const session = await stripe.checkout.sessions.create(sessionConfig)
+
+    logger.info({ sessionId: session.id, workspaceId, plan, trialDays }, 'Checkout session created')
 
     return session
   } catch (error) {
