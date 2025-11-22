@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { logger } from '@/lib/logger'
 
 const WHATSAPP_API_URL = 'https://graph.facebook.com/v18.0'
 
@@ -33,7 +34,7 @@ export async function sendWhatsAppMessage(to: string, message: string) {
     )
     return response.data
   } catch (error) {
-    console.error('Error sending WhatsApp message:', error)
+    logger.error({ error }, 'Error sending WhatsApp message')
     throw error
   }
 }
@@ -56,6 +57,6 @@ export async function markMessageAsRead(messageId: string) {
       }
     )
   } catch (error) {
-    console.error('Error marking message as read:', error)
+    logger.error({ error }, 'Error marking message as read')
   }
 }

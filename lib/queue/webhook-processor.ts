@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import crypto from 'crypto'
+import { logger } from '@/lib/logger'
 
 export async function processWebhookWithIdempotency(
   source: string,
@@ -84,7 +85,7 @@ export async function processWebhookWithIdempotency(
       throw error
     }
   } catch (error) {
-    console.error('Webhook processing error:', error)
+    logger.error({ error }, 'Webhook processing error')
     throw error
   }
 }

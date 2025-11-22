@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { processWhatsAppMessage } from '@/services/ai/whatsapp-ai'
@@ -7,13 +8,48 @@ import { WhatsAppWebhookPayload } from '@/types'
 import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
 import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
 import { enqueueWebhook, checkRateLimit } from '@/lib/queue/webhook-queue'
+import crypto from 'crypto'
+
+function validateWhatsAppSignature(
+  body: string,
+  signature: string | null
+): boolean {
+  if (!signature) {
+    return false
+  }
+
+  const appSecret = process.env.WHATSAPP_APP_SECRET
+
+  if (!appSecret) {
+    logger.warn('WHATSAPP_APP_SECRET not configured, skipping signature validation')
+    return true
+  }
+
+  try {
+    const expectedSignature = crypto
+      .createHmac('sha256', appSecret)
+      .update(body)
+      .digest('hex')
+
+    const providedSignature = signature.replace('sha256=', '')
+    return crypto.timingSafeEqual(
+      Buffer.from(expectedSignature),
+      Buffer.from(providedSignature)
+    )
+  } catch (error) {
+    logger.error({ error }, 'WhatsApp signature validation error')
+    return false
+  }
+}
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode')
   const token = request.nextUrl.searchParams.get('hub.verify_token')
   const challenge = request.nextUrl.searchParams.get('hub.challenge')
 
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+  const verifyToken = process.env.WHATSAPP_VERIFY_TOKEN
+
+  if (mode === 'subscribe' && token === verifyToken) {
     return new NextResponse(challenge, { status: 200 })
   }
 
@@ -22,7 +58,16 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const payload: WhatsAppWebhookPayload = await request.json()
+    const body = await request.text()
+    const signature = request.headers.get('x-hub-signature-256')
+
+    const isValid = validateWhatsAppSignature(body, signature)
+    if (!isValid) {
+      logger.warn('Invalid WhatsApp signature')
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 403 })
+    }
+
+    const payload: WhatsAppWebhookPayload = JSON.parse(body)
 
     logger.info({ payload }, 'Received WhatsApp webhook')
 

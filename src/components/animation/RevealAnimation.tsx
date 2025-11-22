@@ -139,7 +139,7 @@ const RevealAnimation = ({
 
   // Early return if children is not valid (after all hooks)
   if (!children || !React.isValidElement(children)) {
-    console.warn('RevealAnimation: Invalid children prop provided');
+    
     return null;
   }
 

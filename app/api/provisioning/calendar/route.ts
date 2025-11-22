@@ -1,4 +1,6 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { calendarOAuthService } from '@/services/calendar/oauth'
 import { logger } from '@/lib/logger'

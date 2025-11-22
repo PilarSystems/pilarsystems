@@ -1,4 +1,6 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { twilioSubaccountService } from '@/services/twilio/subaccount'
 import { twilioNumberProvisioner } from '@/services/twilio/number-provisioner'

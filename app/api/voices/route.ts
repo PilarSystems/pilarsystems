@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { getVoices } from '@/services/voice/elevenlabs'
 import { logger } from '@/lib/logger'

@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getStripe } from '@/lib/stripe'
@@ -17,11 +18,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No signature' }, { status: 400 })
     }
 
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+    if (!webhookSecret) {
+      logger.warn('Stripe webhook received but STRIPE_WEBHOOK_SECRET not configured')
+      return NextResponse.json({ received: true }, { status: 200 })
+    }
+
     const stripe = getStripe()
     const event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      webhookSecret
     )
 
     logger.info({ eventType: event.type, eventId: event.id }, 'Received Stripe webhook')

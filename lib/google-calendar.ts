@@ -1,4 +1,5 @@
 import { google } from 'googleapis'
+import { logger } from '@/lib/logger'
 
 export function getGoogleCalendarClient(accessToken: string, refreshToken: string) {
   const oauth2Client = new google.auth.OAuth2(
@@ -33,7 +34,7 @@ export async function createCalendarEvent(
     })
     return response.data
   } catch (error) {
-    console.error('Error creating calendar event:', error)
+    logger.error({ error }, 'Error creating calendar event')
     throw error
   }
 }
@@ -53,7 +54,7 @@ export async function listCalendarEvents(
     })
     return response.data.items || []
   } catch (error) {
-    console.error('Error listing calendar events:', error)
+    logger.error({ error }, 'Error listing calendar events')
     throw error
   }
 }

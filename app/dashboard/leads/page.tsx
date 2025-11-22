@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { toast } from 'sonner'
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState<any[]>([])
@@ -22,7 +23,7 @@ export default function LeadsPage() {
           setLeads(data)
         }
       } catch (error) {
-        console.error('Failed to fetch leads:', error)
+        toast.error('Leads konnten nicht geladen werden')
       }
     }
     fetchLeads()

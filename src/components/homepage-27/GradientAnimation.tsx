@@ -61,7 +61,7 @@ const GradientAnimation = () => {
         PATH_IDS.forEach((pathId, idx) => {
           const path = svg.querySelector<SVGPathElement>(`#${pathId}`);
           if (!path) {
-            console.warn(`Path not found: ${pathId}`);
+            
             return;
           }
 
@@ -97,7 +97,7 @@ const GradientAnimation = () => {
           }
         });
       } catch (error) {
-        console.error('Error in gradient animation:', error);
+        
         // Silent error handling
       }
     }, 200);

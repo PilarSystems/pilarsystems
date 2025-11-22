@@ -7,6 +7,7 @@ import { Section } from '@/components/marketing/Section'
 import { CheckCircle2, Copy, QrCode, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 export default function AffiliateSignupPage() {
   const [formData, setFormData] = useState({
@@ -52,7 +53,7 @@ export default function AffiliateSignupPage() {
       setAffiliateData(data)
       setSubmitted(true)
     } catch (error) {
-      console.error('Error registering affiliate:', error)
+      toast.error('Affiliate-Registrierung fehlgeschlagen')
       alert('Fehler bei der Registrierung. Bitte versuche es erneut.')
     }
   }

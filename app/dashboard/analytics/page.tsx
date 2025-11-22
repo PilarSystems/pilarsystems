@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -35,7 +36,7 @@ export default function AnalyticsPage() {
           setAnalytics(data)
         }
       } catch (error) {
-        console.error('Failed to fetch analytics:', error)
+        toast.error('Analytics konnten nicht geladen werden')
       }
     }
     fetchAnalytics()

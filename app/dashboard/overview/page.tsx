@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -33,7 +34,7 @@ export default function DashboardOverviewPage() {
           setStats(data)
         }
       } catch (error) {
-        console.error('Failed to fetch stats:', error)
+        toast.error('Dashboard-Statistiken konnten nicht geladen werden')
       } finally {
         setLoading(false)
       }
