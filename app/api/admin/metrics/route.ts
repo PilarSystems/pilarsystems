@@ -11,12 +11,6 @@ export async function GET(request: NextRequest) {
     const supabase = createRouteHandlerClient({ cookies })
     const { data: { user }, error } = await supabase.auth.getUser()
 
-    // OLD: const authHeader = request.headers.get('authorization')
-    if (!authHeader?.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-
     if (error || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
