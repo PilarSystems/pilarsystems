@@ -19,6 +19,17 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!email.trim() || !email.includes('@')) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
+    if (!password.trim()) {
+      toast.error('Bitte geben Sie Ihr Passwort ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -32,12 +43,15 @@ export default function LoginPage() {
           throw new Error('E-Mail oder Passwort ist falsch')
         }
         if (error.message.includes('Email not confirmed')) {
-          throw new Error('Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse')
+          throw new Error('Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse. Prüfen Sie Ihr Postfach (auch Spam-Ordner).')
+        }
+        if (error.message.includes('Invalid email')) {
+          throw new Error('Ungültige E-Mail-Adresse')
         }
         throw error
       }
 
-      toast.success('Erfolgreich angemeldet')
+      toast.success('Erfolgreich angemeldet! Willkommen zurück.')
       router.push('/dashboard')
     } catch (error: any) {
       toast.error(error.message || 'Anmeldung fehlgeschlagen')
@@ -47,6 +61,11 @@ export default function LoginPage() {
   }
 
   const handleMagicLink = async () => {
+    if (!email.trim() || !email.includes('@')) {
+      toast.error('Bitte geben Sie eine gültige E-Mail-Adresse ein')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -59,7 +78,9 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      toast.success('Magic Link wurde an Ihre E-Mail gesendet')
+      toast.success('Magic Link wurde an Ihre E-Mail gesendet. Bitte prüfen Sie Ihr Postfach (auch Spam-Ordner).', {
+        duration: 6000,
+      })
     } catch (error: any) {
       toast.error(error.message || 'Magic Link konnte nicht gesendet werden')
     } finally {
@@ -77,15 +98,15 @@ export default function LoginPage() {
       >
         <Card className="w-full bg-gray-900 border-gray-800">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Willkommen zurück</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold text-white">Willkommen zurück</CardTitle>
+          <CardDescription className="text-gray-300">
             Melden Sie sich bei Ihrem PILAR SYSTEMS Konto an
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">E-Mail</Label>
+              <Label htmlFor="email" className="text-gray-200">E-Mail</Label>
               <Input
                 id="email"
                 type="email"
@@ -93,10 +114,11 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Passwort</Label>
+              <Label htmlFor="password" className="text-gray-200">Passwort</Label>
               <Input
                 id="password"
                 type="password"
@@ -104,12 +126,13 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
               />
             </div>
             <div className="flex items-center justify-between">
               <Link
                 href="/reset-password"
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-blue-400 hover:text-blue-300 hover:underline"
               >
                 Passwort vergessen?
               </Link>
@@ -128,9 +151,9 @@ export default function LoginPage() {
             >
               Magic Link senden
             </Button>
-            <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-center text-gray-300">
               Noch kein Konto?{' '}
-              <Link href="/signup" className="text-blue-600 hover:underline">
+              <Link href="/signup" className="text-blue-400 hover:text-blue-300 hover:underline">
                 Jetzt registrieren
               </Link>
             </p>
