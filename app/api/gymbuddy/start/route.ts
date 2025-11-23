@@ -5,9 +5,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { gymBuddyService } from '@/src/server/gymbuddy/gymBuddy.service'
-import { getOnboardingQuestion } from '@/src/server/gymbuddy/gymBuddy.onboarding'
-import { OnboardingStep } from '@/src/server/gymbuddy/gymBuddy.types'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
