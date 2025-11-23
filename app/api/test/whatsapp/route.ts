@@ -10,6 +10,8 @@ import { prisma } from '@/src/server/db/client'
 import { orchestrate } from '@/src/server/orchestrator/orchestrator.service'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
 import { logOrchestratorResult } from '@/src/server/logs/log.service'
+import { runWorkflowsForTrigger } from '@/src/server/workflows/workflow.runner'
+import { TriggerType } from '@/src/server/workflows/workflow.types'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -91,6 +93,18 @@ export async function POST(request: NextRequest) {
         userId: 'test-user',
         userName: 'Test User',
         phoneNumber: 'test-user',
+      }
+    )
+
+    await runWorkflowsForTrigger(
+      session.tenantId,
+      TriggerType.WHATSAPP_MESSAGE,
+      {
+        channel: Channel.WHATSAPP,
+        content: message,
+        from: 'test-user',
+        intent: result.intent.intent,
+        intentConfidence: result.intent.confidence,
       }
     )
 

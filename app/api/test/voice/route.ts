@@ -11,6 +11,8 @@ import { getRealtimeEngine } from '@/src/server/core/voice/voice.realtime'
 import { orchestrate } from '@/src/server/orchestrator/orchestrator.service'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
 import { logOrchestratorResult } from '@/src/server/logs/log.service'
+import { runWorkflowsForTrigger } from '@/src/server/workflows/workflow.runner'
+import { TriggerType } from '@/src/server/workflows/workflow.types'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -95,6 +97,18 @@ export async function POST(request: NextRequest) {
         userId: 'test-user',
         userName: 'Test User',
         callId: `test-${Date.now()}`,
+      }
+    )
+
+    await runWorkflowsForTrigger(
+      session.tenantId,
+      TriggerType.VOICE_CALL,
+      {
+        channel: Channel.VOICE,
+        content: text,
+        from: 'test-user',
+        intent: result.intent.intent,
+        intentConfidence: result.intent.confidence,
       }
     )
 
