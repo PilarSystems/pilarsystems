@@ -21,9 +21,19 @@ import { routeToModule, isModuleAvailable, getFallbackModule } from './routingRu
 import { generateWorkoutPlan } from '../core/training/trainingPlan.service'
 import { TrainingGoal, TrainingLevel, Equipment } from '../core/training/trainingPlan.types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+let openaiInstance: OpenAI | null = null
+
+function getOpenAI(): OpenAI | null {
+  if (!process.env.OPENAI_API_KEY) {
+    return null
+  }
+  if (!openaiInstance) {
+    openaiInstance = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  }
+  return openaiInstance
+}
 
 export function normalizeIncomingMessage(payload: RawMessage): NormalizedMessage {
   const id = uuidv4()
@@ -216,7 +226,8 @@ async function executeTrainingPlanEngine(
 }
 
 async function extractTrainingParameters(content: string): Promise<any> {
-  if (!process.env.OPENAI_API_KEY) {
+  const openai = getOpenAI()
+  if (!openai) {
     return {}
   }
 
@@ -323,7 +334,8 @@ async function executeGeneralAI(
 ): Promise<AIResponse> {
   const startTime = Date.now()
 
-  if (!process.env.OPENAI_API_KEY) {
+  const openai = getOpenAI()
+  if (!openai) {
     const processingTime = Date.now() - startTime
 
     return {
