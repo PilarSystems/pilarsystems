@@ -789,6 +789,7 @@ model Tenant {
   workoutPlans       WorkoutPlan[]
   tenantIntegrations TenantIntegration[]
   tenantUsers        TenantUser[]
+  agentProfile       AgentProfile?
 }
 
 // TenantUser (Studio Admin) - Users for new Tenant system
@@ -906,4 +907,22 @@ model WorkoutPlan {
 
   @@index([tenantId])
   @@index([userId])
+}
+
+// AgentProfile (AI Agent Configuration per Tenant)
+model AgentProfile {
+  id          String   @id @default(uuid())
+  tenantId    String   @unique
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String   @default("Studio Assistant")
+  voiceModel  String   @default("tts-1")
+  language    String   @default("de")
+  tone        String   @default("friendly")
+  greeting    String   @db.Text
+  studioRules Json
+  prompt      String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tenantId])
 }
