@@ -7,6 +7,9 @@ import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
+
+export const runtime = 'nodejs'
+
 const trackSchema = z.object({
   code: z.string(),
   referer: z.string().optional(),

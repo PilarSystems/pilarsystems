@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getVoicePreview } from '@/services/voice/elevenlabs'
 import { logger } from '@/lib/logger'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/voices/preview?voiceId=xxx
  * Returns audio preview for a specific voice

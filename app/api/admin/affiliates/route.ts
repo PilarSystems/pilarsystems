@@ -5,6 +5,9 @@ import { getSupabase } from '@/lib/supabase'
 
 export const dynamic = 'force-dynamic'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization')

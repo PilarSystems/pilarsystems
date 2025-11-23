@@ -7,6 +7,9 @@ import { connectTwilio } from '@/services/integrations/twilio'
 import { z } from 'zod'
 import twilio from 'twilio'
 
+
+export const runtime = 'nodejs'
+
 const useExistingSchema = z.object({
   workspaceId: z.string().uuid(),
   accountSid: z.string().min(1),

@@ -5,6 +5,9 @@ import { logger } from '@/lib/logger'
 import { getCachedConfig } from '@/lib/config/env'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const testSchema = z.object({
   workspaceId: z.string().uuid(),
   phoneNumber: z.string(),

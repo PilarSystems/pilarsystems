@@ -8,6 +8,9 @@ import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
 import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
 import { enqueueWebhook } from '@/lib/queue/webhook-queue'
 
+
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text()

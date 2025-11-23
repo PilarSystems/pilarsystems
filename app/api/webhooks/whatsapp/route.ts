@@ -11,6 +11,9 @@ import { eventBus } from '@/lib/autopilot/event-bus'
 import { prisma } from '@/lib/prisma'
 import '@/lib/autopilot/registry'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get('hub.mode')
   const token = request.nextUrl.searchParams.get('hub.verify_token')

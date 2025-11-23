@@ -4,6 +4,9 @@ import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(request: NextRequest) {
   try {
     const leads: any[] = []

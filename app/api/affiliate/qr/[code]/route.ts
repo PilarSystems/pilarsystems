@@ -6,6 +6,9 @@ import QRCode from 'qrcode'
 
 export const dynamic = 'force-dynamic'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ code: string }> }

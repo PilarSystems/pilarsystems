@@ -5,6 +5,9 @@ import { logger } from '@/lib/logger'
 import { encrypt } from '@/lib/encryption'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const step4Schema = z.object({
   userId: z.string(),
   twilioAccountSid: z.string().optional(),

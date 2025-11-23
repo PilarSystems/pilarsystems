@@ -1,3 +1,7 @@
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 /**
  * API Token Management Routes
  */
@@ -5,7 +9,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { identityEngine } from '@/lib/auth/identity-engine'
 
-export const runtime = 'nodejs'
 
 export async function GET(request: NextRequest) {
   try {

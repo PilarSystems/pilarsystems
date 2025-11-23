@@ -4,6 +4,9 @@ import { n8nWorkflowService } from '@/services/n8n/workflows'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const activateSchema = z.object({
   workspaceId: z.string().uuid(),
   workflowType: z.enum(['lead_followup', 'missed_call', 'whatsapp_reply', 'email_reply', 'calendar_reminder']),

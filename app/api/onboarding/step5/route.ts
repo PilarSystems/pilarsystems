@@ -5,6 +5,9 @@ import { logger } from '@/lib/logger'
 import { encrypt } from '@/lib/encryption'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const step5Schema = z.object({
   userId: z.string(),
   whatsappApiToken: z.string().optional(),

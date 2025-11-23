@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { calendarOAuthService } from '@/services/calendar/oauth'
 import { logger } from '@/lib/logger'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)

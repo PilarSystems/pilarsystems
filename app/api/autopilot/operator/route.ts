@@ -1,3 +1,7 @@
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 /**
  * Operator Runtime API
  * 
@@ -8,7 +12,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { operatorRuntime } from '@/lib/autopilot/operator-runtime'
 import { identityEngine } from '@/lib/auth/identity-engine'
 
-export const runtime = 'nodejs'
 
 /**
  * POST /api/autopilot/operator - Control operator runtime

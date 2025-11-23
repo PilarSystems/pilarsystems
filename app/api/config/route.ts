@@ -3,6 +3,9 @@ export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
 import { getPublicFeatureFlags } from '@/lib/config/env'
 
+
+export const runtime = 'nodejs'
+
 /**
  * Public feature flags endpoint
  * Returns which features are enabled based on environment configuration

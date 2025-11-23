@@ -5,6 +5,9 @@ import { logger } from '@/lib/logger'
 import { encrypt } from '@/lib/encryption'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const step6Schema = z.object({
   userId: z.string(),
   email: z.object({

@@ -5,6 +5,9 @@ import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const configSchema = z.object({
   workspaceId: z.string().uuid(),
   targetAudience: z.string(),

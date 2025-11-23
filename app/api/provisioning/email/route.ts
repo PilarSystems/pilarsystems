@@ -5,6 +5,9 @@ import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const provisionSchema = z.object({
   workspaceId: z.string().uuid(),
   provider: z.enum(['gmail', 'outlook', 'custom']),

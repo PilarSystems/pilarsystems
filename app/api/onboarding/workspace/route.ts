@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 
+
+export const runtime = 'nodejs'
+
 /**
  * GET /api/onboarding/workspace?userId=xxx
  * Returns workspace ID for a user

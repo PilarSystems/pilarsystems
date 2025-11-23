@@ -1,3 +1,7 @@
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 /**
  * AI Router API
  * 
@@ -8,7 +12,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { aiRouter } from '@/lib/ai/multi-tenant-router'
 import { identityEngine } from '@/lib/auth/identity-engine'
 
-export const runtime = 'nodejs'
 
 /**
  * POST /api/ai/route - Route AI request

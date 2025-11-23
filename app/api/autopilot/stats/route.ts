@@ -1,3 +1,7 @@
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 /**
  * Autopilot Stats API
  * 
@@ -12,7 +16,6 @@ import { rateLimiter } from '@/lib/autopilot/rate-limiter'
 import { policyEngine } from '@/lib/operator/policy-engine'
 import { operatorRuntime } from '@/lib/autopilot/operator-runtime'
 
-export const runtime = 'nodejs'
 
 /**
  * GET /api/autopilot/stats

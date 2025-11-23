@@ -7,6 +7,9 @@ import { logger } from '@/lib/logger'
 import { getCachedConfig } from '@/lib/config/env'
 import { z } from 'zod'
 
+
+export const runtime = 'nodejs'
+
 const provisionSchema = z.object({
   workspaceId: z.string().uuid(),
   workspaceName: z.string(),

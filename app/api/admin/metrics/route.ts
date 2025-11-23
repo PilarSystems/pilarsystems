@@ -6,6 +6,9 @@ import { cookies } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
+
+export const runtime = 'nodejs'
+
 export async function GET(request: NextRequest) {
   try {
     const supabase = createRouteHandlerClient({ cookies })

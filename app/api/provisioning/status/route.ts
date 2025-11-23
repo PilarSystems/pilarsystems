@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { jobQueue } from '@/lib/queue'
 import { logger } from '@/lib/logger'
 
+
+export const runtime = 'nodejs'
+
 /**
  * GET /api/provisioning/status?jobId=xxx
  * Get provisioning job status

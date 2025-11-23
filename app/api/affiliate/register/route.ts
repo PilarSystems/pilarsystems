@@ -7,6 +7,9 @@ import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
+
+export const runtime = 'nodejs'
+
 const registerSchema = z.object({
   name: z.string().min(2, 'Name muss mindestens 2 Zeichen lang sein'),
   email: z.string().email('Ungültige E-Mail-Adresse'),

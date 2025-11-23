@@ -9,6 +9,9 @@ import { processWebhookWithIdempotency } from '@/lib/queue/webhook-processor'
 import { resolveTenantFromWebhook } from '@/lib/tenant/with-tenant'
 import { enqueueWebhook } from '@/lib/queue/webhook-queue'
 
+
+export const runtime = 'nodejs'
+
 function normalizePhoneNumber(phone: string): string {
   return phone.replace(/[^\d+]/g, '')
 }
