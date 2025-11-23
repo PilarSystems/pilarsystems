@@ -11,6 +11,10 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    const { gymBuddyService } = await import('@/src/server/gymbuddy/gymBuddy.service')
+    const { getOnboardingQuestion } = await import('@/src/server/gymbuddy/gymBuddy.onboarding')
+    const { OnboardingStep } = await import('@/src/server/gymbuddy/gymBuddy.types')
+    
     const body = await request.json()
     const { userId, phoneNumber } = body
 

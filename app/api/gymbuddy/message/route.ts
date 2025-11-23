@@ -11,6 +11,8 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    const { gymBuddyRouter } = await import('@/src/server/gymbuddy/gymBuddy.router')
+    
     const body = await request.json()
     const { userId, content, channel = 'whatsapp' } = body
 
