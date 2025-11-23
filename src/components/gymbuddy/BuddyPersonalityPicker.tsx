@@ -1,7 +1,7 @@
 'use client'
 
-import { PersonalityStyle } from '@/src/server/gymbuddy/gymBuddy.types'
-import { getAllPersonalityProfiles } from '@/src/server/gymbuddy/gymBuddy.personality'
+import { PersonalityStyle } from '@/src/lib/gymbuddy/types'
+import { getAllPersonalityProfiles } from '@/src/lib/gymbuddy/personality'
 
 interface BuddyPersonalityPickerProps {
   selected: PersonalityStyle | null

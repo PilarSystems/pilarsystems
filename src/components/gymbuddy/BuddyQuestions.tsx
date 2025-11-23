@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { OnboardingStep } from '@/src/server/gymbuddy/gymBuddy.types'
-import { getOnboardingQuestion } from '@/src/server/gymbuddy/gymBuddy.onboarding'
+import { OnboardingStep } from '@/src/lib/gymbuddy/types'
+import { getOnboardingQuestion } from '@/src/lib/gymbuddy/onboarding'
 
 interface BuddyQuestionsProps {
   currentStep: OnboardingStep

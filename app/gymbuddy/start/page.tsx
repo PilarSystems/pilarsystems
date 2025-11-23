@@ -6,7 +6,7 @@ import { Dumbbell } from 'lucide-react'
 import BuddyQuestions from '@/src/components/gymbuddy/BuddyQuestions'
 import BuddyPersonalityPicker from '@/src/components/gymbuddy/BuddyPersonalityPicker'
 import BuddyPreview from '@/src/components/gymbuddy/BuddyPreview'
-import { OnboardingStep, PersonalityStyle } from '@/src/server/gymbuddy/gymBuddy.types'
+import { OnboardingStep, PersonalityStyle } from '@/src/lib/gymbuddy/types'
 
 export default function GymBuddyStartPage() {
   const router = useRouter()

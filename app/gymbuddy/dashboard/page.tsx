@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Dumbbell, Send } from 'lucide-react'
 import BuddyDashboard from '@/src/components/gymbuddy/BuddyDashboard'
 import BuddyChatLog from '@/src/components/gymbuddy/BuddyChatLog'
 
-export default function GymBuddyDashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId') || 'demo-user'
 
@@ -186,5 +186,20 @@ export default function GymBuddyDashboardPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function GymBuddyDashboardPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Dumbbell className="w-12 h-12 text-blue-600 animate-pulse mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   )
 }

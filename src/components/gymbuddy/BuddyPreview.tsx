@@ -1,7 +1,7 @@
 'use client'
 
-import { PersonalityStyle } from '@/src/server/gymbuddy/gymBuddy.types'
-import { getPersonalityProfile } from '@/src/server/gymbuddy/gymBuddy.personality'
+import { PersonalityStyle } from '@/src/lib/gymbuddy/types'
+import { getPersonalityProfile } from '@/src/lib/gymbuddy/personality'
 
 interface BuddyPreviewProps {
   personalityStyle: PersonalityStyle
