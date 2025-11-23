@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createCheckoutSession } from '@/services/stripe/checkout'
+import { createCheckoutSession, createBuddyCheckoutSession } from '@/services/stripe/checkout'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
+export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 const checkoutSchema = z.object({
-  plan: z.enum(['BASIC', 'PRO']),
+  plan: z.enum(['BASIC', 'PRO', 'GYM_BUDDY']),
   billingCycle: z.enum(['monthly', 'yearly']).default('monthly'),
   whatsappAddon: z.boolean().default(false),
   userId: z.string(),
   email: z.string().email(),
+  name: z.string().optional(),
   affiliateRef: z.string().optional(),
   trialDays: z.number().min(0).max(30).default(14),
 })
@@ -19,7 +21,28 @@ const checkoutSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { plan, billingCycle, whatsappAddon, userId, email, affiliateRef, trialDays } = checkoutSchema.parse(body)
+    const { plan, billingCycle, whatsappAddon, userId, email, name, affiliateRef, trialDays } = checkoutSchema.parse(body)
+
+    if (plan === 'GYM_BUDDY') {
+      const existingSubscription = await prisma.subscription.findFirst({
+        where: {
+          userId,
+          kind: 'B2C',
+          status: { in: ['active', 'trialing'] },
+        },
+      })
+
+      if (existingSubscription) {
+        logger.warn({ userId }, 'User already has active Gym Buddy subscription')
+        return NextResponse.json(
+          { error: 'You already have an active Gym Buddy subscription' },
+          { status: 400 }
+        )
+      }
+
+      const session = await createBuddyCheckoutSession(userId, email, name)
+      return NextResponse.json({ url: session.url, sessionId: session.id })
+    }
 
     let workspace = await prisma.workspace.findFirst({
       where: { ownerId: userId },

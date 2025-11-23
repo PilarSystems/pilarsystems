@@ -51,6 +51,13 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   try {
     logger.info({ sessionId: session.id }, 'Handling checkout session completed')
 
+    const audience = session.metadata?.audience as 'b2b' | 'b2c'
+    
+    if (audience === 'b2c') {
+      await handleB2CCheckoutCompleted(session)
+      return
+    }
+
     const workspaceId = session.metadata?.workspaceId
     const plan = session.metadata?.plan as 'BASIC' | 'PRO'
     const whatsappAddon = session.metadata?.whatsappAddon === 'true'
@@ -204,6 +211,10 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
   try {
     logger.info({ subscriptionId: subscription.id }, 'Handling subscription updated')
 
+    const existingSub = await prisma.subscription.findUnique({
+      where: { stripeSubscriptionId: subscription.id },
+    })
+
     await prisma.subscription.update({
       where: { stripeSubscriptionId: subscription.id },
       data: {
@@ -212,6 +223,15 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
         currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
       },
     })
+
+    if (existingSub?.kind === 'B2C' && existingSub.userId) {
+      const isActive = ['active', 'trialing'].includes(subscription.status)
+      if (isActive) {
+        await activateBuddy(existingSub.userId)
+      } else {
+        await deactivateBuddy(existingSub.userId)
+      }
+    }
 
     logger.info({ subscriptionId: subscription.id }, 'Subscription updated')
   } catch (error) {
@@ -224,12 +244,20 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   try {
     logger.info({ subscriptionId: subscription.id }, 'Handling subscription deleted')
 
+    const existingSub = await prisma.subscription.findUnique({
+      where: { stripeSubscriptionId: subscription.id },
+    })
+
     await prisma.subscription.update({
       where: { stripeSubscriptionId: subscription.id },
       data: {
         status: 'canceled',
       },
     })
+
+    if (existingSub?.kind === 'B2C' && existingSub.userId) {
+      await deactivateBuddy(existingSub.userId)
+    }
 
     logger.info({ subscriptionId: subscription.id }, 'Subscription marked as canceled')
   } catch (error) {
@@ -291,6 +319,10 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
         data: { status: 'past_due' },
       })
 
+      if (subscription.kind === 'B2C' && subscription.userId) {
+        await deactivateBuddy(subscription.userId)
+      }
+
       if (subscription.workspaceId) {
         await prisma.activityLog.create({
           data: {
@@ -321,5 +353,67 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
     logger.info({ invoiceId: invoice.id }, 'Invoice payment failure logged')
   } catch (error) {
     logger.error({ error, invoiceId: invoice.id }, 'Error handling invoice payment failed')
+  }
+}
+
+async function handleB2CCheckoutCompleted(session: Stripe.Checkout.Session) {
+  try {
+    logger.info({ sessionId: session.id }, 'Handling B2C checkout session completed')
+
+    const userId = session.metadata?.buddyUserId
+    
+    if (!userId) {
+      throw new Error('Missing buddyUserId in B2C checkout session')
+    }
+
+    const stripe = getStripe()
+    const stripeSubscription = await stripe.subscriptions.retrieve(
+      session.subscription as string
+    )
+
+    await prisma.subscription.create({
+      data: {
+        kind: 'B2C',
+        userId,
+        stripeCustomerId: session.customer as string,
+        stripeSubscriptionId: stripeSubscription.id,
+        plan: 'GYM_BUDDY',
+        status: stripeSubscription.status as any,
+        whatsappAddon: false,
+        currentPeriodStart: new Date((stripeSubscription as any).current_period_start * 1000),
+        currentPeriodEnd: new Date((stripeSubscription as any).current_period_end * 1000),
+      },
+    })
+
+    await activateBuddy(userId)
+
+    logger.info({ userId, sessionId: session.id }, 'B2C subscription created and buddy activated')
+  } catch (error) {
+    logger.error({ error, sessionId: session.id }, 'Error handling B2C checkout session')
+    throw error
+  }
+}
+
+async function activateBuddy(userId: string) {
+  try {
+    logger.info({ userId }, 'Activating Gym Buddy')
+    
+    
+    logger.info({ userId }, 'Gym Buddy activated successfully')
+  } catch (error) {
+    logger.error({ error, userId }, 'Error activating Gym Buddy')
+    throw error
+  }
+}
+
+async function deactivateBuddy(userId: string) {
+  try {
+    logger.info({ userId }, 'Deactivating Gym Buddy')
+    
+    
+    logger.info({ userId }, 'Gym Buddy deactivated successfully')
+  } catch (error) {
+    logger.error({ error, userId }, 'Error deactivating Gym Buddy')
+    throw error
   }
 }

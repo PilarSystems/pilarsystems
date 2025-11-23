@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { Plan } from '@/types'
 
+type SubscriptionAudience = 'b2b' | 'b2c'
+
 export async function createCheckoutSession(
   workspaceId: string,
   plan: Plan,
@@ -59,6 +61,7 @@ export async function createCheckoutSession(
     const stripe = getStripe()
     
     const metadata: Record<string, string> = {
+      audience: 'b2b',
       workspaceId,
       plan,
       billingCycle,
@@ -101,6 +104,61 @@ export async function createCheckoutSession(
   }
 }
 
+export async function createBuddyCheckoutSession(
+  userId: string,
+  email: string,
+  name?: string
+) {
+  try {
+    logger.info({ userId, email }, 'Creating Gym Buddy checkout session')
+
+    const planConfig = STRIPE_PLANS.GYM_BUDDY
+    
+    if (!planConfig.priceId) {
+      throw new Error('GYM_BUDDY price ID not configured')
+    }
+
+    const stripe = getStripe()
+    
+    const metadata: Record<string, string> = {
+      audience: 'b2c',
+      buddyUserId: userId,
+      product: 'gym_buddy',
+      plan: 'GYM_BUDDY',
+    }
+    
+    const sessionConfig: any = {
+      mode: 'subscription',
+      payment_method_types: ['card', 'sepa_debit'],
+      line_items: [
+        {
+          price: planConfig.priceId,
+          quantity: 1,
+        },
+      ],
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/gymbuddy/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/gymbuddy/start`,
+      customer_email: email,
+      client_reference_id: userId,
+      metadata,
+      subscription_data: {
+        metadata,
+      },
+      allow_promotion_codes: true,
+      billing_address_collection: 'auto',
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig)
+
+    logger.info({ sessionId: session.id, userId }, 'Gym Buddy checkout session created')
+
+    return session
+  } catch (error) {
+    logger.error({ error, userId }, 'Error creating Gym Buddy checkout session')
+    throw error
+  }
+}
+
 export async function createPortalSession(workspaceId: string) {
   try {
     logger.info({ workspaceId }, 'Creating Stripe portal session')
@@ -124,6 +182,33 @@ export async function createPortalSession(workspaceId: string) {
     return session
   } catch (error) {
     logger.error({ error, workspaceId }, 'Error creating portal session')
+    throw error
+  }
+}
+
+export async function createBuddyPortalSession(userId: string) {
+  try {
+    logger.info({ userId }, 'Creating Gym Buddy portal session')
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { userId, kind: 'B2C' },
+    })
+
+    if (!subscription) {
+      throw new Error('No subscription found')
+    }
+
+    const stripe = getStripe()
+    const session = await stripe.billingPortal.sessions.create({
+      customer: subscription.stripeCustomerId,
+      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/gymbuddy/dashboard`,
+    })
+
+    logger.info({ sessionId: session.id, userId }, 'Gym Buddy portal session created')
+
+    return session
+  } catch (error) {
+    logger.error({ error, userId }, 'Error creating Gym Buddy portal session')
     throw error
   }
 }

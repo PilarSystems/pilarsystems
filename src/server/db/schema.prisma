@@ -57,8 +57,10 @@ model Workspace {
 
 model Subscription {
   id                   String             @id @default(uuid())
+  kind                 SubscriptionKind   @default(B2B)
   workspaceId          String?            @unique
   workspace            Workspace?
+  userId               String?
   stripeCustomerId     String             @unique
   stripeSubscriptionId String             @unique
   plan                 Plan
@@ -68,11 +70,20 @@ model Subscription {
   currentPeriodEnd     DateTime
   createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
+
+  @@index([userId])
+  @@index([kind, status])
+}
+
+enum SubscriptionKind {
+  B2B
+  B2C
 }
 
 enum Plan {
   BASIC
   PRO
+  GYM_BUDDY
 }
 
 enum SubscriptionStatus {
