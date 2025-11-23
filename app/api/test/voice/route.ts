@@ -10,6 +10,7 @@ import { prisma } from '@/src/server/db/client'
 import { getRealtimeEngine } from '@/src/server/core/voice/voice.realtime'
 import { orchestrate } from '@/src/server/orchestrator/orchestrator.service'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
+import { logOrchestratorResult } from '@/src/server/logs/log.service'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -85,6 +86,17 @@ export async function POST(request: NextRequest) {
     })
 
     console.log(`[TEST] Voice test result:`, result)
+
+    logOrchestratorResult(
+      session.tenantId,
+      Channel.VOICE,
+      result,
+      {
+        userId: 'test-user',
+        userName: 'Test User',
+        callId: `test-${Date.now()}`,
+      }
+    )
 
     let audioData = null
     if (generateAudio && result.response?.content) {

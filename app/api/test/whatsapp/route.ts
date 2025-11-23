@@ -9,6 +9,7 @@ import { getSession } from '@/src/lib/auth'
 import { prisma } from '@/src/server/db/client'
 import { orchestrate } from '@/src/server/orchestrator/orchestrator.service'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
+import { logOrchestratorResult } from '@/src/server/logs/log.service'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -81,6 +82,17 @@ export async function POST(request: NextRequest) {
     })
 
     console.log(`[TEST] WhatsApp test result:`, result)
+
+    logOrchestratorResult(
+      session.tenantId,
+      Channel.WHATSAPP,
+      result,
+      {
+        userId: 'test-user',
+        userName: 'Test User',
+        phoneNumber: 'test-user',
+      }
+    )
 
     return NextResponse.json({
       success: true,
