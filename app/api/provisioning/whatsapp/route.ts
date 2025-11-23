@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server'
 import { whatsappAutomationService } from '@/services/whatsapp/automation'
 import { jobQueue } from '@/lib/queue'

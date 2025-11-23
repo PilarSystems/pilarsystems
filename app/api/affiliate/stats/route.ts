@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const runtime = 'nodejs';
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 import { getConfig } from '@/lib/config/env'

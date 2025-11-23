@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server'
 import { n8nWorkflowService } from '@/services/n8n/workflows'
 import { logger } from '@/lib/logger'
