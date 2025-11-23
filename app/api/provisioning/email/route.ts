@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server'
 import { emailAutomationService } from '@/services/email/automation'
 import { jobQueue } from '@/lib/queue'

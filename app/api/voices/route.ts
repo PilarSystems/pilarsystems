@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const runtime = 'nodejs';
 import { getVoices } from '@/services/voice/elevenlabs'
 import { logger } from '@/lib/logger'
 
