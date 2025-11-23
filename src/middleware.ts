@@ -66,7 +66,6 @@ export async function middleware(req: NextRequest) {
   return res;
 }
 
-// Nur auf /dashboard wirken
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/onboarding/:path*'],
 };

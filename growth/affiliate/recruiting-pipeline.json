@@ -1,0 +1,336 @@
+{
+  "version": "1.0.0",
+  "description": "Affiliate recruiting pipeline for PILAR SYSTEMS - Complete automation",
+  "landing_page": {
+    "url": "/affiliate/signup",
+    "headline": "Verdiene 500€+ pro vermitteltem Studio",
+    "subheadline": "Werde PILAR Partner und baue dir ein passives Einkommen auf",
+    "benefits": [
+      {
+        "icon": "💰",
+        "title": "500€ pro Studio",
+        "description": "Einmalige Provision für jedes vermittelte Studio"
+      },
+      {
+        "icon": "🔄",
+        "title": "Wiederkehrende Provisionen",
+        "description": "10% monatliche Provision solange das Studio aktiv ist"
+      },
+      {
+        "icon": "🚀",
+        "title": "Keine Obergrenze",
+        "description": "Je mehr Studios du vermittelst, desto mehr verdienst du"
+      },
+      {
+        "icon": "🎯",
+        "title": "Einfache Vermittlung",
+        "description": "Teile deinen Link, wir kümmern uns um den Rest"
+      },
+      {
+        "icon": "📊",
+        "title": "Live-Dashboard",
+        "description": "Verfolge Klicks, Conversions und Provisionen in Echtzeit"
+      },
+      {
+        "icon": "💳",
+        "title": "Monatliche Auszahlung",
+        "description": "Automatische Auszahlung ab 50€ Guthaben"
+      }
+    ],
+    "social_proof": {
+      "total_affiliates": "500+",
+      "total_earnings": "250.000€+",
+      "top_earner": "5.000€/Monat",
+      "testimonials": [
+        {
+          "name": "Marcus K.",
+          "role": "Fitness-Influencer",
+          "earnings": "3.200€/Monat",
+          "quote": "Ich empfehle PILAR meinen Followern und verdiene dabei. Win-Win!"
+        },
+        {
+          "name": "Sarah M.",
+          "role": "Business-Coach",
+          "earnings": "4.800€/Monat",
+          "quote": "Meine Kunden lieben PILAR und ich verdiene passiv dazu. Perfekt!"
+        }
+      ]
+    },
+    "cta": {
+      "primary": "Jetzt Partner werden",
+      "secondary": "Mehr erfahren"
+    }
+  },
+  "application_form": {
+    "fields": [
+      {
+        "id": "full_name",
+        "label": "Vollständiger Name",
+        "type": "text",
+        "required": true,
+        "validation": "min:3"
+      },
+      {
+        "id": "email",
+        "label": "E-Mail-Adresse",
+        "type": "email",
+        "required": true,
+        "validation": "email"
+      },
+      {
+        "id": "phone",
+        "label": "Telefonnummer",
+        "type": "tel",
+        "required": false,
+        "validation": "phone"
+      },
+      {
+        "id": "website",
+        "label": "Website / Social Media",
+        "type": "url",
+        "required": false,
+        "placeholder": "https://instagram.com/username"
+      },
+      {
+        "id": "audience_type",
+        "label": "Deine Zielgruppe",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Fitness Studio Owners",
+          "Gym Members",
+          "Business Coaches",
+          "Fitness Influencers",
+          "Marketing Agencies",
+          "Other"
+        ]
+      },
+      {
+        "id": "audience_size",
+        "label": "Reichweite",
+        "type": "select",
+        "required": true,
+        "options": [
+          "< 1.000",
+          "1.000 - 5.000",
+          "5.000 - 10.000",
+          "10.000 - 50.000",
+          "50.000+"
+        ]
+      },
+      {
+        "id": "promotion_channels",
+        "label": "Wie möchtest du PILAR bewerben?",
+        "type": "multiselect",
+        "required": true,
+        "options": [
+          "Instagram",
+          "Facebook",
+          "LinkedIn",
+          "YouTube",
+          "TikTok",
+          "Email Newsletter",
+          "Blog",
+          "Podcast",
+          "Events",
+          "Direct Outreach"
+        ]
+      },
+      {
+        "id": "experience",
+        "label": "Affiliate-Erfahrung",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Keine Erfahrung",
+          "Wenig Erfahrung (1-2 Programme)",
+          "Erfahren (3-5 Programme)",
+          "Sehr erfahren (5+ Programme)"
+        ]
+      },
+      {
+        "id": "motivation",
+        "label": "Warum möchtest du PILAR Partner werden?",
+        "type": "textarea",
+        "required": true,
+        "placeholder": "Erzähl uns kurz, warum du PILAR bewerben möchtest..."
+      },
+      {
+        "id": "terms_accepted",
+        "label": "Ich akzeptiere die Partner-Bedingungen",
+        "type": "checkbox",
+        "required": true,
+        "link": "/affiliate/terms"
+      }
+    ],
+    "auto_approval": {
+      "enabled": true,
+      "criteria": {
+        "audience_size_min": "1000",
+        "required_channels": 1,
+        "manual_review_if": [
+          "audience_size < 1000",
+          "no_website_or_social",
+          "suspicious_email_domain"
+        ]
+      }
+    }
+  },
+  "onboarding_sequence": {
+    "auto_send": true,
+    "emails": [
+      {
+        "trigger": "application_approved",
+        "delay_hours": 0,
+        "subject": "🎉 Willkommen im PILAR Partner-Programm!",
+        "content": {
+          "headline": "Du bist jetzt PILAR Partner!",
+          "body": "Hi {{first_name}},\n\nwillkommen im PILAR Partner-Programm! 🎉\n\n**Deine nächsten Schritte:**\n\n1️⃣ **Dashboard einrichten** (2 Minuten)\n   → Login: {{dashboard_url}}\n   → Passwort: {{temp_password}}\n\n2️⃣ **Referral-Link teilen**\n   → Dein Link: {{referral_link}}\n   → QR-Code: {{qr_code_url}}\n\n3️⃣ **Marketing-Materialien nutzen**\n   → Grafiken, Videos, Texte: {{resources_url}}\n\n**Deine Provisionen:**\n\n💰 500€ pro vermitteltem Studio (einmalig)\n💰 10% monatliche Provision (wiederkehrend)\n💰 Auszahlung ab 50€ (monatlich)\n\n**Support:**\n\nFragen? Schreib uns: affiliate@pilarsystems.com\nOder WhatsApp: +49 XXX XXXXXXX\n\n**Erste Schritte:**\n\n1. Teile deinen Link auf Social Media\n2. Schreibe einen Post über PILAR\n3. Sende den Link an 10 Studio-Besitzer\n\n→ Erste Provision in 7 Tagen! 🚀\n\nViel Erfolg!\nDein PILAR Affiliate Team",
+          "cta": "Zum Dashboard",
+          "cta_url": "{{dashboard_url}}"
+        }
+      },
+      {
+        "trigger": "application_approved",
+        "delay_hours": 24,
+        "subject": "{{first_name}}, deine Marketing-Materialien sind bereit",
+        "content": {
+          "headline": "Starte jetzt mit der Bewerbung",
+          "body": "Hi {{first_name}},\n\nhier sind deine Marketing-Materialien:\n\n📸 **Social Media Graphics**\n→ Instagram Posts (10 Designs)\n→ Stories (5 Templates)\n→ Facebook Ads (3 Varianten)\n\n🎥 **Videos**\n→ Produkt-Demo (2 Min)\n→ Testimonials (3x 30 Sek)\n→ Explainer (1 Min)\n\n✍️ **Copy-Paste Texte**\n→ Instagram Captions (10)\n→ Email Templates (5)\n→ LinkedIn Posts (3)\n\n[Button: Materialien herunterladen]\n\n**Quick Win:**\n\nPoste heute noch:\n1. Instagram Story mit deinem Referral-Link\n2. Facebook Post über PILAR\n3. LinkedIn Artikel\n\n→ Erste Klicks garantiert!\n\nViel Erfolg!\nDein PILAR Team",
+          "cta": "Materialien herunterladen",
+          "cta_url": "{{resources_url}}"
+        }
+      },
+      {
+        "trigger": "application_approved",
+        "delay_hours": 72,
+        "condition": "no_clicks_yet",
+        "subject": "{{first_name}}, brauchst du Hilfe beim Start?",
+        "content": {
+          "headline": "Lass uns helfen!",
+          "body": "Hi {{first_name}},\n\nich sehe, dass du noch keine Klicks auf deinen Link hast.\n\nKein Problem - hier sind 3 Quick Wins:\n\n1️⃣ **Instagram Story**\n   → Teile deinen QR-Code\n   → Text: \"Fitness-Studios aufgepasst! 🚀\"\n   → Link in Bio\n\n2️⃣ **Facebook Post**\n   → Nutze unsere Vorlage\n   → Tagge 5 Studio-Besitzer\n   → Poste in Fitness-Gruppen\n\n3️⃣ **Direct Outreach**\n   → Schreibe 10 Studio-Besitzer an\n   → Nutze unsere Email-Vorlage\n   → Persönliche Empfehlung\n\n**Brauchst du Hilfe?**\n\nBuche einen Call mit unserem Affiliate-Manager:\n[Button: Call buchen]\n\nWir helfen dir gerne!\nDein PILAR Team",
+          "cta": "Call buchen",
+          "cta_url": "{{calendly_url}}"
+        }
+      },
+      {
+        "trigger": "first_click",
+        "delay_hours": 0,
+        "subject": "🎉 Dein erster Klick!",
+        "content": {
+          "headline": "Super! Dein erster Klick ist da!",
+          "body": "Hi {{first_name}},\n\nglückwunsch! Jemand hat auf deinen Referral-Link geklickt! 🎉\n\n**Was jetzt passiert:**\n\n1. Lead wird automatisch getrackt\n2. Wir senden Follow-up Emails\n3. Bei Conversion: Du bekommst 500€\n\n**Deine Stats:**\n→ Klicks: {{clicks}}\n→ Conversions: {{conversions}}\n→ Verdient: {{earnings}}€\n\n[Button: Dashboard öffnen]\n\n**Tipp:**\n\nJe mehr Klicks, desto mehr Conversions!\nTeile deinen Link weiter.\n\nViel Erfolg!\nDein PILAR Team",
+          "cta": "Dashboard öffnen",
+          "cta_url": "{{dashboard_url}}"
+        }
+      },
+      {
+        "trigger": "first_conversion",
+        "delay_hours": 0,
+        "subject": "💰 Deine erste Provision: 500€!",
+        "content": {
+          "headline": "Glückwunsch! Deine erste Provision!",
+          "body": "Hi {{first_name}},\n\n🎉 JACKPOT! 🎉\n\nDu hast gerade deine erste Provision verdient!\n\n**Deine Zahlung:**\n→ Einmalig: 500€\n→ Monatlich: ~15€ (10% von 149€)\n→ Auszahlung: Nächster Monat\n\n**Deine Stats:**\n→ Klicks: {{clicks}}\n→ Conversions: {{conversions}}\n→ Verdient: {{earnings}}€\n→ Ausstehend: {{pending}}€\n\n[Button: Dashboard öffnen]\n\n**Weiter so!**\n\nJede Conversion = 500€ + monatliche Provision.\nTeile deinen Link weiter!\n\nTop-Partner verdienen 5.000€+/Monat.\n\nViel Erfolg!\nDein PILAR Team",
+          "cta": "Dashboard öffnen",
+          "cta_url": "{{dashboard_url}}"
+        }
+      }
+    ]
+  },
+  "dashboard_features": {
+    "stats": [
+      "Total Clicks",
+      "Unique Visitors",
+      "Conversions",
+      "Conversion Rate",
+      "Total Earnings",
+      "Pending Payouts",
+      "Paid Out",
+      "Active Referrals"
+    ],
+    "tracking": {
+      "referral_link": "{{app_url}}/r/{{affiliate_code}}",
+      "qr_code": "Auto-generated, downloadable",
+      "utm_parameters": "Auto-added for tracking",
+      "cookie_duration": "30 days"
+    },
+    "resources": [
+      "Social Media Graphics (Instagram, Facebook, LinkedIn)",
+      "Video Content (Demo, Testimonials, Explainer)",
+      "Copy-Paste Texts (Posts, Emails, Ads)",
+      "Email Templates (Cold Outreach, Follow-ups)",
+      "Landing Page Templates",
+      "Success Stories",
+      "FAQ",
+      "Best Practices Guide"
+    ],
+    "payouts": {
+      "minimum": "50€",
+      "frequency": "Monthly (1st of month)",
+      "methods": ["Bank Transfer", "PayPal"],
+      "processing_time": "5-7 business days"
+    }
+  },
+  "commission_structure": {
+    "one_time": {
+      "amount": "500€",
+      "trigger": "First successful payment",
+      "conditions": ["Customer stays active for 30 days"]
+    },
+    "recurring": {
+      "percentage": "10%",
+      "trigger": "Monthly subscription payment",
+      "duration": "Lifetime (as long as customer is active)",
+      "example": "Customer pays 149€/month → You earn 14.90€/month"
+    },
+    "bonuses": {
+      "first_conversion": "50€ bonus",
+      "10_conversions": "500€ bonus",
+      "50_conversions": "2.500€ bonus",
+      "top_performer": "Monthly prize: 1.000€"
+    }
+  },
+  "terms_and_conditions": {
+    "eligibility": [
+      "Must be 18+ years old",
+      "Must have legitimate audience/reach",
+      "No spam or unethical promotion",
+      "Comply with GDPR and data protection laws"
+    ],
+    "prohibited": [
+      "Paid search ads on PILAR brand terms",
+      "Spam emails or messages",
+      "False or misleading claims",
+      "Cookie stuffing or fraud",
+      "Self-referrals"
+    ],
+    "termination": [
+      "We reserve the right to terminate partnership for violations",
+      "Pending commissions will be forfeited if terminated for fraud",
+      "30-day notice for voluntary termination"
+    ]
+  },
+  "implementation_checklist": {
+    "backend": [
+      "✅ Affiliate model already exists",
+      "✅ Referral tracking already implemented",
+      "✅ Commission calculation already implemented",
+      "⚠️ Need to add: Auto-approval logic",
+      "⚠️ Need to add: Onboarding email automation",
+      "⚠️ Need to add: Payout processing"
+    ],
+    "frontend": [
+      "⚠️ Need to build: /affiliate/signup landing page",
+      "⚠️ Need to build: Application form",
+      "✅ Dashboard already exists at /dashboard/affiliate",
+      "⚠️ Need to add: Marketing resources section",
+      "⚠️ Need to add: Payout history"
+    ],
+    "automation": [
+      "⚠️ Need to implement: Auto-approval workflow",
+      "⚠️ Need to implement: Email sequence triggers",
+      "⚠️ Need to implement: Commission calculation on payment",
+      "⚠️ Need to implement: Monthly payout job"
+    ]
+  }
+}

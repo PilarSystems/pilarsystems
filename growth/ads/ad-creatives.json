@@ -1,0 +1,239 @@
+{
+  "version": "1.0.0",
+  "description": "Production-ready ad creatives for PILAR SYSTEMS - Fitness Studio Automation",
+  "target_audience": {
+    "primary": "Fitness Studio Owners (DACH region)",
+    "age_range": "28-55",
+    "interests": ["fitness", "business", "automation", "technology", "entrepreneurship"],
+    "pain_points": ["manual lead management", "missed follow-ups", "time-consuming admin", "low conversion rates"]
+  },
+  "creatives": [
+    {
+      "id": "ad_001",
+      "name": "WhatsApp Coach - Problem/Solution",
+      "platform": ["Facebook", "Instagram"],
+      "format": "Single Image / Video",
+      "headline": "Dein Studio-Coach arbeitet 24/7 – auch nachts um 3 Uhr",
+      "primary_text": "Während du schläfst, beantwortet dein KI-Coach Anfragen, bucht Probetrainings und wandelt Leads in zahlende Mitglieder um. Automatisch. Über WhatsApp.\n\n✅ 24/7 Lead-Betreuung\n✅ Automatische Terminbuchung\n✅ Personalisierte Beratung\n✅ 3x höhere Conversion-Rate\n\nStarte in 5 Minuten. Keine Vorkenntnisse nötig.",
+      "cta": "Jetzt 14 Tage kostenlos testen",
+      "landing_page": "/pricing",
+      "image_suggestions": [
+        "Studio owner sleeping peacefully while phone shows WhatsApp conversations",
+        "Split screen: Tired owner vs. automated WhatsApp chat",
+        "Phone with WhatsApp showing automated booking confirmation"
+      ],
+      "targeting": {
+        "interests": ["Fitness Studio Management", "Small Business", "Automation"],
+        "behaviors": ["Business Page Admin", "Small Business Owners"],
+        "lookalike": "Customer list - Studio owners"
+      }
+    },
+    {
+      "id": "ad_002",
+      "name": "ROI Calculator - Value Proposition",
+      "platform": ["Facebook", "Instagram", "LinkedIn"],
+      "format": "Carousel",
+      "headline": "Wie viel Umsatz verlierst du durch verpasste Leads?",
+      "primary_text": "Durchschnittliches Studio:\n→ 50 Anfragen/Monat\n→ 20 werden nicht erreicht\n→ 10 potenzielle Mitglieder verloren\n→ 5.000€ Umsatzverlust/Monat\n\nMit PILAR SYSTEMS:\n✅ 0 verpasste Anfragen\n✅ Automatische 24/7-Betreuung\n✅ 3x höhere Conversion\n✅ +15.000€ Mehrumsatz/Monat\n\nInvestition: 149€/Monat\nROI: 10.000%",
+      "cta": "ROI für mein Studio berechnen",
+      "landing_page": "/features",
+      "carousel_cards": [
+        {
+          "headline": "Das Problem",
+          "description": "20 verpasste Leads = 5.000€ Verlust/Monat"
+        },
+        {
+          "headline": "Die Lösung",
+          "description": "KI-Coach beantwortet jede Anfrage in 60 Sekunden"
+        },
+        {
+          "headline": "Das Ergebnis",
+          "description": "+15.000€ Mehrumsatz bei 149€ Investment"
+        }
+      ],
+      "targeting": {
+        "interests": ["Fitness Business", "Gym Management", "Business Growth"],
+        "job_titles": ["Studio Owner", "Gym Manager", "Fitness Entrepreneur"]
+      }
+    },
+    {
+      "id": "ad_003",
+      "name": "Social Proof - Testimonial",
+      "platform": ["Facebook", "Instagram"],
+      "format": "Video (15-30s)",
+      "headline": "\"Ich spare 20 Stunden pro Woche und habe 40% mehr Mitglieder\"",
+      "primary_text": "Marcus, Inhaber von 3 Studios in München:\n\n\"Früher habe ich jeden Abend bis 22 Uhr Anfragen beantwortet. Jetzt macht das mein KI-Coach – und zwar besser als ich.\n\nErgebnis nach 3 Monaten:\n✅ 40% mehr Neumitglieder\n✅ 20h/Woche Zeit gespart\n✅ 25.000€ Mehrumsatz\n\nBeste Investition für mein Studio.\"\n\nStarte heute noch – Setup in 5 Minuten.",
+      "cta": "Wie Marcus: Jetzt starten",
+      "landing_page": "/pricing",
+      "video_script": "Show studio owner working late → Transition to automated system → Show results dashboard → Happy owner with more free time",
+      "targeting": {
+        "interests": ["Fitness Studio", "Business Automation"],
+        "lookalike": "Existing customers - 1%"
+      }
+    },
+    {
+      "id": "ad_004",
+      "name": "Feature Highlight - Automation",
+      "platform": ["Facebook", "Instagram", "LinkedIn"],
+      "format": "Single Image",
+      "headline": "Dein Studio läuft auf Autopilot",
+      "primary_text": "Was PILAR SYSTEMS für dich automatisiert:\n\n🤖 Lead-Betreuung (24/7 WhatsApp-Coach)\n📅 Terminbuchung & Erinnerungen\n💬 Follow-ups & Nachfassen\n📊 Lead-Scoring & Priorisierung\n🎯 Personalisierte Angebote\n💰 Zahlungserinnerungen\n\nDu konzentrierst dich aufs Training.\nWir kümmern uns um den Rest.\n\n14 Tage kostenlos testen. Keine Kreditkarte nötig.",
+      "cta": "Kostenlos testen",
+      "landing_page": "/features",
+      "image_suggestions": [
+        "Dashboard showing automated workflows",
+        "Studio owner training clients while phone shows automation",
+        "Before/After: Chaos vs. Organized automation"
+      ],
+      "targeting": {
+        "interests": ["Fitness Business", "Marketing Automation", "CRM"],
+        "behaviors": ["Small Business Owners"]
+      }
+    },
+    {
+      "id": "ad_005",
+      "name": "Urgency - Limited Offer",
+      "platform": ["Facebook", "Instagram"],
+      "format": "Single Image / Video",
+      "headline": "Nur noch 10 Plätze: Setup-Gebühr geschenkt (Wert: 500€)",
+      "primary_text": "🎁 BLACK FRIDAY SPECIAL 🎁\n\nNormalerweise: 500€ Setup + 149€/Monat\nJetzt: 0€ Setup + 14 Tage gratis\n\nNur für die ersten 10 Studios!\n\n✅ Persönliches Onboarding\n✅ WhatsApp-Coach Setup\n✅ Individuelle Anpassung\n✅ 30 Tage Geld-zurück-Garantie\n\nWarum Studios PILAR lieben:\n→ 3x höhere Conversion\n→ 20h/Woche Zeit gespart\n→ +15.000€ Mehrumsatz/Monat\n\n⏰ Angebot endet in 48h",
+      "cta": "Jetzt Platz sichern",
+      "landing_page": "/pricing?promo=blackfriday",
+      "image_suggestions": [
+        "Countdown timer with offer details",
+        "Gift box with PILAR logo and '500€ geschenkt'",
+        "Limited spots remaining visual"
+      ],
+      "targeting": {
+        "interests": ["Fitness Studio", "Business Growth"],
+        "behaviors": ["Engaged Shoppers"],
+        "retargeting": "Website visitors - Last 30 days"
+      }
+    },
+    {
+      "id": "ad_006",
+      "name": "Pain Point - Missed Leads",
+      "platform": ["Facebook", "Instagram"],
+      "format": "Video (15s)",
+      "headline": "Wie viele Leads hast du heute verpasst?",
+      "primary_text": "22:30 Uhr: Neue WhatsApp-Anfrage\n\"Hallo, ich interessiere mich für eine Mitgliedschaft...\"\n\nDu: Schläfst\nDein Konkurrent mit PILAR: Antwortet in 60 Sekunden\n\nErgebnis:\n❌ Du: Lead verloren\n✅ Konkurrent: Neues Mitglied\n\nMit PILAR SYSTEMS verpasst du nie wieder einen Lead.\n\n24/7 automatische Betreuung.\nSetup in 5 Minuten.\n14 Tage kostenlos.",
+      "cta": "Nie wieder Leads verpassen",
+      "landing_page": "/pricing",
+      "video_script": "Show phone notification at night → Owner sleeping → Competitor's automated response → Lost opportunity visualization",
+      "targeting": {
+        "interests": ["Fitness Studio Management", "Lead Generation"],
+        "behaviors": ["Small Business Owners"]
+      }
+    },
+    {
+      "id": "ad_007",
+      "name": "Comparison - Before/After",
+      "platform": ["Facebook", "Instagram", "LinkedIn"],
+      "format": "Carousel",
+      "headline": "Vorher vs. Nachher: So verändert PILAR dein Studio",
+      "primary_text": "Vorher:\n❌ Leads gehen verloren\n❌ Manuelle Follow-ups\n❌ Überlasteter Inhaber\n❌ Niedrige Conversion\n\nNachher:\n✅ 100% Lead-Erfassung\n✅ Automatische Betreuung\n✅ 20h/Woche mehr Zeit\n✅ 3x höhere Conversion\n\nÜber 500 Studios vertrauen PILAR.\nStarte in 5 Minuten.",
+      "cta": "Transformation starten",
+      "landing_page": "/features",
+      "carousel_cards": [
+        {
+          "headline": "Lead-Management",
+          "before": "Verpasste Anfragen, Excel-Chaos",
+          "after": "100% Erfassung, automatisches CRM"
+        },
+        {
+          "headline": "Zeitaufwand",
+          "before": "20h/Woche Admin-Arbeit",
+          "after": "Vollautomatisch, 0h/Woche"
+        },
+        {
+          "headline": "Conversion-Rate",
+          "before": "15% Lead → Kunde",
+          "after": "45% Lead → Kunde"
+        }
+      ],
+      "targeting": {
+        "interests": ["Fitness Business", "Business Efficiency"],
+        "lookalike": "Customer list - 2%"
+      }
+    },
+    {
+      "id": "ad_008",
+      "name": "Demo Video - Product Showcase",
+      "platform": ["Facebook", "Instagram", "YouTube"],
+      "format": "Video (30-60s)",
+      "headline": "So einfach funktioniert PILAR SYSTEMS",
+      "primary_text": "In 60 Sekunden erklärt:\n\n1️⃣ Lead schreibt auf WhatsApp\n2️⃣ KI-Coach antwortet sofort\n3️⃣ Termin wird automatisch gebucht\n4️⃣ Erinnerungen werden verschickt\n5️⃣ Lead wird zum Mitglied\n\nAlles automatisch. Rund um die Uhr.\n\nSetup in 5 Minuten.\n14 Tage kostenlos testen.",
+      "cta": "Demo ansehen & starten",
+      "landing_page": "/features",
+      "video_script": "Screen recording showing: WhatsApp conversation → Automated booking → Calendar integration → Conversion tracking",
+      "targeting": {
+        "interests": ["Fitness Technology", "Business Automation"],
+        "behaviors": ["Technology Early Adopters"]
+      }
+    },
+    {
+      "id": "ad_009",
+      "name": "Retargeting - Abandoned Signup",
+      "platform": ["Facebook", "Instagram"],
+      "format": "Single Image",
+      "headline": "Du warst fast fertig... Jetzt abschließen & 50€ sparen!",
+      "primary_text": "Hey! Du hast deine Anmeldung nicht abgeschlossen.\n\nExklusiv für dich:\n🎁 50€ Rabatt auf die ersten 3 Monate\n🎁 Persönliches Onboarding-Call\n🎁 Individuelle Studio-Anpassung\n\nCode: COMEBACK50\n\n✅ Setup in 5 Minuten\n✅ 14 Tage kostenlos testen\n✅ Jederzeit kündbar\n\nAngebot gültig 48h.",
+      "cta": "Anmeldung abschließen",
+      "landing_page": "/pricing?promo=comeback50",
+      "image_suggestions": [
+        "Friendly reminder with discount badge",
+        "Progress bar showing 'Almost there!'",
+        "Special offer visual"
+      ],
+      "targeting": {
+        "retargeting": "Signup started but not completed - Last 7 days"
+      }
+    },
+    {
+      "id": "ad_010",
+      "name": "Affiliate Program - Recruitment",
+      "platform": ["Facebook", "Instagram", "LinkedIn"],
+      "format": "Single Image",
+      "headline": "Verdiene 500€ pro vermitteltem Studio",
+      "primary_text": "PILAR Partner-Programm:\n\n💰 500€ Provision pro Studio\n💰 Wiederkehrende Provisionen\n💰 Keine Obergrenze\n\nPerfekt für:\n✅ Fitness-Influencer\n✅ Business-Coaches\n✅ Studio-Berater\n✅ Branchenexperten\n\nSo einfach:\n1. Anmelden (kostenlos)\n2. Link teilen\n3. Provisionen kassieren\n\nTop-Partner verdienen 5.000€+/Monat.",
+      "cta": "Partner werden",
+      "landing_page": "/affiliate/signup",
+      "image_suggestions": [
+        "Money/earnings visualization",
+        "Happy affiliate with earnings dashboard",
+        "Simple 3-step process graphic"
+      ],
+      "targeting": {
+        "interests": ["Affiliate Marketing", "Fitness Industry", "Business Consulting"],
+        "behaviors": ["Engaged with business content"]
+      }
+    }
+  ],
+  "testing_strategy": {
+    "approach": "A/B testing with 3-day learning phase",
+    "budget_split": "Equal budget across top 3 performers",
+    "metrics": ["CTR", "CPC", "Conversion Rate", "CAC", "ROAS"],
+    "optimization": "Pause ads with CTR < 1.5% or CPC > 2€ after 3 days"
+  },
+  "audience_packs": {
+    "cold_audience": {
+      "interests": ["Fitness Studio Management", "Gym Ownership", "Small Business", "Business Automation"],
+      "behaviors": ["Small Business Owners", "Business Page Admin"],
+      "demographics": "Age 28-55, DACH region"
+    },
+    "warm_audience": {
+      "website_visitors": "Last 30 days",
+      "video_viewers": "75% video views - Last 30 days",
+      "engaged_users": "Engaged with page/posts - Last 90 days"
+    },
+    "hot_audience": {
+      "signup_started": "Initiated checkout but not completed - Last 7 days",
+      "trial_users": "Active trial users",
+      "past_customers": "Churned customers - Last 180 days"
+    },
+    "lookalike": {
+      "customer_list": "1%, 2%, 5% lookalike from customer email list",
+      "high_ltv": "Top 25% customers by LTV"
+    }
+  }
+}

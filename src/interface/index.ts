@@ -9,7 +9,7 @@ export interface IBlogPost {
   readTime: string;
   slug: string;
   content: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
 }
 
@@ -19,7 +19,7 @@ export interface ICaseStudy {
   thumbnail: string;
   Results: string;
   slug: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
 }
 
@@ -36,7 +36,7 @@ export interface IPosition {
   content: string;
   title: string;
   slug: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
 }
 
@@ -56,7 +56,7 @@ export interface IService {
     userRole: string;
   };
   slug: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
   content: string;
 }
@@ -81,7 +81,7 @@ export interface ITeamMember {
   content: string;
   excerpt?: string;
   isEmpty?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
   slug: string;
 }
