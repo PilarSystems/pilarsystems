@@ -5,17 +5,21 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { gymBuddyService } from '@/src/server/gymbuddy/gymBuddy.service'
-import { gymBuddyRouter } from '@/src/server/gymbuddy/gymBuddy.router'
-import {
-  shouldSendPush,
-  generatePushMessage,
-  schedulePushMessage,
-} from '@/src/server/gymbuddy/gymBuddy.push'
-import { PushTrigger } from '@/src/server/gymbuddy/gymBuddy.types'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    const { gymBuddyService } = await import('@/src/server/gymbuddy/gymBuddy.service')
+    const { gymBuddyRouter } = await import('@/src/server/gymbuddy/gymBuddy.router')
+    const {
+      shouldSendPush,
+      generatePushMessage,
+      schedulePushMessage,
+    } = await import('@/src/server/gymbuddy/gymBuddy.push')
+    const { PushTrigger } = await import('@/src/server/gymbuddy/gymBuddy.types')
+    
     const body = await request.json()
     const { userId, trigger, immediate = false } = body
 
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
       timezone: config.timezone,
     }
 
-    if (!immediate && !shouldSendPush(trigger as PushTrigger, context)) {
+    if (!immediate && !shouldSendPush(trigger, context)) {
       return NextResponse.json({
         success: true,
         sent: false,
@@ -52,7 +56,7 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const content = generatePushMessage(trigger as PushTrigger, context)
+    const content = generatePushMessage(trigger, context)
 
     if (immediate) {
       await gymBuddyRouter.handlePushNotification(userId, trigger, content)
@@ -64,7 +68,7 @@ export async function POST(request: NextRequest) {
       })
     } else {
       const scheduledAt = new Date(Date.now() + 60000) // 1 minute from now
-      const pushMessage = schedulePushMessage(userId, trigger as PushTrigger, content, scheduledAt)
+      const pushMessage = schedulePushMessage(userId, trigger, content, scheduledAt)
       
       await gymBuddyService.schedulePushMessage({
         userId,
