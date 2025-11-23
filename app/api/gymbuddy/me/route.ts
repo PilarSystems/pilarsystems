@@ -11,6 +11,8 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
+    const { gymBuddyService } = await import('@/src/server/gymbuddy/gymBuddy.service')
+    
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
 
