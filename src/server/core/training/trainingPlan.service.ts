@@ -16,9 +16,19 @@ import {
   OpenAIWorkoutPlanResponse,
 } from './trainingPlan.types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+let openaiInstance: OpenAI | null = null
+
+function getOpenAI(): OpenAI | null {
+  if (!process.env.OPENAI_API_KEY) {
+    return null
+  }
+  if (!openaiInstance) {
+    openaiInstance = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  }
+  return openaiInstance
+}
 
 export function validateTrainingPlanInput(input: TrainingPlanInput): ValidationResult {
   const errors: string[] = []
@@ -152,7 +162,9 @@ export async function generateWorkoutPlan(input: TrainingPlanInput): Promise<Tra
     throw new Error(`Invalid input: ${validation.errors.join(', ')}`)
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  const openai = getOpenAI()
+  
+  if (!openai) {
     throw new Error('OPENAI_API_KEY environment variable is not set')
   }
 

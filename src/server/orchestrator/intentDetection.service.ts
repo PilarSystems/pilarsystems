@@ -5,9 +5,19 @@
 import OpenAI from 'openai'
 import { NormalizedMessage, Intent, IntentDetectionResult } from './orchestrator.types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+let openaiInstance: OpenAI | null = null
+
+function getOpenAI(): OpenAI | null {
+  if (!process.env.OPENAI_API_KEY) {
+    return null
+  }
+  if (!openaiInstance) {
+    openaiInstance = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  }
+  return openaiInstance
+}
 
 function detectIntentWithRules(message: NormalizedMessage): IntentDetectionResult | null {
   const content = message.content.toLowerCase()
@@ -66,7 +76,9 @@ function detectIntentWithRules(message: NormalizedMessage): IntentDetectionResul
 }
 
 async function detectIntentWithAI(message: NormalizedMessage): Promise<IntentDetectionResult> {
-  if (!process.env.OPENAI_API_KEY) {
+  const openai = getOpenAI()
+  
+  if (!openai) {
     return {
       intent: Intent.GENERAL_QUESTION,
       confidence: 0.5,
