@@ -4,10 +4,11 @@
  */
 
 import nodemailer from 'nodemailer'
+import type { Transporter } from 'nodemailer'
 import { getConfig } from './config/env'
 import { logger } from './logger'
 
-let transporter: nodemailer.Transporter | null = null
+let transporter: Transporter | null = null
 
 function getTransporter() {
   if (transporter) return transporter
