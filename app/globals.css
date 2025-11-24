@@ -1,5 +1,136 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Animation CSS Properties */
+@property --tw-animation-delay{syntax:"*";inherits:false;initial-value:0s}
+@property --tw-animation-direction{syntax:"*";inherits:false;initial-value:normal}
+@property --tw-animation-duration{syntax:"*";inherits:false}
+@property --tw-animation-fill-mode{syntax:"*";inherits:false;initial-value:none}
+@property --tw-animation-iteration-count{syntax:"*";inherits:false;initial-value:1}
+@property --tw-enter-blur{syntax:"*";inherits:false;initial-value:0}
+@property --tw-enter-opacity{syntax:"*";inherits:false;initial-value:1}
+@property --tw-enter-rotate{syntax:"*";inherits:false;initial-value:0}
+@property --tw-enter-scale{syntax:"*";inherits:false;initial-value:1}
+@property --tw-enter-translate-x{syntax:"*";inherits:false;initial-value:0}
+@property --tw-enter-translate-y{syntax:"*";inherits:false;initial-value:0}
+@property --tw-exit-blur{syntax:"*";inherits:false;initial-value:0}
+@property --tw-exit-opacity{syntax:"*";inherits:false;initial-value:1}
+@property --tw-exit-rotate{syntax:"*";inherits:false;initial-value:0}
+@property --tw-exit-scale{syntax:"*";inherits:false;initial-value:1}
+@property --tw-exit-translate-x{syntax:"*";inherits:false;initial-value:0}
+@property --tw-exit-translate-y{syntax:"*";inherits:false;initial-value:0}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Animation variables */
+  --animation-delay-0: 0s;
+  --animation-delay-75: 75ms;
+  --animation-delay-100: .1s;
+  --animation-delay-150: .15s;
+  --animation-delay-200: .2s;
+  --animation-delay-300: .3s;
+  --animation-delay-500: .5s;
+  --animation-delay-700: .7s;
+  --animation-delay-1000: 1s;
+  --animation-repeat-0: 0;
+  --animation-repeat-1: 1;
+  --animation-repeat-infinite: infinite;
+  --animation-direction-normal: normal;
+  --animation-direction-reverse: reverse;
+  --animation-direction-alternate: alternate;
+  --animation-direction-alternate-reverse: alternate-reverse;
+  --animation-fill-mode-none: none;
+  --animation-fill-mode-forwards: forwards;
+  --animation-fill-mode-backwards: backwards;
+  --animation-fill-mode-both: both;
+  --animate-in: enter var(--tw-animation-duration,var(--tw-duration,.15s))var(--tw-ease,ease)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-out: exit var(--tw-animation-duration,var(--tw-duration,.15s))var(--tw-ease,ease)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-accordion-down: accordion-down var(--tw-animation-duration,var(--tw-duration,.2s))var(--tw-ease,ease-out)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-accordion-up: accordion-up var(--tw-animation-duration,var(--tw-duration,.2s))var(--tw-ease,ease-out)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-collapsible-down: collapsible-down var(--tw-animation-duration,var(--tw-duration,.2s))var(--tw-ease,ease-out)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-collapsible-up: collapsible-up var(--tw-animation-duration,var(--tw-duration,.2s))var(--tw-ease,ease-out)var(--tw-animation-delay,0s)var(--tw-animation-iteration-count,1)var(--tw-animation-direction,normal)var(--tw-animation-fill-mode,none);
+  --animate-caret-blink: caret-blink 1.25s ease-out infinite;
+  
+  /* Keyframes */
+  @keyframes enter {
+    from {
+      opacity: var(--tw-enter-opacity,1);
+      transform: translate3d(var(--tw-enter-translate-x,0),var(--tw-enter-translate-y,0),0)scale3d(var(--tw-enter-scale,1),var(--tw-enter-scale,1),var(--tw-enter-scale,1))rotate(var(--tw-enter-rotate,0));
+      filter: blur(var(--tw-enter-blur,0));
+    }
+  }
+  
+  @keyframes exit {
+    to {
+      opacity: var(--tw-exit-opacity,1);
+      transform: translate3d(var(--tw-exit-translate-x,0),var(--tw-exit-translate-y,0),0)scale3d(var(--tw-exit-scale,1),var(--tw-exit-scale,1),var(--tw-exit-scale,1))rotate(var(--tw-exit-rotate,0));
+      filter: blur(var(--tw-exit-blur,0));
+    }
+  }
+  
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height,var(--bits-accordion-content-height,var(--reka-accordion-content-height,var(--kb-accordion-content-height,var(--ngp-accordion-content-height,auto))))); }
+  }
+  
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height,var(--bits-accordion-content-height,var(--reka-accordion-content-height,var(--kb-accordion-content-height,var(--ngp-accordion-content-height,auto))))); }
+    to { height: 0; }
+  }
+  
+  @keyframes collapsible-down {
+    from { height: 0; }
+    to { height: var(--radix-collapsible-content-height,var(--bits-collapsible-content-height,var(--reka-collapsible-content-height,var(--kb-collapsible-content-height,auto)))); }
+  }
+  
+  @keyframes collapsible-up {
+    from { height: var(--radix-collapsible-content-height,var(--bits-collapsible-content-height,var(--reka-collapsible-content-height,var(--kb-collapsible-content-height,auto)))); }
+    to { height: 0; }
+  }
+  
+  @keyframes caret-blink {
+    0%,70%,100% { opacity: 1; }
+    20%,50% { opacity: 0; }
+  }
+}
 
 :root {
   --radius: 0.625rem;
@@ -85,4 +216,81 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+}
+
+/* Animation Utilities */
+@utility animate-in {
+  animation: var(--animate-in);
+}
+
+@utility animate-out {
+  animation: var(--animate-out);
+}
+
+@utility animate-accordion-down {
+  animation: var(--animate-accordion-down);
+}
+
+@utility animate-accordion-up {
+  animation: var(--animate-accordion-up);
+}
+
+@utility animate-collapsible-down {
+  animation: var(--animate-collapsible-down);
+}
+
+@utility animate-collapsible-up {
+  animation: var(--animate-collapsible-up);
+}
+
+@utility animate-caret-blink {
+  animation: var(--animate-caret-blink);
+}
+
+@utility fade-in {
+  --tw-enter-opacity: 0;
+}
+
+@utility fade-out {
+  --tw-exit-opacity: 0;
+}
+
+@utility zoom-in {
+  --tw-enter-scale: 0;
+}
+
+@utility zoom-out {
+  --tw-exit-scale: 0;
+}
+
+@utility slide-in-from-top {
+  --tw-enter-translate-y: -100%;
+}
+
+@utility slide-in-from-bottom {
+  --tw-enter-translate-y: 100%;
+}
+
+@utility slide-in-from-left {
+  --tw-enter-translate-x: -100%;
+}
+
+@utility slide-in-from-right {
+  --tw-enter-translate-x: 100%;
+}
+
+@utility slide-out-to-top {
+  --tw-exit-translate-y: -100%;
+}
+
+@utility slide-out-to-bottom {
+  --tw-exit-translate-y: 100%;
+}
+
+@utility slide-out-to-left {
+  --tw-exit-translate-x: -100%;
+}
+
+@utility slide-out-to-right {
+  --tw-exit-translate-x: 100%;
 }

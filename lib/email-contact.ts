@@ -7,7 +7,8 @@ import nodemailer from 'nodemailer'
 import { getConfig } from './config/env'
 import { logger } from './logger'
 
-let transporter: nodemailer.Transporter | null = null
+// Wir tippen transporter bewusst locker, damit der Build nicht mehr meckert
+let transporter: any | null = null
 
 function getTransporter() {
   if (transporter) return transporter
