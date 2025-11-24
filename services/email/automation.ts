@@ -101,8 +101,8 @@ export class EmailAutomationService {
         resolve()
       })
 
-      imap.once('error', (err: Error) => {
-        reject(new Error(`IMAP connection failed: ${err.message}`))
+      imap.once('error', (err: any) => {
+        reject(new Error(`IMAP connection failed: ${err?.message ?? 'Unknown error'}`))
       })
 
       imap.connect()
@@ -136,30 +136,20 @@ export class EmailAutomationService {
 
         let syncedCount = 0
 
-imap.once('ready', () => {
-  imap.openBox('INBOX', false, (err: Error | null, box: any) => {
-    if (err) {
-      reject(err)
-      return
-    }
+        imap.once('ready', () => {
+          imap.openBox('INBOX', false, (err: any, box: any) => {
+            if (err) {
+              reject(err)
+              return
+            }
 
-    // HIER kommt dein bisheriger Code rein, z. B. search/fetch:
-    // imap.search([...], (searchErr, results) => { ... })
-    // fetch etc.
-  })
-})
-
-imap.once('error', (err: Error) => {
-  reject(err)
-})
-
-            imap.search(['UNSEEN'], (err, results) => {
-              if (err) {
-                reject(err)
+            imap.search(['UNSEEN'], (searchErr: any, results: any[]) => {
+              if (searchErr) {
+                reject(searchErr)
                 return
               }
 
-              if (results.length === 0) {
+              if (!results || results.length === 0) {
                 imap.end()
                 resolve(0)
                 return
@@ -167,11 +157,11 @@ imap.once('error', (err: Error) => {
 
               const fetch = imap.fetch(results, { bodies: '' })
 
-              fetch.on('message', (msg) => {
-                msg.on('body', (stream) => {
-                  simpleParser(stream as any, async (err, parsed) => {
-                    if (err) {
-                      logger.error({ error: err }, 'Failed to parse email')
+              fetch.on('message', (msg: any) => {
+                msg.on('body', (stream: any) => {
+                  simpleParser(stream, async (parseErr: any, parsed: any) => {
+                    if (parseErr) {
+                      logger.error({ error: parseErr }, 'Failed to parse email')
                       return
                     }
 
@@ -190,14 +180,14 @@ imap.once('error', (err: Error) => {
                 resolve(syncedCount)
               })
 
-              fetch.once('error', (err) => {
-                reject(err)
+              fetch.once('error', (fetchErr: any) => {
+                reject(fetchErr)
               })
             })
           })
         })
 
-        imap.once('error', (err: Error) => {
+        imap.once('error', (err: any) => {
           reject(err)
         })
 
