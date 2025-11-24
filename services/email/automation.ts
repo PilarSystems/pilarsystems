@@ -136,12 +136,15 @@ export class EmailAutomationService {
 
         let syncedCount = 0
 
-        imap.once('ready', () => {
-          imap.openBox('INBOX', false, (err, box) => {
-            if (err) {
-              reject(err)
-              return
-            }
+     imap.once('ready', () => {
+  imap.openBox('INBOX', false, (err: any, box: any) => {
+    if (err) {
+      reject(err)
+      return
+    }
+    // ...
+  })
+})
 
             imap.search(['UNSEEN'], (err, results) => {
               if (err) {
