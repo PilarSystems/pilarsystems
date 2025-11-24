@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/src/lib/auth'
 import { prisma } from '@/src/server/db/client'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, voiceModel, language, tone, greeting, studioRules, prompt } = body
 
-    console.log(`[AGENT] Updating profile for tenant: ${session.tenantId}`)
+    logger.info({ tenantId: session.tenantId }, 'Updating agent profile')
 
     if (!name || typeof name !== 'string') {
       return NextResponse.json(
@@ -121,7 +122,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    console.log(`[AGENT] Profile updated for tenant: ${session.tenantId}`)
+    logger.info({ tenantId: session.tenantId, profileId: profile.id }, 'Agent profile updated successfully')
 
     return NextResponse.json({
       success: true,

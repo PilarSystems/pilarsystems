@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getVoiceEngine } from '@/src/server/core/voice/voiceEngine.service'
 import { VoiceEventType } from '@/src/server/core/voice/voice.types'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
     const voiceEngine = getVoiceEngine()
 
     if (type === 'text' && text) {
-      console.log(`[API] Simulating text input for call ${callId}: "${text}"`)
+      logger.info({ callId, text, tenantId }, 'Simulating text input')
 
       const response = await voiceEngine.simulateTextInput(callId, text, tenantId)
 
@@ -49,7 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (type === 'audio' && audio) {
-      console.log(`[API] Processing audio for call ${callId}`)
+      logger.info({ callId, tenantId }, 'Processing audio')
 
       await voiceEngine.handleIncomingVoiceEvent({
         type: VoiceEventType.CALL_MEDIA,

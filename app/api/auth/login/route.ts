@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/src/server/db/client'
 import bcrypt from 'bcryptjs'
 import { signToken, setSessionCookie } from '@/src/lib/auth'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log(`[AUTH] Login attempt for email: ${email}`)
+    logger.info({ email }, 'Login attempt')
 
     const owner = await prisma.tenantUser.findFirst({
       where: { email },
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (!owner) {
-      console.log(`[AUTH] User not found: ${email}`)
+      logger.warn({ email }, 'User not found')
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
         { status: 401 }
@@ -71,14 +72,14 @@ export async function POST(request: NextRequest) {
     const passwordValid = await bcrypt.compare(password, owner.passwordHash)
 
     if (!passwordValid) {
-      console.log(`[AUTH] Invalid password for: ${email}`)
+      logger.warn({ email }, 'Invalid password')
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
         { status: 401 }
       )
     }
 
-    console.log(`[AUTH] Login successful for: ${email}`)
+    logger.info({ email, tenantId: owner.tenantId }, 'Login successful')
 
     const token = await signToken({
       tenantId: owner.tenantId,

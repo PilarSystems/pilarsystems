@@ -6,6 +6,7 @@
 
 import { NextResponse } from 'next/server'
 import { clearSessionCookie } from '@/src/lib/auth'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -22,18 +23,18 @@ export const dynamic = 'force-dynamic'
  */
 export async function POST() {
   try {
-    console.log('[AUTH] Logout request')
+    logger.info('Logout request')
 
     await clearSessionCookie()
 
-    console.log('[AUTH] Logout successful')
+    logger.info('Logout successful')
 
     return NextResponse.json({
       success: true,
     })
 
   } catch (error) {
-    console.error('[AUTH] Error in POST /api/auth/logout:', error)
+    logger.error({ error }, 'Error in logout')
 
     return NextResponse.json(
       {

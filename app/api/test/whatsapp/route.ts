@@ -12,6 +12,7 @@ import { Channel } from '@/src/server/orchestrator/orchestrator.types'
 import { logOrchestratorResult } from '@/src/server/logs/log.service'
 import { runWorkflowsForTrigger } from '@/src/server/workflows/workflow.runner'
 import { TriggerType } from '@/src/server/workflows/workflow.types'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log(`[TEST] WhatsApp test for tenant: ${session.tenantId}, message: ${message}`)
+    logger.info({ tenantId: session.tenantId, message }, 'WhatsApp test started')
 
     const profile = await prisma.agentProfile.findUnique({
       where: { tenantId: session.tenantId },
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
       tenantId: session.tenantId,
     })
 
-    console.log(`[TEST] WhatsApp test result:`, result)
+    logger.info({ tenantId: session.tenantId, result }, 'WhatsApp test completed')
 
     logOrchestratorResult(
       session.tenantId,
