@@ -16,13 +16,17 @@ interface EncryptedData {
  */
 export class SecretsService {
   private keys: Map<string, Buffer>
+  private initialized: boolean = false
 
   constructor() {
     this.keys = new Map()
-    this.loadKeys()
   }
 
   private loadKeys() {
+    if (this.initialized) {
+      return
+    }
+
     const currentKey = process.env.ENCRYPTION_KEY
     
     if (!currentKey) {
@@ -31,6 +35,7 @@ export class SecretsService {
       }
       const dummyKey = Buffer.alloc(32)
       this.keys.set(CURRENT_KEY_VERSION, dummyKey)
+      this.initialized = true
       return
     }
     
@@ -44,6 +49,8 @@ export class SecretsService {
     if (legacyKey) {
       this.keys.set('v0', Buffer.from(legacyKey, 'hex'))
     }
+
+    this.initialized = true
   }
 
   /**
@@ -51,6 +58,7 @@ export class SecretsService {
    */
   encrypt(plaintext: string): string {
     try {
+      this.loadKeys()
       const iv = crypto.randomBytes(16)
       const key = this.keys.get(CURRENT_KEY_VERSION)!
       
@@ -79,6 +87,7 @@ export class SecretsService {
    */
   decrypt(ciphertext: string): string {
     try {
+      this.loadKeys()
       const encrypted: EncryptedData = JSON.parse(ciphertext)
       
       const key = this.keys.get(encrypted.keyVersion)

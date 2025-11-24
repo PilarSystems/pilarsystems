@@ -9,6 +9,7 @@ import { getSession } from '@/src/lib/auth'
 import { prisma } from '@/src/server/db/client'
 import { orchestrate } from '@/src/server/orchestrator/orchestrator.service'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log(`[AGENT] Preview for tenant: ${session.tenantId}, message: ${message}`)
+    logger.info({ tenantId: session.tenantId, message }, 'Agent preview request')
 
     const profile = await prisma.agentProfile.findUnique({
       where: { tenantId: session.tenantId },
@@ -74,7 +75,12 @@ export async function POST(request: NextRequest) {
       tenantId: session.tenantId,
     })
 
-    console.log(`[AGENT] Preview result:`, result)
+    logger.info({ 
+      tenantId: session.tenantId, 
+      intent: result.intent?.intent, 
+      confidence: result.intent?.confidence,
+      hasResponse: !!result.response?.content 
+    }, 'Agent preview completed')
 
     return NextResponse.json({
       success: true,

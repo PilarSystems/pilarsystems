@@ -8,6 +8,7 @@ import { NextResponse } from 'next/server'
 import { getSession } from '@/src/lib/auth'
 import { prisma } from '@/src/server/db/client'
 import { DEFAULT_AGENT_PROMPT } from '@/src/server/orchestrator/prompts/defaultAgentPrompt'
+import { logger } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -45,14 +46,14 @@ export async function GET() {
       )
     }
 
-    console.log(`[AGENT] Getting profile for tenant: ${session.tenantId}`)
+    logger.info({ tenantId: session.tenantId }, 'Getting agent profile')
 
     let profile = await prisma.agentProfile.findUnique({
       where: { tenantId: session.tenantId },
     })
 
     if (!profile) {
-      console.log(`[AGENT] Creating default profile for tenant: ${session.tenantId}`)
+      logger.info({ tenantId: session.tenantId }, 'Creating default agent profile')
 
       profile = await prisma.agentProfile.create({
         data: {

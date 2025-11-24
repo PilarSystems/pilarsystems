@@ -22,8 +22,13 @@ export class CalendarOAuthService {
 
   private getOAuth2Client() {
     if (!this.oauth2Client) {
-      const { clientId, clientSecret, redirectUri } = getGoogleOAuthConfig();
-      this.oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+      try {
+        const { clientId, clientSecret, redirectUri } = getGoogleOAuthConfig();
+        this.oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
+      } catch (error) {
+        logger.error({ error }, 'Failed to initialize Google OAuth client');
+        throw error;
+      }
     }
     return this.oauth2Client;
   }
