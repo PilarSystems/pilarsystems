@@ -2330,7 +2330,7 @@
 
 "@types/nodemailer@^7.0.4":
   version "7.0.4"
-  resolved "https://registry.npmjs.org/@types/nodemailer/-/nodemailer-7.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-7.0.4.tgz#1a38d8bce85f7da066cc7fd6f57090bc741860f0"
   integrity sha512-ee8fxWqOchH+Hv6MDDNNy028kwvVnLplrStm4Zf/3uHWw5zzo8FoYYeffpJtGs2wWysEumMH0ZIdMGMY1eMAow==
   dependencies:
     "@aws-sdk/client-sesv2" "^3.839.0"
