@@ -74,7 +74,7 @@ export default function SignupPage() {
     try {
       const supabase = getSupabase()
 
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -82,7 +82,7 @@ export default function SignupPage() {
             full_name: fullName,
             studio_name: studioName,
           },
-          emailRedirectTo: `${window.location.origin}/verify-email`,
+          // WICHTIG: Kein emailRedirectTo mehr, um den Flow zu simplifizieren
         },
       })
 
@@ -104,17 +104,13 @@ export default function SignupPage() {
         return
       }
 
-      // Wenn Supabase kein error gibt, Signup war technisch erfolgreich
-      toast.success(
-        'Konto erfolgreich erstellt! Bitte prüfen Sie Ihr E-Mail-Postfach (auch Spam-Ordner) für die Bestätigungs-Mail.',
-        { duration: 6000 },
-      )
-      setFormSuccess(
-        'Konto erstellt. Bitte prüfen Sie Ihr E-Mail-Postfach und bestätigen Sie Ihre Adresse, bevor Sie fortfahren.',
-      )
+      toast.success('Konto erfolgreich erstellt! Bitte schließen Sie jetzt die Zahlung ab.', {
+        duration: 6000,
+      })
+      setFormSuccess('Konto erstellt. Sie werden zum Checkout weitergeleitet...')
 
-      // Erst zur Verify-Seite, nicht direkt Checkout
-      router.push('/verify-email')
+      // Direkt ins Checkout – Benutzer ist durch Supabase-Session schon eingeloggt
+      router.push('/checkout')
     } catch (err: any) {
       const msg = err?.message || 'Konto konnte nicht erstellt werden'
       setFormError(msg)
