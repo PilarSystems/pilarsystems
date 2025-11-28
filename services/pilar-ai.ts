@@ -374,7 +374,7 @@ class PilarAIService {
   /**
    * Check if AI is available for a workspace
    */
-  async isAvailable(workspaceId: string): Promise<boolean> {
+  async isAvailable(_workspaceId: string): Promise<boolean> {
     try {
       const providers = await aiRouter.getAvailableProviders()
       return providers.length > 0
