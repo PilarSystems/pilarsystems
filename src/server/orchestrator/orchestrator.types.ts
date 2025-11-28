@@ -48,6 +48,9 @@ export interface NormalizedMessage {
     userName?: string
     phoneNumber?: string
     email?: string
+    callSid?: string
+    sessionId?: string
+    subject?: string
     timestamp: Date
     raw: any
   }
@@ -95,7 +98,7 @@ export interface AIResponse {
     confidence: number
     processingTime: number
   }
-  actions?: Array<{
+  actions?: Array<{    
     type: string
     params: Record<string, any>
   }>
