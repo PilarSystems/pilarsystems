@@ -15,10 +15,10 @@ const INTENT_TO_MODULE: Record<Intent, Module> = {
 }
 
 export function routeToModule(intent: IntentDetectionResult): RoutingDecision {
-  const module = INTENT_TO_MODULE[intent.intent] || Module.GENERAL_AI
+  const targetModule = INTENT_TO_MODULE[intent.intent] || Module.GENERAL_AI
 
   const decision: RoutingDecision = {
-    module,
+    module: targetModule,
     intent: intent.intent,
     params: {
       confidence: intent.confidence,
@@ -30,19 +30,19 @@ export function routeToModule(intent: IntentDetectionResult): RoutingDecision {
   return decision
 }
 
-export function isModuleAvailable(module: Module): boolean {
+export function isModuleAvailable(targetModule: Module): boolean {
   const availableModules = [
     Module.TRAINING_PLAN_ENGINE,
     Module.GENERAL_AI,
   ]
 
-  return availableModules.includes(module)
+  return availableModules.includes(targetModule)
 }
 
-export function getFallbackModule(module: Module): Module {
-  if (!isModuleAvailable(module)) {
+export function getFallbackModule(targetModule: Module): Module {
+  if (!isModuleAvailable(targetModule)) {
     return Module.GENERAL_AI
   }
 
-  return module
+  return targetModule
 }
