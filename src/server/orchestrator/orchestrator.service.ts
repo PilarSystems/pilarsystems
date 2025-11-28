@@ -39,7 +39,7 @@ export function normalizeIncomingMessage(payload: RawMessage): NormalizedMessage
   const id = uuidv4()
 
   let content = ''
-  let metadata: any = {
+  const metadata: Record<string, unknown> = {
     timestamp: payload.timestamp || new Date(),
     raw: payload.payload,
   }
@@ -139,11 +139,11 @@ export async function executeAIResponse(
   const startTime = Date.now()
 
   try {
-    const module = isModuleAvailable(routing.module)
+    const targetModule = isModuleAvailable(routing.module)
       ? routing.module
       : getFallbackModule(routing.module)
 
-    switch (module) {
+    switch (targetModule) {
       case Module.TRAINING_PLAN_ENGINE:
         return await executeTrainingPlanEngine(context, routing, message)
 

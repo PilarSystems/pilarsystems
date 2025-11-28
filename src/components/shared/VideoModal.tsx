@@ -1,15 +1,19 @@
 'use client';
 import { useModalContext } from '@/context/ModalContext';
-import { MouseEvent } from 'react';
+import { MouseEvent, useCallback } from 'react';
 
 const VideoModal = () => {
   const { videoModal } = useModalContext();
 
-  const handleOverlayClick = (e: MouseEvent<HTMLDialogElement>) => {
+  const handleOverlayClick = useCallback((e: MouseEvent<HTMLDialogElement>) => {
     if (e.target === e.currentTarget) {
       videoModal.closeModal();
     }
-  };
+  }, [videoModal]);
+
+  const handleCloseClick = useCallback(() => {
+    videoModal.closeModal();
+  }, [videoModal]);
 
   return (
     <dialog
@@ -29,7 +33,7 @@ const VideoModal = () => {
         />
 
         <button
-          onClick={videoModal.closeModal}
+          onClick={handleCloseClick}
           className="modal-close-btn dark:bg-background-5 absolute -top-8 -right-8 flex size-8 cursor-pointer items-center justify-center rounded-full bg-white max-[400px]:-top-4 max-[400px]:-right-4 dark:text-white"
           aria-label="Close modal">
           <svg

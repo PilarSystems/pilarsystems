@@ -56,13 +56,20 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     // Register any additional GSAP plugins here if needed
   });
 
+  // Helper to safely modify body overflow
+  const setBodyOverflow = useCallback((value: 'hidden' | 'auto') => {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = value;
+    }
+  }, []);
+
   // Animation functions wrapped with contextSafe
   const animateOpen = contextSafe(() => {
     if (isOpen || isAnimating.current || !modalRef.current) return;
 
     isAnimating.current = true;
     setIsOpen(true);
-    document.body.style.overflow = 'hidden';
+    setBodyOverflow('hidden');
 
     const modal = modalRef.current;
     const content = contentRef.current;
@@ -92,7 +99,7 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     if (!isOpen || isAnimating.current || !modalRef.current) return;
 
     isAnimating.current = true;
-    document.body.style.overflow = 'auto';
+    setBodyOverflow('auto');
 
     const modal = modalRef.current;
     const content = contentRef.current;
@@ -146,9 +153,9 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      document.body.style.overflow = 'auto';
+      setBodyOverflow('auto');
     };
-  }, []);
+  }, [setBodyOverflow]);
 
   return {
     isOpen,
