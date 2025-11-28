@@ -150,12 +150,14 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, closeModal, mergedConfig.closeOnEscape]);
 
-  // Cleanup on unmount
+  // Cleanup on unmount - use direct DOM manipulation for immediate cleanup
   useEffect(() => {
     return () => {
-      setBodyOverflow('auto');
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = 'auto';
+      }
     };
-  }, [setBodyOverflow]);
+  }, []);
 
   return {
     isOpen,

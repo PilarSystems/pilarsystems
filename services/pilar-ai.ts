@@ -416,7 +416,14 @@ class PilarAIService {
       if (!workspace?.studioInfo) return null
 
       const info = workspace.studioInfo as Record<string, unknown>
-      return info.aiConfig as typeof info.aiConfig || null
+      const aiConfig = info.aiConfig as {
+        provider?: AIProvider
+        model?: AIModel
+        temperature?: number
+        systemPromptOverride?: string
+      } | undefined
+      
+      return aiConfig || null
     } catch {
       return null
     }
