@@ -1,7 +1,5 @@
-// Original content above line 42...
+// Original content of the file goes here...
 
 const metadata: NormalizedMessage['metadata'] = {
-    // Updated content as per request
-};
-
-// Original content below line 42...
+  // remaining content
+}
