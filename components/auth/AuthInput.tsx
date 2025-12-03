@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Building } from 'lucide-react';
 
 interface AuthInputProps {
     id: string;
@@ -27,41 +28,38 @@ const AuthInput: React.FC<AuthInputProps> = ({
     placeholder,
     delay = 0,
 }) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (inputRef.current && value) {
-            inputRef.current.classList.add('has-value');
-        }
-    }, [value]);
+    const [isFocused, setIsFocused] = useState(false);
+    const hasValue = value.length > 0;
+    const isLabelFloated = isFocused || hasValue;
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.3 }}
-            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-md overflow-hidden transition-all duration-300 ${error ? 'border-red-500' : 'border-transparent'} p-3`}
+            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-md overflow-hidden transition-all duration-300 ${error ? 'border border-red-500' : 'border border-transparent'} p-3`}
         >
             <input
                 id={id}
                 type={type}
                 value={value}
                 onChange={onChange}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 required={required}
                 placeholder={placeholder}
-                ref={inputRef}
-                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
+                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 text-white ${error ? 'border-red-500' : 'border-gray-600 focus:border-cyan-500'}`} 
             />
             <label
                 htmlFor={id}
-                className={`absolute left-3 top-2 transform transition-all duration-300 ${value || inputRef.current?.classList.contains('has-value') ? 'scale-75 -translate-y-4' : ''}`}
+                className={`absolute left-3 transform transition-all duration-300 pointer-events-none text-gray-400 ${isLabelFloated ? 'top-1 scale-75 -translate-y-1 text-cyan-400' : 'top-6'}`}
             >
                 {label} {required && '*'}
             </label>
-            {icon && <span className="icon-spacing">{icon}</span>}
-            {error && <span className="text-red-500 text-sm">{error}</span>}
+            {icon && <span className="absolute right-3 top-6 text-gray-400">{icon}</span>}
+            {error && <span className="text-red-500 text-sm mt-1 block">{error}</span>}
         </motion.div>
     );
 };
 
-export default AuthInput;
+export { AuthInput };
