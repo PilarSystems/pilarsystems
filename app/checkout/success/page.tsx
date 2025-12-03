@@ -73,7 +73,7 @@ function SuccessContent() {
           </div>
           <CardTitle className="text-2xl sm:text-3xl">Welcome to PILAR!</CardTitle>
           <CardDescription className="text-base">
-            Your 14-day free trial has started successfully
+            Your subscription has been activated successfully
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">

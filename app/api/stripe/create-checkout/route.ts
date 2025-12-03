@@ -14,13 +14,12 @@ const checkoutSchema = z.object({
   userId: z.string(),
   email: z.string().email(),
   affiliateRef: z.string().optional(),
-  trialDays: z.number().min(0).max(30).default(14),
 })
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { plan, billingCycle, whatsappAddon, userId, email, affiliateRef, trialDays } = checkoutSchema.parse(body)
+    const { plan, billingCycle, whatsappAddon, userId, email, affiliateRef } = checkoutSchema.parse(body)
 
     let workspace = await prisma.workspace.findFirst({
       where: { ownerId: userId },
@@ -91,8 +90,7 @@ export async function POST(request: NextRequest) {
       plan,
       billingCycle,
       whatsappAddon,
-      affiliateConversionId,
-      trialDays
+      affiliateConversionId
     )
 
     return NextResponse.json({ url: session.url, sessionId: session.id })
