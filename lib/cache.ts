@@ -16,7 +16,22 @@ class SimpleCache {
     // Cleanup expired entries every 5 minutes
     if (typeof setInterval !== 'undefined') {
       this.cleanupInterval = setInterval(() => this.cleanup(), 5 * 60 * 1000)
+      // Unref the interval so it doesn't prevent Node.js from exiting
+      if (this.cleanupInterval.unref) {
+        this.cleanupInterval.unref()
+      }
     }
+  }
+
+  /**
+   * Destroy the cache and clear the cleanup interval
+   */
+  destroy(): void {
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval)
+      this.cleanupInterval = null
+    }
+    this.cache.clear()
   }
 
   /**

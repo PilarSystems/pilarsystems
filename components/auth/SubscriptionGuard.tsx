@@ -17,6 +17,13 @@ export function SubscriptionGuard({ children }: SubscriptionGuardProps) {
     async function checkSubscription() {
       try {
         const response = await fetch('/api/auth/check-subscription')
+        
+        if (!response.ok) {
+          // Server error - redirect to login for safety
+          router.push('/login')
+          return
+        }
+
         const data = await response.json()
 
         if (!data.authenticated) {
@@ -30,9 +37,9 @@ export function SubscriptionGuard({ children }: SubscriptionGuardProps) {
         }
 
         setHasSubscription(true)
-      } catch (error) {
-        console.error('Error checking subscription:', error)
-        router.push('/checkout')
+      } catch {
+        // Network error - redirect to login
+        router.push('/login')
       } finally {
         setLoading(false)
       }

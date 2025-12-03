@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
 
@@ -37,15 +37,27 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Get the authorization token from the request
-    const authHeader = request.headers.get('authorization')
-    const cookieHeader = request.headers.get('cookie')
-    
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      global: {
-        headers: {
-          ...(authHeader ? { Authorization: authHeader } : {}),
-          ...(cookieHeader ? { Cookie: cookieHeader } : {}),
+    // Create Supabase client using SSR package for proper cookie handling
+    const response = NextResponse.next()
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name: string, options: CookieOptions) {
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+            maxAge: 0,
+          })
         },
       },
     })

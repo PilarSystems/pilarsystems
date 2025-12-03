@@ -44,14 +44,26 @@ export default function LoginPage() {
       
       if (data.user) {
         // Check if user has an active subscription
-        const response = await fetch('/api/auth/check-subscription');
-        const subscriptionData = await response.json();
-        
-        if (subscriptionData.hasActiveSubscription) {
-          // User has subscription, redirect to dashboard
-          router.push('/dashboard');
-        } else {
-          // User doesn't have subscription, redirect to checkout
+        try {
+          const response = await fetch('/api/auth/check-subscription');
+          
+          if (!response.ok) {
+            // If subscription check fails, still allow user to proceed to checkout
+            router.push('/checkout');
+            return;
+          }
+          
+          const subscriptionData = await response.json();
+          
+          if (subscriptionData.hasActiveSubscription) {
+            // User has subscription, redirect to dashboard
+            router.push('/dashboard');
+          } else {
+            // User doesn't have subscription, redirect to checkout
+            router.push('/checkout');
+          }
+        } catch {
+          // If subscription check fails, redirect to checkout
           router.push('/checkout');
         }
       }
