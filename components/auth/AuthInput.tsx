@@ -1,67 +1,78 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Lock, User, Building } from 'lucide-react';
+'use client'
 
-interface AuthInputProps {
-    id: string;
-    type: string;
-    label: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    error?: string;
-    icon?: React.ReactNode;
-    required?: boolean;
-    placeholder?: string;
-    delay?: number;
+import { motion } from 'framer-motion'
+import { ReactNode, InputHTMLAttributes } from 'react'
+
+interface AuthInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+  id?: string
+  type?: string
+  label?: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  error?: string
+  icon?: ReactNode
+  delay?: number
 }
 
-const AuthInput: React.FC<AuthInputProps> = ({
-    id,
-    type,
-    label,
-    value,
-    onChange,
-    error,
-    icon,
-    required,
-    placeholder,
-    delay = 0,
-}) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (inputRef.current && value) {
-            inputRef.current.classList.add('has-value');
-        }
-    }, [value]);
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay, duration: 0.3 }}
-            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-md overflow-hidden transition-all duration-300 ${error ? 'border-red-500' : 'border-transparent'} p-3`}
+export function AuthInput({
+  id,
+  type = 'text',
+  label,
+  value,
+  onChange,
+  error,
+  icon,
+  required,
+  placeholder,
+  delay = 0,
+  className = '',
+  ...props
+}: AuthInputProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.3 }}
+      className="w-full mb-4"
+    >
+      {label && (
+        <label
+          htmlFor={id}
+          className="block text-sm font-medium text-gray-300 mb-2"
         >
-            <input
-                id={id}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required={required}
-                placeholder={placeholder}
-                ref={inputRef}
-                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
-            />
-            <label
-                htmlFor={id}
-                className={`absolute left-3 top-2 transform transition-all duration-300 ${value || inputRef.current?.classList.contains('has-value') ? 'scale-75 -translate-y-4' : ''}`}
-            >
-                {label} {required && '*'}
-            </label>
-            {icon && <span className="icon-spacing">{icon}</span>}
-            {error && <span className="text-red-500 text-sm">{error}</span>}
-        </motion.div>
-    );
-};
-
-export default AuthInput;
+          {label} {required && <span className="text-red-400">*</span>}
+        </label>
+      )}
+      <div className="relative">
+        {icon && (
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            {icon}
+          </span>
+        )}
+        <input
+          id={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          required={required}
+          placeholder={placeholder}
+          className={`
+            w-full h-12 px-4 ${icon ? 'pl-12' : ''}
+            bg-white/5 backdrop-blur-lg
+            border ${error ? 'border-red-500' : 'border-white/10'} 
+            rounded-xl
+            text-white placeholder-gray-500
+            outline-none
+            transition-all duration-300
+            focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500
+            ${className}
+          `}
+          {...props}
+        />
+      </div>
+      {error && (
+        <p className="mt-2 text-sm text-red-400">{error}</p>
+      )}
+    </motion.div>
+  )
+}
