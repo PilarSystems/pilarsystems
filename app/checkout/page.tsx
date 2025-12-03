@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { toast } from 'sonner'
+import { CHECKOUT_CONTENT } from '@/lib/constants/checkout'
 import {
   Shield,
   Lock,
@@ -380,7 +381,7 @@ function CheckoutContent() {
                 <span className="text-2xl font-bold text-green-600 dark:text-green-400">€0.00</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                You won&apos;t be charged until your trial ends. Setup fee of €{selectedPlanData.setupFee} will be charged after trial.
+                You won't be charged until your trial ends. Setup fee of €{selectedPlanData.setupFee} will be charged after trial.
               </p>
             </div>
           </CardContent>
@@ -424,23 +425,23 @@ function CheckoutContent() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           <div className="flex flex-col items-center text-center p-4 bg-muted/50 rounded-lg">
             <Lock className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
-            <p className="text-sm font-medium">SSL Secured</p>
-            <p className="text-xs text-muted-foreground">256-bit encryption</p>
+            <p className="text-sm font-medium">{CHECKOUT_CONTENT.TRUST_SIGNALS.SSL.TITLE}</p>
+            <p className="text-xs text-muted-foreground">{CHECKOUT_CONTENT.TRUST_SIGNALS.SSL.DESCRIPTION}</p>
           </div>
           <div className="flex flex-col items-center text-center p-4 bg-muted/50 rounded-lg">
             <CreditCard className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
-            <p className="text-sm font-medium">Secure Payments</p>
-            <p className="text-xs text-muted-foreground">Powered by Stripe</p>
+            <p className="text-sm font-medium">{CHECKOUT_CONTENT.TRUST_SIGNALS.PAYMENTS.TITLE}</p>
+            <p className="text-xs text-muted-foreground">{CHECKOUT_CONTENT.TRUST_SIGNALS.PAYMENTS.DESCRIPTION}</p>
           </div>
           <div className="flex flex-col items-center text-center p-4 bg-muted/50 rounded-lg">
             <Shield className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
-            <p className="text-sm font-medium">GDPR Compliant</p>
-            <p className="text-xs text-muted-foreground">Data protection</p>
+            <p className="text-sm font-medium">{CHECKOUT_CONTENT.TRUST_SIGNALS.GDPR.TITLE}</p>
+            <p className="text-xs text-muted-foreground">{CHECKOUT_CONTENT.TRUST_SIGNALS.GDPR.DESCRIPTION}</p>
           </div>
           <div className="flex flex-col items-center text-center p-4 bg-muted/50 rounded-lg">
             <RefreshCcw className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
-            <p className="text-sm font-medium">Cancel Anytime</p>
-            <p className="text-xs text-muted-foreground">No commitments</p>
+            <p className="text-sm font-medium">{CHECKOUT_CONTENT.TRUST_SIGNALS.CANCEL.TITLE}</p>
+            <p className="text-xs text-muted-foreground">{CHECKOUT_CONTENT.TRUST_SIGNALS.CANCEL.DESCRIPTION}</p>
           </div>
         </div>
 
@@ -452,10 +453,7 @@ function CheckoutContent() {
             and{' '}
             <a href="/datenschutz" className="underline hover:text-foreground">Privacy Policy</a>.
           </p>
-          <p>
-            Your payment information is processed securely by Stripe. We never store your full card details.
-            All data is handled in accordance with GDPR regulations.
-          </p>
+          <p>{CHECKOUT_CONTENT.PRIVACY_STATEMENT}</p>
         </div>
       </div>
     </div>

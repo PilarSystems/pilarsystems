@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle2, Loader2, ArrowRight, PartyPopper, Rocket } from 'lucide-react'
+import { CHECKOUT_CONTENT } from '@/lib/constants/checkout'
 
 function SuccessContent() {
   const router = useRouter()
@@ -79,7 +80,7 @@ function SuccessContent() {
           <div className="bg-muted/50 rounded-lg p-4 space-y-3">
             <h3 className="font-semibold flex items-center gap-2">
               <Rocket className="w-5 h-5 text-primary" />
-              What&apos;s next?
+              What's next?
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
@@ -118,8 +119,8 @@ function SuccessContent() {
           <div className="text-center text-xs text-muted-foreground border-t pt-4">
             <p>
               Need help? Contact us at{' '}
-              <a href="mailto:support@pilarsystems.de" className="underline hover:text-foreground">
-                support@pilarsystems.de
+              <a href={`mailto:${CHECKOUT_CONTENT.SUPPORT_EMAIL}`} className="underline hover:text-foreground">
+                {CHECKOUT_CONTENT.SUPPORT_EMAIL}
               </a>
             </p>
           </div>
