@@ -8,11 +8,10 @@ export async function createCheckoutSession(
   plan: Plan,
   billingCycle: 'monthly' | 'yearly' = 'monthly',
   whatsappAddon: boolean = false,
-  affiliateConversionId?: string,
-  trialDays: number = 14
+  affiliateConversionId?: string
 ) {
   try {
-    logger.info({ workspaceId, plan, billingCycle, whatsappAddon, trialDays }, 'Creating Stripe checkout session')
+    logger.info({ workspaceId, plan, billingCycle, whatsappAddon }, 'Creating Stripe checkout session')
 
     const workspace = await prisma.workspace.findUnique({
       where: { id: workspaceId },
@@ -63,7 +62,6 @@ export async function createCheckoutSession(
       plan,
       billingCycle,
       whatsappAddon: whatsappAddon.toString(),
-      trialDays: trialDays.toString(),
     }
     
     if (affiliateConversionId) {
@@ -81,7 +79,6 @@ export async function createCheckoutSession(
       metadata,
       subscription_data: {
         metadata,
-        trial_period_days: trialDays > 0 ? trialDays : undefined,
       },
       allow_promotion_codes: true,
       billing_address_collection: 'required',
@@ -93,7 +90,7 @@ export async function createCheckoutSession(
       },
       custom_text: {
         submit: {
-          message: 'Your 14-day free trial starts now. You won\'t be charged until the trial ends.',
+          message: 'Complete your subscription to get started with PILAR AI.',
         },
         terms_of_service_acceptance: {
           message: `By continuing, you agree to our [Terms of Service](${process.env.NEXT_PUBLIC_APP_URL}/agb) and [Privacy Policy](${process.env.NEXT_PUBLIC_APP_URL}/datenschutz).`,
@@ -103,7 +100,7 @@ export async function createCheckoutSession(
 
     const session = await stripe.checkout.sessions.create(sessionConfig)
 
-    logger.info({ sessionId: session.id, workspaceId, plan, trialDays }, 'Checkout session created')
+    logger.info({ sessionId: session.id, workspaceId, plan }, 'Checkout session created')
 
     return session
   } catch (error) {
