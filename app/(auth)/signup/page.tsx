@@ -54,7 +54,7 @@ export default function SignupPage() {
     
     setLoading(true);
     // TODO: Implement actual signup with Supabase
-    console.log('Signup:', { fullName, studioName, email, password });
+    // Note: Actual implementation should use Supabase auth with user metadata
     
     // Simulate API call
     setTimeout(() => {

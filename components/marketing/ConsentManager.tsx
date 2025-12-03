@@ -6,14 +6,37 @@ import { X, Cookie } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
+// Safe localStorage access helper
+function safeGetLocalStorage(key: string): string | null {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem(key)
+    }
+  } catch {
+    // localStorage not available (e.g., private browsing mode)
+  }
+  return null
+}
+
+function safeSetLocalStorage(key: string, value: string): void {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(key, value)
+    }
+  } catch {
+    // localStorage not available
+  }
+}
+
 // Custom hook to read consent status from localStorage
 function useConsentStatus() {
   return useSyncExternalStore(
     (callback) => {
+      if (typeof window === 'undefined') return () => {}
       window.addEventListener('storage', callback)
       return () => window.removeEventListener('storage', callback)
     },
-    () => !localStorage.getItem('cookie-consent'),
+    () => !safeGetLocalStorage('cookie-consent'),
     () => false // Server snapshot - don't show banner during SSR
   )
 }
@@ -25,7 +48,7 @@ export function ConsentManager() {
   const showBanner = shouldShowBanner && !isHidden
 
   const acceptAll = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
+    safeSetLocalStorage('cookie-consent', JSON.stringify({
       necessary: true,
       analytics: true,
       marketing: true,
@@ -33,11 +56,13 @@ export function ConsentManager() {
     }))
     setIsHidden(true)
     // Trigger storage event for useSyncExternalStore
-    window.dispatchEvent(new Event('storage'))
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('storage'))
+    }
   }
 
   const acceptNecessary = () => {
-    localStorage.setItem('cookie-consent', JSON.stringify({
+    safeSetLocalStorage('cookie-consent', JSON.stringify({
       necessary: true,
       analytics: false,
       marketing: false,
@@ -45,7 +70,9 @@ export function ConsentManager() {
     }))
     setIsHidden(true)
     // Trigger storage event for useSyncExternalStore
-    window.dispatchEvent(new Event('storage'))
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('storage'))
+    }
   }
 
   return (

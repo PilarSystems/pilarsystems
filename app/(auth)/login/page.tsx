@@ -18,7 +18,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     // TODO: Implement actual login with Supabase
-    console.log('Login:', { email, password });
+    // Note: Actual implementation should use Supabase auth
     setLoading(false);
   };
 
