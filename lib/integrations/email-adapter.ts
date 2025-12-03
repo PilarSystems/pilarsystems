@@ -5,6 +5,7 @@
  * Gracefully degrades when ENV not configured
  */
 
+import nodemailer from 'nodemailer'
 import { IEmailAdapter, IAdapterResult } from './base'
 import { logger } from '@/lib/logger'
 import { withRetry } from '@/lib/autopilot/self-healing'
@@ -39,8 +40,6 @@ class EmailAdapter implements IEmailAdapter {
     }
 
     try {
-      const nodemailer = require('nodemailer')
-
       const transporter = nodemailer.createTransport({
         host: SMTP_HOST,
         port: parseInt(SMTP_PORT || '587'),
@@ -66,12 +65,13 @@ class EmailAdapter implements IEmailAdapter {
       return {
         ok: true,
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as Error & { code?: string }
       logger.error({ error, to, subject }, 'Failed to send email')
       return {
         ok: false,
-        error: error.message || 'Failed to send email',
-        code: error.code || 'WEBHOOK_ERROR',
+        error: err.message || 'Failed to send email',
+        code: err.code || 'WEBHOOK_ERROR',
       }
     }
   }

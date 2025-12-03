@@ -5,6 +5,7 @@
  * Gracefully degrades when ENV not configured
  */
 
+import twilio from 'twilio'
 import { ITwilioAdapter, IAdapterResult } from './base'
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
@@ -13,7 +14,6 @@ import { withRetry } from '@/lib/autopilot/self-healing'
 
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://pilarsystems.com'
 
 class TwilioAdapter implements ITwilioAdapter {
   private isConfigured(): boolean {
@@ -21,12 +21,15 @@ class TwilioAdapter implements ITwilioAdapter {
   }
 
   private getTwilioClient() {
-    if (!this.isConfigured()) {
+    if (!this.isConfigured() || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
       return null
     }
 
-    const twilio = require('twilio')
     return twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+  }
+
+  private getSubaccountClient(sid: string, authToken: string) {
+    return twilio(sid, authToken)
   }
 
   async ensureSubaccount(
@@ -97,7 +100,7 @@ class TwilioAdapter implements ITwilioAdapter {
         'Twilio subaccount created'
       )
 
-      const subaccountClient = require('twilio')(
+      const subaccountClient = this.getSubaccountClient(
         subaccount.sid,
         subaccount.authToken
       )
@@ -136,12 +139,13 @@ class TwilioAdapter implements ITwilioAdapter {
           apiKeySecret: apiKey.secret,
         },
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as Error & { code?: string }
       logger.error({ error, workspaceId }, 'Failed to create Twilio subaccount')
       return {
         ok: false,
-        error: error.message || 'Failed to create subaccount',
-        code: error.code || 'PROVISIONING_ERROR',
+        error: err.message || 'Failed to create subaccount',
+        code: err.code || 'PROVISIONING_ERROR',
       }
     }
   }
@@ -195,20 +199,24 @@ class TwilioAdapter implements ITwilioAdapter {
         }
       }
 
-      const subaccountClient = require('twilio')(
+      const subaccountClient = this.getSubaccountClient(
         existing.subaccountSid,
-        TWILIO_AUTH_TOKEN
+        TWILIO_AUTH_TOKEN!
       )
 
-      const searchParams: any = {
+      const searchParams: { limit: number; areaCode?: number } = {
         limit: 10,
       }
 
       if (options.areaCode) {
-        searchParams.areaCode = options.areaCode
+        const parsedAreaCode = parseInt(options.areaCode, 10)
+        if (!isNaN(parsedAreaCode)) {
+          searchParams.areaCode = parsedAreaCode
+        }
       }
 
-      let availableNumbers: any[] = []
+      type AvailableNumber = { phoneNumber: string }
+      let availableNumbers: AvailableNumber[] = []
 
       if (options.type === 'local') {
         availableNumbers = await withRetry(async () => {
@@ -269,12 +277,13 @@ class TwilioAdapter implements ITwilioAdapter {
           phoneNumber: purchasedNumber.phoneNumber,
         },
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as Error & { code?: string }
       logger.error({ error, workspaceId }, 'Failed to purchase Twilio number')
       return {
         ok: false,
-        error: error.message || 'Failed to purchase number',
-        code: error.code || 'PROVISIONING_ERROR',
+        error: err.message || 'Failed to purchase number',
+        code: err.code || 'PROVISIONING_ERROR',
       }
     }
   }
@@ -308,14 +317,14 @@ class TwilioAdapter implements ITwilioAdapter {
         }
       }
 
-      const subaccountClient = require('twilio')(
+      const subaccountClient = this.getSubaccountClient(
         twilioSubaccount.subaccountSid,
-        TWILIO_AUTH_TOKEN
+        TWILIO_AUTH_TOKEN!
       )
 
       await withRetry(async () => {
         return await subaccountClient
-          .incomingPhoneNumbers(twilioSubaccount.phoneNumberSid)
+          .incomingPhoneNumbers(twilioSubaccount.phoneNumberSid!)
           .update({
             voiceUrl: urls.voice,
             voiceMethod: 'POST',
@@ -332,12 +341,13 @@ class TwilioAdapter implements ITwilioAdapter {
       return {
         ok: true,
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as Error & { code?: string }
       logger.error({ error, workspaceId }, 'Failed to set Twilio webhooks')
       return {
         ok: false,
-        error: error.message || 'Failed to set webhooks',
-        code: error.code || 'PROVISIONING_ERROR',
+        error: err.message || 'Failed to set webhooks',
+        code: err.code || 'PROVISIONING_ERROR',
       }
     }
   }
@@ -373,11 +383,12 @@ class TwilioAdapter implements ITwilioAdapter {
           subaccountSid: twilioSubaccount.subaccountSid || undefined,
         },
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as Error
       logger.error({ error, workspaceId }, 'Failed to get Twilio status')
       return {
         ok: false,
-        error: error.message || 'Failed to get status',
+        error: err.message || 'Failed to get status',
       }
     }
   }
