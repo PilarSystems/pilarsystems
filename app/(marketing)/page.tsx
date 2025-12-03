@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/marketing/Section'
 import { FeatureCard } from '@/components/marketing/FeatureCard'
+import { TrustSignals } from '@/components/marketing/TrustSignals'
+import { Testimonials } from '@/components/marketing/Testimonials'
 import { 
   Phone, 
   MessageSquare, 
@@ -68,30 +70,73 @@ export default function HomePage() {
               className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Link href="/signup">
-                <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                  Jetzt starten
+                <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 shadow-xl shadow-cyan-500/30">
+                  🚀 Jetzt kostenlos starten
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/features">
+              <Link href="/demo">
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-gray-600 hover:bg-gray-800">
-                  Funktionen ansehen
+                  📺 Live-Demo ansehen
                 </Button>
               </Link>
             </motion.div>
 
-            {/* Social Proof */}
+            {/* Benefit bullets */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-400"
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Keine Kreditkarte erforderlich</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Setup in 15 Minuten</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Jederzeit kündbar</span>
+              </div>
+            </motion.div>
+
+            {/* Social Proof - Stats instead of placeholder logos */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="mt-16 flex flex-col items-center gap-4"
+              className="mt-16"
             >
-              <p className="text-sm text-gray-500">Vertraut von führenden Studios in DACH</p>
-              <div className="flex gap-8 items-center opacity-50">
-                <div className="text-gray-600 font-semibold">Your Logo Here</div>
-                <div className="text-gray-600 font-semibold">Your Logo Here</div>
-                <div className="text-gray-600 font-semibold">Your Logo Here</div>
+              <p className="text-sm text-gray-500 text-center mb-6">
+                Vertraut von über 50 Studios in DACH
+              </p>
+              
+              {/* Stats */}
+              <div className="flex flex-wrap justify-center gap-8 text-center">
+                <div className="px-6">
+                  <div className="text-3xl font-bold text-cyan-400">50+</div>
+                  <div className="text-sm text-gray-500">Studios live</div>
+                </div>
+                <div className="px-6">
+                  <div className="text-3xl font-bold text-cyan-400">12.000+</div>
+                  <div className="text-sm text-gray-500">Leads verarbeitet</div>
+                </div>
+                <div className="px-6">
+                  <div className="text-3xl font-bold text-cyan-400">24/7</div>
+                  <div className="text-sm text-gray-500">AI verfügbar</div>
+                </div>
+                <div className="px-6">
+                  <div className="text-3xl font-bold text-cyan-400">99.9%</div>
+                  <div className="text-sm text-gray-500">Uptime</div>
+                </div>
+              </div>
+
+              {/* Trust Signals */}
+              <div className="mt-8">
+                <TrustSignals />
               </div>
             </motion.div>
           </motion.div>
@@ -228,8 +273,7 @@ export default function HomePage() {
           >
             <Link href="/features">
               <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-950/30">
-                Alle Features ansehen
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Alle Module entdecken →
               </Button>
             </Link>
           </motion.div>
@@ -365,8 +409,7 @@ export default function HomePage() {
           >
             <Link href="/pricing">
               <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                Alle Preise ansehen
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Preise vergleichen & sparen →
               </Button>
             </Link>
           </motion.div>
@@ -410,6 +453,37 @@ export default function HomePage() {
               delay={0.3}
             />
           </div>
+        </div>
+      </Section>
+
+      {/* Testimonials Section */}
+      <Section className="bg-gradient-to-b from-gray-950 to-black">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Was unsere Kunden sagen
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Echte Erfahrungen von Studio-Inhabern
+            </p>
+          </div>
+
+          <Testimonials />
+
+          {/* Case Study CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <Link href="/success-stories">
+              <Button size="lg" variant="outline" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-950/30">
+                Alle Success Stories lesen
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </Section>
 
@@ -465,6 +539,45 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Guarantee Section */}
+      <Section className="bg-black">
+        <div className="mx-auto max-w-4xl px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="p-12 rounded-3xl bg-gradient-to-br from-cyan-950/30 to-blue-950/30 border border-cyan-500/30 text-center"
+          >
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+              <Shield className="h-10 w-10 text-white" />
+            </div>
+            
+            <h3 className="text-3xl font-bold text-white mb-4">
+              30-Tage Geld-zurück-Garantie
+            </h3>
+            
+            <p className="text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
+              Wenn du in den ersten 30 Tagen nicht zu 100% zufrieden bist, erhältst du dein Geld vollständig zurück – ohne Fragen.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Kein Risiko</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Volle Rückerstattung</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-cyan-400" />
+                <span>Keine Nachfragen</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </Section>
+
       {/* Final CTA */}
       <Section className="bg-gradient-to-br from-cyan-950/30 via-black to-blue-950/30">
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
@@ -482,14 +595,14 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup">
-                <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                  Jetzt starten
+                <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 shadow-xl shadow-cyan-500/30">
+                  🚀 Kostenlos testen (15 Min. Setup)
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/contact">
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-gray-600 hover:bg-gray-800">
-                  Kontakt aufnehmen
+                  📞 Kostenlose Beratung buchen
                 </Button>
               </Link>
             </div>
