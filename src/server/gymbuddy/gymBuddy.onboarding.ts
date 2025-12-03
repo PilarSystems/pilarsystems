@@ -19,14 +19,14 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
     question: 'Willkommen bei Gym Buddy! 🎉\n\nIch bin dein persönlicher AI Fitness Coach und Freund. Zusammen erreichen wir deine Fitnessziele!\n\nBist du bereit zu starten?',
     options: ['Ja, los geht\'s! 💪', 'Erzähl mir mehr'],
     validation: (answer) => answer.length > 0,
-    nextStep: (answer) => OnboardingStep.NAME,
+    nextStep: (_answer) => OnboardingStep.NAME,
   },
 
   [OnboardingStep.NAME]: {
     step: OnboardingStep.NAME,
     question: 'Super! Wie heißt du? 😊',
     validation: (answer) => answer.length >= 2,
-    nextStep: (answer) => OnboardingStep.GOAL,
+    nextStep: (_answer) => OnboardingStep.GOAL,
   },
 
   [OnboardingStep.GOAL]: {
@@ -48,7 +48,7 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
         answer.toLowerCase().includes(goal.replace('_', ' '))
       )
     },
-    nextStep: (answer) => OnboardingStep.LEVEL,
+    nextStep: (_answer) => OnboardingStep.LEVEL,
   },
 
   [OnboardingStep.LEVEL]: {
@@ -61,7 +61,7 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
         answer.toLowerCase().includes(level)
       )
     },
-    nextStep: (answer) => OnboardingStep.FREQUENCY,
+    nextStep: (_answer) => OnboardingStep.FREQUENCY,
   },
 
   [OnboardingStep.FREQUENCY]: {
@@ -72,7 +72,7 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
       const num = parseInt(answer)
       return !isNaN(num) && num >= 1 && num <= 7
     },
-    nextStep: (answer) => OnboardingStep.EQUIPMENT,
+    nextStep: (_answer) => OnboardingStep.EQUIPMENT,
   },
 
   [OnboardingStep.EQUIPMENT]: {
@@ -85,7 +85,7 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
         answer.toLowerCase().includes(eq.replace('_', ' '))
       )
     },
-    nextStep: (answer) => OnboardingStep.PERSONALITY,
+    nextStep: (_answer) => OnboardingStep.PERSONALITY,
   },
 
   [OnboardingStep.PERSONALITY]: {
@@ -109,14 +109,14 @@ export const ONBOARDING_QUESTIONS: Record<OnboardingStep, OnboardingQuestion> = 
         answer.toLowerCase().includes(style.replace('_', ' '))
       )
     },
-    nextStep: (answer) => OnboardingStep.COMPLETE,
+    nextStep: (_answer) => OnboardingStep.COMPLETE,
   },
 
   [OnboardingStep.COMPLETE]: {
     step: OnboardingStep.COMPLETE,
     question: 'Perfekt! Dein Profil ist komplett! 🎉\n\nIch freue mich darauf, mit dir zu arbeiten!\n\nSchreib mir einfach eine Nachricht und wir legen los! 💪',
-    validation: (answer) => true,
-    nextStep: (answer) => OnboardingStep.COMPLETE,
+    validation: (_answer) => true,
+    nextStep: (_answer) => OnboardingStep.COMPLETE,
   },
 }
 

@@ -5,7 +5,7 @@
  */
 
 import { orchestrate } from '../orchestrator/orchestrator.service'
-import { Channel, Intent } from '../orchestrator/orchestrator.types'
+import { Channel } from '../orchestrator/orchestrator.types'
 import {
   Workflow,
   WorkflowContext,
@@ -272,7 +272,7 @@ async function executeAction(
   action: WorkflowAction,
   context: WorkflowContext
 ): Promise<any> {
-  const { type, config } = action
+  const { type } = action
 
   switch (type) {
     case ActionType.SEND_MESSAGE:
@@ -312,7 +312,7 @@ async function executeAction(
 
 async function executeSendMessageAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { message, channel, recipient } = action.config
 
@@ -379,7 +379,7 @@ async function executeGenerateWorkoutPlanAction(
 
 async function executeScheduleFollowUpAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { delay, message } = action.config
 
@@ -397,7 +397,7 @@ async function executeScheduleFollowUpAction(
 
 async function executeCreateLeadAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { name, email, phone, source } = action.config
 
@@ -417,7 +417,7 @@ async function executeCreateLeadAction(
 
 async function executeUpdateLeadAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { leadId, updates } = action.config
 
@@ -435,7 +435,7 @@ async function executeUpdateLeadAction(
 
 async function executeCallWebhookAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { webhookUrl, method = 'POST', headers = {}, body } = action.config
 
@@ -476,7 +476,7 @@ async function executeCallWebhookAction(
 
 async function executeWaitAction(
   action: WorkflowAction,
-  context: WorkflowContext
+  _context: WorkflowContext
 ): Promise<any> {
   const { delay = 0 } = action.config
 

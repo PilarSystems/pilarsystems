@@ -7,7 +7,6 @@
 import { orchestrate } from '../orchestrator/orchestrator.service'
 import { Channel, Intent } from '../orchestrator/orchestrator.types'
 import { gymBuddyService } from './gymBuddy.service'
-import { generatePersonalizedMessage } from './gymBuddy.personality'
 import {
   getOnboardingQuestion,
   getNextOnboardingStep,
@@ -177,7 +176,7 @@ export class GymBuddyRouter {
   private addPersonalityToResponse(
     response: string,
     personalityStyle: any,
-    context: 'workout' | 'general'
+    _context: 'workout' | 'general'
   ): string {
     const personalityAdditions: Record<string, string> = {
       motivator: ' 💪',

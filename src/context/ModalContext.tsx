@@ -8,8 +8,14 @@ interface ModalContextType {
     isOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
-    modalRef: React.RefObject<HTMLDialogElement | null>;
-    contentRef: React.RefObject<HTMLDivElement | null>;
+    getModalProps: () => {
+      ref: React.RefCallback<HTMLDialogElement>;
+      className: string;
+    };
+    getContentProps: () => {
+      ref: React.RefCallback<HTMLDivElement>;
+      className: string;
+    };
   };
 }
 

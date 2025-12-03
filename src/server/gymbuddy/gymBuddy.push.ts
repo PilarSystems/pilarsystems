@@ -199,7 +199,7 @@ export function schedulePushMessage(
 
 export function getOptimalPushTime(
   schedule: PushSchedule,
-  timezone: string
+  _timezone: string
 ): Date {
   const now = new Date()
   const hour = now.getHours()

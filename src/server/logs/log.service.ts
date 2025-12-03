@@ -7,7 +7,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { MessageLog, LogLevel, LogType, LogFilter, LogStats } from './log.types'
 import { getLogStore } from './log.store'
-import { Channel, Intent, Module, OrchestratorResult } from '../orchestrator/orchestrator.types'
+import { Channel, OrchestratorResult } from '../orchestrator/orchestrator.types'
 
 const logStore = getLogStore()
 

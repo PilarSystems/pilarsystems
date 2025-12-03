@@ -8,7 +8,7 @@ const Map = () => {
   if (typeof window === 'undefined') return;
   return (
     <>
-      {/* @ts-ignore - MapContainer type compatibility issue with React 19 */}
+      {/* @ts-expect-error MapContainer type compatibility issue with React 19 */}
       <MapContainer className="h-full w-full" center={position} zoom={6}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </MapContainer>

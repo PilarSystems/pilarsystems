@@ -2,7 +2,7 @@
 
 import { Phone, MessageCircle, Mail, Globe, MessageSquare, Zap, Clock, PhoneMissed, UserPlus, Calendar } from 'lucide-react'
 import { TriggerType, WorkflowTrigger } from '@/src/server/workflows/workflow.types'
-import { Channel, Intent } from '@/src/server/orchestrator/orchestrator.types'
+import { Intent } from '@/src/server/orchestrator/orchestrator.types'
 
 interface TriggerPickerProps {
   trigger: WorkflowTrigger | null

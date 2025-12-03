@@ -1,6 +1,5 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -22,8 +21,14 @@ interface UseModalReturn {
   isOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  modalRef: React.RefObject<HTMLDialogElement | null>;
-  contentRef: React.RefObject<HTMLDivElement | null>;
+  getModalProps: () => {
+    ref: React.RefCallback<HTMLDialogElement>;
+    className: string;
+  };
+  getContentProps: () => {
+    ref: React.RefCallback<HTMLDivElement>;
+    className: string;
+  };
 }
 
 const defaultConfig: UseModalConfig = {
@@ -45,16 +50,11 @@ const defaultConfig: UseModalConfig = {
 
 export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useRef<HTMLDialogElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const modalElement = useRef<HTMLDialogElement | null>(null);
+  const contentElement = useRef<HTMLDivElement | null>(null);
   const isAnimating = useRef(false);
 
   const mergedConfig = { ...defaultConfig, ...config };
-
-  // Setup GSAP context and get contextSafe function
-  const { contextSafe } = useGSAP(() => {
-    // Register any additional GSAP plugins here if needed
-  });
 
   // Helper to safely modify body overflow
   const setBodyOverflow = useCallback((value: 'hidden' | 'auto') => {
@@ -63,16 +63,16 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     }
   }, []);
 
-  // Animation functions wrapped with contextSafe
-  const animateOpen = contextSafe(() => {
-    if (isOpen || isAnimating.current || !modalRef.current) return;
+  // Open modal function - refs accessed in event handler context
+  const openModal = useCallback(() => {
+    const modal = modalElement.current;
+    const content = contentElement.current;
+    
+    if (isOpen || isAnimating.current || !modal) return;
 
     isAnimating.current = true;
     setIsOpen(true);
     setBodyOverflow('hidden');
-
-    const modal = modalRef.current;
-    const content = contentRef.current;
 
     modal.classList.remove('modal-close');
     modal.classList.add('modal-open');
@@ -93,16 +93,17 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     } else {
       isAnimating.current = false;
     }
-  });
+  }, [isOpen, setBodyOverflow, mergedConfig.openAnimation]);
 
-  const animateClose = contextSafe(async () => {
-    if (!isOpen || isAnimating.current || !modalRef.current) return;
+  // Close modal function - refs accessed in event handler context
+  const closeModal = useCallback(async () => {
+    const modal = modalElement.current;
+    const content = contentElement.current;
+    
+    if (!isOpen || isAnimating.current || !modal) return;
 
     isAnimating.current = true;
     setBodyOverflow('auto');
-
-    const modal = modalRef.current;
-    const content = contentRef.current;
 
     try {
       if (content && mergedConfig.closeAnimation) {
@@ -128,15 +129,7 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
       setIsOpen(false);
       isAnimating.current = false;
     }
-  });
-
-  const openModal = useCallback(() => {
-    animateOpen();
-  }, [animateOpen]);
-
-  const closeModal = useCallback(() => {
-    animateClose();
-  }, [animateClose]);
+  }, [isOpen, setBodyOverflow, mergedConfig.closeAnimation]);
 
   // Handle keyboard events
   useEffect(() => {
@@ -159,11 +152,30 @@ export const useModal = (config: UseModalConfig = {}): UseModalReturn => {
     };
   }, []);
 
+  // Callback refs for binding DOM elements
+  const modalRefCallback = useCallback((el: HTMLDialogElement | null) => {
+    modalElement.current = el;
+  }, []);
+
+  const contentRefCallback = useCallback((el: HTMLDivElement | null) => {
+    contentElement.current = el;
+  }, []);
+
+  const getModalProps = useCallback(() => ({
+    ref: modalRefCallback,
+    className: 'modal-overlay modal-close',
+  }), [modalRefCallback]);
+
+  const getContentProps = useCallback(() => ({
+    ref: contentRefCallback,
+    className: 'modal-content',
+  }), [contentRefCallback]);
+
   return {
     isOpen,
     openModal,
     closeModal,
-    modalRef,
-    contentRef,
+    getModalProps,
+    getContentProps,
   };
 };

@@ -104,7 +104,9 @@ const BlogList = ({ blogs: allBlogs }: BlogListProps) => {
 
   // Reset to first page when filters change
   useEffect(() => {
-    setCurrentPage(1);
+    requestAnimationFrame(() => {
+      setCurrentPage(1);
+    });
   }, [searchQuery, selectedCategory, selectedMonth]);
 
   const handlePageChange = (page: number) => {

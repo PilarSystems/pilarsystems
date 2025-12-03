@@ -123,8 +123,10 @@ const TestimonialV2 = () => {
   };
 
   useEffect(() => {
-    // Set initial testimonial
-    updateTestimonial();
+    // Set initial testimonial using requestAnimationFrame to avoid synchronous setState
+    requestAnimationFrame(() => {
+      updateTestimonial();
+    });
 
     // Set up interval for auto-rotation
     intervalRef.current = setInterval(() => {
@@ -141,7 +143,9 @@ const TestimonialV2 = () => {
 
   // Update testimonial when currentIndex changes
   useEffect(() => {
-    updateTestimonial();
+    requestAnimationFrame(() => {
+      updateTestimonial();
+    });
   }, [currentIndex, updateTestimonial]);
 
   return (

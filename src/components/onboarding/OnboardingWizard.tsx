@@ -113,7 +113,7 @@ const OnboardingWizard = () => {
 
   const progressPercent = (currentStep / steps.length) * 100;
 
-  const handlePlayPreview = (previewUrl: string, label: string) => {
+  const handlePlayPreview = (previewUrl: string, _label: string) => {
     try {
       const audio = new Audio(previewUrl);
       audio.play();
@@ -477,8 +477,6 @@ type Step3Props = {
 };
 
 const Step3Voice = ({ voice, setVoice, onPlayPreview }: Step3Props) => {
-  const activeVoice = voices.find((v) => v.id === voice.voiceId)!;
-
   return (
     <div className="space-y-6">
       <h2 className="text-heading-5">Stimme & Stil deiner KI</h2>
