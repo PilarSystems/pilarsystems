@@ -30,8 +30,9 @@ for (const check of checks) {
   try {
     execSync(check.cmd, { stdio: 'inherit' });
     console.log(`✅ ${check.name} passed`);
-  } catch {
-    console.error(`❌ ${check.name} failed`);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`❌ ${check.name} failed: ${errorMessage}`);
     failed = true;
     break;
   }

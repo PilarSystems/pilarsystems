@@ -28,6 +28,13 @@ function safeSetLocalStorage(key: string, value: string): void {
   }
 }
 
+// Helper to trigger storage event for useSyncExternalStore
+function triggerStorageEvent(): void {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('storage'))
+  }
+}
+
 // Custom hook to read consent status from localStorage
 function useConsentStatus() {
   return useSyncExternalStore(
@@ -55,10 +62,7 @@ export function ConsentManager() {
       timestamp: new Date().toISOString()
     }))
     setIsHidden(true)
-    // Trigger storage event for useSyncExternalStore
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event('storage'))
-    }
+    triggerStorageEvent()
   }
 
   const acceptNecessary = () => {
@@ -69,10 +73,11 @@ export function ConsentManager() {
       timestamp: new Date().toISOString()
     }))
     setIsHidden(true)
-    // Trigger storage event for useSyncExternalStore
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event('storage'))
-    }
+    triggerStorageEvent()
+  }
+
+  const dismissBanner = () => {
+    setIsHidden(true)
   }
 
   return (
@@ -115,8 +120,9 @@ export function ConsentManager() {
                 </div>
               </div>
               <button
-                onClick={acceptNecessary}
+                onClick={dismissBanner}
                 className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Banner schließen"
               >
                 <X className="h-5 w-5 text-gray-400" />
               </button>
