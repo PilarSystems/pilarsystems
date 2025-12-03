@@ -5,11 +5,6 @@ import { AuthLayout, AuthCard, AuthInput, AuthButton, AuthBadge } from '@/compon
 import { User, Building, Mail, Lock, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-type UserData = {
-  full_name: string;
-  studio_name: string;
-};
-
 const SignupPage = () => {
   const [fullName, setFullName] = useState('');
   const [studioName, setStudioName] = useState('');
@@ -22,8 +17,7 @@ const SignupPage = () => {
     e.preventDefault();
     setLoading(true);
     // TODO: Complete the signUp logic with Supabase
-    const userData: UserData = { full_name: fullName, studio_name: studioName };
-    console.log('Signup attempt with:', userData, email);
+    console.log('Signup attempt with:', { full_name: fullName, studio_name: studioName }, email);
     // TODO: Add signUp functionality with error handling and toast notifications
     // TODO: Redirect to /checkout on success
     setLoading(false);
