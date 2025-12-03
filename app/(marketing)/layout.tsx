@@ -1,10 +1,7 @@
-import { Inter } from 'next/font/google'
 import { Header } from '@/components/marketing/Header'
 import { Footer } from '@/components/marketing/Footer'
 import { ConsentManager } from '@/components/marketing/ConsentManager'
 import '@/app/globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'PILAR SYSTEMS - AI SaaS für Fitnessstudios',
@@ -23,7 +20,12 @@ export default function MarketingLayout({
 }) {
   return (
     <html lang="de" className="dark">
-      <body className={`${inter.className} bg-black text-white antialiased`}>
+      <body 
+        className="bg-black text-white antialiased"
+        style={{
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        }}
+      >
         <Header />
         <main className="pt-16">
           {children}
