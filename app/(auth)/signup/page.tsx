@@ -1,46 +1,99 @@
-import { AuthLayout, AuthCard, AuthInput, AuthButton, AuthBadge } from '@/components/auth';
-import { User, Building, Mail, Lock, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+'use client'
 
-type UserData = {
-  full_name: string;
-  studio_name: string;
-};
+import { useState } from 'react'
+import { AuthLayout } from '@/components/auth/AuthLayout'
+import { AuthCard } from '@/components/auth/AuthCard'
+import { AuthInput } from '@/components/auth/AuthInput'
+import { AuthButton } from '@/components/auth/AuthButton'
+import { AuthBadge } from '@/components/auth/AuthBadge'
+import { User, Building, Mail, Lock, Sparkles } from 'lucide-react'
+import { motion } from 'framer-motion'
 
-const SignupPage = () => {
-  // Define the state and handlers for the form fields
-  const [fullName, setFullName] = useState('');
-  const [studioName, setStudioName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Validation logic here...
+export default function SignupPage() {
+  const [fullName, setFullName] = useState('')
+  const [studioName, setStudioName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // Complete the signUp logic with Supabase, keeping user metadata
-    const userData: UserData = { full_name: fullName, studio_name: studioName };
-    // Add signUp functionality with error handling and toast notifications
-    // Redirect to /checkout on success
-  };
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      alert('Passwörter stimmen nicht überein')
+      return
+    }
+    setLoading(true)
+    // TODO: Add Supabase signUp with user metadata
+    console.log('Signup attempt:', { fullName, studioName, email })
+    setLoading(false)
+  }
 
   return (
     <AuthLayout>
       <AuthCard>
+        <div className="text-center mb-6">
+          <AuthBadge icon={<Sparkles className="h-4 w-4 text-blue-400" />}>
+            <span className="text-sm text-blue-300">Jetzt registrieren</span>
+          </AuthBadge>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Studio erstellen
+          </h1>
+        </div>
         <form onSubmit={handleSubmit}>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <AuthInput placeholder="Full Name" icon={<User />} value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-            <AuthInput placeholder="Studio Name" icon={<Building />} value={studioName} onChange={(e) => setStudioName(e.target.value)} required />
-            <AuthInput placeholder="Email" icon={<Mail />} value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <AuthInput placeholder="Password" type="password" icon={<Lock />} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
-            <AuthInput placeholder="Confirm Password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
+          >
+            <AuthInput
+              placeholder="Vollständiger Name"
+              icon={<User className="h-5 w-5" />}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
+            <AuthInput
+              placeholder="Studio Name"
+              icon={<Building className="h-5 w-5" />}
+              value={studioName}
+              onChange={(e) => setStudioName(e.target.value)}
+              required
+            />
+            <AuthInput
+              placeholder="E-Mail"
+              icon={<Mail className="h-5 w-5" />}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <AuthInput
+              placeholder="Passwort"
+              type="password"
+              icon={<Lock className="h-5 w-5" />}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={8}
+            />
+            <AuthInput
+              placeholder="Passwort bestätigen"
+              type="password"
+              icon={<Lock className="h-5 w-5" />}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </motion.div>
-          <AuthButton type="submit"><AuthBadge icon={<Sparkles />}/> Sign Up</AuthButton>
+          <div className="mt-6">
+            <AuthButton type="submit" loading={loading}>
+              Registrieren
+            </AuthButton>
+          </div>
         </form>
       </AuthCard>
     </AuthLayout>
-  );
-};
-
-export default SignupPage;
+  )
+}

@@ -1,54 +1,53 @@
-import { Button } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+'use client'
+
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 interface AuthButtonProps {
-  children: React.ReactNode;
-  onClick: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  variant?: 'primary' | 'secondary' | 'ghost';
-  disabled?: boolean;
-  loading?: boolean;
-  fullWidth?: boolean;
-  icon?: React.ReactNode;
-  delay?: number;
+  children: React.ReactNode
+  onClick?: () => void
+  type?: 'button' | 'submit' | 'reset'
+  variant?: 'primary' | 'secondary' | 'ghost'
+  disabled?: boolean
+  loading?: boolean
+  fullWidth?: boolean
+  icon?: React.ReactNode
+  delay?: number
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({
+export function AuthButton({
   children,
   onClick,
   type = 'button',
   variant = 'primary',
   disabled = false,
   loading = false,
-  fullWidth = false,
+  fullWidth = true,
   icon,
   delay = 0,
-}) => {
-  const variants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { delay } },
-  };
-
+}: AuthButtonProps) {
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105',
-    secondary: 'border border-gray-300 hover:bg-gray-200',
-    ghost: 'bg-transparent',
-  }[variant];
+    primary: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white',
+    secondary: 'border border-gray-600 hover:bg-gray-800 text-white',
+    ghost: 'bg-transparent text-gray-400 hover:text-white',
+  }[variant]
 
   return (
-    <Button 
-      className={`${variantStyles} ${fullWidth ? 'w-full' : ''}`} 
-      onClick={onClick} 
-      type={type} 
-      disabled={disabled || loading}
-      variants={variants}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.4 }}
     >
-      {loading ? <Loader2 className='animate-spin' /> : icon} 
-      {children}
-    </Button>
-  );
-};
-
-export default AuthButton;
+      <Button
+        className={`${variantStyles} ${fullWidth ? 'w-full' : ''} h-12 text-base font-semibold transition-all duration-300`}
+        onClick={onClick}
+        type={type}
+        disabled={disabled || loading}
+      >
+        {loading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : icon && <span className="mr-2">{icon}</span>}
+        {children}
+      </Button>
+    </motion.div>
+  )
+}

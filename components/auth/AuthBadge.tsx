@@ -1,13 +1,15 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+'use client'
+
+import { motion } from 'framer-motion'
+import React from 'react'
 
 interface AuthBadgeProps {
-  children: React.ReactNode;
-  icon: React.ReactNode;
-  delay?: number;
+  children: React.ReactNode
+  icon: React.ReactNode
+  delay?: number
 }
 
-const AuthBadge: React.FC<AuthBadgeProps> = ({ children, icon, delay = 0 }) => {
+export function AuthBadge({ children, icon, delay = 0 }: AuthBadgeProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
@@ -18,7 +20,5 @@ const AuthBadge: React.FC<AuthBadgeProps> = ({ children, icon, delay = 0 }) => {
       {icon}
       {children}
     </motion.div>
-  );
-};
-
-export default AuthBadge;
+  )
+}
