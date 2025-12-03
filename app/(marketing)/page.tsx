@@ -409,7 +409,7 @@ export default function HomePage() {
           >
             <Link href="/pricing">
               <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                Preise vergleichen &amp; sparen →
+                Preise vergleichen & sparen →
               </Button>
             </Link>
           </motion.div>
