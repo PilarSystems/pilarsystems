@@ -53,14 +53,19 @@ export function LocaleProvider({ children, defaultLocale }: LocaleProviderProps)
 
   const t = translations[locale];
 
+  /**
+   * Format a message by key path with optional interpolation parameters
+   * @param keyPath - Dot-separated path to the translation key (e.g., "auth.login")
+   * @param params - Optional parameters for interpolation
+   * @returns The translated string or the keyPath if not found
+   */
   const formatMessage = useCallback((keyPath: string, params?: Record<string, string | number>): string => {
     const keys = keyPath.split('.');
-    type MessagePath = keyof TranslationKeys | string;
     let result: unknown = translations[locale];
     
     for (const key of keys) {
       if (result && typeof result === 'object' && key in result) {
-        result = (result as Record<string, unknown>)[key as MessagePath];
+        result = (result as Record<string, unknown>)[key];
       } else {
         console.warn(`Translation key not found: ${keyPath}`);
         return keyPath;

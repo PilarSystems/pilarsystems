@@ -267,6 +267,9 @@ export type AccountSettingsData = z.infer<typeof accountSettingsSchema>;
 
 /**
  * Helper function to get validation error messages in the correct locale
+ * 
+ * Note: English messages are not translated as they are already in English.
+ * The English object is intentionally empty as a fallback to the original messages.
  */
 export function getLocalizedErrors(
   errors: z.ZodError,
@@ -291,13 +294,15 @@ export function getLocalizedErrors(
       'Password must contain at least one number': 'Passwort muss mindestens eine Zahl enthalten',
       'Please select a voice': 'Bitte wähle eine Stimme aus',
     },
+    // English messages are intentionally empty - fallback to original Zod messages which are already in English
     en: {},
   };
 
   for (const issue of errors.issues) {
     const path = issue.path.join('.');
     const message = issue.message;
-    errorMap[path] = messages[locale][message] || message;
+    // For English locale, use original message; for German, use translation if available
+    errorMap[path] = (locale === 'de' && messages.de[message]) ? messages.de[message] : message;
   }
 
   return errorMap;
