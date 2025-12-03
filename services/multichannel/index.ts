@@ -8,3 +8,18 @@ export { smsService, SmsService } from './sms.service'
 export { emailOutreachService, EmailOutreachService } from './email.service'
 export { multiChannelOrchestrator, MultiChannelOrchestrator } from './orchestrator'
 export { multiChannelAnalytics, MultiChannelAnalyticsService } from './analytics.service'
+export {
+  createTraceContext,
+  createChildSpan,
+  completeTrace,
+  updateChannelHealth,
+  getChannelHealth,
+  isChannelHealthy,
+  getAllChannelHealth,
+  withRetry,
+  withTimeout,
+  withFallback,
+  CircuitBreaker,
+  type TraceContext,
+  type ChannelHealth,
+} from './tracing'
