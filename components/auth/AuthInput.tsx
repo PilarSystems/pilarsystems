@@ -59,7 +59,7 @@ export function AuthInput({
           className="w-full h-10 bg-transparent outline-none text-white placeholder-white/40 transition-all duration-300 focus:outline-none"
         />
       </div>
-      {label && (
+      {label && id && (
         <label
           htmlFor={id}
           className={`absolute left-3 top-2 transform transition-all duration-300 text-white/50 ${value ? 'scale-75 -translate-y-4' : ''}`}

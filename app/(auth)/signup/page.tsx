@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AuthLayout, AuthCard, AuthInput, AuthButton, AuthBadge } from '@/components/auth'
+import { AuthLayout, AuthCard, AuthInput, AuthButton } from '@/components/auth'
 import { User, Building, Mail, Lock, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 
@@ -69,7 +69,7 @@ const SignupPage = () => {
             />
           </motion.div>
           <AuthButton type="submit">
-            <AuthBadge icon={<Sparkles className="w-4 h-4" />}>Sign Up</AuthBadge>
+            <Sparkles className="w-4 h-4" /> Sign Up
           </AuthButton>
         </form>
       </AuthCard>
