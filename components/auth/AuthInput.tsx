@@ -1,6 +1,7 @@
+'use client'
+
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Building } from 'lucide-react';
 
 interface AuthInputProps {
     id: string;
@@ -15,7 +16,7 @@ interface AuthInputProps {
     delay?: number;
 }
 
-const AuthInput: React.FC<AuthInputProps> = ({
+export function AuthInput({
     id,
     type,
     label,
@@ -26,7 +27,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
     required,
     placeholder,
     delay = 0,
-}) => {
+}: AuthInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -40,28 +41,30 @@ const AuthInput: React.FC<AuthInputProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.3 }}
-            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-md overflow-hidden transition-all duration-300 ${error ? 'border-red-500' : 'border-transparent'} p-3`}
+            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden transition-all duration-300 border ${error ? 'border-red-500' : 'border-white/10'} p-3`}
         >
-            <input
-                id={id}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required={required}
-                placeholder={placeholder}
-                ref={inputRef}
-                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
-            />
-            <label
-                htmlFor={id}
-                className={`absolute left-3 top-2 transform transition-all duration-300 ${value || inputRef.current?.classList.contains('has-value') ? 'scale-75 -translate-y-4' : ''}`}
-            >
-                {label} {required && '*'}
-            </label>
-            {icon && <span className="icon-spacing">{icon}</span>}
-            {error && <span className="text-red-500 text-sm">{error}</span>}
+            <div className="flex items-center gap-3">
+                {icon && <span className="text-gray-400">{icon}</span>}
+                <div className="flex-1">
+                    <label
+                        htmlFor={id}
+                        className="block text-xs text-gray-400 mb-1"
+                    >
+                        {label} {required && '*'}
+                    </label>
+                    <input
+                        id={id}
+                        type={type}
+                        value={value}
+                        onChange={onChange}
+                        required={required}
+                        placeholder={placeholder}
+                        ref={inputRef}
+                        className="w-full bg-transparent outline-none text-white placeholder:text-gray-500"
+                    />
+                </div>
+            </div>
+            {error && <span className="text-red-500 text-sm mt-1 block">{error}</span>}
         </motion.div>
     );
-};
-
-export default AuthInput;
+}
