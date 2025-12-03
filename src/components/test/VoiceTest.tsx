@@ -6,7 +6,7 @@
  * Browser microphone → Voice Engine → TTS response
  */
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Mic, MicOff, Volume2, VolumeX, Loader2, AlertCircle } from 'lucide-react'
 
 interface VoiceTestProps {
@@ -23,88 +23,10 @@ export default function VoiceTest({ onResult, onLog }: VoiceTestProps) {
   const [error, setError] = useState<string | null>(null)
   const [permissionGranted, setPermissionGranted] = useState(false)
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
-  const audioChunksRef = useRef<Blob[]>([])
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const recognitionRef = useRef<any>(null)
 
-  useEffect(() => {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
-      recognitionRef.current = new SpeechRecognition()
-      recognitionRef.current.continuous = false
-      recognitionRef.current.interimResults = false
-      recognitionRef.current.lang = 'de-DE'
-
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript
-        setTranscript(transcript)
-        processVoiceInput(transcript)
-      }
-
-      recognitionRef.current.onerror = (event: any) => {
-        console.error('Speech recognition error:', event.error)
-        setError(`Speech recognition error: ${event.error}`)
-        setIsRecording(false)
-      }
-
-      recognitionRef.current.onend = () => {
-        setIsRecording(false)
-      }
-    }
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop()
-      }
-    }
-  }, [])
-
-  const requestMicrophonePermission = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      stream.getTracks().forEach(track => track.stop())
-      setPermissionGranted(true)
-      setError(null)
-      return true
-    } catch (error) {
-      console.error('Microphone permission denied:', error)
-      setError('Microphone permission denied. Please allow microphone access.')
-      return false
-    }
-  }
-
-  const startRecording = async () => {
-    setError(null)
-
-    if (!permissionGranted) {
-      const granted = await requestMicrophonePermission()
-      if (!granted) return
-    }
-
-    if (recognitionRef.current) {
-      try {
-        recognitionRef.current.start()
-        setIsRecording(true)
-        setTranscript('')
-        setAudioUrl(null)
-      } catch (error) {
-        console.error('Error starting speech recognition:', error)
-        setError('Failed to start speech recognition')
-      }
-    } else {
-      setError('Speech recognition not supported in this browser')
-    }
-  }
-
-  const stopRecording = () => {
-    if (recognitionRef.current && isRecording) {
-      recognitionRef.current.stop()
-    }
-    setIsRecording(false)
-  }
-
-  const processVoiceInput = async (text: string) => {
+  const processVoiceInput = useCallback(async (text: string) => {
     setIsProcessing(true)
     setError(null)
 
@@ -160,7 +82,7 @@ export default function VoiceTest({ onResult, onLog }: VoiceTestProps) {
     } finally {
       setIsProcessing(false)
     }
-  }
+  }, [onLog, onResult])
 
   const playAudio = (base64Audio: string) => {
     try {
@@ -184,6 +106,82 @@ export default function VoiceTest({ onResult, onLog }: VoiceTestProps) {
       console.error('Error playing audio:', error)
       setError('Failed to play audio response')
     }
+  }
+
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
+      recognitionRef.current = new SpeechRecognition()
+      recognitionRef.current.continuous = false
+      recognitionRef.current.interimResults = false
+      recognitionRef.current.lang = 'de-DE'
+
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript
+        setTranscript(transcript)
+        processVoiceInput(transcript)
+      }
+
+      recognitionRef.current.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error)
+        setError(`Speech recognition error: ${event.error}`)
+        setIsRecording(false)
+      }
+
+      recognitionRef.current.onend = () => {
+        setIsRecording(false)
+      }
+    }
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop()
+      }
+    }
+  }, [processVoiceInput])
+
+  const requestMicrophonePermission = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      stream.getTracks().forEach(track => track.stop())
+      setPermissionGranted(true)
+      setError(null)
+      return true
+    } catch (error) {
+      console.error('Microphone permission denied:', error)
+      setError('Microphone permission denied. Please allow microphone access.')
+      return false
+    }
+  }
+
+  const startRecording = async () => {
+    setError(null)
+
+    if (!permissionGranted) {
+      const granted = await requestMicrophonePermission()
+      if (!granted) return
+    }
+
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.start()
+        setIsRecording(true)
+        setTranscript('')
+        setAudioUrl(null)
+      } catch (error) {
+        console.error('Error starting speech recognition:', error)
+        setError('Failed to start speech recognition')
+      }
+    } else {
+      setError('Speech recognition not supported in this browser')
+    }
+  }
+
+  const stopRecording = () => {
+    if (recognitionRef.current && isRecording) {
+      recognitionRef.current.stop()
+    }
+    setIsRecording(false)
   }
 
   const stopAudio = () => {

@@ -2,7 +2,6 @@
 
 import { CheckIcon } from '@/icons';
 import { cn } from '@/utils/cn';
-import gradient30 from '@public/images/gradient/gradient-30.png';
 import gradient42 from '@public/images/gradient/gradient-42.png';
 import Image from 'next/image';
 import Link from 'next/link';

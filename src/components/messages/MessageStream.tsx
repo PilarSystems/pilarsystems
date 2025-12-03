@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { RefreshCw, Trash2, AlertCircle, MessageCircle } from 'lucide-react'
 import { MessageLog, LogLevel, LogType } from '@/src/server/logs/log.types'
 import { Channel } from '@/src/server/orchestrator/orchestrator.types'
@@ -18,7 +18,7 @@ export default function MessageStream({ channel, level, type }: MessageStreamPro
   const [error, setError] = useState<string | null>(null)
   const [autoRefresh, setAutoRefresh] = useState(true)
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     try {
       setError(null)
       const params = new URLSearchParams()
@@ -52,7 +52,7 @@ export default function MessageStream({ channel, level, type }: MessageStreamPro
     } finally {
       setLoading(false)
     }
-  }
+  }, [channel, level, type])
 
   const clearLogs = async () => {
     if (!confirm('Are you sure you want to clear all logs? This action cannot be undone.')) {
@@ -79,7 +79,7 @@ export default function MessageStream({ channel, level, type }: MessageStreamPro
 
   useEffect(() => {
     fetchLogs()
-  }, [channel, level, type])
+  }, [fetchLogs])
 
   useEffect(() => {
     if (!autoRefresh) return
@@ -89,7 +89,7 @@ export default function MessageStream({ channel, level, type }: MessageStreamPro
     }, 3000)
 
     return () => clearInterval(interval)
-  }, [autoRefresh, channel, level, type])
+  }, [autoRefresh, fetchLogs])
 
   if (loading) {
     return (

@@ -65,8 +65,8 @@ export async function processEmailWebhook(
 export async function sendEmailResponse(
   to: string,
   subject: string,
-  body: string,
-  inReplyTo?: string
+  _body: string,
+  _inReplyTo?: string
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   console.log(`[STUB] Sending email to ${to}: ${subject}`)
 

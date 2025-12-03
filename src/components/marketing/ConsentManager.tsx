@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { X, Cookie, Shield } from 'lucide-react'
@@ -24,22 +24,7 @@ export function ConsentManager() {
   const [showDetails, setShowDetails] = useState(false)
   const [preferences, setPreferences] = useState<ConsentPreferences>(DEFAULT_PREFERENCES)
 
-  useEffect(() => {
-    const stored = localStorage.getItem('cookie-consent-v2')
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as ConsentPreferences
-        setPreferences(parsed)
-        loadScripts(parsed)
-      } catch (e) {
-        setShowBanner(true)
-      }
-    } else {
-      setTimeout(() => setShowBanner(true), 1000)
-    }
-  }, [])
-
-  const loadScripts = (prefs: ConsentPreferences) => {
+  const loadScripts = useCallback((prefs: ConsentPreferences) => {
     if (prefs.analytics && typeof window !== 'undefined') {
       console.log('Analytics consent granted, loading scripts...')
     }
@@ -47,7 +32,25 @@ export function ConsentManager() {
     if (prefs.marketing && typeof window !== 'undefined') {
       console.log('Marketing consent granted, loading scripts...')
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      const stored = localStorage.getItem('cookie-consent-v2')
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored) as ConsentPreferences
+          setPreferences(parsed)
+          loadScripts(parsed)
+        } catch {
+          setShowBanner(true)
+        }
+      } else {
+        setTimeout(() => setShowBanner(true), 1000)
+      }
+    })
+  }, [loadScripts])
 
   const savePreferences = (prefs: ConsentPreferences) => {
     const toSave = {
@@ -259,15 +262,18 @@ export function useConsent(category: 'necessary' | 'analytics' | 'marketing'): b
   const [hasConsent, setHasConsent] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('cookie-consent-v2')
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as ConsentPreferences
-        setHasConsent(parsed[category])
-      } catch (e) {
-        setHasConsent(false)
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      const stored = localStorage.getItem('cookie-consent-v2')
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored) as ConsentPreferences
+          setHasConsent(parsed[category])
+        } catch {
+          setHasConsent(false)
+        }
       }
-    }
+    })
   }, [category])
 
   return hasConsent

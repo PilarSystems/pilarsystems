@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
-import { useEffect, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import { LucideIcon, TrendingUp, Target, Phone, Clock } from 'lucide-react'
 
 interface KPICardProps {

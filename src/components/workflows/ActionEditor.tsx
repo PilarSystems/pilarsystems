@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus, X, MessageSquare, Brain, Dumbbell, Clock, UserPlus, Edit, Webhook, Timer, GitBranch } from 'lucide-react'
+import { X, MessageSquare, Brain, Dumbbell, Clock, UserPlus, Edit, Webhook, Timer, GitBranch } from 'lucide-react'
 import { WorkflowAction, ActionType } from '@/src/server/workflows/workflow.types'
 import { v4 as uuidv4 } from 'uuid'
 

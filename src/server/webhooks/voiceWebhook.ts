@@ -67,7 +67,7 @@ export async function processVoiceWebhook(
 
 async function handleCallStart(
   payload: VoiceWebhookPayload,
-  tenantId?: string
+  _tenantId?: string
 ): Promise<{ success: boolean; message?: string; response?: string; error?: string }> {
   console.log(`[VOICE STUB] Call started: ${payload.callSid} from ${payload.from}`)
 
@@ -113,7 +113,7 @@ async function handleCallTranscript(
 
 async function handleCallMedia(
   payload: VoiceWebhookPayload,
-  tenantId?: string
+  _tenantId?: string
 ): Promise<{ success: boolean; message?: string; error?: string }> {
   console.log(`[VOICE STUB] Media event received: ${payload.callSid}`)
 
@@ -125,7 +125,7 @@ async function handleCallMedia(
 
 async function handleCallEnd(
   payload: VoiceWebhookPayload,
-  tenantId?: string
+  _tenantId?: string
 ): Promise<{ success: boolean; message?: string; error?: string }> {
   console.log(`[VOICE STUB] Call ended: ${payload.callSid}, duration: ${payload.duration}s`)
 

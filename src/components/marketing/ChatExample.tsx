@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageCircle, Phone, Check, CheckCheck } from 'lucide-react'
+import { MessageCircle, Phone, CheckCheck } from 'lucide-react'
 
 interface WhatsAppMessage {
   id: number

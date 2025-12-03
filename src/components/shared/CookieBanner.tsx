@@ -13,11 +13,14 @@ const CookieBanner = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEY) : null;
-    if (stored === 'all' || stored === 'necessary') {
-      setConsent(stored);
-    }
-    setMounted(true);
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      const stored = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEY) : null;
+      if (stored === 'all' || stored === 'necessary') {
+        setConsent(stored);
+      }
+      setMounted(true);
+    });
   }, []);
 
   const handleConsent = (value: ConsentValue) => {

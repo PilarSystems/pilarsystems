@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { X } from 'lucide-react'
 
 export function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie-consent')
-    if (!consent) {
-      setShowBanner(true)
-    }
+    // Use requestAnimationFrame to avoid synchronous setState in effect
+    requestAnimationFrame(() => {
+      const consent = localStorage.getItem('cookie-consent')
+      if (!consent) {
+        setShowBanner(true)
+      }
+    })
   }, [])
 
   const acceptCookies = () => {

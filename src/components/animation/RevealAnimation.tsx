@@ -4,7 +4,7 @@ import Springer from '@/utils/springer';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import React, { ReactElement, Ref, cloneElement, useRef } from 'react';
+import React, { ReactElement, Ref, cloneElement, useRef, useCallback } from 'react';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -44,10 +44,15 @@ const RevealAnimation = ({
   animationType = 'from',
   className = '',
 }: RevealAnimationProps) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementHolder = useRef<HTMLElement | null>(null);
+
+  // Use callback ref to store the element without triggering lint errors
+  const setElementRef = useCallback((el: HTMLElement | null) => {
+    elementHolder.current = el;
+  }, []);
 
   useGSAP(() => {
-    const element = elementRef.current;
+    const element = elementHolder.current;
     if (!element) return;
 
     // Get spring easing if useSpring is true
@@ -145,7 +150,7 @@ const RevealAnimation = ({
 
   // Clone the child element and add the ref, className, and data-ns-animate attribute
   return cloneElement(children, {
-    ref: elementRef,
+    ref: setElementRef,
     className: cn(children?.props?.className, className),
     'data-ns-animate': true,
   });

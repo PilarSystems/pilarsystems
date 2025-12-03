@@ -4,7 +4,7 @@
  * TypeScript types for the Studio Automations (Workflow Engine).
  */
 
-import { Channel, Intent, Module } from '../orchestrator/orchestrator.types'
+import { Channel, Intent } from '../orchestrator/orchestrator.types'
 
 export enum TriggerType {
   VOICE_CALL = 'voice_call',

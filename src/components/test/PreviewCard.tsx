@@ -6,7 +6,7 @@
  * Displays live agent preview with intent, routing, and response
  */
 
-import { CheckCircle, XCircle, Zap, Brain, MessageSquare } from 'lucide-react'
+import { CheckCircle, Zap, Brain, MessageSquare } from 'lucide-react'
 
 interface PreviewCardProps {
   result: {
