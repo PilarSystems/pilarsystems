@@ -39,10 +39,9 @@ export default function SignupPage() {
     
     try {
       // TODO: Implement actual signup with Supabase
-      console.log('Signup attempt:', { fullName, studioName, email });
       // Redirect to checkout on success
       router.push('/checkout');
-    } catch (err) {
+    } catch {
       setError('Registrierung fehlgeschlagen. Bitte versuche es erneut.');
     } finally {
       setLoading(false);

@@ -23,10 +23,9 @@ export default function LoginPage() {
     
     try {
       // TODO: Implement actual login with Supabase
-      console.log('Login attempt:', { email });
       // Redirect to dashboard on success
       router.push('/dashboard');
-    } catch (err) {
+    } catch {
       setError('Login fehlgeschlagen. Bitte überprüfe deine Daten.');
     } finally {
       setLoading(false);
