@@ -121,7 +121,9 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Return available sequences (placeholder - would typically come from database)
+    // TODO: Replace with database queries for production implementation
+    // Sequences should be stored in a dedicated ChannelSequence table
+    // For now, return default sequences for demonstration
     const sequences = [
       {
         id: 'seq-welcome',

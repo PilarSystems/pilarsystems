@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -39,6 +40,7 @@ interface MultiChannelStatusProps {
 }
 
 export function MultiChannelStatus({ workspaceId, onChannelClick }: MultiChannelStatusProps) {
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [status, setStatus] = useState<ChannelStatus | null>(null)
 
@@ -170,7 +172,7 @@ export function MultiChannelStatus({ workspaceId, onChannelClick }: MultiChannel
           <Button
             variant="outline"
             className="flex-1"
-            onClick={() => window.location.href = '/dashboard/analytics'}
+            onClick={() => router.push('/dashboard/analytics')}
           >
             <BarChart3 className="h-4 w-4 mr-2" />
             Analytics anzeigen

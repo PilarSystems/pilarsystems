@@ -5,7 +5,7 @@
 
 import { prisma } from '@/lib/prisma'
 import { logger } from '@/lib/logger'
-import { auditService } from '@/lib/audit'
+import { secretsService } from '@/lib/secrets'
 import { whatsappAutomationService } from '@/services/whatsapp/automation'
 import { smsService } from './sms.service'
 import { emailOutreachService } from './email.service'
@@ -214,8 +214,8 @@ export class MultiChannelOrchestrator {
         throw new Error('Sequence not found or inactive')
       }
 
-      // Create execution record
-      const executionId = `exec_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      // Create execution record with cryptographically secure ID
+      const executionId = `exec_${Date.now()}_${secretsService.generateToken(8)}`
       const execution: SequenceExecution = {
         id: executionId,
         sequenceId,
