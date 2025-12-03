@@ -9,11 +9,14 @@ interface AuthInputProps {
     label: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
     error?: string;
     icon?: React.ReactNode;
     required?: boolean;
     placeholder?: string;
     delay?: number;
+    disabled?: boolean;
+    autoComplete?: string;
 }
 
 export function AuthInput({
@@ -22,11 +25,14 @@ export function AuthInput({
     label,
     value,
     onChange,
+    onBlur,
     error,
     icon,
     required,
     placeholder,
     delay = 0,
+    disabled = false,
+    autoComplete,
 }: AuthInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -57,14 +63,25 @@ export function AuthInput({
                         type={type}
                         value={value}
                         onChange={onChange}
+                        onBlur={onBlur}
                         required={required}
                         placeholder={placeholder}
+                        disabled={disabled}
+                        autoComplete={autoComplete}
                         ref={inputRef}
-                        className="w-full bg-transparent outline-none text-white placeholder:text-gray-500"
+                        className="w-full bg-transparent outline-none text-white placeholder:text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                 </div>
             </div>
-            {error && <span className="text-red-500 text-sm mt-1 block">{error}</span>}
+            {error && (
+                <motion.span 
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-400 text-xs mt-2 block"
+                >
+                    {error}
+                </motion.span>
+            )}
         </motion.div>
     );
 }

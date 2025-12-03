@@ -7,25 +7,96 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
+import { useLocale } from '@/lib/i18n'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import Link from 'next/link'
+import { User, Settings, ChevronRight } from 'lucide-react'
 
 export default function SettingsPage() {
+  const { locale } = useLocale()
+  
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Einstellungen</h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Verwalte deine Studio-Einstellungen und Integrationen
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">
+              {locale === 'de' ? 'Einstellungen' : 'Settings'}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              {locale === 'de' 
+                ? 'Verwalte deine Studio-Einstellungen und Integrationen' 
+                : 'Manage your studio settings and integrations'}
+            </p>
+          </div>
+          <LanguageSwitcher />
+        </div>
+
+        {/* Quick Access Cards */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <Link href="/dashboard/settings/account">
+            <Card className="hover:border-blue-500 transition-colors cursor-pointer">
+              <CardContent className="flex items-center justify-between p-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                    <User className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">
+                      {locale === 'de' ? 'Konto-Einstellungen' : 'Account Settings'}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {locale === 'de' 
+                        ? 'Profil, Sprache & Benachrichtigungen' 
+                        : 'Profile, language & notifications'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-gray-400" />
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/dashboard/settings/autopilot">
+            <Card className="hover:border-blue-500 transition-colors cursor-pointer">
+              <CardContent className="flex items-center justify-between p-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                    <Settings className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">
+                      {locale === 'de' ? 'Autopilot-Einstellungen' : 'Autopilot Settings'}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {locale === 'de' 
+                        ? 'KI-Automatisierung konfigurieren' 
+                        : 'Configure AI automation'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-gray-400" />
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
         <Tabs defaultValue="studio">
           <TabsList>
-            <TabsTrigger value="studio">Studio Info</TabsTrigger>
-            <TabsTrigger value="team">Team</TabsTrigger>
-            <TabsTrigger value="ai">AI Rules</TabsTrigger>
-            <TabsTrigger value="integrations">Integrations</TabsTrigger>
-            <TabsTrigger value="billing">Billing</TabsTrigger>
+            <TabsTrigger value="studio">
+              {locale === 'de' ? 'Studio Info' : 'Studio Info'}
+            </TabsTrigger>
+            <TabsTrigger value="team">
+              {locale === 'de' ? 'Team' : 'Team'}
+            </TabsTrigger>
+            <TabsTrigger value="ai">
+              {locale === 'de' ? 'KI-Regeln' : 'AI Rules'}
+            </TabsTrigger>
+            <TabsTrigger value="integrations">
+              {locale === 'de' ? 'Integrationen' : 'Integrations'}
+            </TabsTrigger>
+            <TabsTrigger value="billing">
+              {locale === 'de' ? 'Abrechnung' : 'Billing'}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="studio" className="space-y-4">
