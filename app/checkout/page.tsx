@@ -174,6 +174,8 @@ function CheckoutContent() {
   const yearlyPrice = selectedPlanData.yearlyPrice + (whatsappAddon ? WHATSAPP_ADDON.price * 12 : 0)
   const effectiveMonthlyPrice = billingCycle === 'yearly' ? yearlyPrice / 12 : monthlyPrice
   const yearlySavings = (monthlyPrice * 12) - yearlyPrice
+  const totalDueToday = (billingCycle === 'yearly' ? yearlyPrice : monthlyPrice) + selectedPlanData.setupFee
+  const subscriptionPeriod = billingCycle === 'yearly' ? 'first year subscription' : 'first month subscription'
 
   if (initialLoading) {
     return (
@@ -375,10 +377,10 @@ function CheckoutContent() {
                   <p className="font-semibold">Due today</p>
                   <p className="text-xs text-muted-foreground">First payment + setup fee</p>
                 </div>
-                <span className="text-2xl font-bold text-primary">€{billingCycle === 'yearly' ? yearlyPrice + selectedPlanData.setupFee : monthlyPrice + selectedPlanData.setupFee}</span>
+                <span className="text-2xl font-bold text-primary">€{totalDueToday}</span>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Includes setup fee of €{selectedPlanData.setupFee} and {billingCycle === 'yearly' ? 'first year subscription' : 'first month subscription'}.
+                Includes setup fee of €{selectedPlanData.setupFee} and {subscriptionPeriod}.
               </p>
             </div>
           </CardContent>
