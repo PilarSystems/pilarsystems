@@ -14,6 +14,25 @@ interface TestimonialProps {
   delay?: number
 }
 
+/**
+ * Validates if a string is a valid image source
+ * Supports: relative paths, absolute URLs, and data URIs
+ */
+function isValidImageSrc(src: string): boolean {
+  if (!src || typeof src !== 'string') return false
+  
+  // Check for relative paths (starting with /)
+  if (src.startsWith('/')) return true
+  
+  // Check for absolute URLs (http/https)
+  if (src.startsWith('http://') || src.startsWith('https://')) return true
+  
+  // Check for data URIs (base64 images)
+  if (src.startsWith('data:image/')) return true
+  
+  return false
+}
+
 export function Testimonial({ name, role, studio, image, rating, quote, delay = 0 }: TestimonialProps) {
   return (
     <motion.div
@@ -42,13 +61,13 @@ export function Testimonial({ name, role, studio, image, rating, quote, delay = 
 
       {/* Quote */}
       <p className="text-gray-300 text-lg leading-relaxed mb-6 relative z-10">
-        "{quote}"
+        &quot;{quote}&quot;
       </p>
 
       {/* Author */}
       <div className="flex items-center gap-4">
         <div className="relative w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-          {image && image.startsWith('/') ? (
+          {isValidImageSrc(image) ? (
             <Image
               src={image}
               alt={name}

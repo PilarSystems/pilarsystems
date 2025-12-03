@@ -8,9 +8,9 @@ export function createClient() {
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error(
-      'Supabase: Env-Variablen fehlen (NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY)'
+      'Supabase: Missing environment variables (NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY)'
     )
-    throw new Error('Supabase: Env-Variablen fehlen')
+    throw new Error('Supabase: Missing environment variables')
   }
 
   return createBrowserClient(supabaseUrl, supabaseAnonKey)

@@ -32,6 +32,7 @@ export function ConsentManager() {
         setPreferences(parsed)
         loadScripts(parsed)
       } catch (e) {
+        console.warn('Failed to parse cookie consent preferences:', e)
         setShowBanner(true)
       }
     } else {
@@ -265,6 +266,7 @@ export function useConsent(category: 'necessary' | 'analytics' | 'marketing'): b
         const parsed = JSON.parse(stored) as ConsentPreferences
         setHasConsent(parsed[category])
       } catch (e) {
+        console.warn('Failed to parse consent preferences:', e)
         setHasConsent(false)
       }
     }
