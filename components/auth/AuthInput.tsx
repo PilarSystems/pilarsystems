@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+'use client'
+
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Building } from 'lucide-react';
 
 interface AuthInputProps {
     id: string;
@@ -27,13 +28,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
     placeholder,
     delay = 0,
 }) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (inputRef.current && value) {
-            inputRef.current.classList.add('has-value');
-        }
-    }, [value]);
+    const hasValue = !!value;
 
     return (
         <motion.div
@@ -49,16 +44,15 @@ const AuthInput: React.FC<AuthInputProps> = ({
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                ref={inputRef}
-                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
+                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 text-white ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
             />
             <label
                 htmlFor={id}
-                className={`absolute left-3 top-2 transform transition-all duration-300 ${value || inputRef.current?.classList.contains('has-value') ? 'scale-75 -translate-y-4' : ''}`}
+                className={`absolute left-3 top-2 transform transition-all duration-300 text-white/50 pointer-events-none ${hasValue ? 'scale-75 -translate-y-4 text-xs' : ''}`}
             >
                 {label} {required && '*'}
             </label>
-            {icon && <span className="icon-spacing">{icon}</span>}
+            {icon && <span className="absolute right-3 top-1/2 -translate-y-1/2">{icon}</span>}
             {error && <span className="text-red-500 text-sm">{error}</span>}
         </motion.div>
     );
