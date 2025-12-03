@@ -74,8 +74,8 @@ export async function createCheckoutSession(
       mode: 'subscription',
       payment_method_types: ['card', 'sepa_debit'],
       line_items: lineItems,
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/onboarding?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
       customer_email: owner.email,
       client_reference_id: workspaceId,
       metadata,
@@ -87,6 +87,17 @@ export async function createCheckoutSession(
       billing_address_collection: 'required',
       tax_id_collection: {
         enabled: true,
+      },
+      phone_number_collection: {
+        enabled: true,
+      },
+      custom_text: {
+        submit: {
+          message: 'Your 14-day free trial starts now. You won\'t be charged until the trial ends.',
+        },
+        terms_of_service_acceptance: {
+          message: `By continuing, you agree to our [Terms of Service](${process.env.NEXT_PUBLIC_APP_URL}/agb) and [Privacy Policy](${process.env.NEXT_PUBLIC_APP_URL}/datenschutz).`,
+        },
       },
     }
 
