@@ -16,16 +16,18 @@ export default function SignupPage() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
+    
     if (password !== confirmPassword) {
-      alert('Passwörter stimmen nicht überein')
+      setError('Passwörter stimmen nicht überein')
       return
     }
     setLoading(true)
     // TODO: Add Supabase signUp with user metadata
-    console.log('Signup attempt:', { fullName, studioName, email })
     setLoading(false)
   }
 
@@ -41,6 +43,11 @@ export default function SignupPage() {
           </h1>
         </div>
         <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+              {error}
+            </div>
+          )}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -16,7 +16,6 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     // TODO: Add Supabase authentication
-    console.log('Login attempt:', { email, password })
     setLoading(false)
   }
 

@@ -9,10 +9,12 @@ export function ConsentManager() {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    // Check if user has already made a choice
-    const consent = localStorage.getItem('cookie-consent')
-    if (!consent) {
-      setShowBanner(true)
+    // Check if user has already made a choice (only on client side)
+    if (typeof window !== 'undefined') {
+      const consent = localStorage.getItem('cookie-consent')
+      if (!consent) {
+        setShowBanner(true)
+      }
     }
   }, [])
 
