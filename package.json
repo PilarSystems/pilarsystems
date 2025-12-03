@@ -7,7 +7,9 @@
     "build": "sh -c 'export DATABASE_URL=${DATABASE_URL:-postgresql://user:pass@localhost:5432/db}; prisma generate; next build'",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "echo 'Skipping prisma generate on Vercel - will run during build'"
+    "postinstall": "echo 'Skipping prisma generate on Vercel - will run during build'",
+    "verify": "npx ts-node scripts/verify-build.ts",
+    "verify:quick": "yarn lint && npx tsc --noEmit"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

@@ -4,12 +4,14 @@ import { ConsentManager } from '@/components/marketing/ConsentManager'
 import '@/app/globals.css'
 
 export const metadata = {
-  title: 'PILAR SYSTEMS - AI SaaS für Fitnessstudios',
-  description: 'Automatisiere dein Fitnessstudio mit AI. 24/7 Rezeption, Lead-Management, WhatsApp & Phone AI, Follow-Up Automation.',
+  title: 'PILAR SYSTEMS - KI-gesteuerte Automatisierung für Fitnessstudios',
+  description: 'Automatisiere dein Fitnessstudio mit KI: WhatsApp AI, Phone AI, Lead Management. 100% Self-Service Onboarding.',
   openGraph: {
-    title: 'PILAR SYSTEMS - AI SaaS für Fitnessstudios',
-    description: 'Automatisiere dein Fitnessstudio mit AI. 24/7 Rezeption, Lead-Management, WhatsApp & Phone AI, Follow-Up Automation.',
+    title: 'PILAR SYSTEMS - KI-gesteuerte Automatisierung für Fitnessstudios',
+    description: 'Automatisiere dein Fitnessstudio mit KI: WhatsApp AI, Phone AI, Lead Management.',
     type: 'website',
+    locale: 'de_DE',
+    siteName: 'PILAR SYSTEMS',
   },
 }
 
@@ -20,7 +22,12 @@ export default function MarketingLayout({
 }) {
   return (
     <html lang="de" className="dark">
-      <body className="font-sans bg-black text-white antialiased">
+      <body 
+        className="bg-black text-white antialiased"
+        style={{
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        }}
+      >
         <Header />
         <main className="pt-16">
           {children}
