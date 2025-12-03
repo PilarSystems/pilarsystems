@@ -45,9 +45,15 @@ export default function AffiliateDashboardPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/affiliate/stats')
+      const response = await fetch('/api/affiliate/my-stats')
       if (!response.ok) throw new Error('Failed to fetch stats')
       const data = await response.json()
+      
+      if (!data.isAffiliate) {
+        setStats(null)
+        return
+      }
+      
       setStats(data)
     } catch (error) {
       console.error('Error fetching affiliate stats:', error)

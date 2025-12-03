@@ -8,6 +8,7 @@ import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { getSupabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,9 +23,38 @@ export default function LoginPage() {
     setError('');
     
     try {
-      // TODO: Implement actual login with Supabase
-      // Redirect to dashboard on success
-      router.push('/dashboard');
+      const supabase = getSupabase();
+      
+      // Sign in with Supabase
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email.trim().toLowerCase(),
+        password,
+      });
+      
+      if (signInError) {
+        if (signInError.message.includes('Invalid login credentials')) {
+          setError('Ungültige E-Mail oder Passwort.');
+        } else if (signInError.message.includes('Email not confirmed')) {
+          setError('Bitte bestätige zuerst deine E-Mail-Adresse.');
+        } else {
+          setError('Login fehlgeschlagen. Bitte versuche es erneut.');
+        }
+        return;
+      }
+      
+      if (data.user) {
+        // Check if user has an active subscription
+        const response = await fetch('/api/auth/check-subscription');
+        const subscriptionData = await response.json();
+        
+        if (subscriptionData.hasActiveSubscription) {
+          // User has subscription, redirect to dashboard
+          router.push('/dashboard');
+        } else {
+          // User doesn't have subscription, redirect to checkout
+          router.push('/checkout');
+        }
+      }
     } catch {
       setError('Login fehlgeschlagen. Bitte überprüfe deine Daten.');
     } finally {

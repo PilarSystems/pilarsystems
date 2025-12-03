@@ -6,8 +6,8 @@ import { createServerClient } from '@supabase/ssr';
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  // Nur bestimmte Routen schützen
-  const protectedPaths = ['/dashboard'];
+  // Only protect certain routes
+  const protectedPaths = ['/dashboard', '/onboarding'];
   const pathname = req.nextUrl.pathname;
 
   const isProtected = protectedPaths.some((path) =>
@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.warn(
-      'Supabase Middleware: ENV Variablen fehlen (NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY)',
+      'Supabase Middleware: ENV variables missing (NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY)',
     );
     return res;
   }
@@ -55,14 +55,14 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Nicht eingeloggt → auf Login umleiten
+  // Not logged in → redirect to login
   if (!user) {
-    const redirectUrl = new URL('/login-01', req.url);
+    const redirectUrl = new URL('/login', req.url);
     redirectUrl.searchParams.set('redirectTo', pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Eingeloggt → darf Dashboard sehen (kein Demo-Redirect mehr)
+  // Logged in → allow access (subscription check happens in dashboard layout)
   return res;
 }
 

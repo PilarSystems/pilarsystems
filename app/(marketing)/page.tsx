@@ -80,7 +80,7 @@ export default function HomePage() {
               <Link href="/signup">
                 <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300">
                   <Rocket className="mr-2 h-5 w-5" />
-                  Jetzt kostenlos starten
+                  Jetzt starten
                 </Button>
               </Link>
               <Link href="/features">
@@ -99,7 +99,7 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-2">
                 <CreditCard className="h-4 w-4 text-cyan-400" />
-                <span>Keine Kreditkarte erforderlich</span>
+                <span>Sichere Zahlung mit Stripe</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-cyan-400" />
@@ -107,7 +107,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2">
                 <RefreshCw className="h-4 w-4 text-cyan-400" />
-                <span>30 Tage kostenlos testen</span>
+                <span>Jederzeit kündbar</span>
               </div>
             </motion.div>
 
@@ -700,14 +700,14 @@ export default function HomePage() {
               Starte dein AI Studio heute
             </h2>
             <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-              Teste PILAR 30 Tage kostenlos und erlebe, wie dein Studio vollautomatisch läuft.
+              Erlebe, wie dein Studio mit PILAR vollautomatisch läuft. Jetzt starten und sofort loslegen.
             </p>
             
             {/* Benefit reminders */}
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                <span>Keine Kreditkarte</span>
+                <span>Sichere Zahlung</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-cyan-400" />
@@ -723,7 +723,7 @@ export default function HomePage() {
               <Link href="/signup">
                 <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 shadow-lg shadow-cyan-500/25">
                   <Rocket className="mr-2 h-5 w-5" />
-                  Jetzt kostenlos starten
+                  Jetzt starten
                 </Button>
               </Link>
               <Link href="/contact">
