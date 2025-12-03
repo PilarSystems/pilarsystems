@@ -21,11 +21,11 @@ class TwilioAdapter implements ITwilioAdapter {
   }
 
   private getTwilioClient() {
-    if (!this.isConfigured()) {
+    if (!this.isConfigured() || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
       return null
     }
 
-    return twilio(TWILIO_ACCOUNT_SID!, TWILIO_AUTH_TOKEN!)
+    return twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
   }
 
   private getSubaccountClient(sid: string, authToken: string) {
@@ -209,7 +209,10 @@ class TwilioAdapter implements ITwilioAdapter {
       }
 
       if (options.areaCode) {
-        searchParams.areaCode = parseInt(options.areaCode, 10)
+        const parsedAreaCode = parseInt(options.areaCode, 10)
+        if (!isNaN(parsedAreaCode)) {
+          searchParams.areaCode = parsedAreaCode
+        }
       }
 
       type AvailableNumber = { phoneNumber: string }
