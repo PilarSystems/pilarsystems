@@ -34,14 +34,14 @@ const channelHealthMap = new Map<string, ChannelHealth>()
  * Generate a unique trace ID
  */
 export function generateTraceId(): string {
-  return `tr_${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 9)}`
+  return `tr_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 11)}`
 }
 
 /**
  * Generate a unique span ID
  */
 export function generateSpanId(): string {
-  return `sp_${Math.random().toString(36).substr(2, 9)}`
+  return `sp_${Math.random().toString(36).slice(2, 11)}`
 }
 
 /**

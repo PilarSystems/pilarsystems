@@ -208,7 +208,7 @@ export default function AdminAnalyticsPage() {
               <CardContent>
                 <div className="text-2xl font-bold">{metrics.api.slowRequests}</div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Requests &gt; 1000ms
+                  Requests {'>'} 1000ms
                 </p>
               </CardContent>
             </Card>

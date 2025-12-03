@@ -96,11 +96,21 @@ async function setInCache<T>(key: string, data: T, ttlSeconds: number): Promise<
     expiresAt: Date.now() + ttlSeconds * 1000,
   })
 
-  // Limit memory cache size (simple LRU would be better but this works for now)
-  if (memoryCache.size > 1000) {
-    const firstKey = memoryCache.keys().next().value
-    if (firstKey) {
-      memoryCache.delete(firstKey)
+  // Limit memory cache size with batch cleanup
+  const MAX_CACHE_SIZE = 1000
+  if (memoryCache.size > MAX_CACHE_SIZE) {
+    const keysToDelete: string[] = []
+    let count = 0
+    const deleteCount = Math.min(50, memoryCache.size - MAX_CACHE_SIZE + 50)
+    
+    for (const key of memoryCache.keys()) {
+      if (count >= deleteCount) break
+      keysToDelete.push(key)
+      count++
+    }
+    
+    for (const key of keysToDelete) {
+      memoryCache.delete(key)
     }
   }
 }

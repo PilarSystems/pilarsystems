@@ -186,6 +186,18 @@ export function errorResponse(
 }
 
 /**
+ * Generate a request ID
+ */
+function generateRequestId(): string {
+  // Use crypto.randomUUID if available (Node.js 19+, modern browsers)
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  // Fallback for older environments
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 11)}`
+}
+
+/**
  * Wrapper for API route handlers with automatic error handling and timing
  */
 export function withAPIHandler<T>(
@@ -193,7 +205,7 @@ export function withAPIHandler<T>(
 ) {
   return async (request: Request): Promise<NextResponse> => {
     const startTime = Date.now()
-    const requestId = crypto.randomUUID()
+    const requestId = generateRequestId()
 
     try {
       const result = await handler(request, { requestId, startTime })
