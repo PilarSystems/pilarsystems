@@ -1,67 +1,91 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Lock, User, Building } from 'lucide-react';
+'use client'
+
+import React, { useId } from 'react'
+import { motion } from 'framer-motion'
 
 interface AuthInputProps {
-    id: string;
-    type: string;
-    label: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    error?: string;
-    icon?: React.ReactNode;
-    required?: boolean;
-    placeholder?: string;
-    delay?: number;
+  id?: string
+  type?: string
+  label: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  error?: string
+  icon?: React.ReactNode
+  required?: boolean
+  placeholder?: string
+  delay?: number
+  name?: string
+  autoComplete?: string
 }
 
-const AuthInput: React.FC<AuthInputProps> = ({
-    id,
-    type,
-    label,
-    value,
-    onChange,
-    error,
-    icon,
-    required,
-    placeholder,
-    delay = 0,
-}) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+export function AuthInput({
+  id,
+  type = 'text',
+  label,
+  value,
+  onChange,
+  error,
+  icon,
+  required = false,
+  placeholder,
+  delay = 0,
+  name,
+  autoComplete,
+}: AuthInputProps) {
+  const generatedId = useId()
+  const inputId = id || generatedId
 
-    useEffect(() => {
-        if (inputRef.current && value) {
-            inputRef.current.classList.add('has-value');
-        }
-    }, [value]);
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay, duration: 0.3 }}
-            className={`relative w-full bg-white/5 backdrop-blur-lg rounded-md overflow-hidden transition-all duration-300 ${error ? 'border-red-500' : 'border-transparent'} p-3`}
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.3 }}
+      className="w-full"
+    >
+      <div className={`relative group ${error ? 'animate-shake' : ''}`}>
+        {/* Icon */}
+        {icon && (
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-blue-400 transition-colors">
+            {icon}
+          </div>
+        )}
+        
+        {/* Input */}
+        <input
+          id={inputId}
+          name={name || inputId}
+          type={type}
+          value={value}
+          onChange={onChange}
+          required={required}
+          placeholder={placeholder || label}
+          autoComplete={autoComplete}
+          className={`
+            w-full px-4 py-3 ${icon ? 'pl-12' : ''} 
+            bg-white/5 backdrop-blur-sm
+            border ${error ? 'border-red-500/50' : 'border-white/10'} 
+            rounded-xl text-white placeholder-white/30
+            focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20
+            transition-all duration-300
+          `}
+        />
+        
+        {/* Label for screen readers */}
+        <label htmlFor={inputId} className="sr-only">
+          {label} {required && '(erforderlich)'}
+        </label>
+      </div>
+      
+      {/* Error message */}
+      {error && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-2 text-sm text-red-400"
         >
-            <input
-                id={id}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required={required}
-                placeholder={placeholder}
-                ref={inputRef}
-                className={`w-full h-12 border-b-2 bg-transparent outline-none transition-all duration-300 ${error ? 'ring-red-500' : 'ring-blue-500'} focus:ring-2`} 
-            />
-            <label
-                htmlFor={id}
-                className={`absolute left-3 top-2 transform transition-all duration-300 ${value || inputRef.current?.classList.contains('has-value') ? 'scale-75 -translate-y-4' : ''}`}
-            >
-                {label} {required && '*'}
-            </label>
-            {icon && <span className="icon-spacing">{icon}</span>}
-            {error && <span className="text-red-500 text-sm">{error}</span>}
-        </motion.div>
-    );
-};
-
-export default AuthInput;
+          {error}
+        </motion.p>
+      )}
+    </motion.div>
+  )
+}
